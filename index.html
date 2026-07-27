@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
 <head>
@@ -45,11 +46,11 @@
         .tab-content { display: none; opacity: 0; transition: opacity 0.25s ease-in-out; }
         .tab-content.active { display: block; opacity: 1; }
         .lab-table-container {
-            background: var(--card-bg);
+            background: var(--card-bg, #ffffff);
             border-radius: 12px;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-color, #e5e7eb);
             margin-bottom: 30px;
         }
 
@@ -61,18 +62,18 @@
 
         table.lab-table th {
             background-color: #f1f5f9;
-            color: var(--primary);
+            color: var(--primary, #0374B5);
             font-weight: 700;
             padding: 14px 16px;
             font-size: 10pt;
-            border-bottom: 2px solid var(--border-color);
+            border-bottom: 2px solid var(--border-color, #e5e7eb);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
 
         table.lab-table td {
             padding: 14px 16px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color, #e5e7eb);
             vertical-align: middle;
         }
 
@@ -86,13 +87,13 @@
 
         .lab-number {
             font-weight: 700;
-            color: var(--primary);
+            color: var(--primary, #0374B5);
             white-space: nowrap;
         }
 
         .lab-title {
             font-weight: 600;
-            color: var(--text-main);
+            color: var(--text-main, #1f2937);
         }
 
         .badge {
@@ -108,7 +109,7 @@
         .badge-guide {
             background-color: #dbeafe;
             color: #1e40af;
-            border: 1px.solid #bfdbfe;
+            border: 1px solid #bfdbfe;
         }
 
         .badge-guide:hover {
@@ -133,14 +134,6 @@
         .actions-cell .badge {
             margin-left: 6px;
         }
-
-        .footer-note {
-            margin-top: 20px;
-            font-size: 9.5pt;
-            color: var(--text-muted);
-            text-align: center;
-            font-style: italic;
-        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800 font-sans leading-relaxed antialiased min-h-screen pb-20">
@@ -155,35 +148,6 @@
                     <h1 class="text-base sm:text-lg font-bold text-canvas-dark leading-tight">Álgebra Lineal</h1>
                     <p class="text-xs text-gray-500 hidden sm:block">Planeador Docente & Control de Producción Audiovisual (16 Semanas)</p>
                 </div>
-            </div>
-            
-            <div class="flex items-center space-x-2">
-                <label for="quickWeekSelect" class="text-xs font-semibold text-gray-500 hidden md:inline-block">Ir a Semana:</label>
-                <select id="quickWeekSelect" onchange="scrollToWeek(this.value)" class="text-xs bg-gray-100 border border-gray-300 rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-canvas-blue">
-                    <option value="">Seleccionar semana...</option>
-                    <optgroup label="Corte I: Sistemas y Matrices">
-                        <option value="semana-1">Semana 1: Introducción a sistemas de ecuaciones</option>
-                        <option value="semana-2">Semana 2: Eliminación gaussiana y Gauss-Jordan</option>
-                        <option value="semana-3">Semana 3: Matrices y operaciones</option>
-                        <option value="semana-4">Semana 4: Inversas y matrices elementales</option>
-                        <option value="semana-5">Semana 5: Invertibilidad y matrices especiales</option>
-                    </optgroup>
-                    <optgroup label="Corte II: Determinantes y Vectores">
-                        <option value="semana-6">Semana 6: Determinantes por reducción</option>
-                        <option value="semana-7">Semana 7: Propiedades de determinantes y Cramer</option>
-                        <option value="semana-8">Semana 8: Introducción a vectores</option>
-                        <option value="semana-9">Semana 9: Producto punto, norma, proyecciones</option>
-                        <option value="semana-10">Semana 10: Producto cruz</option>
-                    </optgroup>
-                    <optgroup label="Corte III: Espacios y Transformaciones">
-                        <option value="semana-11">Semana 11: Espacios vectoriales y subespacios</option>
-                        <option value="semana-12">Semana 12: Espacios asociados a matrices</option>
-                        <option value="semana-13">Semana 13: Transformaciones lineales</option>
-                        <option value="semana-14">Semana 14: Representación matricial de transformaciones</option>
-                        <option value="semana-15">Semana 15: Valores y vectores propios</option>
-                        <option value="semana-16">Semana 16: Aplicaciones de diagonalización</option>
-                    </optgroup>
-                </select>
             </div>
         </div>
 
@@ -209,12 +173,8 @@
         </div>
     </header>
 
-    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-canvas-dark text-white text-xs px-4 py-3 rounded-xl shadow-lg border border-gray-700 hidden flex items-center gap-2 transition-all">
-        <span id="toast-icon">✅</span>
-        <span id="toast-message">Progreso guardado correctamente</span>
-    </div>
-
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
+        <!-- Pestaña 1: Plan de Curso -->
         <div id="tab-plan-curso" class="tab-content active space-y-10">
             <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8 border-l-8 border-l-canvas-blue">
                 <div class="flex flex-col lg:flex-row justify-between lg:items-start gap-6">
@@ -397,16 +357,8 @@
             </section>
         </div>
 
+        <!-- Pestaña 2: Plan de Videos & Recursos (Incluyendo asistente de programación) -->
         <div id="tab-videos-recursos" class="tab-content space-y-8">
-            <section class="bg-gradient-to-r from-canvas-dark via-gray-800 to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
-                <div class="max-w-3xl space-y-3">
-                    <h2 class="text-2xl sm:text-3xl font-extrabold">Recursos Audiovisuales de Álgebra Lineal</h2>
-                    <p class="text-xs sm:text-sm text-gray-200">
-                        Espacio reservado para gestionar los videos complementarios de programación en Google Colab y Python (SymPy, SciPy).
-                    </p>
-                </div>
-            </section>
-            <div id="tab-videos-recursos" class="tab-content space-y-8">
             <section class="bg-gradient-to-r from-canvas-dark via-gray-800 to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
                 <div class="max-w-3xl space-y-3">
                     <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white border border-white/20">
@@ -785,7 +737,7 @@
                                 <p class="text-gray-500 text-[11px]">Tema: Similitud de Coseno en Recomendación de Películas (Netflix y Spotify).</p>
                                 <div class="flex gap-2">
                                     <input type="url" id="link-yt-s9" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
-                                    <button onclick="saveSingleVideoLink('yt-s9')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardار</button>
+                                    <button onclick="saveSingleVideoLink('yt-s9')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
                                 </div>
                             </div>
                             <div class="space-y-2">
@@ -1031,7 +983,7 @@
                                 </div>
                                 <p class="text-gray-500 text-[11px]">Gancho: "El secreto matemático detrás de cómo Google rankeaba páginas (PageRank)."</p>
                                 <div class="flex gap-2">
-                                    <input type="url" id="link-yt-s15" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <input type="url" id="link-reel-s15" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
                                     <button onclick="saveSingleVideoLink('reel-s15')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
                                 </div>
                             </div>
@@ -1101,61 +1053,38 @@
                     </div>
                 </div>
             </div>
+
+            <!-- SECCIÓN AGREGADA: Asistente de Programación -->
+            <div class="bg-gradient-to-br from-slate-900 to-canvas-dark rounded-2xl p-6 sm:p-8 text-white shadow-xl space-y-4 border border-blue-500/30">
+                <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+                    <div class="bg-canvas-blue p-2.5 rounded-xl font-bold text-lg">🤖</div>
+                    <div>
+                        <h3 class="text-lg font-bold">Asistente de Programación Integrado</h3>
+                        <p class="text-xs text-gray-300">Normas y directrices para tareas de escritura, corrección y comprensión de código en Python.</p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10 space-y-2">
+                        <h4 class="font-bold text-canvas-blue text-sm">🎯 Finalidad y Objetivos</h4>
+                        <ul class="list-disc ml-4 space-y-1 text-gray-300">
+                            <li>Generación de código completo para optimizar tus proyectos.</li>
+                            <li>Enseñanza paso a paso de los conceptos de desarrollo en Python.</li>
+                            <li>Instrucciones claras y documentación exhaustiva para cada algoritmo.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/10 space-y-2">
+                        <h4 class="font-bold text-canvas-blue text-sm">🛠️ Protocolo de Desarrollo</h4>
+                        <ol class="list-decimal ml-4 space-y-1 text-gray-300">
+                            <li><strong>Comprender la solicitud:</strong> Análisis de finalidad y parámetros.</li>
+                            <li><strong>Resumen de la solución:</strong> Estructura, alcance y limitaciones.</li>
+                            <li><strong>Implementación:</strong> Código optimizado listo para copiar y pegar.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
         </div>
 
-    </div>
-
-    <script>
-        function updateVideoStats() {
-            let ytChecked = 0;
-            let reelsChecked = 0;
-            const total = 16;
-            
-            for (let i = 1; i <= total; i++) {
-                const ytChk = document.getElementById(`chk-yt-s${i}`);
-                const reelChk = document.getElementById(`chk-reel-s${i}`);
-                if (ytChk && ytChk.checked) ytChecked++;
-                if (reelChk && reelChk.checked) reelsChecked++;
-            }
-            
-            document.getElementById('yt-count').innerText = `${ytChecked} / ${total}`;
-            document.getElementById('reels-count').innerText = `${reelsChecked} / ${total}`;
-            
-            const totalDone = ytChecked + reelsChecked;
-            const maxPossible = total * 2;
-            const percent = Math.round((totalDone / maxPossible) * 100);
-            document.getElementById('total-progress-percent').innerText = `${percent}%`;
-        }
-
-        function saveSingleVideoLink(id) {
-            const inputVal = document.getElementById(`link-${id}`).value;
-            localStorage.setItem(`link-${id}`, inputVal);
-            alert('¡Enlace guardado correctamente en almacenamiento local!');
-        }
-
-        function saveAllVideoLinks() {
-            for (let i = 1; i <= 16; i++) {
-                const ytVal = document.getElementById(`link-yt-s${i}`).value;
-                const reelVal = document.getElementById(`link-reel-s${i}`).value;
-                if(ytVal) localStorage.setItem(`link-yt-s${i}`, ytVal);
-                if(reelVal) localStorage.setItem(`link-reel-s${i}`, reelVal);
-            }
-            alert('¡Todos los enlaces disponibles han sido guardados con éxito!');
-        }
-
-        // Cargar datos guardados previamente si existen
-        window.onload = function() {
-            for (let i = 1; i <= 16; i++) {
-                const ytVal = localStorage.getItem(`link-yt-s${i}`);
-                const reelVal = localStorage.getItem(`link-reel-s${i}`);
-                if(ytVal) document.getElementById(`link-yt-s${i}`).value = ytVal;
-                if(reelVal) document.getElementById(`link-reel-s${i}`).value = reelVal;
-            }
-        };
-    </script>
-
-        </div>
-
+        <!-- Pestaña 3: Aplicaciones Integradoras -->
         <div id="tab-proyectos" class="tab-content space-y-10">
             <section class="bg-gradient-to-r from-canvas-dark via-canvas-accent to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
                 <div class="max-w-4xl space-y-3">
@@ -1194,6 +1123,7 @@
             </div>
         </div>
 
+        <!-- Pestaña 4: Laboratorios -->
         <div id="tab-laboratorios" class="tab-content space-y-8">
             <section class="bg-gradient-to-r from-canvas-dark via-indigo-900 to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
                 <div class="max-w-3xl space-y-3">
@@ -1204,83 +1134,83 @@
                 </div>
             </section>
             
-             <div class="lab-table-container">
-        <table class="lab-table">
-            <thead>
-                <tr>
-                    <th style="width: 15%;">Módulo / Lab</th>
-                    <th style="width: 55%;">Título del Laboratorio</th>
-                    <th style="width: 30%; text-align: right;">Recursos (Guía y Video)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="lab-number">Lab 1</td>
-                    <td class="lab-title">Solución de Sistemas de Ecuaciones Lineales</td>
-                    <td class="actions-cell">
-                        <a href="#" class="badge badge-guide">📄 Guía</a>
-                        <a href="#" class="badge badge-video">🎥 Video</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="lab-number">Lab 2</td>
-                    <td class="lab-title">Operaciones con matrices</td>
-                    <td class="actions-cell">
-                        <a href="#" class="badge badge-guide">📄 Guía</a>
-                        <a href="#" class="badge badge-video">🎥 Video</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="lab-number">Lab 3</td>
-                    <td class="lab-title">Inversas de matrices y solución a sistemas de ecuaciones</td>
-                    <td class="actions-cell">
-                        <a href="#" class="badge badge-guide">📄 Guía</a>
-                        <a href="#" class="badge badge-video">🎥 Video</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="lab-number">Lab 4</td>
-                    <td class="lab-title">Determinantes</td>
-                    <td class="actions-cell">
-                        <a href="#" class="badge badge-guide">📄 Guía</a>
-                        <a href="#" class="badge badge-video">🎥 Video</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="lab-number">Lab 5</td>
-                    <td class="lab-title">Vectores y operaciones con vectores</td>
-                    <td class="actions-cell">
-                        <a href="#" class="badge badge-guide">📄 Guía</a>
-                        <a href="#" class="badge badge-video">🎥 Video</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="lab-number">Lab 6</td>
-                    <td class="lab-title">Espacios vectoriales y subespacios</td>
-                    <td class="actions-cell">
-                        <a href="#" class="badge badge-guide">📄 Guía</a>
-                        <a href="#" class="badge badge-video">🎥 Video</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="lab-number">Lab 7</td>
-                    <td class="lab-title">Transformaciones lineales</td>
-                    <td class="actions-cell">
-                        <a href="#" class="badge badge-guide">📄 Guía</a>
-                        <a href="#" class="badge badge-video">🎥 Video</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="lab-number">Lab 8</td>
-                    <td class="lab-title">Diagonalización de matrices, valores y vectores propios</td>
-                    <td class="actions-cell">
-                        <a href="#" class="badge badge-guide">📄 Guía</a>
-                        <a href="#" class="badge badge-video">🎥 Video</a>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+            <div class="lab-table-container">
+                <table class="lab-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 15%;">Módulo / Lab</th>
+                            <th style="width: 55%;">Título del Laboratorio</th>
+                            <th style="width: 30%; text-align: right;">Recursos (Guía y Video)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="lab-number">Lab 1</td>
+                            <td class="lab-title">Solución de Sistemas de Ecuaciones Lineales</td>
+                            <td class="actions-cell">
+                                <a href="#" class="badge badge-guide">📄 Guía</a>
+                                <a href="#" class="badge badge-video">🎥 Video</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lab-number">Lab 2</td>
+                            <td class="lab-title">Operaciones con matrices</td>
+                            <td class="actions-cell">
+                                <a href="#" class="badge badge-guide">📄 Guía</a>
+                                <a href="#" class="badge badge-video">🎥 Video</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lab-number">Lab 3</td>
+                            <td class="lab-title">Inversas de matrices y solución a sistemas de ecuaciones</td>
+                            <td class="actions-cell">
+                                <a href="#" class="badge badge-guide">📄 Guía</a>
+                                <a href="#" class="badge badge-video">🎥 Video</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lab-number">Lab 4</td>
+                            <td class="lab-title">Determinantes</td>
+                            <td class="actions-cell">
+                                <a href="#" class="badge badge-guide">📄 Guía</a>
+                                <a href="#" class="badge badge-video">🎥 Video</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lab-number">Lab 5</td>
+                            <td class="lab-title">Vectores y operaciones con vectores</td>
+                            <td class="actions-cell">
+                                <a href="#" class="badge badge-guide">📄 Guía</a>
+                                <a href="#" class="badge badge-video">🎥 Video</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lab-number">Lab 6</td>
+                            <td class="lab-title">Espacios vectoriales y subespacios</td>
+                            <td class="actions-cell">
+                                <a href="#" class="badge badge-guide">📄 Guía</a>
+                                <a href="#" class="badge badge-video">🎥 Video</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lab-number">Lab 7</td>
+                            <td class="lab-title">Transformaciones lineales</td>
+                            <td class="actions-cell">
+                                <a href="#" class="badge badge-guide">📄 Guía</a>
+                                <a href="#" class="badge badge-video">🎥 Video</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lab-number">Lab 8</td>
+                            <td class="lab-title">Diagonalización de matrices, valores y vectores propios</td>
+                            <td class="actions-cell">
+                                <a href="#" class="badge badge-guide">📄 Guía</a>
+                                <a href="#" class="badge badge-video">🎥 Video</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
 
@@ -1317,6 +1247,60 @@
                 if (btn4) btn4.className = activeStyle;
             }
         }
+
+        function updateVideoStats() {
+            let ytChecked = 0;
+            let reelsChecked = 0;
+            const total = 16;
+            
+            for (let i = 1; i <= total; i++) {
+                const ytChk = document.getElementById(`chk-yt-s${i}`);
+                const reelChk = document.getElementById(`chk-reel-s${i}`);
+                if (ytChk && ytChk.checked) ytChecked++;
+                if (reelChk && reelChk.checked) reelsChecked++;
+            }
+            
+            const ytCountElem = document.getElementById('yt-count');
+            const reelsCountElem = document.getElementById('reels-count');
+            const progressElem = document.getElementById('total-progress-percent');
+
+            if(ytCountElem) ytCountElem.innerText = `${ytChecked} / ${total}`;
+            if(reelsCountElem) reelsCountElem.innerText = `${reelsChecked} / ${total}`;
+            
+            const totalDone = ytChecked + reelsChecked;
+            const maxPossible = total * 2;
+            const percent = Math.round((totalDone / maxPossible) * 100);
+            if(progressElem) progressElem.innerText = `${percent}%`;
+        }
+
+        function saveSingleVideoLink(id) {
+            const inputElem = document.getElementById(`link-${id}`);
+            if(inputElem) {
+                localStorage.setItem(`link-${id}`, inputElem.value);
+                alert('¡Enlace guardado correctamente en almacenamiento local!');
+            }
+        }
+
+        function saveAllVideoLinks() {
+            for (let i = 1; i <= 16; i++) {
+                const ytInput = document.getElementById(`link-yt-s${i}`);
+                const reelInput = document.getElementById(`link-reel-s${i}`);
+                if(ytInput && ytInput.value) localStorage.setItem(`link-yt-s${i}`, ytInput.value);
+                if(reelInput && reelInput.value) localStorage.setItem(`link-reel-s${i}`, reelInput.value);
+            }
+            alert('¡Todos los enlaces disponibles han sido guardados con éxito!');
+        }
+
+        window.onload = function() {
+            for (let i = 1; i <= 16; i++) {
+                const ytVal = localStorage.getItem(`link-yt-s${i}`);
+                const reelVal = localStorage.getItem(`link-reel-s${i}`);
+                const ytInput = document.getElementById(`link-yt-s${i}`);
+                const reelInput = document.getElementById(`link-reel-s${i}`);
+                if(ytVal && ytInput) ytInput.value = ytVal;
+                if(reelVal && reelInput) reelInput.value = reelVal;
+            }
+        };
     </script>
 </body>
 </html>
