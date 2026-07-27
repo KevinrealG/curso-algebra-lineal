@@ -406,6 +406,753 @@
                     </p>
                 </div>
             </section>
+            <div id="tab-videos-recursos" class="tab-content space-y-8">
+            <section class="bg-gradient-to-r from-canvas-dark via-gray-800 to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
+                <div class="max-w-3xl space-y-3">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-white/10 text-white border border-white/20">
+                        🎬 Checklist de Producción & Entrega de Videos
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">Plan de Videos: YouTube & Reels (16 Semanas)</h2>
+                    <p class="text-xs sm:text-sm text-gray-200">
+                        Ingresa tus links de YouTube/Reels una vez grabados y mantén al día tus fechas límite. El sistema calcula automáticamente el progreso de producción.
+                    </p>
+                </div>
+            </section>
+
+            <section class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium">Videos YouTube Publicados</p>
+                        <h3 id="yt-count" class="text-2xl font-black text-youtube">0 / 16</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-red-50 text-youtube rounded-xl flex items-center justify-center font-bold text-xl">▶</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium">Reels / Shorts Publicados</p>
+                        <h3 id="reels-count" class="text-2xl font-black text-reel">0 / 16</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-pink-50 text-reel rounded-xl flex items-center justify-center font-bold text-xl">📱</div>
+                </div>
+                <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs text-gray-500 font-medium">Progreso Global Producción</p>
+                        <h3 id="total-progress-percent" class="text-2xl font-black text-canvas-blue">0%</h3>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-50 text-canvas-blue rounded-xl flex items-center justify-center font-bold text-xl">🚀</div>
+                </div>
+            </section>
+
+            <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
+                <div class="flex justify-between items-center border-b pb-3">
+                    <h3 class="font-bold text-canvas-dark text-base">📋 Gestor de Enlaces Audiovisuales por Semana</h3>
+                    <button onclick="saveAllVideoLinks()" class="bg-canvas-blue hover:bg-canvas-accent text-white px-4 py-2 rounded-lg text-xs font-semibold shadow-sm transition">
+                        💾 Guardar Todos los Links
+                    </button>
+                </div>
+
+                <div class="space-y-4 text-xs">
+                    
+                    <!-- SEMANA 1 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 1</span>
+                                <span>Introducción a Sistemas Lineales y Solución Gráfica/Algebraica</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte I • ⏱️ Lab: Solución de Sistemas Lineales</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube (8-12 min)</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s1" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: ¿Por qué fallan las intersecciones? Geometría de los sistemas lineales en 2D y 3D.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s1" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s1')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical (&lt;60 seg)</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s1" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "¿Cuándo un sistema de ecuaciones tiene infinitas soluciones? Descúbrelo visualmente."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s1" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s1')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 2 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 2</span>
+                                <span>Eliminación Gaussiana y de Gauss-Jordan</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte I • ⏱️ Lab: Eliminación en Python</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s2" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Algoritmos detrás de las matrices escalonadas y operaciones elementales por renglón.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s2" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s2')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s2" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "El algoritmo que mueve Internet: Cómo Gauss simplifica millones de ecuaciones."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s2" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s2')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 3 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 3</span>
+                                <span>Matrices y Operaciones Matriciales</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte I • ⏱️ Lab: NumPy Operaciones</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s3" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: ¿Por qué la multiplicación de matrices no es conmutativa? Intuición geométrica.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s3" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s3')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s3" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "Rotar y escalar imágenes en Python usando solo producto de matrices."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s3" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s3')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 4 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 4</span>
+                                <span>Matrices Elementales e Inversas</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte I • ⏱️ Lab: Inversas y Examen 1</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s4" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Cómo descifrar mensajes secretos usando matrices inversas y criptografía elemental.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s4" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s4')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s4" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "El peligro de calcular la matriz inversa en Machine Learning."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s4" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s4')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 5 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 5</span>
+                                <span>Invertibilidad, Tipos de Matrices y Cierre Corte I</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte I • ⏱️ Lab: Sistemas Invertibles & Examen 2</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s5" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Teorema de la matriz invertible: Conectando determinantes, rango y soluciones únicas.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s5" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s5')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s5" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "Matrices simétricas: por qué los ingenieros las aman."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s5" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s5')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 6 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 6</span>
+                                <span>Determinantes por Reducción de Renglones</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte II • ⏱️ Lab: SymPy y NumPy</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s6" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: ¿Qué es realmente un determinante? Cambio de área y volumen en el espacio.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s6" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s6')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s6" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "Si el determinante es cero, tu espacio colapsa."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s6" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s6')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 7 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 7</span>
+                                <span>Propiedades, Cofactores y Regla de Cramer</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte II • ⏱️ Lab: Regla de Cramer</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s7" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Cuándo usar Cramer y cuándo huir de ella: Complejidad computacional.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s7" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s7')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s7" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "Por qué tus profesores aman Cramer (pero los computadores la odian)."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s7" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s7')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 8 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 8</span>
+                                <span>Vectores en Rn y Aritmética Vectorial</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte II • ⏱️ Taller & Lab: Vectores Básicos</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s8" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Física vs. Ciencias de Datos: ¿Qué es un vector en espacios n-dimensionales?</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s8" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s8')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s8" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "Cómo los videojuegos representan mundos 3D usando vectores."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s8" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s8')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 9 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 9</span>
+                                <span>Producto Punto, Norma y Ortogonalidad</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte II • ⏱️ Lab: Producto Punto & Examen 1</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s9" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Similitud de Coseno en Recomendación de Películas (Netflix y Spotify).</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s9" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s9')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardار</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s9" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "Cómo Spotify sabe qué música te gusta usando el producto punto."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s9" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s9')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 10 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 10</span>
+                                <span>Producto Cruz y Aplicaciones Geométricas</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte II • ⏱️ Lab: Producto Cruz & Examen 2</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s10" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Vectores normales a planos, áreas de paralelogramos y torque en física.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s10" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s10')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s10" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "La regla de la mano derecha explicada sin enredos."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s10" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s10')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 11 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 11</span>
+                                <span>Espacios Vectoriales, Bases y Dimensión</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte III • ⏱️ Lab: Espacios Vectoriales</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s11" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Axiomas de espacios vectoriales y qué significa que un conjunto sea linealmente independiente.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s11" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s11')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s11" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "¿Por qué el mundo es 3D? Entendiendo la dimensión de un espacio."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s11" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s11')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 12 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 12</span>
+                                <span>Espacio Renglón, Columna, Rango y Nulidad</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte III • ⏱️ Lab: Rango y Nulidad</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s12" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Teorema del rango: La conexión fundamental entre columnas y soluciones nulas.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s12" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s12')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s12" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "Por qué comprimir imágenes es eliminar dimensiones redundantes."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s12" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s12')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 13 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 13</span>
+                                <span>Transformaciones Lineales y Propiedades</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte III • ⏱️ Lab: Transformaciones Lineales</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s13" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: ¿Qué es una transformación lineal? De funciones algebraicas a máquinas geométricas.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s13" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s13')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s13" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "Cómo los filtros de Instagram deforman tu cara usando álgebra lineal."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s13" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s13')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 14 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 14</span>
+                                <span>Matriz Asociada a una Transformación y Núcleo</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte III • ⏱️ Taller & Lab: Matrices de Transformación</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s14" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Cómo encontrar la matriz que representa cualquier rotación, cizalladura o proyección.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s14" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s14')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s14" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "El núcleo (kernel): el espacio que queda aniquilado por la transformación."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s14" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s14')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 15 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 15</span>
+                                <span>Valores, Vectores Propios y Diagonalización</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte III • ⏱️ Lab: Eigenvalues & Examen 1</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s15" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Eigenvalues y Eigenvectors: Las direcciones invariantes que gobiernan sistemas dinámicos.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s15" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s15')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s15" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "El secreto matemático detrás de cómo Google rankeaba páginas (PageRank)."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s15" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s15')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SEMANA 16 -->
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-3">
+                        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 font-bold text-canvas-blue border-b border-gray-200 pb-2">
+                            <div>
+                                <span class="bg-canvas-blue text-white px-2 py-0.5 rounded text-[11px] mr-2">Semana 16</span>
+                                <span>Aplicaciones Prácticas y Cierre de Curso</span>
+                            </div>
+                            <span class="text-gray-500 font-normal">Corte III • ⏱️ Examen 2 & Proyecto Final</span>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">▶️ Video Largo YouTube</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-yt-s16" onchange="updateVideoStats()" class="rounded text-youtube"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Tema: Análisis de Componentes Principales (PCA) en Ciencia de Datos y visión artificial.</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-yt-s16" placeholder="https://youtube.com/watch?v=..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('yt-s16')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <label class="font-semibold text-gray-800">📱 Reel / Short Vertical</label>
+                                    <label class="flex items-center gap-1 cursor-pointer text-gray-700">
+                                        <input type="checkbox" id="chk-reel-s16" onchange="updateVideoStats()" class="rounded text-reel"> ¿Grabado?
+                                    </label>
+                                </div>
+                                <p class="text-gray-500 text-[11px]">Gancho: "Cómo el Álgebra Lineal hace posible la Inteligencia Artificial moderna."</p>
+                                <div class="flex gap-2">
+                                    <input type="url" id="link-reel-s16" placeholder="https://instagram.com/reel/..." class="w-full border rounded-md px-3 py-1.5 focus:ring-2 focus:ring-canvas-blue">
+                                    <button onclick="saveSingleVideoLink('reel-s16')" class="bg-gray-200 hover:bg-gray-300 px-3 py-1.5 rounded-md font-medium">Guardar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Banco de Recursos -->
+            <div class="bg-white rounded-xl border border-gray-200 p-6 space-y-4 shadow-sm">
+                <h3 class="font-bold text-canvas-dark text-base border-b pb-3">📁 Banco de Recursos y Repositorio de Materiales</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                        <h4 class="font-bold text-canvas-blue flex items-center gap-1.5">📊 Datasets & Matrices (OpenStax)</h4>
+                        <p class="text-gray-600">Matrices de coeficientes para talleres en Python y NumPy.</p>
+                        <a href="https://openstax.org/details/books/linear-algebra" target="_blank" class="inline-block text-canvas-blue font-semibold hover:underline">🌐 OpenStax Álgebra Lineal ↗</a>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                        <h4 class="font-bold text-canvas-blue flex items-center gap-1.5">💻 Notebooks Colab / Python</h4>
+                        <p class="text-gray-600">Plantillas en Python para eliminación gaussiana y eigenvalores.</p>
+                        <a href="https://colab.research.google.com" target="_blank" class="inline-block text-canvas-blue font-semibold hover:underline">🐍 Ir a Google Colab ↗</a>
+                    </div>
+                    <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 space-y-2">
+                        <h4 class="font-bold text-canvas-blue flex items-center gap-1.5">📈 Visualizadores interactivos</h4>
+                        <p class="text-gray-600">Simuladores gráficos de transformaciones lineales en el plano.</p>
+                        <a href="https://www.geogebra.org" target="_blank" class="inline-block text-canvas-blue font-semibold hover:underline">🌐 GeoGebra 3D Matrices ↗</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function updateVideoStats() {
+            let ytChecked = 0;
+            let reelsChecked = 0;
+            const total = 16;
+            
+            for (let i = 1; i <= total; i++) {
+                const ytChk = document.getElementById(`chk-yt-s${i}`);
+                const reelChk = document.getElementById(`chk-reel-s${i}`);
+                if (ytChk && ytChk.checked) ytChecked++;
+                if (reelChk && reelChk.checked) reelsChecked++;
+            }
+            
+            document.getElementById('yt-count').innerText = `${ytChecked} / ${total}`;
+            document.getElementById('reels-count').innerText = `${reelsChecked} / ${total}`;
+            
+            const totalDone = ytChecked + reelsChecked;
+            const maxPossible = total * 2;
+            const percent = Math.round((totalDone / maxPossible) * 100);
+            document.getElementById('total-progress-percent').innerText = `${percent}%`;
+        }
+
+        function saveSingleVideoLink(id) {
+            const inputVal = document.getElementById(`link-${id}`).value;
+            localStorage.setItem(`link-${id}`, inputVal);
+            alert('¡Enlace guardado correctamente en almacenamiento local!');
+        }
+
+        function saveAllVideoLinks() {
+            for (let i = 1; i <= 16; i++) {
+                const ytVal = document.getElementById(`link-yt-s${i}`).value;
+                const reelVal = document.getElementById(`link-reel-s${i}`).value;
+                if(ytVal) localStorage.setItem(`link-yt-s${i}`, ytVal);
+                if(reelVal) localStorage.setItem(`link-reel-s${i}`, reelVal);
+            }
+            alert('¡Todos los enlaces disponibles han sido guardados con éxito!');
+        }
+
+        // Cargar datos guardados previamente si existen
+        window.onload = function() {
+            for (let i = 1; i <= 16; i++) {
+                const ytVal = localStorage.getItem(`link-yt-s${i}`);
+                const reelVal = localStorage.getItem(`link-reel-s${i}`);
+                if(ytVal) document.getElementById(`link-yt-s${i}`).value = ytVal;
+                if(reelVal) document.getElementById(`link-reel-s${i}`).value = reelVal;
+            }
+        };
+    </script>
 
         </div>
 
