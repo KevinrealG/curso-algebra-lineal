@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estructura, Planeación y Plan de Videos: Álgebra Lineal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        canvas: {
+                            blue: '#0374B5',
+                            dark: '#2D3B45',
+                            light: '#EEF7FA',
+                            border: '#BCE0EF',
+                            accent: '#02588A'
+                        },
+                        youtube: '#FF0000',
+                        reel: '#E1306C',
+                        notion: {
+                            bg: '#FFFFFF',
+                            hover: '#F1F3F5',
+                            border: '#E9ECEF',
+                            text: '#37352F',
+                            muted: '#787774',
+                            toggleBg: '#F8F9FA'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .toggle-icon { transition: transform 0.2s ease-in-out; }
+        details[open] > summary .toggle-icon { transform: rotate(90deg); }
+        .completed-item { text-decoration: line-through; opacity: 0.55; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .tab-content { display: none; opacity: 0; transition: opacity 0.25s ease-in-out; }
+        .tab-content.active { display: block; opacity: 1; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans leading-relaxed antialiased min-h-screen pb-20">
+
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-gray-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="bg-canvas-blue text-white p-2 rounded-lg font-bold text-base sm:text-lg tracking-wider shadow-sm">
+                    CBAS-M04A
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold text-canvas-dark leading-tight">Álgebra Lineal</h1>
+                    <p class="text-xs text-gray-500 hidden sm:block">Planeador Docente & Control de Producción Audiovisual (16 Semanas)</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-2">
+                <label for="quickWeekSelect" class="text-xs font-semibold text-gray-500 hidden md:inline-block">Ir a Semana:</label>
+                <select id="quickWeekSelect" onchange="scrollToWeek(this.value)" class="text-xs bg-gray-100 border border-gray-300 rounded-md px-2.5 py-1.5 focus:outline-none focus:ring-2 focus:ring-canvas-blue">
+                    <option value="">Seleccionar semana...</option>
+                    <optgroup label="Corte I: Sistemas y Matrices">
+                        <option value="semana-1">Semana 1: Introducción a sistemas de ecuaciones</option>
+                        <option value="semana-2">Semana 2: Eliminación gaussiana y Gauss-Jordan</option>
+                        <option value="semana-3">Semana 3: Matrices y operaciones</option>
+                        <option value="semana-4">Semana 4: Inversas y matrices elementales</option>
+                        <option value="semana-5">Semana 5: Invertibilidad y matrices especiales</option>
+                    </optgroup>
+                    <optgroup label="Corte II: Determinantes y Vectores">
+                        <option value="semana-6">Semana 6: Determinantes por reducción</option>
+                        <option value="semana-7">Semana 7: Propiedades de determinantes y Cramer</option>
+                        <option value="semana-8">Semana 8: Introducción a vectores</option>
+                        <option value="semana-9">Semana 9: Producto punto, norma, proyecciones</option>
+                        <option value="semana-10">Semana 10: Producto cruz</option>
+                    </optgroup>
+                    <optgroup label="Corte III: Espacios y Transformaciones">
+                        <option value="semana-11">Semana 11: Espacios vectoriales y subespacios</option>
+                        <option value="semana-12">Semana 12: Espacios asociados a matrices</option>
+                        <option value="semana-13">Semana 13: Transformaciones lineales</option>
+                        <option value="semana-14">Semana 14: Representación matricial de transformaciones</option>
+                        <option value="semana-15">Semana 15: Valores y vectores propios</option>
+                        <option value="semana-16">Semana 16: Aplicaciones de diagonalización</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="bg-gray-100 border-t border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex space-x-2 text-xs sm:text-sm font-medium overflow-x-auto no-scrollbar">
+                <button id="tab-btn-1" onclick="switchTab('plan-curso')" class="py-3 px-4 border-b-2 font-bold flex items-center gap-2 border-canvas-blue text-canvas-blue bg-white shadow-sm transition-all rounded-t-md whitespace-nowrap">
+                    <span>📚 Pestaña 1: Plan de Curso</span>
+                    <span class="bg-canvas-light text-canvas-blue text-[10px] font-semibold px-2 py-0.5 rounded-full border border-canvas-border">16 Semanas</span>
+                </button>
+                <button id="tab-btn-2" onclick="switchTab('videos-recursos')" class="py-3 px-4 border-b-2 font-medium flex items-center gap-2 border-transparent text-gray-600 hover:text-canvas-blue hover:bg-white/60 transition-all rounded-t-md whitespace-nowrap">
+                    <span>🎬 Pestaña 2: Plan de Videos & Recursos</span>
+                    <span class="bg-red-50 text-red-600 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-red-200">YouTube / Reels</span>
+                </button>
+                <button id="tab-btn-3" onclick="switchTab('proyectos')" class="py-3 px-4 border-b-2 font-medium flex items-center gap-2 border-transparent text-gray-600 hover:text-canvas-blue hover:bg-white/60 transition-all rounded-t-md whitespace-nowrap">
+                    <span>🚀 Pestaña 3: Aplicaciones Integradoras</span>
+                    <span class="bg-emerald-50 text-emerald-700 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-200">Corte I, II y III</span>
+                </button>
+                <button id="tab-btn-4" onclick="switchTab('laboratorios')" class="py-3 px-4 border-b-2 font-medium flex items-center gap-2 border-transparent text-gray-600 hover:text-canvas-blue hover:bg-white/60 transition-all rounded-t-md whitespace-nowrap">
+                    <span>💻 Pestaña 4: Laboratorios</span>
+                    <span class="bg-indigo-50 text-indigo-700 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-indigo-200">Guías & Python</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-canvas-dark text-white text-xs px-4 py-3 rounded-xl shadow-lg border border-gray-700 hidden flex items-center gap-2 transition-all">
+        <span id="toast-icon">✅</span>
+        <span id="toast-message">Progreso guardado correctamente</span>
+    </div>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-8">
+        <div id="tab-plan-curso" class="tab-content active space-y-10">
+            <section class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sm:p-8 border-l-8 border-l-canvas-blue">
+                <div class="flex flex-col lg:flex-row justify-between lg:items-start gap-6">
+                    <div class="space-y-3">
+                        <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-canvas-light text-canvas-blue border border-canvas-border">
+                            📅 Inicio: 3 de Agosto | 16 Semanas
+                        </div>
+                        <h2 class="text-2xl font-bold text-canvas-dark">Álgebra Lineal (CBAS-M04A)</h2>
+                        <p class="text-sm text-gray-600 max-w-3xl">
+                            Curso práctico orientado a la comprensión de espacios vectoriales, transformaciones lineales y matrices, con enfoque en implementaciones con Python, NumPy, SciPy, y herramientas de Inteligencia Artificial.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200 min-w-[260px] space-y-2 text-xs">
+                        <div class="flex justify-between py-1 border-b border-gray-200">
+                            <span class="text-gray-500">⏱️ Intensidad Horaria:</span>
+                            <span class="font-bold text-gray-800">144 horas (64 HAD / 80 HTI)</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-gray-200">
+                            <span class="text-gray-500">🏫 Clase Teórica:</span>
+                            <span class="font-medium text-gray-800">3 horas / semana</span>
+                        </div>
+                        <div class="flex justify-between py-1">
+                            <span class="text-gray-500">💻 Lab. Práctico:</span>
+                            <span class="font-medium text-canvas-blue">1 hora (Google Colab / Python)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="space-y-8">
+                <div class="border-b border-gray-200 pb-3 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-xl font-bold text-canvas-dark">📊 Resumen General del Plan de Estudios</h2>
+                    </div>
+                </div>
+
+                <!-- CORTE I -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="bg-canvas-dark text-white px-6 py-3 font-semibold text-sm flex justify-between items-center">
+                        <span>Corte I: Sistemas de Ecuaciones Lineales y Matrices (Semanas 1 a 5)</span>
+                        <span class="text-xs bg-canvas-blue px-2.5 py-1 rounded-md">Evaluación 30%</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-gray-100 text-canvas-dark border-b border-gray-200 uppercase font-semibold text-[11px] tracking-wider">
+                                    <th class="p-3 w-24">Semana</th>
+                                    <th class="p-3">Componente Teórico (3 hrs)</th>
+                                    <th class="p-3">Laboratorio Práctico (1 hr)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 1</td>
+                                    <td class="p-3">Introducción a los sistemas de ecuaciones lineales. Solución gráfica, por sustitución, eliminación e igualación.</td>
+                                    <td class="p-3"><strong>Lab 1 (Parte 1):</strong> Solución de Sistemas de Ecuaciones Lineales.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 2</td>
+                                    <td class="p-3">Eliminación gaussiana y de Gauss-Jordan.</td>
+                                    <td class="p-3"><strong>Lab 1 (Parte 2):</strong> Eliminación gaussiana en Python.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 3</td>
+                                    <td class="p-3">Matrices y operaciones matriciales (sumas, restas, productos).</td>
+                                    <td class="p-3"><strong>Lab 2:</strong> Operaciones con matrices en Python (NumPy).</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 4</td>
+                                    <td class="p-3">Matrices elementales y cálculo de inversas. <strong>Examen 1 (Semana 3)</strong></td>
+                                    <td class="p-3"><strong>Lab 3 (Parte 1):</strong> Inversas de matrices.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 5</td>
+                                    <td class="p-3">Relación entre invertibilidad y solución a sistemas; matrices diagonales, triangulares y simétricas. <strong>Examen 2 (Semana 4)</strong></td>
+                                    <td class="p-3"><strong>Lab 3 (Parte 2):</strong> Sistemas y matrices invertibles.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CORTE II -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="bg-canvas-dark text-white px-6 py-3 font-semibold text-sm flex justify-between items-center">
+                        <span>Corte II: Determinantes y Espacios Vectoriales (Semanas 6 a 10)</span>
+                        <span class="text-xs bg-canvas-blue px-2.5 py-1 rounded-md">Evaluación 35%</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-gray-100 text-canvas-dark border-b border-gray-200 uppercase font-semibold text-[11px] tracking-wider">
+                                    <th class="p-3 w-24">Semana</th>
+                                    <th class="p-3">Componente Teórico (3 hrs)</th>
+                                    <th class="p-3">Laboratorio Práctico (1 hr)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 6</td>
+                                    <td class="p-3">Determinantes usando reducción por renglones.</td>
+                                    <td class="p-3"><strong>Lab 4 (Parte 1):</strong> Determinantes con SymPy y NumPy.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 7</td>
+                                    <td class="p-3">Propiedades de los determinantes, cofactores y Regla de Cramer.</td>
+                                    <td class="p-3"><strong>Lab 4 (Parte 2):</strong> Regla de Cramer.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 8</td>
+                                    <td class="p-3">Introducción a los vectores en Rn, aritmética vectorial. <strong>Taller (Semanas 5, 6, 7)</strong></td>
+                                    <td class="p-3"><strong>Lab 5 (Parte 1):</strong> Vectores y operaciones básicas.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 9</td>
+                                    <td class="p-3">Producto punto, norma, proyecciones y ortogonalidad. <strong>Examen 1 (Semana 8)</strong></td>
+                                    <td class="p-3"><strong>Lab 5 (Parte 2):</strong> Producto punto y ángulos (Python).</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 10</td>
+                                    <td class="p-3">Producto cruz. <strong>Examen 2 (Semana 9)</strong></td>
+                                    <td class="p-3"><strong>Lab 5 (Parte 3):</strong> Producto cruz y aplicaciones geométricas.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CORTE III -->
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <div class="bg-canvas-dark text-white px-6 py-3 font-semibold text-sm flex justify-between items-center">
+                        <span>Corte III: Espacios y Transformaciones, Valores y Vectores Propios (Semanas 11 a 16)</span>
+                        <span class="text-xs bg-canvas-blue px-2.5 py-1 rounded-md">Evaluación 35%</span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                            <thead>
+                                <tr class="bg-gray-100 text-canvas-dark border-b border-gray-200 uppercase font-semibold text-[11px] tracking-wider">
+                                    <th class="p-3 w-24">Semana</th>
+                                    <th class="p-3">Componente Teórico (3 hrs)</th>
+                                    <th class="p-3">Laboratorio Práctico (1 hr)</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 11</td>
+                                    <td class="p-3">Espacios vectoriales reales, subespacios, independencia lineal, bases y dimensión.</td>
+                                    <td class="p-3"><strong>Lab 6 (Parte 1):</strong> Espacios vectoriales y subespacios.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 12</td>
+                                    <td class="p-3">Espacio renglón, espacio columna, rango, espacio nulo.</td>
+                                    <td class="p-3"><strong>Lab 6 (Parte 2):</strong> Rango y nulidad.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 13</td>
+                                    <td class="p-3">Transformaciones lineales, propiedades e imagen.</td>
+                                    <td class="p-3"><strong>Lab 7 (Parte 1):</strong> Transformaciones lineales.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 14</td>
+                                    <td class="p-3">Matriz asociada a una transformación, imagen, rango, núcleo. <strong>Taller (Semanas 11 y 12)</strong></td>
+                                    <td class="p-3"><strong>Lab 7 (Parte 2):</strong> Matrices de transformación.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 15</td>
+                                    <td class="p-3">Valores y vectores propios, diagonalización. <strong>Examen 1 (Semana 14)</strong></td>
+                                    <td class="p-3"><strong>Lab 8 (Parte 1):</strong> Eigenvalores y diagonalización.</td>
+                                </tr>
+                                <tr class="hover:bg-blue-50/50 transition-colors">
+                                    <td class="p-3 font-bold text-canvas-blue">Semana 16</td>
+                                    <td class="p-3">Aplicaciones prácticas de valores y vectores propios. <strong>Examen 2 (Semana 15)</strong></td>
+                                    <td class="p-3"><strong>Lab 8 (Parte 2):</strong> Aplicaciones de diagonalización (PCA, Markov).</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div id="tab-videos-recursos" class="tab-content space-y-8">
+            <section class="bg-gradient-to-r from-canvas-dark via-gray-800 to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
+                <div class="max-w-3xl space-y-3">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">Recursos Audiovisuales de Álgebra Lineal</h2>
+                    <p class="text-xs sm:text-sm text-gray-200">
+                        Espacio reservado para gestionar los videos complementarios de programación en Google Colab y Python (SymPy, SciPy).
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <div id="tab-proyectos" class="tab-content space-y-10">
+            <section class="bg-gradient-to-r from-canvas-dark via-canvas-accent to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
+                <div class="max-w-4xl space-y-3">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">Aplicaciones por Programas Académicos</h2>
+                    <p class="text-xs sm:text-sm text-gray-100">
+                        Casos de estudio enfocados a Economía, Administración e Ingeniería aplicando el Álgebra Lineal.
+                    </p>
+                </div>
+            </section>
+            
+            <div class="grid grid-cols-1 gap-4">
+                <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm border-l-4 border-l-blue-500">
+                    <h3 class="font-bold text-lg text-canvas-dark">Corte I: Sistemas y Matrices</h3>
+                    <ul class="list-disc ml-5 mt-2 text-sm text-gray-600">
+                        <li><strong>Economía:</strong> Modelo Input-Output de Leontief.</li>
+                        <li><strong>Administración:</strong> Planificación de Recursos (ERP).</li>
+                        <li><strong>Ingeniería:</strong> Análisis de Circuitos Eléctricos (Leyes de Kirchhoff).</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm border-l-4 border-l-purple-500">
+                    <h3 class="font-bold text-lg text-canvas-dark">Corte II: Matrices Especiales, Determinantes y Vectores</h3>
+                    <ul class="list-disc ml-5 mt-2 text-sm text-gray-600">
+                        <li><strong>Economía:</strong> Análisis de Portafolios (Modelo de Markowitz).</li>
+                        <li><strong>Administración:</strong> Matrices de Transición de Estado (Cadenas de Markov).</li>
+                        <li><strong>Ingeniería:</strong> Análisis Estructural por Elementos Finitos (FEA).</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm border-l-4 border-l-emerald-500">
+                    <h3 class="font-bold text-lg text-canvas-dark">Corte III: Transformaciones y Valores Propios</h3>
+                    <ul class="list-disc ml-5 mt-2 text-sm text-gray-600">
+                        <li><strong>Economía/Ciencia de Datos:</strong> Descomposición en Valores Singulares (SVD) y Análisis de Componentes Principales (PCA).</li>
+                        <li><strong>Administración:</strong> Análisis de Redes Organizacionales.</li>
+                        <li><strong>Ingeniería:</strong> Análisis Modal (Frecuencias naturales de vibración).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-laboratorios" class="tab-content space-y-8">
+            <section class="bg-gradient-to-r from-canvas-dark via-indigo-900 to-canvas-blue rounded-2xl p-6 sm:p-8 text-white shadow-lg">
+                <div class="max-w-3xl space-y-3">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold">Laboratorios de Álgebra Lineal en Python</h2>
+                    <p class="text-xs sm:text-sm text-gray-200">
+                        Uso de Google Colab, NumPy, SciPy, SymPy, y scikit-learn.
+                    </p>
+                </div>
+            </section>
+            
+            <div class="bg-white rounded-xl border border-gray-200 p-6">
+                <ul class="space-y-3 text-sm text-gray-700">
+                    <li><strong>Lab 1:</strong> Solución de Sistemas de Ecuaciones Lineales.</li>
+                    <li><strong>Lab 2:</strong> Operaciones con matrices.</li>
+                    <li><strong>Lab 3:</strong> Inversas de matrices y solución a sistemas de ecuaciones.</li>
+                    <li><strong>Lab 4:</strong> Determinantes.</li>
+                    <li><strong>Lab 5:</strong> Vectores y operaciones con vectores.</li>
+                    <li><strong>Lab 6:</strong> Espacios vectoriales y subespacios.</li>
+                    <li><strong>Lab 7:</strong> Transformaciones lineales.</li>
+                    <li><strong>Lab 8:</strong> Diagonalización de matrices, valores y vectores propios.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            const btn1 = document.getElementById('tab-btn-1');
+            const btn2 = document.getElementById('tab-btn-2');
+            const btn3 = document.getElementById('tab-btn-3');
+            const btn4 = document.getElementById('tab-btn-4');
+
+            const inactiveStyle = "py-3 px-4 border-b-2 font-medium flex items-center gap-2 border-transparent text-gray-600 hover:text-canvas-blue hover:bg-white/60 transition-all rounded-t-md whitespace-nowrap";
+            const activeStyle = "py-3 px-4 border-b-2 font-bold flex items-center gap-2 border-canvas-blue text-canvas-blue bg-white shadow-sm transition-all rounded-t-md whitespace-nowrap";
+
+            btn1.className = inactiveStyle;
+            btn2.className = inactiveStyle;
+            if (btn3) btn3.className = inactiveStyle;
+            if (btn4) btn4.className = inactiveStyle;
+
+            if (tabName === 'plan-curso') {
+                document.getElementById('tab-plan-curso').classList.add('active');
+                btn1.className = activeStyle;
+            } else if (tabName === 'videos-recursos') {
+                document.getElementById('tab-videos-recursos').classList.add('active');
+                btn2.className = activeStyle;
+            } else if (tabName === 'proyectos') {
+                document.getElementById('tab-proyectos').classList.add('active');
+                if (btn3) btn3.className = activeStyle;
+            } else if (tabName === 'laboratorios') {
+                document.getElementById('tab-laboratorios').classList.add('active');
+                if (btn4) btn4.className = activeStyle;
+            }
+        }
+    </script>
+</body>
+</html>
