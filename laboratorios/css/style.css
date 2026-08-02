@@ -48,6 +48,11 @@ transition:.3s;
 }
 .card:hover{transform:translateY(-5px)}
 .card h3{margin-bottom:10px;color:var(--accent)}
+.sidebar-card{
+position:sticky;
+top:2rem;
+align-self:flex-start;
+}
 .timeline{border-left:3px solid var(--accent);padding-left:25px}
 .timeline-item{margin-bottom:25px;position:relative}
 .timeline-item::before{
