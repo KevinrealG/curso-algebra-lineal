@@ -22,10 +22,12 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
+            overflow-y: auto;
         }
         .slide {
             width: min(92vw, 1200px);
-            min-height: 90vh;
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
             height: auto;
             margin: 2vh 0;
             background: white;
@@ -33,20 +35,22 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             display: none;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
             box-sizing: border-box;
             position: relative;
             overflow-y: auto;
+            overflow-x: hidden;
         }
         .slides-container {
             width: 100%;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-bottom: 90px;
+            padding: 0 0 110px;
             box-sizing: border-box;
         }
         h1 {
@@ -117,6 +121,65 @@
             gap: clamp(20px, 3vw, 40px);
             width: 100%;
             align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p {
+            margin: 0 0 10px;
+            font-size: clamp(1rem, 1.5vw, 1.25rem);
+            line-height: 1.5;
+        }
+        .info-pill {
+            display: inline-block;
+            background: var(--blue);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-right: 8px;
+            margin-top: 4px;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        .matrix-card p {
+            margin: 12px 0 0;
+            color: var(--blue);
+            font-weight: 600;
+            text-align: center;
+        }
+        .matrix-types {
+            background: linear-gradient(135deg, #f9fcff 0%, #f0f8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 20px 22px;
+        }
+        .matrix-types h3 {
+            margin: 0 0 12px;
+            color: var(--blue);
+            font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+        }
+        .matrix-types ol {
+            margin: 0;
+            padding-left: 18px;
+        }
+        .matrix-types li {
+            font-size: clamp(0.95rem, 1.3vw, 1.1rem);
+            margin-bottom: 8px;
+            padding-left: 0;
+        }
+        .matrix-types li::before {
+            content: none;
         }
         .step-list li::before {
             content: '✓';
@@ -246,7 +309,7 @@
         <div class="slide">
             <div class="grid-layout">
                 <div>
-                    <h1>Introducción a Sistemas de Ecuaciones</h1>
+                    <h1>Introducción a Sistemas de Ecuaciones Lineales(SEL)</h1>
                     <ul>
                         <li>Objetivo: Resolver sistemas lineales 2x2.</li>
                         <li>Competencia: Modelar matemáticamente problemas reales.</li>
@@ -266,7 +329,7 @@
         <div class="slide">
             <h1>Reto Inicial</h1>
             <ul>
-                <li>Una empresa fabrica dos productos distintos.</li>
+                <li>Una planta produce dos tipos de aleaciones/productos financieros. El producto A requiere 2 horas de máquina y $5 de materia prima; el B requiere 3 horas y $2. Disponemos de 100 horas y $120. ¿Cuántos productos de cada tipo se pueden hacer?</li>
                 <li>¿Qué variables desconocemos?</li>
                 <li>¿Qué restricciones existen?</li>
                 <li>¿Cómo comprobarían una respuesta?</li>
@@ -276,12 +339,44 @@
         <!-- Slide 3 -->
         <div class="slide">
             <h1>Del problema al modelo matemático</h1>
-            <div class="math-eq">x = Cantidad producto 1</div>
-            <div class="math-eq">y = Cantidad producto 2</div>
+            <div class="math-eq">x = Cantidad producto A</div>
+            <div class="math-eq">y = Cantidad producto B</div>
             
             <div class="visual-container">
                 <div class="flow-diagram">
                     <span>Problema</span> ➔ <span>Variables</span> ➔ <span>Ecuaciones</span>
+                </div>
+            </div>
+        </div>
+        <!-- Slide Nueva: Intuición Geométrica -->
+        <div class="slide">
+            <div style="width: 100%; margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 1.2rem; text-transform: uppercase;">1 · Intuición Geométrica</p>
+                <h1>La idea de “lineal” comienza con la recta</h1>
+            </div>
+            <div class="grid-layout">
+                <div style="background-color: #f4f5f7; padding: 40px; border-radius: 12px; text-align: center;">
+                    <div class="math-eq" style="font-size: clamp(2rem, 4vw, 4rem); font-weight: bold; margin-bottom: 20px;">y = mx + b</div>
+                    <div class="math-eq" style="color: #5c6bc0; font-size: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: 30px; font-weight: bold;">m = Δy / Δx</div>
+                    <ul style="text-align: left; margin: 0; padding-left: 20px;">
+                        <li style="font-size: clamp(1rem, 1.8vw, 1.8rem); margin-bottom: 10px;">m pendiente</li>
+                        <li style="font-size: clamp(1rem, 1.8vw, 1.8rem); margin-bottom: 0;">b intercepto con el eje y</li>
+                    </ul>
+                </div>
+                <div class="visual-container" style="flex-direction: column;">
+                    <svg viewBox="-20 -20 240 240" stroke="var(--text-color)">
+                        <!-- Ejes -->
+                        <line x1="0" y1="200" x2="200" y2="200" stroke-width="2" />
+                        <line x1="100" y1="0" x2="100" y2="220" stroke-width="2" />
+                        <!-- Etiquetas Ejes -->
+                        <text x="190" y="215" font-size="12" fill="var(--text-color)" stroke="none" font-family="sans-serif" font-weight="bold">x</text>
+                        <text x="110" y="10" font-size="12" fill="var(--text-color)" stroke="none" font-family="sans-serif" font-weight="bold">y</text>
+                        <!-- Recta (Azul) -->
+                        <line x1="25" y1="180" x2="175" y2="70" stroke="var(--blue)" stroke-width="4" stroke-linecap="round" />
+                        <!-- Etiqueta m > 0 -->
+                        <text x="150" y="55" font-size="14" fill="var(--blue)" stroke="none" font-weight="bold" font-family="sans-serif">m &gt; 0</text>
+                    </svg>
+                    <p style="color: var(--blue); font-weight: bold; font-size: clamp(1rem, 1.5vw, 1.5rem); text-align: center; margin-top: 20px;">Una ecuación lineal en dos variables representa una recta.</p>
                 </div>
             </div>
         </div>
@@ -312,13 +407,124 @@
                 </div>
             </div>
         </div>
+        <!-- Slide Nueva: Interpretación Geométrica 2x2 -->
+        <div class="slide" style="padding: clamp(10px, 3vw, 40px);">
+            <div style="text-align: center; margin-bottom: 25px;">
+                <h1 style="border: none; margin-bottom: 5px; padding-bottom: 0; font-size: clamp(1.5rem, 3vw, 2.5rem);">SISTEMAS DE ECUACIONES LINEALES 2×2</h1>
+                <p style="font-size: clamp(1.1rem, 2vw, 1.4rem); margin-top: 0; color: #555;">Interpretación geométrica</p>
+            </div>
+
+            <div style="display: flex; gap: 15px; width: 100%; justify-content: center; flex-wrap: wrap;">
+                
+                <!-- Tarjeta 1: Una solución -->
+                <div style="flex: 1 1 30%; min-width: 260px; border: 2px solid #2e7d32; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center; padding-bottom: 15px;">
+                    <div style="background-color: #2e7d32; color: white; width: 100%; padding: 12px 0; font-weight: bold; font-size: clamp(1rem, 1.2vw, 1.2rem);">1. UNA SOLUCIÓN</div>
+                    <div class="math-eq" style="font-size: 1.1rem; margin-top: 15px; color: #1565c0; font-family: 'Cambria Math', serif;">a<sub>11</sub>x<sub>1</sub> + a<sub>12</sub>x<sub>2</sub> = b<sub>1</sub></div>
+                    <div class="math-eq" style="font-size: 1.1rem; margin-top: 5px; color: #c62828; font-family: 'Cambria Math', serif;">a<sub>21</sub>x<sub>1</sub> + a<sub>22</sub>x<sub>2</sub> = b<sub>2</sub></div>
+                    
+                    <svg viewBox="-10 -10 120 120" style="width: 100%; max-width: 180px; margin: 15px 0;">
+                        <!-- Ejes -->
+                        <line x1="0" y1="90" x2="100" y2="90" stroke="black" stroke-width="1" />
+                        <line x1="50" y1="0" x2="50" y2="100" stroke="black" stroke-width="1" />
+                        <!-- Etiquetas de ejes -->
+                        <text x="95" y="102" font-size="8" font-family="sans-serif" font-style="italic">x<tspan dy="2" font-size="6">1</tspan></text>
+                        <text x="55" y="10" font-size="8" font-family="sans-serif" font-style="italic">x<tspan dy="2" font-size="6">2</tspan></text>
+                        <text x="42" y="102" font-size="8" font-family="sans-serif">0</text>
+                        <!-- Flechas -->
+                        <polygon points="100,88 103,90 100,92" />
+                        <polygon points="48,3 50,0 52,3" />
+                        <!-- Rectas -->
+                        <line x1="10" y1="30" x2="90" y2="80" stroke="#1565c0" stroke-width="1.5" />
+                        <line x1="20" y1="85" x2="90" y2="30" stroke="#c62828" stroke-width="1.5" />
+                        <!-- Intersección -->
+                        <circle cx="56" cy="58" r="2.5" fill="black" />
+                        <line x1="56" y1="58" x2="56" y2="90" stroke="black" stroke-dasharray="2" stroke-width="1" />
+                        <line x1="56" y1="58" x2="50" y2="58" stroke="black" stroke-dasharray="2" stroke-width="1" />
+                    </svg>
+
+                    <div style="width: 85%; border: 1px solid #ccc; border-radius: 8px; padding: 8px; background-color: #f9f9f9; font-size: 0.9rem; margin-bottom: 10px; margin-top: auto;">
+                        Las rectas se cortan en un único<br>punto (x<sub>1</sub><sup>0</sup>, x<sub>2</sub><sup>0</sup>).
+                    </div>
+                    <div style="width: 85%; border: 1px solid #2e7d32; border-radius: 8px; padding: 8px; color: #2e7d32; font-weight: bold; font-size: 0.95rem;">
+                        Sistema consistente<br>(una solución)
+                    </div>
+                </div>
+
+                <!-- Tarjeta 2: Ninguna solución -->
+                <div style="flex: 1 1 30%; min-width: 260px; border: 2px solid #1565c0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center; padding-bottom: 15px;">
+                    <div style="background-color: #1565c0; color: white; width: 100%; padding: 12px 0; font-weight: bold; font-size: clamp(1rem, 1.2vw, 1.2rem);">2. NINGUNA SOLUCIÓN</div>
+                    <div class="math-eq" style="font-size: 1.1rem; margin-top: 15px; color: #1565c0; font-family: 'Cambria Math', serif;">a<sub>11</sub>x<sub>1</sub> + a<sub>12</sub>x<sub>2</sub> = b<sub>1</sub></div>
+                    <div class="math-eq" style="font-size: 1.1rem; margin-top: 5px; color: #c62828; font-family: 'Cambria Math', serif;">a<sub>21</sub>x<sub>1</sub> + a<sub>22</sub>x<sub>2</sub> = b<sub>2</sub></div>
+                    
+                    <svg viewBox="-10 -10 120 120" style="width: 100%; max-width: 180px; margin: 15px 0;">
+                        <!-- Ejes -->
+                        <line x1="0" y1="90" x2="100" y2="90" stroke="black" stroke-width="1" />
+                        <line x1="50" y1="0" x2="50" y2="100" stroke="black" stroke-width="1" />
+                        <text x="95" y="102" font-size="8" font-family="sans-serif" font-style="italic">x<tspan dy="2" font-size="6">1</tspan></text>
+                        <text x="55" y="10" font-size="8" font-family="sans-serif" font-style="italic">x<tspan dy="2" font-size="6">2</tspan></text>
+                        <text x="42" y="102" font-size="8" font-family="sans-serif">0</text>
+                        <polygon points="100,88 103,90 100,92" />
+                        <polygon points="48,3 50,0 52,3" />
+                        <!-- Rectas paralelas -->
+                        <line x1="10" y1="35" x2="90" y2="75" stroke="#1565c0" stroke-width="1.5" />
+                        <line x1="10" y1="60" x2="70" y2="90" stroke="#c62828" stroke-width="1.5" />
+                    </svg>
+
+                    <div style="width: 85%; border: 1px solid #ccc; border-radius: 8px; padding: 8px; background-color: #f9f9f9; font-size: 0.9rem; margin-bottom: 10px; margin-top: auto;">
+                        Las rectas son paralelas<br>y no se cortan.
+                    </div>
+                    <div style="width: 85%; border: 1px solid #1565c0; border-radius: 8px; padding: 8px; color: #1565c0; font-weight: bold; font-size: 0.95rem;">
+                        Sistema inconsistente<br>(sin solución)
+                    </div>
+                </div>
+
+                <!-- Tarjeta 3: Infinitas soluciones -->
+                <div style="flex: 1 1 30%; min-width: 260px; border: 2px solid #7b1fa2; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center; padding-bottom: 15px;">
+                    <div style="background-color: #7b1fa2; color: white; width: 100%; padding: 12px 0; font-weight: bold; font-size: clamp(1rem, 1.2vw, 1.2rem);">3. INFINITAS SOLUCIONES</div>
+                    <div class="math-eq" style="font-size: 1.1rem; margin-top: 15px; color: #1565c0; font-family: 'Cambria Math', serif;">a<sub>11</sub>x<sub>1</sub> + a<sub>12</sub>x<sub>2</sub> = b<sub>1</sub></div>
+                    <div class="math-eq" style="font-size: 1.1rem; margin-top: 5px; color: #c62828; font-family: 'Cambria Math', serif;">a<sub>21</sub>x<sub>1</sub> + a<sub>22</sub>x<sub>2</sub> = b<sub>2</sub></div>
+                    
+                    <svg viewBox="-10 -10 120 120" style="width: 100%; max-width: 180px; margin: 15px 0;">
+                        <!-- Ejes -->
+                        <line x1="0" y1="90" x2="100" y2="90" stroke="black" stroke-width="1" />
+                        <line x1="50" y1="0" x2="50" y2="100" stroke="black" stroke-width="1" />
+                        <text x="95" y="102" font-size="8" font-family="sans-serif" font-style="italic">x<tspan dy="2" font-size="6">1</tspan></text>
+                        <text x="55" y="10" font-size="8" font-family="sans-serif" font-style="italic">x<tspan dy="2" font-size="6">2</tspan></text>
+                        <text x="42" y="102" font-size="8" font-family="sans-serif">0</text>
+                        <polygon points="100,88 103,90 100,92" />
+                        <polygon points="48,3 50,0 52,3" />
+                        <!-- Rectas coincidentes (morado) -->
+                        <line x1="10" y1="40" x2="90" y2="80" stroke="#7b1fa2" stroke-width="2" />
+                    </svg>
+
+                    <div style="width: 85%; border: 1px solid #ccc; border-radius: 8px; padding: 8px; background-color: #f9f9f9; font-size: 0.9rem; margin-bottom: 10px; margin-top: auto;">
+                        Las rectas coinciden;<br>todos sus puntos son solución.
+                    </div>
+                    <div style="width: 85%; border: 1px solid #7b1fa2; border-radius: 8px; padding: 8px; color: #7b1fa2; font-weight: bold; font-size: 0.95rem;">
+                        Sistema consistente<br>(infinitas soluciones)
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!-- Slide 5 -->
+        <div class="slide">
+            <h1>Método de Sustitución</h1>
+            <ul class="step-list">
+                <li>Despejar una variable.</li>
+                <li>Sustituir en la otra ecuación.</li>
+                <li>Resolver la ecuación resultante.</li>
+                <li>Encontrar la otra variable.</li>
+                <li>Verificar los resultados obtenidos.</li>
+            </ul>
+        </div>
         <!-- Nueva Diapositiva: Sistema nxn -->
         <div class="slide">
             <div class="grid-layout">
                 <div>
-                    <h1>Sistemas n×n</h1>
+                    <h1>SEL de  m ecuaciones y n incógnitas</h1>
                     <ul>
-                        <li>Tienen "n" ecuaciones.</li>
+                        <li>Tienen "m" ecuaciones.</li>
                         <li>Tienen "n" variables desconocidas.</li>
                         <li>Se modelan con matrices (Ax = b).</li>
                         <li>Mayor complejidad requiere software.</li>
@@ -333,17 +539,508 @@
                 </div>
             </div>
         </div>
-
-        <!-- Slide 5 -->
+        <!-- Slide Nueva: ¿Qué es una matriz? -->
         <div class="slide">
-            <h1>Método de Sustitución</h1>
-            <ul class="step-list">
-                <li>Despejar una variable.</li>
-                <li>Sustituir en la otra ecuación.</li>
-                <li>Resolver la ecuación resultante.</li>
-                <li>Encontrar la otra variable.</li>
-                <li>Verificar los resultados obtenidos.</li>
-            </ul>
+            <h1>Antes de empezar: ¿Qué es una matriz?</h1>
+            <div class="slide-intro">
+                <p>Una matriz <strong>A<sub>m×n</sub></strong> es un arreglo rectangular de números organizado en filas y columnas.</p>
+                <span class="info-pill">m filas</span>
+                <span class="info-pill">n columnas</span>
+            </div>
+            <div class="grid-layout">
+                <div class="matrix-card visual-container" style="font-family: 'Cambria Math', serif; font-size: clamp(1.2rem, 2vw, 2.2rem);">
+                    <div style="display: flex; align-items: center; gap: 10px; color: var(--text-color); flex-wrap: wrap; justify-content: center;">
+                        <b>A</b> = 
+                        <div style="display: flex; align-items: center;">
+                            <span style="font-size: 3.2em; font-weight: 300;">(</span>
+                            <table style="text-align: center; border-collapse: separate; border-spacing: 12px 8px;">
+                                <tr><td>a<sub>11</sub></td><td>a<sub>12</sub></td><td>⋯</td><td>a<sub>1n</sub></td></tr>
+                                <tr><td>a<sub>21</sub></td><td>a<sub>22</sub></td><td>⋯</td><td>a<sub>2n</sub></td></tr>
+                                <tr><td>⋮</td><td>⋮</td><td>⋱</td><td>⋮</td></tr>
+                                <tr><td>a<sub>m1</sub></td><td>a<sub>m2</sub></td><td>⋯</td><td>a<sub>mn</sub></td></tr>
+                            </table>
+                            <span style="font-size: 3.2em; font-weight: 300;">)</span>
+                        </div>
+                    </div>
+                    <p>Cada elemento a<sub>ij</sub> tiene una posición específica.</p>
+                </div>
+                <div class="matrix-types">
+                    <h3>Tipos de matrices que verás</h3>
+                    <ol>
+                        <li>Zero matrix (Matriz nula)</li>
+                        <li>Square matrix (Matriz cuadrada)</li>
+                        <li>Diagonal matrix (Matriz diagonal)</li>
+                        <li>Identity matrix (Matriz identidad)</li>
+                        <li>Triangular matrices (Matrices triangulares)</li>
+                        <li>Inverse matrix (Matriz inversa)</li>
+                        <li>Row echelon matrix (Matriz escalonada)</li>
+                        <li>Reduced row echelon matrix (Matriz escalonada reducida)</li>
+                        <li>...and many more (...y muchas más)</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- Slide Nueva: Matriz Aumentada -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 40px; font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: #333;">La matriz aumentada concentra coeficientes y resultados</h1>
+            
+            <div style="display: flex; align-items: center; justify-content: center; gap: clamp(20px, 4vw, 50px); flex-wrap: wrap; margin-bottom: 40px; width: 100%;">
+                
+                <!-- Ecuaciones -->
+                <div class="math-eq" style="font-size: clamp(1.2rem, 2vw, 1.6rem); color: #2c3e50; font-weight: bold; text-align: right; line-height: 1.8;">
+                    <div>2x<sub>1</sub> + 4x<sub>2</sub> + 6x<sub>3</sub> = 18</div>
+                    <div>4x<sub>1</sub> + 5x<sub>2</sub> + 6x<sub>3</sub> = 24</div>
+                    <div>3x<sub>1</sub> + x<sub>2</sub> - 2x<sub>3</sub> = 4</div>
+                </div>
+
+                <!-- Flecha -->
+                <div style="color: #ef5350; font-size: clamp(3rem, 5vw, 4rem); font-weight: bold;">
+                    ➔
+                </div>
+
+                <!-- Matriz -->
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <div style="display: flex; align-items: center;">
+                        <!-- Corchete Izquierdo -->
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 130px;"></div>
+                        
+                        <table style="text-align: center; font-size: clamp(1.2rem, 2vw, 1.6rem); border-collapse: collapse; font-family: 'Segoe UI', sans-serif; color: #2c3e50; margin: 0 10px;">
+                            <tr>
+                                <td style="padding: 10px 15px;">2</td>
+                                <td style="padding: 10px 15px;">4</td>
+                                <td style="padding: 10px 15px;">6</td>
+                                <td style="padding: 10px 15px; border-left: 1.5px solid #ef5350;">18</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 15px;">4</td>
+                                <td style="padding: 10px 15px;">5</td>
+                                <td style="padding: 10px 15px;">6</td>
+                                <td style="padding: 10px 15px; border-left: 1.5px solid #ef5350;">24</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px 15px;">3</td>
+                                <td style="padding: 10px 15px;">1</td>
+                                <td style="padding: 10px 15px;">-2</td>
+                                <td style="padding: 10px 15px; border-left: 1.5px solid #ef5350;">4</td>
+                            </tr>
+                        </table>
+                        
+                        <!-- Corchete Derecho -->
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 130px;"></div>
+                    </div>
+                    
+                    <!-- Etiquetas inferiores -->
+                    <div style="display: flex; width: 100%; justify-content: space-between; margin-top: 10px; font-weight: bold; font-size: clamp(0.85rem, 1.2vw, 1rem);">
+                        <span style="color: #1565c0; margin-left: 35px;">coeficientes</span>
+                        <span style="color: #ef5350; text-align: center; margin-right: -15px;">términos<br>independientes</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner inferior -->
+            <div style="background-color: #f4f6f9; border-radius: 12px; padding: 20px; text-align: center; color: #1565c0; font-weight: bold; font-size: clamp(1.1rem, 2vw, 1.4rem); width: 100%; box-sizing: border-box;">
+                La barra vertical separa A de b: [ A | b ]
+            </div>
+        </div>
+
+        <!-- Slide Nueva: Reducción por renglones -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <!-- Encabezado -->
+            <div style="width: 100%; margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 1rem; text-transform: uppercase;">4 · REDUCCIÓN POR RENGLONES</p>
+                <h1 style="display: block; width: 100%; text-align: center; border-bottom: 3px solid #1565c0; padding-bottom: 15px; margin: 0 0 30px 0; font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: #1565c0; line-height: 1.3;">Tres operaciones transforman el sistema sin cambiar su solución</h1>
+            </div>
+
+            <!-- Contenedor de Tarjetas -->
+            <div style="display: flex; gap: 20px; width: 100%; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
+                
+                <!-- Tarjeta 1: Escalar -->
+                <div style="flex: 1 1 30%; min-width: 250px; background-color: #eef4fb; border-radius: 12px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div style="background-color: #1565c0; color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: bold; margin-bottom: 25px;">1</div>
+                    <h3 style="color: #333; margin: 10px 0; font-size: 1.4rem;">Escalar</h3>
+                    <div style="color: #1565c0; font-weight: bold; font-size: 1.6rem; margin: 20px 0;">R<sub>i</sub> ➔ cR<sub>i</sub></div>
+                    <div style="color: #666; font-size: 1rem;">c ≠ 0</div>
+                </div>
+
+                <!-- Tarjeta 2: Sumar múltiplo -->
+                <div style="flex: 1 1 30%; min-width: 250px; background-color: #f4f5f7; border-radius: 12px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div style="background-color: #6543ed; color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: bold; margin-bottom: 25px;">2</div>
+                    <h3 style="color: #333; margin: 10px 0; font-size: 1.4rem;">Sumar a una fila el<br>múltiplo de otra</h3>
+                    <div style="color: #1565c0; font-weight: bold; font-size: 1.6rem; margin: 20px 0;">R<sub>j</sub> ➔ R<sub>j</sub> + cR<sub>i</sub></div>
+                    <div style="color: #666; font-size: 1rem;">suma un múltiplo</div>
+                </div>
+
+                <!-- Tarjeta 3: Intercambiar -->
+                <div style="flex: 1 1 30%; min-width: 250px; background-color: #f4f5f7; border-radius: 12px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div style="background-color: #f0545b; color: white; width: 70px; height: 70px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: bold; margin-bottom: 25px;">3</div>
+                    <h3 style="color: #333; margin: 10px 0; font-size: 1.4rem;">Intercambiar</h3>
+                    <div style="color: #f0545b; font-weight: bold; font-size: 1.6rem; margin: 20px 0;">R<sub>i</sub> ↔ R<sub>j</sub></div>
+                    <div style="color: #666; font-size: 1rem;">cambia el orden</div>
+                </div>
+
+            </div>
+
+            <!-- Conclusión inferior -->
+            <div style="text-align: center; width: 100%; margin-top: 15px;">
+                <h2 style="color: #1565c0; font-size: clamp(1.2rem, 2.2vw, 1.8rem); font-weight: bold; margin: 0;">Cada paso produce un sistema equivalente.</h2>
+            </div>
+            
+            
+        </div>
+        <!-- Slide Nueva: Gauss-Jordan Pivotes (Encuadre ajustado) -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <div style="display: flex; flex-direction: column; gap: 30px; align-items: center; width: 100%; margin-top: 40px;">
+
+                <!-- Primera fila: Matriz original -> Operación 1 -> Matriz 2 -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: clamp(10px, 3vw, 40px); flex-wrap: wrap;">
+                    <!-- Matriz 1 -->
+                    <div style="display: flex; align-items: center;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: clamp(1rem, 1.5vw, 1.3rem); border-collapse: collapse; font-family: 'Segoe UI', sans-serif; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">2</td><td style="padding: 8px 12px;">4</td><td style="padding: 8px 12px;">6</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">18</td></tr>
+                            <tr><td style="padding: 8px 12px;">4</td><td style="padding: 8px 12px;">5</td><td style="padding: 8px 12px;">6</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">24</td></tr>
+                            <tr><td style="padding: 8px 12px;">3</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">-2</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">4</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+
+                    <!-- Operación 1 y Flecha -->
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="color: #ef5350; font-weight: bold; font-size: clamp(1rem, 1.5vw, 1.2rem);">R<sub>1</sub> ➔ ½R<sub>1</sub></div>
+                        <div style="color: #1565c0; font-size: 2rem; font-weight: bold;">➔</div>
+                    </div>
+
+                    <!-- Matriz 2 -->
+                    <div style="display: flex; align-items: center;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: clamp(1rem, 1.5vw, 1.3rem); border-collapse: collapse; font-family: 'Segoe UI', sans-serif; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">2</td><td style="padding: 8px 12px;">3</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">9</td></tr>
+                            <tr><td style="padding: 8px 12px;">4</td><td style="padding: 8px 12px;">5</td><td style="padding: 8px 12px;">6</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">24</td></tr>
+                            <tr><td style="padding: 8px 12px;">3</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">-2</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">4</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+                </div>
+
+                <!-- Segunda fila: Operaciones 2 y 3 -> Matriz 3 -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: clamp(10px, 3vw, 40px); flex-wrap: wrap; margin-left: clamp(20px, 10vw, 200px);">
+                    <!-- Operaciones 2 y 3 y Flecha -->
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="color: #5c6bc0; font-weight: bold; font-size: clamp(1rem, 1.5vw, 1.2rem); text-align: left;">
+                            <div>R<sub>2</sub> ➔ R<sub>2</sub> - 4R<sub>1</sub></div>
+                            <div>R<sub>3</sub> ➔ R<sub>3</sub> - 3R<sub>1</sub></div>
+                        </div>
+                        <div style="color: #1565c0; font-size: 2rem; font-weight: bold;">➔</div>
+                    </div>
+
+                    <!-- Matriz 3 -->
+                    <div style="display: flex; align-items: center;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: clamp(1rem, 1.5vw, 1.3rem); border-collapse: collapse; font-family: 'Segoe UI', sans-serif; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">2</td><td style="padding: 8px 12px;">3</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">9</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">-3</td><td style="padding: 8px 12px;">-6</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">-12</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">-5</td><td style="padding: 8px 12px;">-11</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">-23</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+                </div>
+
+                <!-- Insignia "Primer pivote: 1" -->
+                <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: 10px;">
+                    <div style="background-color: #eef4fb; padding: 12px 35px; border-radius: 8px; color: #1565c0; font-weight: bold; font-size: clamp(1rem, 1.5vw, 1.2rem);">
+                        Primer pivote: 1
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Slide Nueva: Forma reducida -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <!-- Encabezado -->
+            <div style="width: 100%; margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 1rem; text-transform: uppercase;">4 · REDUCCIÓN POR RENGLONES</p>
+                <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 40px; font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: #333;">La forma reducida permite leer la solución directamente</h1>
+            </div>
+
+            <!-- Contenido Principal -->
+            <div style="display: flex; align-items: center; justify-content: center; gap: clamp(15px, 3vw, 40px); flex-wrap: wrap; margin-bottom: 50px; width: 100%;">
+                
+                <!-- Matriz Izquierda -->
+                <div style="display: flex; align-items: center;">
+                    <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 130px;"></div>
+                    <table style="text-align: center; font-size: clamp(1.2rem, 2vw, 1.6rem); border-collapse: collapse; font-family: 'Segoe UI', sans-serif; color: #333; margin: 0 10px;">
+                        <tr><td style="padding: 12px 18px;">1</td><td style="padding: 12px 18px;">2</td><td style="padding: 12px 18px;">3</td><td style="padding: 12px 18px; border-left: 1.5px solid #ef5350;">9</td></tr>
+                        <tr><td style="padding: 12px 18px;">0</td><td style="padding: 12px 18px;">1</td><td style="padding: 12px 18px;">2</td><td style="padding: 12px 18px; border-left: 1.5px solid #ef5350;">4</td></tr>
+                        <tr><td style="padding: 12px 18px;">0</td><td style="padding: 12px 18px;">0</td><td style="padding: 12px 18px;">-1</td><td style="padding: 12px 18px; border-left: 1.5px solid #ef5350;">-3</td></tr>
+                    </table>
+                    <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 130px;"></div>
+                </div>
+
+                <!-- Texto central y flecha -->
+                <div style="display: flex; align-items: center; gap: 15px; text-align: center;">
+                    <div style="color: #5c6bc0; font-weight: bold; font-size: clamp(1rem, 1.5vw, 1.3rem);">
+                        Eliminar arriba y abajo<br>de cada pivote
+                    </div>
+                    <div style="color: #ef5350; font-size: 2.5rem; font-weight: bold;">➔</div>
+                </div>
+
+                <!-- Matriz Derecha (Resultado) -->
+                <div style="display: flex; align-items: center;">
+                    <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 130px;"></div>
+                    <table style="text-align: center; font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: bold; border-collapse: collapse; font-family: 'Segoe UI', sans-serif; color: #1565c0; margin: 0 10px;">
+                        <tr><td style="padding: 12px 18px;">1</td><td style="padding: 12px 18px;">0</td><td style="padding: 12px 18px;">0</td><td style="padding: 12px 18px; border-left: 1.5px solid #ef5350;">4</td></tr>
+                        <tr><td style="padding: 12px 18px;">0</td><td style="padding: 12px 18px;">1</td><td style="padding: 12px 18px;">0</td><td style="padding: 12px 18px; border-left: 1.5px solid #ef5350;">-2</td></tr>
+                        <tr><td style="padding: 12px 18px;">0</td><td style="padding: 12px 18px;">0</td><td style="padding: 12px 18px;">1</td><td style="padding: 12px 18px; border-left: 1.5px solid #ef5350;">3</td></tr>
+                    </table>
+                    <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 130px;"></div>
+                </div>
+            </div>
+
+            <!-- Solución final -->
+            <div style="display: flex; justify-content: center; width: 100%;">
+                <div style="background-color: #ef5350; color: white; padding: 15px 50px; border-radius: 12px; font-weight: bold; font-size: clamp(1.4rem, 2.5vw, 2rem); font-family: 'Segoe UI', sans-serif; letter-spacing: 1px;">
+                    (x<sub>1</sub>, x<sub>2</sub>, x<sub>3</sub>) = (4, -2, 3)
+                </div>
+            </div>
+        </div>
+        <!-- Slide Nueva: Tipos de Soluciones -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <!-- Encabezado -->
+            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 40px; font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: #2c3e50; width: 100%;">La última forma de la matriz revela cuántas soluciones existen</h1>
+
+            <!-- Contenedor de Tarjetas -->
+            <div style="display: flex; gap: 20px; width: 100%; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
+                
+                <!-- Tarjeta 1: Única -->
+                <div style="flex: 1 1 30%; min-width: 260px; background-color: #f4f6f9; border-radius: 12px; padding: 30px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="color: #1565c0; margin-top: 0; margin-bottom: 30px; font-size: 1.6rem;">Única</h3>
+                    
+                    <!-- Matriz Única -->
+                    <div style="display: flex; align-items: center; margin-bottom: 40px;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: 1.2rem; border-collapse: collapse; font-family: 'Segoe UI', sans-serif; color: #1565c0; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">4</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">-2</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">3</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+                    
+                    <div style="color: #333; font-weight: bold; font-size: 1.1rem;">Un pivote por variable</div>
+                </div>
+
+                <!-- Tarjeta 2: Infinitas -->
+                <div style="flex: 1 1 30%; min-width: 260px; background-color: #f4f6f9; border-radius: 12px; padding: 30px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="color: #6543ed; margin-top: 0; margin-bottom: 30px; font-size: 1.6rem;">Infinitas</h3>
+                    
+                    <!-- Matriz Infinitas -->
+                    <div style="display: flex; align-items: center; margin-bottom: 40px;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: 1.2rem; border-collapse: collapse; font-family: 'Segoe UI', sans-serif; color: #6543ed; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">-1</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">1</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">2</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">4</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">0</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+                    
+                    <div style="color: #333; font-weight: bold; font-size: 1.1rem;">Hay variables libres</div>
+                </div>
+
+                <!-- Tarjeta 3: Ninguna -->
+                <div style="flex: 1 1 30%; min-width: 260px; background-color: #f4f6f9; border-radius: 12px; padding: 30px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="color: #ef5350; margin-top: 0; margin-bottom: 30px; font-size: 1.6rem;">Ninguna</h3>
+                    
+                    <!-- Matriz Ninguna -->
+                    <div style="display: flex; align-items: center; margin-bottom: 40px;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: 1.2rem; border-collapse: collapse; font-family: 'Segoe UI', sans-serif; color: #ef5350; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">8</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">15</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">-3</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">2.5</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">-1</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+                    
+                    <div style="color: #333; font-weight: bold; font-size: 1.1rem;">Aparece 0 = -1</div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Slide Nueva: REF vs RREF -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <!-- Encabezado -->
+            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 40px; font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: #2c3e50; width: 100%;">Forma escalonada y forma reducida responden a necesidades distintas</h1>
+
+            <!-- Contenedor de Tarjetas -->
+            <div style="display: flex; gap: 30px; width: 100%; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
+                
+                <!-- Tarjeta 1: REF -->
+                <div style="flex: 1 1 40%; min-width: 280px; background-color: #f4f6f9; border-radius: 12px; padding: 35px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="color: #1565c0; margin-top: 0; margin-bottom: 30px; font-size: 1.6rem;">Escalonada (REF)</h3>
+                    
+                    <!-- Matriz REF -->
+                    <div style="display: flex; align-items: center; margin-bottom: 40px;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: 1.2rem; border-collapse: collapse; font-family: 'Segoe UI', sans-serif; color: #1565c0; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">2</td><td style="padding: 8px 12px;">3</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">9</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">2</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">4</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">3</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+                    
+                    <div style="color: #333; font-weight: bold; font-size: 1.1rem;">Ceros debajo de cada pivote</div>
+                </div>
+
+                <!-- Tarjeta 2: RREF -->
+                <div style="flex: 1 1 40%; min-width: 280px; background-color: #f4f6f9; border-radius: 12px; padding: 35px 20px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="color: #6543ed; margin-top: 0; margin-bottom: 30px; font-size: 1.6rem;">Escalonada reducida (RREF)</h3>
+                    
+                    <!-- Matriz RREF -->
+                    <div style="display: flex; align-items: center; margin-bottom: 40px;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: 1.2rem; border-collapse: collapse; font-family: 'Segoe UI', sans-serif; color: #6543ed; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">4</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">-2</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">3</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+                    
+                    <div style="color: #333; font-weight: bold; font-size: 1.1rem;">Ceros arriba y debajo</div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Slide Nueva: Elegimos el método -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <!-- Encabezado -->
+            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 40px; font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: #2c3e50; width: 100%;">Elegimos el método según el resultado que necesitamos</h1>
+
+            <!-- Contenedor de Tarjetas -->
+            <div style="display: flex; gap: 30px; width: 100%; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
+                
+                <!-- Tarjeta 1: Eliminación gaussiana -->
+                <div style="flex: 1 1 40%; min-width: 280px; background-color: #f4f6f9; border-radius: 12px; padding: 35px 25px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="color: #1565c0; margin-top: 0; margin-bottom: 25px; font-size: 1.6rem;">Eliminación gaussiana</h3>
+                    
+                    <ol style="text-align: left; font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.8; margin: 0 0 35px 0; padding-left: 20px; color: #333; width: 85%;">
+                        <li>Llegar a REF</li>
+                        <li>Sustituir hacia atrás</li>
+                        <li>Menos operaciones</li>
+                    </ol>
+                    
+                    <div style="color: #1565c0; font-weight: bold; font-size: clamp(0.95rem, 1.2vw, 1.1rem); margin-top: auto;">Preferida para cálculo numérico</div>
+                </div>
+
+                <!-- Tarjeta 2: Gauss-Jordan -->
+                <div style="flex: 1 1 40%; min-width: 280px; background-color: #f4f6f9; border-radius: 12px; padding: 35px 25px; display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <h3 style="color: #6543ed; margin-top: 0; margin-bottom: 25px; font-size: 1.6rem;">Gauss-Jordan</h3>
+                    
+                    <ol style="text-align: left; font-size: clamp(1rem, 1.5vw, 1.2rem); line-height: 1.8; margin: 0 0 35px 0; padding-left: 20px; color: #333; width: 85%;">
+                        <li>Llegar a RREF</li>
+                        <li>Leer la solución</li>
+                        <li>Expone variables libres</li>
+                    </ol>
+                    
+                    <div style="color: #6543ed; font-weight: bold; font-size: clamp(0.95rem, 1.2vw, 1.1rem); margin-top: auto;">Útil para analizar la estructura</div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Slide Nueva: Resuelva usando ambos métodos -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <!-- Encabezado -->
+            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 40px; font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: #2c3e50; width: 100%; text-align: center;">RESUELVA USANDO AMBOS MÉTODOS</h1>
+
+            <!-- Contenido del sistema -->
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; margin-top: 20px;">
+                <div style="background-color: #f4f6f9; border-radius: 16px; padding: 40px 60px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); width: 100%; max-width: 500px; box-sizing: border-box;">
+                    <div class="math-eq" style="font-size: clamp(1.8rem, 3vw, 2.5rem); color: #1565c0; font-weight: bold; margin-bottom: 15px; font-family: 'Cambria Math', serif;">2X + Y = 3</div>
+                    <div class="math-eq" style="font-size: clamp(1.8rem, 3vw, 2.5rem); color: #1565c0; font-weight: bold; font-family: 'Cambria Math', serif;">X - Y = 0</div>
+                </div>
+            </div>
+        </div>
+        <!-- Slide Nueva: Modelar recursos -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <div style="width: 100%; margin-bottom: 20px;">
+                <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 25px; font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: #2c3e50;">Modelar recursos convierte una situación real en un sistema</h1>
+            </div>
+            
+            <div class="grid-layout">
+                <!-- Columna Izquierda: Tabla de consumo -->
+                <div>
+                    <p style="color: #1565c0; font-weight: bold; font-size: clamp(1rem, 1.8vw, 1.3rem); margin-bottom: 20px;">Tres especies de peces consumen tres tipos de alimento</p>
+                    
+                    <table style="width: 100%; border-collapse: collapse; text-align: center; font-size: clamp(1rem, 1.5vw, 1.2rem); font-family: 'Segoe UI', sans-serif;">
+                        <thead>
+                            <tr style="background-color: #1565c0; color: white;">
+                                <th style="padding: 12px; border-top-left-radius: 8px;">Especie</th>
+                                <th style="padding: 12px;">A</th>
+                                <th style="padding: 12px;">B</th>
+                                <th style="padding: 12px; border-top-right-radius: 8px;">C</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background-color: #f8f9fa; border-bottom: 8px solid white;">
+                                <td style="padding: 12px; font-weight: bold; color: #1565c0;">1</td>
+                                <td style="padding: 12px;">1</td>
+                                <td style="padding: 12px;">1</td>
+                                <td style="padding: 12px;">2</td>
+                            </tr>
+                            <tr style="background-color: #f8f9fa; border-bottom: 8px solid white;">
+                                <td style="padding: 12px; font-weight: bold; color: #1565c0;">2</td>
+                                <td style="padding: 12px;">3</td>
+                                <td style="padding: 12px;">4</td>
+                                <td style="padding: 12px;">5</td>
+                            </tr>
+                            <tr style="background-color: #f8f9fa;">
+                                <td style="padding: 12px; font-weight: bold; color: #1565c0;">3</td>
+                                <td style="padding: 12px;">2</td>
+                                <td style="padding: 12px;">1</td>
+                                <td style="padding: 12px;">5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Columna Derecha: Disponibilidad y Botón -->
+                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px;">
+                    <!-- Panel de Disponibilidad -->
+                    <div style="background-color: #f4f2fb; border-radius: 16px; padding: 25px; width: 100%; max-width: 340px; text-align: center; box-sizing: border-box;">
+                        <div style="color: #5c6bc0; font-weight: bold; font-size: 1.1rem; margin-bottom: 15px;">Disponibilidad semanal</div>
+                        <div style="color: #5c6bc0; font-weight: bold; font-size: clamp(1.2rem, 2vw, 1.5rem); line-height: 1.6;">
+                            <div>A: 25 000</div>
+                            <div>B: 20 000</div>
+                            <div>C: 55 000</div>
+                        </div>
+                    </div>
+
+                    <!-- Botón de Pregunta -->
+                    <div style="background-color: #ef5350; color: white; padding: 15px 25px; border-radius: 12px; font-weight: bold; font-size: clamp(1rem, 1.5vw, 1.2rem); text-align: center; width: 100%; max-width: 340px; box-sizing: border-box; box-shadow: 0 4px 10px rgba(239,83,80,0.3);">
+                        ¿Cuántos peces de cada especie?
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Slide Nueva: Problema del Agente Secreto -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 30px; font-size: clamp(1.3rem, 2.2vw, 2rem); color: #2c3e50; width: 100%;">Problema de Aplicación</h1>
+            <div style="background-color: #f4f6f9; border-radius: 12px; padding: 30px; box-sizing: border-box; width: 100%;">
+                <p style="font-size: clamp(0.95rem, 1.5vw, 1.25rem); line-height: 1.6; color: #333; margin: 0; text-align: justify;">
+                    Un agente secreto sabe que 60 equipos aéreos, que consisten en aviones de combate y bombarderos, se encuentran estacionados en cierto campo aéreo secreto. El agente quiere determinar cuántos de los 60 equipos son aviones de combate y cuántos son bombarderos. Existe, además, un tipo de cohete que llevan ambos aviones; el de combate lleva 6 de ellos y el bombardero sólo 2. El agente averigua que se requieren 250 cohetes para armar a todos los aviones del campo aéreo. Aún más, escucha que se tiene el doble de aviones de combate que de bombarderos en la base (es decir, el número de aviones de combate menos dos veces el número de bombarderos es igual a cero). Calcule el número de aviones de combate y bombarderos presentes en el campo aéreo o muestre que la información del agente es incorrecta debido a su inconsistencia.
+                </p>
+            </div>
+        </div>
+        <!-- Slide Nueva: Problema de Inversión y Acciones -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 30px; font-size: clamp(1.3rem, 2.2vw, 2rem); color: #2c3e50; width: 100%;">Problema de Aplicación: Análisis de Acciones</h1>
+            <div style="background-color: #f4f6f9; border-radius: 12px; padding: 30px; box-sizing: border-box; width: 100%;">
+                <p style="font-size: clamp(0.95rem, 1.5vw, 1.2rem); line-height: 1.6; color: #333; margin: 0; text-align: justify;">
+                    Una inversionista le afirma a su corredor de bolsa que todas sus acciones pertenecen a tres compañías: Delta Airlines, Hilton Hotels y McDonald's, y que hace dos días su valor bajó $350 pero que ayer aumentó $600. El corredor recuerda que hace dos días el precio de las acciones de Delta Airlines bajó $1 por cada una, mientras que las de Hilton Hotels bajaron $1.50, pero que el precio de las acciones de McDonald's subió $0.50. También recuerda que ayer el precio de las acciones de Delta subió $1.50 por acción, el de las de Hilton Hotels bajó otros $0.50 por acción y las de McDonald's subieron $1. Demuestre que el corredor no cuenta con la información suficiente para calcular el número de acciones que posee la inversionista en cada compañía, pero que si ella dice tener 200 acciones de McDonald's, el corredor pueda calcular el número de acciones que posee en Delta y en Hilton.
+                </p>
+            </div>
         </div>
 
         <!-- Slide 6 -->
@@ -379,6 +1076,73 @@
                 <li>Caso Finanzas: Inversión de capital.</li>
             </ul>
         </div>
+        <!-- Slide Nueva: Gauss-Jordan Pivotes (Encuadre ajustado) -->
+        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
+            <div style="display: flex; flex-direction: column; gap: 30px; align-items: center; width: 100%; margin-top: 40px;">
+
+                <!-- Primera fila: Matriz original -> Operación 1 -> Matriz 2 -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: clamp(10px, 3vw, 40px); flex-wrap: wrap;">
+                    <!-- Matriz 1 -->
+                    <div style="display: flex; align-items: center;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: clamp(1rem, 1.5vw, 1.3rem); border-collapse: collapse; font-family: 'Segoe UI', sans-serif; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">2</td><td style="padding: 8px 12px;">4</td><td style="padding: 8px 12px;">6</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">18</td></tr>
+                            <tr><td style="padding: 8px 12px;">4</td><td style="padding: 8px 12px;">5</td><td style="padding: 8px 12px;">6</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">24</td></tr>
+                            <tr><td style="padding: 8px 12px;">3</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">-2</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">4</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+
+                    <!-- Operación 1 y Flecha -->
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="color: #ef5350; font-weight: bold; font-size: clamp(1rem, 1.5vw, 1.2rem);">R<sub>1</sub> ➔ ½R<sub>1</sub></div>
+                        <div style="color: #1565c0; font-size: 2rem; font-weight: bold;">➔</div>
+                    </div>
+
+                    <!-- Matriz 2 -->
+                    <div style="display: flex; align-items: center;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: clamp(1rem, 1.5vw, 1.3rem); border-collapse: collapse; font-family: 'Segoe UI', sans-serif; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">2</td><td style="padding: 8px 12px;">3</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">9</td></tr>
+                            <tr><td style="padding: 8px 12px;">4</td><td style="padding: 8px 12px;">5</td><td style="padding: 8px 12px;">6</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">24</td></tr>
+                            <tr><td style="padding: 8px 12px;">3</td><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">-2</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">4</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+                </div>
+
+                <!-- Segunda fila: Operaciones 2 y 3 -> Matriz 3 -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: clamp(10px, 3vw, 40px); flex-wrap: wrap; margin-left: clamp(20px, 10vw, 200px);">
+                    <!-- Operaciones 2 y 3 y Flecha -->
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="color: #5c6bc0; font-weight: bold; font-size: clamp(1rem, 1.5vw, 1.2rem); text-align: left;">
+                            <div>R<sub>2</sub> ➔ R<sub>2</sub> - 4R<sub>1</sub></div>
+                            <div>R<sub>3</sub> ➔ R<sub>3</sub> - 3R<sub>1</sub></div>
+                        </div>
+                        <div style="color: #1565c0; font-size: 2rem; font-weight: bold;">➔</div>
+                    </div>
+
+                    <!-- Matriz 3 -->
+                    <div style="display: flex; align-items: center;">
+                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                        <table style="text-align: center; font-size: clamp(1rem, 1.5vw, 1.3rem); border-collapse: collapse; font-family: 'Segoe UI', sans-serif; margin: 0 10px;">
+                            <tr><td style="padding: 8px 12px;">1</td><td style="padding: 8px 12px;">2</td><td style="padding: 8px 12px;">3</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">9</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">-3</td><td style="padding: 8px 12px;">-6</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">-12</td></tr>
+                            <tr><td style="padding: 8px 12px;">0</td><td style="padding: 8px 12px;">-5</td><td style="padding: 8px 12px;">-11</td><td style="padding: 8px 12px; border-left: 1.5px solid #ef5350;">-23</td></tr>
+                        </table>
+                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 110px;"></div>
+                    </div>
+                </div>
+
+                <!-- Insignia "Primer pivote: 1" -->
+                <div style="display: flex; justify-content: flex-end; width: 100%; margin-top: 10px;">
+                    <div style="background-color: #eef4fb; padding: 12px 35px; border-radius: 8px; color: #1565c0; font-weight: bold; font-size: clamp(1rem, 1.5vw, 1.2rem);">
+                        Primer pivote: 1
+                    </div>
+                </div>
+
+            </div>
+        </div>
 
         <!-- Slide 8 -->
         <div class="slide">
@@ -402,6 +1166,7 @@
                 </div>
             </div>
         </div>
+        
 
     </div>
     <!-- Controles de Navegación y Tema -->
