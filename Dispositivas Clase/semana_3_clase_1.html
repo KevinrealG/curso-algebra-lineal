@@ -309,10 +309,10 @@
         <div class="slide">
             <div class="grid-layout">
                 <div>
-                    <h1>Introducción a Sistemas de Ecuaciones Lineales Homogéneas (SEL)</h1>
+                    <h1>Operaciones con Matrices</h1>
                     <ul>
-                        <li>Objetivo: Resolver sistemas lineales 2x2.</li>
-                        <li>Competencia: Modelar matemáticamente problemas reales.</li>
+                        <li>Objetivo: Conocer y aplicar las operaciones básicas con matrices.</li>
+                        <li>Competencia: Resolver problemas relacionados con matrices.</li>
                     </ul>
                 </div>
                 <div class="visual-container">
@@ -937,166 +937,10 @@
         </div>
 
         
-        <!-- Slide Nueva: Sistemas Homogéneos -->
-        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
-            <!-- Encabezado -->
-            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 30px; font-size: clamp(1.3rem, 2.2vw, 2rem); color: #2c3e50; width: 100%;">Sistemas de Ecuaciones Lineales Homogéneas (SEL)</h1>
-
-            <!-- Contenido en dos columnas -->
-            <div class="grid-layout" style="align-items: center; margin-bottom: 20px;">
-                
-                <!-- Columna Izquierda: Ecuaciones homogéneas -->
-                <div style="font-family: 'Cambria Math', serif; color: #1565c0; font-size: clamp(1.1rem, 1.8vw, 1.4rem); line-height: 1.8; font-weight: bold;">
-                    <div>a<sub>11</sub>x<sub>1</sub> + a<sub>12</sub>x<sub>2</sub> + ⋯ + a<sub>1n</sub>x<sub>n</sub> = 0</div>
-                    <div>a<sub>21</sub>x<sub>1</sub> + a<sub>22</sub>x<sub>2</sub> + ⋯ + a<sub>2n</sub>x<sub>n</sub> = 0</div>
-                    <div style="text-align: center; margin: 8px 0; font-size: 1.5rem;">⋮</div>
-                    <div>a<sub>m1</sub>x<sub>1</sub> + a<sub>m2</sub>x<sub>2</sub> + ⋯ + a<sub>mn</sub>x<sub>n</sub> = 0</div>
-                </div>
-
-                <!-- Columna Derecha: Tarjetas informativas -->
-                <div style="display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%;">
+       
                     
-                    <!-- Tarjeta Forma matricial -->
-                    <div style="background-color: #f4f6f9; border-radius: 12px; padding: 20px; text-align: center; width: 100%; max-width: 300px; box-sizing: border-box;">
-                        <div style="color: #1565c0; font-size: 0.95rem; font-weight: bold; margin-bottom: 8px;">Forma matricial</div>
-                        <div style="color: #1565c0; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: bold; font-family: 'Cambria Math', serif;">Ax = 0</div>
-                    </div>
 
-                    <!-- Tarjeta La clave -->
-                    <div style="background-color: #fdf2f2; border-radius: 12px; padding: 20px; text-align: center; width: 100%; max-width: 300px; box-sizing: border-box;">
-                        <div style="color: #ef5350; font-size: 0.95rem; font-weight: bold; margin-bottom: 8px;">La clave</div>
-                        <div style="color: #ef5350; font-size: clamp(1.5rem, 2.5vw, 2rem); font-weight: bold; font-family: 'Cambria Math', serif;">b = 0</div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Nota al pie -->
-            <div style="text-align: center; width: 100%; margin-top: auto; padding-top: 15px;">
-                <p style="color: #6543ed; font-weight: bold; font-size: clamp(0.9rem, 1.3vw, 1.1rem); margin: 0;">
-                    Los coeficientes pueden ser distintos de cero; lo que debe ser cero es el vector b.
-                </p>
-            </div>
-        </div>
-        <!-- Slide Nueva: Homogéneo vs No homogéneo -->
-        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
-            <!-- Encabezado -->
-            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 40px; font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: #2c3e50; width: 100%;">La diferencia entre ambos sistemas está únicamente en el vector b</h1>
-
-            <!-- Contenedor de Tarjetas -->
-            <div style="display: flex; gap: 30px; width: 100%; justify-content: center; flex-wrap: wrap; margin-bottom: 20px;">
-                
-                <!-- Tarjeta 1: Homogéneo -->
-                <div style="flex: 1 1 40%; min-width: 280px; background-color: #f4f6f9; border-radius: 12px; padding: 35px 25px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <h3 style="color: #1565c0; margin-top: 0; margin-bottom: 20px; font-size: 1.6rem;">Homogéneo</h3>
                     
-                    <div class="math-eq" style="font-size: clamp(2rem, 3.5vw, 3rem); color: #1565c0; font-weight: bold; margin: 20px 0; font-family: 'Cambria Math', serif;">Ax = 0</div>
-                    
-                    <p style="color: #333; font-size: clamp(1rem, 1.5vw, 1.2rem); margin: 20px 0;">Todos los b<sub>i</sub> son cero</p>
-                    
-                    <div style="color: #1565c0; font-weight: bold; font-size: clamp(0.95rem, 1.2vw, 1.1rem); margin-top: auto;">Siempre es consistente</div>
-                </div>
-
-                <!-- Tarjeta 2: No homogéneo -->
-                <div style="flex: 1 1 40%; min-width: 280px; background-color: #f4f6f9; border-radius: 12px; padding: 35px 25px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-                    <h3 style="color: #6543ed; margin-top: 0; margin-bottom: 20px; font-size: 1.6rem;">No homogéneo</h3>
-                    
-                    <div class="math-eq" style="font-size: clamp(2rem, 3.5vw, 3rem); color: #6543ed; font-weight: bold; margin: 20px 0; font-family: 'Cambria Math', serif;">Ax = b</div>
-                    
-                    <p style="color: #333; font-size: clamp(1rem, 1.5vw, 1.2rem); margin: 20px 0;">Algún b<sub>i</sub> es distinto de cero</p>
-                    
-                    <div style="color: #ef5350; font-weight: bold; font-size: clamp(0.95rem, 1.2vw, 1.1rem); margin-top: auto;">Puede ser inconsistente</div>
-                </div>
-
-            </div>
-        </div>
-        <!-- Slide Nueva: Solución trivial y posibilidades -->
-        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
-            <!-- Encabezado -->
-            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 30px; font-size: clamp(1.3rem, 2.2vw, 2rem); color: #2c3e50; width: 100%;">Todo sistema homogéneo tiene, al menos, la solución cero</h1>
-
-            <!-- Contenedor en dos columnas -->
-            <div class="grid-layout" style="align-items: center; gap: 40px;">
-                
-                <!-- Columna Izquierda: Tarjeta Azul (Solución Trivial) -->
-                <div style="background-color: #1565c0; border-radius: 16px; padding: 40px 30px; color: white; display: flex; flex-direction: column; align-items: center; text-align: center; box-sizing: border-box; width: 100%;">
-                    <h3 style="color: white; margin-top: 0; margin-bottom: 25px; font-size: clamp(1.4rem, 2.2vw, 1.8rem);">Solución trivial</h3>
-                    
-                    <div class="math-eq" style="font-size: clamp(1.2rem, 2vw, 1.6rem); font-weight: bold; margin: 20px 0; font-family: 'Cambria Math', serif; color: white;">
-                        x<sub>1</sub> = x<sub>2</sub> = ⋯ = x<sub>n</sub> = 0
-                    </div>
-                    
-                    <p style="font-size: clamp(0.9rem, 1.3vw, 1.05rem); margin: 15px 0 0 0; opacity: 0.95; line-height: 1.5;">
-                        Al sustituir, cada ecuación queda 0 = 0.
-                    </p>
-                </div>
-
-                <!-- Columna Derecha: Dos posibilidades -->
-                <div style="display: flex; flex-direction: column; gap: 15px; align-items: center; width: 100%;">
-                    <p style="color: #333; font-weight: bold; font-size: clamp(1rem, 1.5vw, 1.2rem); text-align: center; margin: 0 0 5px 0;">
-                        A partir de aquí solo hay dos posibilidades
-                    </p>
-
-                    <!-- Tarjeta 1: Solución única -->
-                    <div style="background-color: #f4f6f9; border-radius: 12px; padding: 20px; text-align: center; width: 100%; max-width: 380px; box-sizing: border-box;">
-                        <div style="color: #1565c0; font-weight: bold; font-size: clamp(0.95rem, 1.3vw, 1.15rem);">La solución trivial es única</div>
-                    </div>
-
-                    <!-- Separador -->
-                    <div style="color: #666; font-weight: bold; font-size: 1rem; margin: 2px 0;">o</div>
-
-                    <!-- Tarjeta 2: Infinitas soluciones -->
-                    <div style="background-color: #f4f4fb; border-radius: 12px; padding: 20px; text-align: center; width: 100%; max-width: 380px; box-sizing: border-box;">
-                        <div style="color: #6543ed; font-weight: bold; font-size: clamp(0.95rem, 1.3vw, 1.15rem);">Existen infinitas soluciones</div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-        <!-- Slide Nueva: Ejemplo 1 Sistema Homogéneo -->
-        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
-            <!-- Encabezado -->
-            <h1 style="border-bottom: 1px solid #e0e0e0; padding-bottom: 15px; margin-bottom: 40px; font-size: clamp(1.4rem, 2.5vw, 2.2rem); color: #2c3e50; width: 100%;">Ejemplo 1: ¿la solución trivial será la única?</h1>
-
-            <!-- Contenido en dos columnas -->
-            <div class="grid-layout" style="align-items: center; gap: 40px;">
-                
-                <!-- Columna Izquierda: Tarjeta del Sistema -->
-                <div style="background-color: #f4f6f9; border-radius: 16px; padding: 35px 25px; display: flex; flex-direction: column; align-items: center; text-align: center; box-sizing: border-box; width: 100%;">
-                    <h3 style="color: #1565c0; margin-top: 0; margin-bottom: 25px; font-size: clamp(1.3rem, 2vw, 1.6rem);">Sistema</h3>
-                    
-                    <div class="math-eq" style="font-size: clamp(1.1rem, 1.8vw, 1.4rem); color: #1565c0; font-weight: bold; line-height: 1.8; font-family: 'Cambria Math', serif; margin-bottom: 25px; text-align: left;">
-                        <div>2x<sub>1</sub> + 4x<sub>2</sub> + 6x<sub>3</sub> = 0</div>
-                        <div>4x<sub>1</sub> + 5x<sub>2</sub> + 6x<sub>3</sub> = 0</div>
-                        <div>3x<sub>1</sub> + x<sub>2</sub> - 2x<sub>3</sub> = 0</div>
-                    </div>
-                    
-                    <div style="color: #555; font-size: clamp(0.9rem, 1.2vw, 1rem); margin-top: auto; font-weight: 500;">
-                        Tres ecuaciones · Tres incógnitas
-                    </div>
-                </div>
-
-                <!-- Columna Derecha: Matriz aumentada y Nota -->
-                <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%;">
-                    <div style="color: #6543ed; font-weight: bold; font-size: clamp(1.1rem, 1.8vw, 1.3rem); margin-bottom: 5px;">Matriz aumentada</div>
-                    
-                    <!-- Matriz -->
-                    <div style="display: flex; align-items: center;">
-                        <div style="border-left: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 130px;"></div>
-                        <table style="text-align: center; font-size: clamp(1.1rem, 1.8vw, 1.4rem); border-collapse: collapse; font-family: 'Segoe UI', sans-serif; color: #333; margin: 0 10px;">
-                            <tr><td style="padding: 10px 14px;">2</td><td style="padding: 10px 14px;">4</td><td style="padding: 10px 14px;">6</td><td style="padding: 10px 14px; border-left: 1.5px solid #ef5350;">0</td></tr>
-                            <tr><td style="padding: 10px 14px;">4</td><td style="padding: 10px 14px;">5</td><td style="padding: 10px 14px;">6</td><td style="padding: 10px 14px; border-left: 1.5px solid #ef5350;">0</td></tr>
-                            <tr><td style="padding: 10px 14px;">3</td><td style="padding: 10px 14px;">1</td><td style="padding: 10px 14px;">-2</td><td style="padding: 10px 14px; border-left: 1.5px solid #ef5350;">0</td></tr>
-                        </table>
-                        <div style="border-right: 3px solid #1565c0; border-top: 3px solid #1565c0; border-bottom: 3px solid #1565c0; width: 10px; height: 130px;"></div>
-                    </div>
-
-                    <!-- Tarjeta inferior: La última columna permanecerá en cero -->
-                    <div style="background-color: #fdf2f2; border-radius: 12px; padding: 15px 25px; text-align: center; width: 100%; max-width: 340px; box-sizing: border-box; margin-top: 10px;">
-                        <div style="color: #ef5350; font-weight: bold; font-size: clamp(0.95rem, 1.3vw, 1.1rem);">La última columna permanecerá en cero</div>
-                    </div>
                 </div>
 
             </div>
