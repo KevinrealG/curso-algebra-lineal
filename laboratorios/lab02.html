@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Álgebra Lineal UTB</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; 
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Álgebra Lineal · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 2: Eliminación gaussiana y Gauss-Jordan</h2>
+<p>Resolver sistemas de ecuaciones lineales mediante eliminación gaussiana y el método de Gauss-Jordan usando la librería SymPy en Python.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#objetivos">Objetivos</a></li>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#recomendaciones">Recomendaciones Generales</a></li>
+<li><a href="#desarrollo">Desarrollo del Laboratorio</a></li>
+<li><a href="#entorno">Configuración del Entorno</a></li>
+<li><a href="#actividades">Actividades</a></li>
+<li><a href="#entregables">Entregables y Rúbrica</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="objetivos" class="section card">
+    <h2 class="section-title">Objetivos de la Guía</h2>
+    <ul>
+        <li>Resolver sistemas de ecuaciones lineales mediante eliminación gaussiana y el método de Gauss-Jordan usando la librería SymPy en Python.</li>
+        <li>Comparar los resultados obtenidos por ambos métodos e interpretar las diferencias en la representación de la solución (forma escalonada vs. forma escalonada reducida).</li>
+        <li>Verificar la consistencia del sistema y la unicidad de la solución a partir del análisis de los pivotes y la matriz resultante.</li>
+        <li>Aplicar los métodos implementados a un problema de ciencias o ingeniería, documentando el procedimiento y elaborando conclusiones sobre la solución obtenida.</li>
+    </ul>
+</section>
+
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li><strong>Competencia digital:</strong> Usar Google Colab y SymPy para implementar eliminación gaussiana y Gauss-Jordan, comparar sus salidas y verificar resultados de forma computacional.</li>
+        <li><strong>Competencia matemática:</strong> Identificar las diferencias estructurales entre la forma escalonada y la forma escalonada reducida, y relacionarlas con el proceso algebraico manual de cada método.</li>
+        <li><strong>Competencia analítica:</strong> Interpretar los pivotes, la consistencia del sistema y la unicidad de la solución en el contexto del problema de aplicación asignado.</li>
+        <li><strong>Competencia comunicativa:</strong> Documentar en el informe final el procedimiento seguido, las diferencias observadas entre los dos métodos y las conclusiones derivadas de los resultados obtenidos.</li>
+        <li><strong>Competencia autónoma:</strong> Explorar la documentación de SymPy para comprender el funcionamiento de echelon_form() y rref(), y aplicar ese conocimiento en la solución del problema propio.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <p>Al finalizar esta guía, el estudiante será capaz de:</p>
+    <ul>
+        <li>Resolver un sistema de ecuaciones lineales aplicando eliminación gaussiana y Gauss-Jordan en Python, obteniendo la forma escalonada y la forma escalonada reducida de la matriz aumentada.</li>
+        <li>Identificar las diferencias entre los resultados de echelon_form() y rref(), y explicar qué representa cada salida en términos del proceso algebraico correspondiente.</li>
+        <li>Verificar la consistencia y unicidad de la solución de un sistema lineal a partir del análisis de los pivotes entregados por SymPy.</li>
+        <li>Documentar el procedimiento completo, los resultados obtenidos y las conclusiones del problema de aplicación en un informe técnico estructurado.</li>
+    </ul>
+</section>
+
+<section id="recomendaciones" class="section card">
+    <h2 class="section-title">Recomendaciones Generales</h2>
+    <ul>
+        <li>El laboratorio se realiza de manera individual o en parejas.</li>
+        <li>A cada estudiante o pareja se le asignará un solo problema.</li>
+        <li>Se debe entregar un preinforme al final de la sesión de 2 horas con los resultados del problema asignado.</li>
+        <li>El informe final (con preguntas de interpretación, conclusiones y recomendaciones) se entrega en la siguiente clase.</li>
+        <li>Use Google Colab (<a href="https://colab.research.google.com" target="_blank">https://colab.research.google.com</a>) y guarde su cuaderno en su unidad de Google Drive.</li>
+    </ul>
+</section>
+
+<section id="desarrollo" class="section card">
+    <h2 class="section-title">Desarrollo del Laboratorio</h2>
+    <h3>EJEMPLO PROBLEMA: Programación de un robot móvil en la UTB</h3>
+    <p>En el laboratorio de robótica de la UTB, un grupo de estudiantes programa un robot para desplazarse en línea recta por uno de los pasillos. El robot tiene tres movimientos básicos, llamados X, Y y Z, pero se desconoce la distancia y la dirección asociada con cada uno. Se establece la siguiente convención:</p>
+    <ul>
+        <li>Los desplazamientos hacia el este son positivos.</li>
+        <li>Los desplazamientos hacia el oeste son negativos.</li>
+    </ul>
+    <p>Para identificar los tres movimientos, los estudiantes realizan estas pruebas:</p>
+    <ul>
+        <li>En la primera prueba, el robot ejecuta tres veces el movimiento X, seis veces el movimiento Y y tres veces el movimiento Z en sentido contrario. Al finalizar, queda 12 metros al este del punto de partida.</li>
+        <li>En la segunda prueba, ejecuta una vez X, dos veces Y y una vez Z. Termina 8 metros al este.</li>
+        <li>En la tercera prueba, ejecuta una vez cada movimiento. Termina 3 metros al este del punto de partida.</li>
+    </ul>
+    <p>¿Cuál es la distancia y la dirección de cada movimiento?</p>
+    <ul>
+        <li>X: desplazamiento producido por el movimiento X</li>
+        <li>Y: desplazamiento producido por el movimiento Y</li>
+        <li>Z: desplazamiento producido por el movimiento Z</li>
+    </ul>
+    <p>Sistema de ecuaciones:</p>
+    <p>\( 3X + 6Y - 3Z = 12 \)</p>
+    <p>\( X + 2Y + Z = 8 \)</p>
+    <p>\( X + Y + Z = 3 \)</p>
+</section>
+
+<section id="entorno" class="section card">
+    <h2 class="section-title">Configuración del Entorno en Google Colab</h2>
+    
+    <!-- Espacio para embeber video de YouTube (Placeholder) -->
+    <p>Video introductorio sobre la configuración de Google Colab:</p>
+    <div class="video-container">
+        <!-- Reemplazar 'VIDEO_ID' con el ID real del video de YouTube -->
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+
+    <h3>Paso 1: Instalar e importar librerías necesarias</h3>
+    <p>Ejecute la siguiente celda de código:</p>
+    <div class="code-block">
+<pre># Instalacion de librerias (solo ejecutar una vez)
+!pip install sympy numpy matplotlib
+
+# Importacion de bibliotecas
+import sympy as sp
+import numpy as np
+import matplotlib.pyplot as plt
+
+sp.init_printing(use_unicode=True)
+print("Entorno configurado correctamente.")</pre>
+    </div>
+
+    <h3>Paso 2: Verificar la instalación</h3>
+    <div class="code-block">
+<pre># Verificar versiones
+print(f"SymPy version: {sp.__version__}")
+print(f"NumPy version: {np.__version__}")</pre>
+    </div>
+</section>
+
+<section id="actividades" class="section card">
+    <h2 class="section-title">Eliminación gaussiana y Gauss-Jordan</h2>
+    
+    <h3>Actividad 1: Creación de la matriz aumentada</h3>
+    <ol>
+        <li>Defina la matriz de coeficientes A y el vector de constantes b para el sistema de ecuaciones de su problema asignado.</li>
+        <li>Construya la matriz aumentada [A b].</li>
+        <li>Imprima la matriz.</li>
+    </ol>
+    <p>Código de ejemplo (para problema 1):</p>
+    <div class="code-block">
+<pre># Ejemplo Lab2
+A = sp.Matrix([[3, 6, -3], [1, 2, 1], [1, 1, 1]])
+b = sp.Matrix([12, 8, 3])
+
+# Matriz aumentada
+Aug = A.row_join(b)
+print("Matriz aumentada:\n")
+sp.pprint(Aug)</pre>
+    </div>
+
+    <h3>Actividad 2: Eliminación gaussiana usando el comando echelon_form</h3>
+    <div class="code-block">
+<pre>import sympy as sp
+# Eliminación gaussiana (forma escalonada)
+Aug_esc = Aug.echelon_form()
+print("\nForma escalonada (Eliminacion gaussiana):\n")
+sp.pprint(Aug_esc)</pre>
+    </div>
+
+    <h3>Actividad 3: Eliminación de Gauss-Jordan con el comando rref</h3>
+    <div class="code-block">
+<pre>import sympy as sp
+A = sp.Matrix([[3, 6, -3], [1, 2, 1], [1, 1, 1]])
+b = sp.Matrix([12, 8, 3])
+
+# Gauss-Jordan:
+Aug_red, pivotes = Aug.rref()
+print("\nForma escalonada reducida (Gauss-Jordan):\n")
+sp.pprint(Aug_red)</pre>
+    </div>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">Entregables y Rúbrica</h2>
+    
+    <h3>Entrega del Preinforme</h3>
+    <p><strong>Fecha de entrega:</strong> Al finalizar la sesión de laboratorio (2 horas).</p>
+    <p>Compartir con el docente el notebook de Colab con las especificaciones indicadas. Copie esto en una celda de texto (Markdown):</p>
+    <div class="code-block">
+<pre># Laboratorio 2: Eliminación gaussiana y Gauss-Jordan
+## Curso y Sección: [NRC] Sección [102]
+## Integrantes:
+- **Nombre 1:** [Nombre Completo] - Codigo: [Codigo]
+- **Nombre 2:** [Nombre Completo] - Codigo: [Codigo]
+## Fecha: [Fecha]
+## Tabla de Contenido
+1. Configuracion del entorno
+2. Actividad 1: Creación de la matriz aumentada
+3. Actividad 2: Eliminación gaussiana usando el comando echelon_form
+4. Actividad 3: Eliminación de Gauss-Jordan con el comando rref
+5. Recopilación de resultados</pre>
+    </div>
+
+    <h3>Entrega del Informe Final</h3>
+    <p><strong>Fechas de entrega:</strong></p>
+    <ul>
+        <li>11, sábado 29 de agosto</li>
+        <li>12, sábado 29 de agosto</li>
+        <li>K1, miércoles 26 de agosto</li>
+        <li>K2, martes 1 de septiembre</li>
+    </ul>
+    <p><strong>Entrega:</strong> Digital por Teams.</p>
+    <p><strong>Formato:</strong> PDF o documento de Word bien comentado. Incluir en el encabezado del archivo:</p>
+    <ul>
+        <li>Nombre y número del laboratorio.</li>
+        <li>Nombres y códigos estudiantiles de los integrantes.</li>
+        <li>Código del curso (NRC)</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Rúbrica de Evaluación</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Ítem a evaluar</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1. Preinforme: Configuración correcta del entorno y Google Colab</td>
+                <td>15%</td>
+            </tr>
+            <tr>
+                <td>2. Preinforme: Implementación correcta de matrices y comandos (echelon_form y rref)</td>
+                <td>25%</td>
+            </tr>
+            <tr>
+                <td>3. Informe Final: Análisis comparativo entre eliminación gaussiana y Gauss-Jordan</td>
+                <td>20%</td>
+            </tr>
+            <tr>
+                <td>4. Informe Final: Interpretación de consistencia y unicidad (pivotes)</td>
+                <td>20%</td>
+            </tr>
+            <tr>
+                <td>5. Informe Final: Documentación, formato (PDF/Word) y entrega en Teams</td>
+                <td>20%</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Álgebra Lineal · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>
