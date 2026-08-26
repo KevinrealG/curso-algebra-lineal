@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Productos Vectorial y Matricial</title>
+    
+    <!-- Importación de MathJax para renderizar matemáticas en la web -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Estilos CSS para dar formato de hoja de trabajo -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f6f9;
+        }
+        h1, h2 {
+            color: #1565c0;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .section {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+        }
+        .exercise {
+            margin-bottom: 25px;
+        }
+        .ex-num {
+            font-weight: bold;
+            color: #d32f2f;
+            margin-right: 10px;
+        }
+        /* Estilos específicos para la tabla del ejercicio 63 */
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.95rem;
+        }
+        table.data-table th, table.data-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        table.data-table th {
+            background-color: #1565c0;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>2.2 Productos vectorial y matricial</h1>
+
+    <!-- SECCIÓN 1: Cálculos Matriciales Directos -->
+    <div class="section">
+        <h2>Cálculo de Productos Matriciales</h2>
+        <div class="grid-2-col">
+            <div class="exercise"><span class="ex-num">20.</span> \( \begin{pmatrix} 2 \\ -1 \end{pmatrix} \begin{pmatrix} 3 & 5 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">21.</span> \( \begin{pmatrix} 3 & 5 \end{pmatrix} \begin{pmatrix} 2 \\ -1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">22.</span> \( \begin{pmatrix} -5 & 6 \\ 1 & 3 \end{pmatrix} \begin{pmatrix} 3 & -2 \\ 1 & 4 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">23.</span> \( \begin{pmatrix} 1 & -1 \\ 1 & 1 \end{pmatrix} \begin{pmatrix} -1 & 0 \\ 2 & 3 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">24.</span> \( \begin{pmatrix} 2 \\ -1 \end{pmatrix} \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">25.</span> \( \begin{pmatrix} -4 & 5 & 1 \\ 0 & 4 & 2 \end{pmatrix} \begin{pmatrix} 3 & -1 & 1 \\ 5 & 6 & 4 \\ 0 & 1 & 2 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">26.</span> \( \begin{pmatrix} 1 & 4 & -2 \\ 3 & 0 & 4 \end{pmatrix} \begin{pmatrix} 0 & 1 \\ 2 & 3 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">27.</span> \( \begin{pmatrix} -3 & 4 \\ 1 & -1 \\ 2 & 0 \end{pmatrix} \begin{pmatrix} 3 & -2 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">28.</span> \( \begin{pmatrix} 1 & 4 & 6 \\ -2 & 3 & 5 \\ 1 & 0 & 4 \end{pmatrix} \begin{pmatrix} 2 & -3 & 5 \\ 1 & 0 & 6 \\ 2 & 3 & 1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">29.</span> \( \begin{pmatrix} 3 & -2 \end{pmatrix} \begin{pmatrix} -3 & 4 \\ 1 & -1 \\ 2 & 0 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">30.</span> \( \begin{pmatrix} 1 & 4 & 0 & 2 \end{pmatrix} \begin{pmatrix} 3 & -6 \\ 2 & 4 \\ 1 & 0 \\ -2 & 3 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">31.</span> \( \begin{pmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{pmatrix} \begin{pmatrix} -3 & 4 \\ 1 & -1 \\ 2 & 0 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">32.</span> \( \begin{pmatrix} 3 & -2 & 1 \\ 4 & 0 & 6 \\ 5 & 1 & 9 \end{pmatrix} \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">33.</span> \( \begin{pmatrix} 7 & 10 & 6 & -2 \\ 10 & 0 & -8 & 9 \end{pmatrix} \begin{pmatrix} 2 & 1 \\ 7 & 4 \\ 6 & 3 \\ 10/3 & -10/3 \\ 3 & 5/6 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">34.</span> \( \begin{pmatrix} 5 & -1 & -2 \\ -1 & 3 & 2 \\ 1 & 1 & -5 \end{pmatrix} \begin{pmatrix} 0 & 0 & 1 \\ 0 & 1 & 0 \\ 1 & 0 & 0 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">35.</span> \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} \begin{pmatrix} 3 & -2 & 1 \\ 4 & 0 & 6 \\ 5 & 1 & 9 \end{pmatrix} \)</div>
+        </div>
+        
+        <div class="exercise">
+            <span class="ex-num">36.</span> \( \begin{pmatrix} a & b & c \\ d & e & f \\ g & h & j \end{pmatrix} \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} \), donde \(a, b, c, d, e, f, g, h, j\) son números reales.
+        </div>
+        <div class="exercise">
+            <span class="ex-num">37.</span> Sea \( A = \begin{pmatrix} 2 & 6 \\ 8 & -6 \end{pmatrix} \), encuentre un vector no nulo \( b = \begin{pmatrix} x \\ y \end{pmatrix} \) tal que \( Ab = 6b \).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">38.</span> Encuentre una matriz \( A = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \) tal que \( A \begin{pmatrix} 2 & 3 \\ 1 & 2 \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">39.</span> Sea \( A = \begin{pmatrix} 9 & 7 \\ 0 & \alpha \end{pmatrix} \). Determine el valor de \( \alpha \) para que \( A^2 - 81I = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix} \).
+        </div>
+    </div>
+
+    <!-- SECCIÓN 2: Ecuaciones, Demostraciones y Propiedades -->
+    <div class="section">
+        <h2>Demostraciones y Propiedades Matriciales</h2>
+        
+        <div class="exercise">
+            <span class="ex-num">40.</span> Encuentre \(B\) tal que \(AB = C\). Si \( A = \begin{pmatrix} 5 & 0 & 3 & 4 \\ -1 & 2 & 0 & 1 \end{pmatrix} \) y \( C = \begin{pmatrix} 6 & 5 \\ 3 & 5 \end{pmatrix} \).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">41.</span> Sea \( A = \begin{pmatrix} 2 & 2 \\ 8 & -2 \end{pmatrix} \) y \( B = \begin{pmatrix} 2 & -2 \\ 4 & -2 \end{pmatrix} \), pruebe que \( A^2 + B^2 = (A + B)^2 \).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">42.</span> Si \( A = \begin{pmatrix} 1 & 1 \\ 0 & 1 \end{pmatrix} \) y \( B = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \), encuentre las condiciones para \(a, b, c\) y \(d\) tal que \(AB = BA\).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">43.</span> Una matriz \(A\) de \(n \times n\) tal que \(A^2 = I_n\) se llama involutiva. Pruebe que la siguiente matriz es involutiva:
+            \[ A = \begin{pmatrix} 0 & 1 & -1 \\ 4 & -3 & 4 \\ 3 & -3 & 4 \end{pmatrix} \]
+        </div>
+        <div class="exercise">
+            <span class="ex-num">44.</span> Demuestre que \( \begin{pmatrix} \alpha & 1 \\ 0 & \alpha \end{pmatrix}^n = \begin{pmatrix} \alpha^n & n\alpha^{n-1} \\ 0 & \alpha^n \end{pmatrix} \) con \(n \in \mathbb{Z}^+\).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">45.</span> Sean \(a_{11}, a_{12}, a_{21}\) y \(a_{22}\) números reales dados tales que \(a_{11}a_{22} - a_{12}a_{21} \neq 0\). Encuentre los números \(b_{11}, b_{12}, b_{21}\) y \(b_{22}\) tales que:
+            \[ \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} \begin{pmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{pmatrix} = \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \]
+        </div>
+        <div class="exercise">
+            <span class="ex-num">46.</span> Dada la siguiente matriz pruebe que \(A^2 = A\):
+            \[ A = \begin{pmatrix} -1 & 3 & 5 \\ 1 & -3 & -5 \\ -1 & 3 & 5 \end{pmatrix} \]
+        </div>
+        <div class="exercise">
+            <span class="ex-num">47.</span> Verifique la ley asociativa para la multiplicación de las matrices \( A = \begin{pmatrix} 2 & -1 & 4 \\ 1 & 0 & 6 \end{pmatrix} \), \( B = \begin{pmatrix} 1 & 0 & 1 \\ 2 & -1 & 2 \\ 3 & -2 & 0 \end{pmatrix} \) y \( C = \begin{pmatrix} 1 & 6 \\ -2 & 4 \\ 0 & 5 \end{pmatrix} \).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">48.</span> De la misma forma que en el ejemplo 2.2.6, suponga que un grupo de personas ha contraído una enfermedad contagiosa. Estas personas tienen contacto con un segundo grupo que, a su vez, tiene contacto con un tercer grupo. Si \( A = \begin{pmatrix} 1 & 0 & 1 & 0 \\ 0 & 1 & 1 & 0 \\ 1 & 0 & 0 & 1 \end{pmatrix} \) representa los contactos entre el grupo contagioso y los miembros del grupo 2, y si \( B = \begin{pmatrix} 1 & 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 & 0 \\ 1 & 1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 & 1 \end{pmatrix} \) representa los contactos entre los grupos 2 y 3. 
+            <br>a) ¿Cuántas personas hay en cada grupo? 
+            <br>b) Encuentre la matriz de contactos indirectos entre los grupos 1 y 3.
+        </div>
+    </div>
+
+    <!-- SECCIÓN 3: Problemas de Aplicación -->
+    <div class="section">
+        <h2>Problemas de Aplicación</h2>
+        
+        <div class="exercise">
+            <span class="ex-num">62.</span> Una compañía paga un salario a sus ejecutivos y les da un porcentaje de sus acciones como un bono anual. El año pasado el presidente de la compañía recibió $80 000 y 50 acciones, se pagó a cada uno de los vicepresidentes $45 000 y 20 acciones y el tesorero recibió $40 000 y 10 acciones.
+            <br>a) Exprese los pagos a los ejecutivos en dinero y acciones como una matriz de \(2 \times 3\).
+            <br>b) Exprese el número de ejecutivos de cada nivel como un vector columna.
+            <br>c) Utilice la multiplicación de matrices para calcular la cantidad total de dinero y el número total de acciones que pagó la compañía a los ejecutivos el año pasado.
+        </div>
+
+        <div class="exercise">
+            <span class="ex-num">63.</span> La siguiente tabla contiene ventas, utilidades brutas por unidad y los impuestos por unidad sobre las ventas de una compañía grande:
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th rowspan="2">Mes</th>
+                        <th colspan="3">Artículo vendido</th>
+                        <th rowspan="2">Artículo</th>
+                        <th rowspan="2">Utilidad unitaria<br>(en cientos de dólares)</th>
+                        <th rowspan="2">Impuestos unitarios<br>(en cientos de dólares)</th>
+                    </tr>
+                    <tr>
+                        <th>I</th>
+                        <th>II</th>
+                        <th>III</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Enero</td><td>4</td><td>2</td><td>20</td>
+                        <td>I</td><td>3.5</td><td>1.5</td>
+                    </tr>
+                    <tr>
+                        <td>Febrero</td><td>6</td><td>1</td><td>9</td>
+                        <td>II</td><td>2.75</td><td>2</td>
+                    </tr>
+                    <tr>
+                        <td>Marzo</td><td>5</td><td>3</td><td>12</td>
+                        <td>III</td><td>1.5</td><td>0.6</td>
+                    </tr>
+                    <tr>
+                        <td>Abril</td><td>8</td><td>2.5</td><td>20</td>
+                        <td></td><td></td><td></td>
+                    </tr>
+                </tbody>
+            </table>
+            Elabore una matriz que muestre las utilidades y los impuestos totales de cada mes.
+        </div>
+
+        <div class="exercise">
+            <span class="ex-num">64.</span> Sea \(A\) una matriz cuadrada. Entonces \(A^2\) se define simplemente como \(AA\). Calcule \( \begin{pmatrix} 2 & -1 \\ 4 & 6 \end{pmatrix}^2 \).
+        </div>
+    </div>
+
+</body>
+</html>
