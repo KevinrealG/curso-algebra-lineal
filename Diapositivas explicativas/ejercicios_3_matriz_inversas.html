@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación 2.4</title>
+    
+    <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #1565c0;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        .question-block {
+            background: #fff;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .options {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+        .options li {
+            padding: 10px;
+            margin-bottom: 8px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+        }
+        .answers-footer {
+            background-color: #4054b2;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .answers-footer span {
+            margin: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Autoevaluación 2.4</h1>
+
+    <!-- Pregunta I -->
+    <div class="question-block">
+        <div class="question-text">I) Indique cuál de las siguientes afirmaciones es correcta.</div>
+        <ul class="options">
+            <li>a) Toda matriz cuadrada tiene inversa.</li>
+            <li>b) Una matriz cuadrada tiene inversa si su reducción por renglones lleva a un renglón de ceros.</li>
+            <li>c) Una matriz cuadrada es invertible si tiene inversa.</li>
+            <li>d) Una matriz cuadrada \(B\) es la inversa de \(A\) si \(AI = B\).</li>
+        </ul>
+    </div>
+
+    <!-- Pregunta II -->
+    <div class="question-block">
+        <div class="question-text">II) ¿Cuál de las siguientes afirmaciones es cierta sobre un sistema de ecuaciones en forma de matriz?</div>
+        <ul class="options">
+            <li>a) Es de la forma \(A^{-1}\mathbf{x} = \mathbf{b}\).</li>
+            <li>b) Si tiene una solución única, la solución será \(\mathbf{x} = A^{-1}\mathbf{b}\).</li>
+            <li>c) Tiene solución si \(A\) no es invertible.</li>
+            <li>d) Tiene una solución única.</li>
+        </ul>
+    </div>
+
+    <!-- Pregunta III -->
+    <div class="question-block">
+        <div class="question-text">III) ¿Cuál de las siguientes matrices es invertible?</div>
+        <ul class="options">
+            <li>a) \( \begin{pmatrix} 1 & 3 \\ -3 & -9 \end{pmatrix} \)</li>
+            <li>b) \( \begin{pmatrix} 6 & -1 \\ 1 & -\frac{1}{6} \end{pmatrix} \)</li>
+            <li>c) \( \begin{pmatrix} 2 & -3 \\ 1 & -1 \end{pmatrix} \)</li>
+            <li>d) \( \begin{pmatrix} 1 & 0 \\ 2 & 0 \end{pmatrix} \)</li>
+        </ul>
+    </div>
+
+    <!-- Pregunta IV -->
+    <div class="question-block">
+        <div class="question-text">IV) Considere una matriz invertible \(A\) y señale cuál de las siguientes afirmaciones es cierta.</div>
+        <ul class="options">
+            <li>a) El producto de \(A\) por \(I\) es \(A^{-1}\).</li>
+            <li>b) \(A\) es una matriz de \(2 \times 3\).</li>
+            <li>c) \(A = A^{-1}\).</li>
+            <li>d) \(A\) es una matriz cuadrada.</li>
+        </ul>
+    </div>
+
+    <!-- Pregunta V -->
+    <div class="question-block">
+        <div class="question-text">V) ¿Cuál de las siguientes afirmaciones es cierta sobre el sistema?<br><br>
+            \(4x - 5y = 3\)<br>
+            \(6x + 7y = 4\)
+        </div>
+        <ul class="options">
+            <li>a) No tiene solución porque \( \begin{pmatrix} 4 & -5 \\ 6 & -7 \end{pmatrix} \) no es invertible.</li>
+            <li>b) Tiene solución \((-1, -\frac{1}{2})\).</li>
+            <li>c) Si tuviera una solución se encontraría resolviendo \( \begin{pmatrix} 4 & -5 \\ 6 & -7 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 3 \\ 4 \end{pmatrix} \).</li>
+            <li>d) Su solución es \( \begin{pmatrix} 4 & -5 \\ 6 & -7 \end{pmatrix} \begin{pmatrix} 3 \\ 4 \end{pmatrix} \).</li>
+        </ul>
+    </div>
+
+    <!-- Respuestas -->
+    <div class="answers-footer">
+        <div>Respuestas a la autoevaluación</div>
+        <div>
+            <span>I) c)</span>
+            <span>II) b)</span>
+            <span>III) c)</span>
+            <span>IV) d)</span>
+            <span>V) c)</span>
+        </div>
+    </div>
+
+</body>
+</html>

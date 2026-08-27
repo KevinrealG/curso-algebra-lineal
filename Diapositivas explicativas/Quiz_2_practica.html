@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación- Quiz Interactivo Invertibilidad de Matrices</title>
+    
+    <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #1565c0;
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .question-block {
+            background: #fff;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #1565c0;
+            transition: all 0.3s ease;
+        }
+        /* Clases dinámicas aplicadas por JavaScript */
+        .question-block.correct {
+            border-left-color: #2e7d32;
+            background-color: #e8f5e9;
+        }
+        .question-block.incorrect {
+            border-left-color: #c62828;
+            background-color: #ffebee;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .option-label {
+            display: block;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .option-label:hover {
+            background-color: #f0f4f8;
+        }
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0d47a1;
+        }
+        #result-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AUTOEVALUACIÓN 2.4</h1>
+
+    <form id="quiz-form">
+        
+        <!-- Pregunta I -->
+        <div class="question-block" id="block-q1">
+            <div class="question-text">I) Indique cuál de las siguientes afirmaciones es correcta.</div>
+            <label class="option-label"><input type="radio" name="q1" value="a"> a) Toda matriz cuadrada tiene inversa.</label>
+            <label class="option-label"><input type="radio" name="q1" value="b"> b) Una matriz cuadrada tiene inversa si su reducción por renglones lleva a un renglón de ceros.</label>
+            <label class="option-label"><input type="radio" name="q1" value="c"> c) Una matriz cuadrada es invertible si tiene inversa.</label>
+            <label class="option-label"><input type="radio" name="q1" value="d"> d) Una matriz cuadrada \(B\) es la inversa de \(A\) si \(AI = B\).</label>
+        </div>
+
+        <!-- Pregunta II -->
+        <div class="question-block" id="block-q2">
+            <div class="question-text">II) ¿Cuál de las siguientes afirmaciones es cierta sobre un sistema de ecuaciones en forma de matriz?</div>
+            <label class="option-label"><input type="radio" name="q2" value="a"> a) Es de la forma \(A^{-1}\mathbf{x} = \mathbf{b}\).</label>
+            <label class="option-label"><input type="radio" name="q2" value="b"> b) Si tiene una solución única, la solución será \(\mathbf{x} = A^{-1}\mathbf{b}\).</label>
+            <label class="option-label"><input type="radio" name="q2" value="c"> c) Tiene solución si \(A\) no es invertible.</label>
+            <label class="option-label"><input type="radio" name="q2" value="d"> d) Tiene una solución única.</label>
+        </div>
+
+        <!-- Pregunta III -->
+        <div class="question-block" id="block-q3">
+            <div class="question-text">III) ¿Cuál de las siguientes matrices es invertible?</div>
+            <label class="option-label"><input type="radio" name="q3" value="a"> a) \( \begin{pmatrix} 1 & 3 \\ -3 & -9 \end{pmatrix} \)</label>
+            <label class="option-label"><input type="radio" name="q3" value="b"> b) \( \begin{pmatrix} 6 & -1 \\ 1 & -\frac{1}{6} \end{pmatrix} \)</label>
+            <label class="option-label"><input type="radio" name="q3" value="c"> c) \( \begin{pmatrix} 2 & -3 \\ 1 & -1 \end{pmatrix} \)</label>
+            <label class="option-label"><input type="radio" name="q3" value="d"> d) \( \begin{pmatrix} 1 & 0 \\ 2 & 0 \end{pmatrix} \)</label>
+        </div>
+
+        <!-- Pregunta IV -->
+        <div class="question-block" id="block-q4">
+            <div class="question-text">IV) Considere una matriz invertible \(A\) y señale cuál de las siguientes afirmaciones es cierta.</div>
+            <label class="option-label"><input type="radio" name="q4" value="a"> a) El producto de \(A\) por \(I\) es \(A^{-1}\).</label>
+            <label class="option-label"><input type="radio" name="q4" value="b"> b) \(A\) es una matriz de \(2 \times 3\).</label>
+            <label class="option-label"><input type="radio" name="q4" value="c"> c) \(A = A^{-1}\).</label>
+            <label class="option-label"><input type="radio" name="q4" value="d"> d) \(A\) es una matriz cuadrada.</label>
+        </div>
+
+        <!-- Pregunta V -->
+        <div class="question-block" id="block-q5">
+            <div class="question-text">V) ¿Cuál de las siguientes afirmaciones es cierta sobre el sistema?<br><br>
+                \(4x - 5y = 3\)<br>
+                \(6x - 7y = 4\)
+            </div>
+            <label class="option-label"><input type="radio" name="q5" value="a"> a) No tiene solución porque \( \begin{pmatrix} 4 & -5 \\ 6 & -7 \end{pmatrix} \) no es invertible.</label>
+            <label class="option-label"><input type="radio" name="q5" value="b"> b) Tiene solución \((-1, -\frac{1}{2})\).</label>
+            <label class="option-label"><input type="radio" name="q5" value="c"> c) Si tuviera una solución se encontraría resolviendo \( \begin{pmatrix} 4 & -5 \\ 6 & -7 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 3 \\ 4 \end{pmatrix} \).</label>
+            <label class="option-label"><input type="radio" name="q5" value="d"> d) Su solución es \( \begin{pmatrix} 4 & -5 \\ 6 & -7 \end{pmatrix} \begin{pmatrix} 3 \\ 4 \end{pmatrix} \).</label>
+        </div>
+
+        <button type="submit">Evaluar mis respuestas</button>
+    </form>
+
+    <div id="result-container"></div>
+
+    <script>
+        // Diccionario con las respuestas correctas de la imagen
+        const correctAnswers = {
+            q1: 'c',
+            q2: 'b',
+            q3: 'c',
+            q4: 'd',
+            q5: 'c'
+        };
+
+        // Lógica de validación al enviar el formulario
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que la página se recargue
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            // Iteramos sobre las respuestas correctas
+            for (let question in correctAnswers) {
+                const block = document.getElementById('block-' + question);
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                
+                // Limpiamos estilos previos
+                block.classList.remove('correct', 'incorrect');
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[question]) {
+                        block.classList.add('correct');
+                        score++;
+                    } else {
+                        block.classList.add('incorrect');
+                    }
+                } else {
+                    // Si el usuario no responde la pregunta, la marcamos como incorrecta visualmente
+                    block.classList.add('incorrect'); 
+                }
+            }
+
+            // Mostrar el resultado final
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+            
+            if (score === totalQuestions) {
+                resultContainer.style.color = '#2e7d32';
+                resultContainer.innerHTML = `¡Excelente! Puntuación perfecta: ${score}/${totalQuestions}`;
+            } else {
+                resultContainer.style.color = '#c62828';
+                resultContainer.innerHTML = `Tu puntuación es: ${score}/${totalQuestions}. ¡Revisa los bloques en rojo e inténtalo de nuevo!`;
+            }
+            
+            // Hacemos scroll suave hacia el resultado
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
