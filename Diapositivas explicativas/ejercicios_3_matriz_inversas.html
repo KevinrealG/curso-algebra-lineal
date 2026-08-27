@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autoevaluación 2.4</title>
+    <title>Problemas 2.4 - Álgebra Lineal</title>
     
     <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
@@ -14,7 +14,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f6f9;
             color: #333;
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px;
             line-height: 1.6;
@@ -24,119 +24,220 @@
             border-bottom: 2px solid #e0e0e0;
             padding-bottom: 10px;
             margin-bottom: 30px;
-            text-transform: uppercase;
         }
-        .question-block {
+        .section {
             background: #fff;
-            padding: 20px 25px;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        .instruction {
+            font-style: italic;
+            color: #555;
             margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .question-text {
-            font-weight: bold;
-            margin-bottom: 15px;
-            font-size: 1.1rem;
-        }
-        .options {
-            list-style-type: none;
-            padding-left: 0;
-            margin: 0;
-        }
-        .options li {
             padding: 10px;
-            margin-bottom: 8px;
-            background-color: #f9f9f9;
-            border-radius: 4px;
+            background-color: #eef4fb;
+            border-left: 4px solid #1565c0;
         }
-        .answers-footer {
-            background-color: #4054b2;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            margin-top: 30px;
+        .grid-3-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .grid-4-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .exercise {
+            margin-bottom: 20px;
+        }
+        .ex-num {
             font-weight: bold;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
+            color: #d32f2f;
+            margin-right: 10px;
         }
-        .answers-footer span {
-            margin: 5px 10px;
+        table.data-table {
+            width: 100%;
+            max-width: 600px;
+            border-collapse: collapse;
+            margin: 15px auto;
+        }
+        table.data-table th, table.data-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        table.data-table th {
+            background-color: #1565c0;
+            color: white;
+        }
+        table.data-table tr:nth-child(even) {
+            background-color: #f9f9f9;
         }
     </style>
 </head>
 <body>
 
-    <h1>Autoevaluación 2.4</h1>
+    <h1>PROBLEMAS 2.4</h1>
 
-    <!-- Pregunta I -->
-    <div class="question-block">
-        <div class="question-text">I) Indique cuál de las siguientes afirmaciones es correcta.</div>
-        <ul class="options">
-            <li>a) Toda matriz cuadrada tiene inversa.</li>
-            <li>b) Una matriz cuadrada tiene inversa si su reducción por renglones lleva a un renglón de ceros.</li>
-            <li>c) Una matriz cuadrada es invertible si tiene inversa.</li>
-            <li>d) Una matriz cuadrada \(B\) es la inversa de \(A\) si \(AI = B\).</li>
-        </ul>
-    </div>
-
-    <!-- Pregunta II -->
-    <div class="question-block">
-        <div class="question-text">II) ¿Cuál de las siguientes afirmaciones es cierta sobre un sistema de ecuaciones en forma de matriz?</div>
-        <ul class="options">
-            <li>a) Es de la forma \(A^{-1}\mathbf{x} = \mathbf{b}\).</li>
-            <li>b) Si tiene una solución única, la solución será \(\mathbf{x} = A^{-1}\mathbf{b}\).</li>
-            <li>c) Tiene solución si \(A\) no es invertible.</li>
-            <li>d) Tiene una solución única.</li>
-        </ul>
-    </div>
-
-    <!-- Pregunta III -->
-    <div class="question-block">
-        <div class="question-text">III) ¿Cuál de las siguientes matrices es invertible?</div>
-        <ul class="options">
-            <li>a) \( \begin{pmatrix} 1 & 3 \\ -3 & -9 \end{pmatrix} \)</li>
-            <li>b) \( \begin{pmatrix} 6 & -1 \\ 1 & -\frac{1}{6} \end{pmatrix} \)</li>
-            <li>c) \( \begin{pmatrix} 2 & -3 \\ 1 & -1 \end{pmatrix} \)</li>
-            <li>d) \( \begin{pmatrix} 1 & 0 \\ 2 & 0 \end{pmatrix} \)</li>
-        </ul>
-    </div>
-
-    <!-- Pregunta IV -->
-    <div class="question-block">
-        <div class="question-text">IV) Considere una matriz invertible \(A\) y señale cuál de las siguientes afirmaciones es cierta.</div>
-        <ul class="options">
-            <li>a) El producto de \(A\) por \(I\) es \(A^{-1}\).</li>
-            <li>b) \(A\) es una matriz de \(2 \times 3\).</li>
-            <li>c) \(A = A^{-1}\).</li>
-            <li>d) \(A\) es una matriz cuadrada.</li>
-        </ul>
-    </div>
-
-    <!-- Pregunta V -->
-    <div class="question-block">
-        <div class="question-text">V) ¿Cuál de las siguientes afirmaciones es cierta sobre el sistema?<br><br>
-            \(4x - 5y = 3\)<br>
-            \(6x + 7y = 4\)
+    <div class="section">
+        <div class="instruction">
+            En los problemas 1 a 22 determine si la matriz dada es invertible. De ser así, calcule la inversa.
         </div>
-        <ul class="options">
-            <li>a) No tiene solución porque \( \begin{pmatrix} 4 & -5 \\ 6 & -7 \end{pmatrix} \) no es invertible.</li>
-            <li>b) Tiene solución \((-1, -\frac{1}{2})\).</li>
-            <li>c) Si tuviera una solución se encontraría resolviendo \( \begin{pmatrix} 4 & -5 \\ 6 & -7 \end{pmatrix} \begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 3 \\ 4 \end{pmatrix} \).</li>
-            <li>d) Su solución es \( \begin{pmatrix} 4 & -5 \\ 6 & -7 \end{pmatrix} \begin{pmatrix} 3 \\ 4 \end{pmatrix} \).</li>
-        </ul>
+        
+        <div class="grid-3-col">
+            <div class="exercise"><span class="ex-num">1.</span> \( \begin{pmatrix} 3 & 5 \\ 6 & 10 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">2.</span> \( \begin{pmatrix} 4 & -7 \\ -8 & 14 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">3.</span> \( \begin{pmatrix} 1 & 0 \\ 0 & 1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">4.</span> \( \begin{pmatrix} 1 & 1 \\ 3 & 3 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">5.</span> \( \begin{pmatrix} 3 & 5 \\ 7 & 11 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">6.</span> \( \begin{pmatrix} a & b \\ -a & -b \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">7.</span> \( \begin{pmatrix} 1 & 1 & 1 \\ 0 & 2 & 3 \\ 5 & 5 & 1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">8.</span> \( \begin{pmatrix} 0 & 1 & 3 \\ 3 & 4 & -2 \\ -1 & 5 & 8 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">9.</span> \( \begin{pmatrix} 3 & 2 & 1 \\ 0 & 2 & 2 \\ 0 & 0 & -1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">10.</span> \( \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 1 & 0 & 1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">11.</span> \( \begin{pmatrix} 0 & 0 & 1 \\ 0 & 1 & 1 \\ 1 & 1 & 1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">12.</span> \( \begin{pmatrix} 2 & 24 & 48 \\ 0 & -3 & 12 \\ 0 & 0 & 2 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">13.</span> \( \begin{pmatrix} 1 & 3 & 5 \\ 2 & 4 & 8 \\ 1 & -1 & 1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">14.</span> \( \begin{pmatrix} 1 & -2 & -3 \\ 0 & 3 & 4 \\ 0 & 0 & 5 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">15.</span> \( \begin{pmatrix} \alpha & \beta & \gamma \\ \delta & \epsilon & \zeta \\ 3\alpha - 2\delta & 3\beta - 2\epsilon & 3\gamma - 2\zeta \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">16.</span> \( \begin{pmatrix} 1 & 2 & 3 \\ 1 & 1 & 2 \\ 0 & 1 & 2 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">17.</span> \( \begin{pmatrix} 1 & 1 & 0 \\ 0 & 1 & 1 \\ 1 & 0 & 1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">18.</span> \( \begin{pmatrix} 1 & 0 & 2 & 3 \\ -1 & 1 & 0 & 4 \\ 2 & 1 & -1 & 3 \\ -1 & 0 & 5 & 7 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">19.</span> \( \begin{pmatrix} 1 & 2 & 0 & 0 \\ 2 & 3 & -3 & 0 \\ 0 & -3 & -2 & 4 \\ 0 & 0 & 4 & 4 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">20.</span> \( \begin{pmatrix} -4 & -5 & -1 & -7 \\ 1 & 4 & -9 & 8 \\ -6 & -2 & -20 & 2 \\ 3 & 6 & 10 & 11 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">21.</span> \( \begin{pmatrix} 3 & 4 & 0 & 0 \\ 2 & 3 & 0 & 0 \\ 0 & 0 & 2 & 3 \\ 0 & 0 & 3 & 4 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">22.</span> \( \begin{pmatrix} 0 & 0 & 3 & 4 \\ 0 & 0 & 2 & 3 \\ 2 & 3 & 0 & 0 \\ 3 & 4 & 0 & 0 \end{pmatrix} \)</div>
+        </div>
+
+        <div class="exercise">
+            <span class="ex-num">23.</span> Muestre que si \(A, B\) y \(C\) son matrices invertibles, entonces \(ABC\) es invertible y \((ABC)^{-1} = C^{-1}B^{-1}A^{-1}\).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">24.</span> Si \(A_1, A_2, \dots, A_m\) son matrices invertibles de \(n \times n\), muestre que \(A_1 \cdot A_2, \dots, A_m\) es invertible y calcule su inversa.
+        </div>
+        <div class="exercise">
+            <span class="ex-num">25.</span> Muestre que la matriz \( \begin{pmatrix} 3 & -4 \\ -2 & -3 \end{pmatrix} \) es su propia inversa.
+        </div>
+        <div class="exercise">
+            <span class="ex-num">26.</span> Muestre que la matriz \( \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} \) es su propia inversa si \(A = \pm I\) o si \(a_{11} = -a_{22}\) y \(a_{21}a_{12} = 1 - a_{11}^2\).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">27.</span> Encuentre el vector de producción \(\mathbf{x}\) en el modelo de insumo-producto de Leontief si \(n=3\), \(\mathbf{e} = \begin{pmatrix} 40 \\ 10 \\ 10 \end{pmatrix}\) y \( A = \begin{pmatrix} 1/5 & 1/5 & 0 \\ 2/5 & 2/5 & 3/5 \\ 1/5 & 1/10 & 2/5 \end{pmatrix} \).
+        </div>
     </div>
 
-    <!-- Respuestas -->
-    <div class="answers-footer">
-        <div>Respuestas a la autoevaluación</div>
-        <div>
-            <span>I) c)</span>
-            <span>II) b)</span>
-            <span>III) c)</span>
-            <span>IV) d)</span>
-            <span>V) c)</span>
+    <div class="section">
+        <div class="instruction">
+            En los problemas 38 a 41 se da una matriz. En cada caso demuestre que la matriz no es invertible encontrando un vector \(\mathbf{x}\) diferente de cero tal que \(A\mathbf{x} = \mathbf{0}\).
+        </div>
+        <div class="grid-4-col">
+            <div class="exercise"><span class="ex-num">38.</span> \( \begin{pmatrix} 2 & -1 \\ -4 & 2 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">39.</span> \( \begin{pmatrix} a & 1 & 0 \\ -1 & a & 1 \\ 1-2a & -2+a & 1 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">40.</span> \( \begin{pmatrix} 7 & -21 & 9 \\ 9 & -27 & 3 \\ -8 & 24 & -8 \end{pmatrix} \)</div>
+            <div class="exercise"><span class="ex-num">41.</span> \( \begin{pmatrix} 9 & 3 & 5 \\ -3 & 7 & -1 \\ 3 & 17 & 3 \end{pmatrix} \)</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="exercise">
+            <span class="ex-num">42.</span> Sean \(A, B, F\) y \(M\) matrices invertibles de \(m \times n\). Si \(M = I + F(\lambda I - A_F)^{-1}B\) y \(A_F = A + BF\). Demuestre que \(M^{-1} = B^{-1}(\lambda I - A_F)(\lambda I - A)^{-1}B\).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">43.</span> Sean \(A, B, C, D, F\) y \(N\) matrices invertibles de \(m \times n\). Si \(N = D + C_F(\lambda I - A_F)^{-1}B\), \(M^{-1} = B^{-1}(\lambda I - A_F)(\lambda I - A)^{-1}B\), \(CF = C + DF\) y \(A_F = A + BF\). Demuestre que \(NM^{-1} = D + C(\lambda I - A)^{-1}B\).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">44.</span> Una fábrica de muebles de calidad tiene dos divisiones: un taller de máquinas herramienta donde se fabrican las partes de los muebles, y una división de ensamble y terminado en la que se unen las partes para obtener el producto final. Suponga que se tienen 12 empleados en el taller y 20 en la división y que cada empleado trabaja 8 horas. Suponga también que se producen únicamente dos artículos: sillas y mesas. Una silla requiere \(\frac{384}{17}\) horas de maquinado y \(\frac{480}{17}\) horas de ensamble y terminado. Una mesa requiere \(\frac{240}{17}\) horas de maquinado y \(\frac{640}{17}\) horas de ensamble y terminado. Suponiendo que se tiene una demanda ilimitada de estos productos y que el fabricante desea mantener ocupados a todos sus empleados, ¿cuántas sillas y cuántas mesas puede producir esta fábrica al día?
+        </div>
+        <div class="exercise">
+            <span class="ex-num">45.</span> La alacena de ingredientes mágicos de una hechicera contiene 10 onzas de tréboles de cuatro hojas molidos y 14 onzas de raíz de mandrágora en polvo. La alacena se resurte en forma automática siempre y cuando ella termine con todo lo que tiene. Una poción de amor requiere \(\frac{1}{13}\) onzas de tréboles y \(2\frac{2}{13}\) onzas de mandrágora. Una receta de un conocido tratamiento para el resfriado común requiere \(5\frac{5}{13}\) onzas de tréboles y \(10\frac{10}{13}\) onzas de mandrágora. ¿Qué cantidad de la poción de amor y del remedio para resfriado debe combinar la hechicera para usar toda la reserva en su alacena?
+        </div>
+        <div class="exercise">
+            <span class="ex-num">46.</span> Un granjero nutre a su ganado con una mezcla de dos tipos de alimento. Una unidad estándar del alimento \(A\) proporciona a un novillo 10% del requerimiento diario de proteína y 15% del de carbohidratos. Si el granjero quiere alimentar a su ganado con 100% de los requerimientos mínimos diarios de proteínas y carbohidratos, ¿cuántas unidades de cada tipo de alimento debe recibir un novillo al día?
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="exercise">
+            <span class="ex-num">47.</span> Una versión muy simplificada de una tabla de insumo-producto para la economía de Israel en 1958 divide dicha economía en tres sectores —agricultura, manufactura y energía— con los siguientes resultados.
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Agricultura</th>
+                        <th>Manufactura</th>
+                        <th>Energía</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Agricultura</strong></td><td>0.293</td><td>0</td><td>0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Manufactura</strong></td><td>0.014</td><td>0.207</td><td>0.017</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Energía</strong></td><td>0.044</td><td>0.010</td><td>0.216</td>
+                    </tr>
+                </tbody>
+            </table>
+            a) ¿Cuántas unidades de producción agrícola se requieren para obtener una unidad de producto agrícola?<br>
+            b) ¿Cuántas unidades de producción agrícola se requieren para obtener 200 000 unidades de productos de esta naturaleza?<br>
+            c) ¿Cuántas unidades de producción agrícola se requieren para obtener 50 000 unidades de energía?<br>
+            d) ¿Cuántas unidades de energía se requieren para obtener 50 000 unidades de productos agrícolas?
+        </div>
+
+        <div class="exercise">
+            <span class="ex-num">48.</span> Si se continúa con el problema 47, las exportaciones (en miles de libras israelíes) en 1958 fueron las siguientes:
+            <table class="data-table" style="max-width: 400px;">
+                <tbody>
+                    <tr><td><strong>Agricultura</strong></td><td>13 213</td></tr>
+                    <tr><td><strong>Manufactura</strong></td><td>17 597</td></tr>
+                    <tr><td><strong>Energía</strong></td><td>1 786</td></tr>
+                </tbody>
+            </table>
+            a) Calcule la matriz tecnológica y la de Leontief.<br>
+            b) Determine el valor en libras israelíes de los productos agrícolas, la energía y los artículos manufacturados necesarios para hacer funcionar este modelo y exportar el valor establecido de cada producto.
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="instruction">
+            En los problemas 49 a 56 calcule la forma escalonada por renglones de la matriz dada y utilícela para determinar en forma directa si es invertible.
+        </div>
+        <div class="grid-4-col">
+            <div class="exercise"><span class="ex-num">49.</span> La matriz del problema 4.</div>
+            <div class="exercise"><span class="ex-num">50.</span> La matriz del problema 1.</div>
+            <div class="exercise"><span class="ex-num">51.</span> La matriz del problema 5.</div>
+            <div class="exercise"><span class="ex-num">52.</span> La matriz del problema 10.</div>
+            <div class="exercise"><span class="ex-num">53.</span> La matriz del problema 13.</div>
+            <div class="exercise"><span class="ex-num">54.</span> La matriz del problema 16.</div>
+            <div class="exercise"><span class="ex-num">55.</span> La matriz del problema 18.</div>
+            <div class="exercise"><span class="ex-num">56.</span> La matriz del problema 19.</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="exercise">
+            <span class="ex-num">57.</span> Sea \( A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} \) y suponga que \( a_{11}a_{22} - a_{12}a_{21} \neq 0 \). Derive la fórmula (2.4.12) mediante reducción por renglones de la matriz aumentada \( \left(\begin{array}{cc|cc} a_{11} & a_{12} & 1 & 0 \\ a_{21} & a_{22} & 0 & 1 \end{array}\right) \).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">58.</span> Demuestre los incisos i), ii) y iv) del teorema 2.4.6.
+        </div>
+        <div class="exercise">
+            <span class="ex-num">59.</span> Calcule la inversa de \( \begin{pmatrix} I & A \\ 0 & I \end{pmatrix} \) donde \(A\) es una matriz cuadrada. [<em>Sugerencia: Revise la multiplicación de matrices por bloques en la página 71.</em>]
+        </div>
+        <div class="exercise">
+            <span class="ex-num">60.</span> Considere que \(A_{11}\) y \(A_{22}\) son invertibles y encuentre la inversa de \( \begin{pmatrix} A_{11} & 0 \\ A_{21} & A_{22} \end{pmatrix} \).
+        </div>
+        <div class="exercise">
+            <span class="ex-num">61.</span> Si \(A\) y \(B\) son matrices invertibles, resuelva para \(X\):<br><br>
+            a) \(BXA = B\)<br>
+            b) \(A^{-1}X = A\)
         </div>
     </div>
 
