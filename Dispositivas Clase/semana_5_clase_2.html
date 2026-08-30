@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 2: Invertibilidad, Transposición y Matrices Simétricas</title>
+    
+    <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --bg-body: #1a1a1a;
+            --bg-wrapper: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --card-bg: #f4f6f9;
+            --card-blue-bg: #eef4fb;
+            --card-blue-text: #1565c0;
+            --card-purple-bg: #f4f2fb;
+            --card-purple-text: #6543ed;
+            --card-red-bg: #fdf2f2;
+            --card-red-text: #ef5350;
+            --nav-bg: #2c3e50;
+            --code-bg: #e0e0e0;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-wrapper: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --card-bg: #2a2d32;
+            --card-blue-bg: #1a2736;
+            --card-blue-text: #64b5f6;
+            --card-purple-bg: #251f38;
+            --card-purple-text: #b39ddb;
+            --card-red-bg: #361f1f;
+            --card-red-text: #ef9a9a;
+            --nav-bg: #111111;
+            --code-bg: #333333;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+        .presentation-wrapper {
+            width: 100%;
+            max-width: 1050px;
+        }
+        .slides-container {
+            background: var(--bg-wrapper);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .slide {
+            display: none;
+            padding: clamp(30px, 5vw, 50px);
+            box-sizing: border-box;
+            min-height: 550px;
+            flex-direction: column;
+            justify-content: space-between;
+            color: var(--text-main);
+        }
+        .slide.active {
+            display: flex;
+        }
+        h1 {
+            border-bottom: 1px solid var(--code-bg);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+            color: var(--text-main);
+            width: 100%;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-sizing: border-box;
+            color: var(--text-main);
+        }
+        .card-blue { background-color: var(--card-blue-bg); color: var(--card-blue-text); }
+        .card-purple { background-color: var(--card-purple-bg); color: var(--card-purple-text); }
+        .card-red { background-color: var(--card-red-bg); color: var(--card-red-text); }
+        
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            padding: 15px 30px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .nav-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .nav-btn:hover { background-color: #0d47a1; }
+        .nav-btn:disabled { background-color: #555; cursor: not-allowed; }
+        
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            background: white;
+            color: var(--nav-bg);
+        }
+
+        code { background: var(--code-bg); padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        ul, ol { color: var(--text-main); }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="presentation-wrapper">
+    <div class="slides-container">
+
+        <!-- DIAPOSITIVA 1 -->
+        <div class="slide active">
+            <div>
+                <h1>Espejos de Datos: La Matriz Transpuesta y Sistemas Simétricos</h1>
+                <div class="grid-2">
+                    <div class="card card-blue">
+                        <h3 style="margin-top:0;">Meta de Aprendizaje</h3>
+                        <p style="margin:0;">Identificar y aplicar las propiedades de las matrices transpuestas, simétricas y su relación con la invertibilidad en modelos de redes.</p>
+                    </div>
+                    <div class="card card-purple">
+                        <h3 style="margin-top:0;">Ruta de la Sesión</h3>
+                        <ul style="margin:0; padding-left: 20px;">
+                            <li><strong>Reto:</strong> La Red de Transporte.</li>
+                            <li><strong>Concepto:</strong> Transposición y Simetría.</li>
+                            <li><strong>Acción:</strong> Optimizando almacenamiento de datos.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; text-align: right; margin:0;">Clase 2 · Duración: 1 Hora</p>
+        </div>
+
+        <!-- DIAPOSITIVA 2 -->
+        <div class="slide">
+            <div>
+                <h1>Apertura: El Reto de la Red (10 min)</h1>
+                <div class="card card-blue" style="margin-bottom: 20px; font-size: 0.95rem;">
+                    <p style="margin:0;"><strong>Contexto Visual:</strong> Grafo bidireccional simple (ej. 3 ciudades conectadas por carreteras de doble vía donde la distancia A \(\to\) B es igual a B \(\to\) A) junto a su matriz de adyacencia o distancias.</p>
+                </div>
+                <div class="card card-red">
+                    <h3 style="margin-top:0; color:var(--card-red-text);">Preguntas Motivadoras</h3>
+                    <ul style="margin:0; padding-left: 20px;">
+                        <li>Si trazamos una línea diagonal desde la esquina superior izquierda, ¿qué patrón notan entre los números de arriba y los de abajo?</li>
+                        <li>Si intercambiamos las filas por las columnas, ¿cambia la información de nuestro mapa?</li>
+                        <li>Si este mapa tuviera un millón de ciudades, ¿necesitamos guardar todos los datos en la memoria del computador?</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; text-align: right; margin:0;">Actividad Grupal</p>
+        </div>
+
+        <!-- DIAPOSITIVA 3 -->
+        <div class="slide">
+            <div>
+                <h1>Exploración: Hipótesis de Costos (5 min)</h1>
+                <div class="card card-purple" style="text-align: center; padding: 40px;">
+                    <h2 style="color: var(--card-purple-text); margin-top:0;">Misión de los Grupos</h2>
+                    <p style="font-size: 1.1rem; margin-bottom: 20px;">Reúnanse en parejas. Escriban una matriz \(3 \times 3\) que represente los costos de envío entre 3 sucursales comerciales, asumiendo que el costo de ida siempre es idéntico al costo de vuelta.</p>
+                    <p style="font-style: italic; margin-top: 20px;">Regla: Tienen 3 minutos. Deben identificar dónde van los ceros (costo de enviarse a sí mismo).</p>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; text-align: right; margin:0;">Trabajo en Parejas</p>
+        </div>
+
+        <!-- DIAPOSITIVA 4 -->
+        <div class="slide">
+            <div>
+                <h1>Desarrollo Conceptual: Transposición y Simetría (10 min)</h1>
+                <div class="grid-2">
+                    <div class="card card-blue">
+                        <h3 style="margin-top:0;">Teoría Mínima</h3>
+                        <ul style="margin:0; padding-left: 20px; line-height: 1.6;">
+                            <li><strong>Transpuesta (\(A^T\)):</strong> Las filas se vuelven columnas.</li>
+                            <li><strong>Simétrica:</strong> Matriz donde \(A = A^T\) ("espejo" en la diagonal principal).</li>
+                            <li><strong>Propiedad Clave:</strong> \((AB)^T = B^T A^T\) y \((A^{-1})^T = (A^T)^{-1}\).</li>
+                        </ul>
+                    </div>
+                    <div class="card card-purple">
+                        <h3 style="margin-top:0;">Puente Computacional</h3>
+                        <p>Código en Python:</p>
+                        <code>A.T</code> (en NumPy)
+                        <p style="margin-top: 15px; font-weight: bold; color: var(--card-purple-text);">Nota para estudiantes:</p>
+                        <p style="margin:0; font-size: 0.9rem;">"En el laboratorio del lunes veremos cómo la simetría permite a Python calcular operaciones en la mitad del tiempo".</p>
+                    </div>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; text-align: right; margin:0;">Exposición Docente</p>
+        </div>
+
+        <!-- DIAPOSITIVA 5 -->
+        <div class="slide">
+            <div>
+                <h1>Actividad Guiada y Colaborativa (15 min)</h1>
+                <p style="margin-top:0;"><strong>El Problema Controlado:</strong> Comprobar la propiedad \((AB)^T = B^T A^T\).</p>
+                <div class="grid-2" style="margin-top: 20px;">
+                    <div class="card card-blue">
+                        <h3 style="margin-top:0;">Estudiante 1</h3>
+                        <p style="margin:0;">Multiplica \(A \cdot B\) usando matrices \(2 \times 2\) sencillas, y luego calcula la transpuesta del resultado.</p>
+                    </div>
+                    <div class="card card-purple">
+                        <h3 style="margin-top:0;">Estudiante 2</h3>
+                        <p style="margin:0;">Transpone \(B\), transpone \(A\), y luego multiplica \(B^T \cdot A^T\).</p>
+                    </div>
+                </div>
+            </div>
+            <p style="color: var(--card-red-text); font-weight: bold; font-size: 0.9rem; text-align: right; margin:0;">Punto de Control: Cuidado con el orden (\(A \cdot B \neq B \cdot A\))</p>
+        </div>
+
+        <!-- DIAPOSITIVA 6 -->
+        <div class="slide">
+            <div>
+                <h1>Aplicación: Matriz de Covarianza en Finanzas (10 min)</h1>
+                <div class="card card-blue" style="margin-bottom: 20px;">
+                    <h3 style="margin-top:0;">El Escenario en Data Science</h3>
+                    <p style="margin:0;">Matriz de correlación entre 4 acciones (Apple, Google, Amazon, Tesla). Por naturaleza matemática, la correlación entre Apple y Google es exactamente la misma que entre Google y Apple.</p>
+                </div>
+                <div class="card card-red">
+                    <h3 style="margin-top:0; color:var(--card-red-text);">Reto de Análisis</h3>
+                    <ol style="margin:0; padding-left: 20px;">
+                        <li>Identifiquen por qué esta matriz es obligatoriamente simétrica.</li>
+                        <li>Si sabemos que la matriz de correlación es invertible (determinante distinto de cero), ¿su matriz transpuesta también lo es? Justifiquen usando propiedades.</li>
+                    </ol>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; text-align: right; margin:0;">Práctica Deliberada</p>
+        </div>
+
+        <!-- DIAPOSITIVA 7 -->
+        <div class="slide">
+            <div>
+                <h1>Cierre y Reflexión (5 min)</h1>
+                <div class="card card-purple" style="padding: 30px;">
+                    <h3 style="margin-top:0; color: var(--card-purple-text);">Preguntas de Alto Nivel</h3>
+                    <ol style="font-size: 1.1rem; line-height: 1.8; margin-bottom: 0;">
+                        <li>Si una base de datos financiera almacena una matriz simétrica de \(10,000 \times 10,000\), ¿por qué los ingenieros de software configuran el sistema para guardar solo el triángulo superior de los datos?</li>
+                        <li>¿Cómo se relaciona la invertibilidad con la pérdida de información? (Si el determinante es 0, el sistema "colapsa" y no se puede invertir).</li>
+                    </ol>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; text-align: right; margin:0;">Plenaria</p>
+        </div>
+
+        <!-- DIAPOSITIVA 8 -->
+        <div class="slide">
+            <div>
+                <h1>Actividad Final de Consolidación (5 min)</h1>
+                <div class="card card-blue" style="padding: 25px; margin-bottom: 15px;">
+                    <h3 style="margin-top:0;">Mini-Quiz (Verdadero o Falso)</h3>
+                    <ul style="margin:0; padding-left: 20px; line-height: 1.6;">
+                        <li>Toda matriz diagonal es simétrica. <strong>(V)</strong></li>
+                        <li>Si transponemos una matriz, su determinante cambia. <strong>(F)</strong></li>
+                        <li>\((A+B)^T = A^T + B^T\) <strong>(V)</strong></li>
+                    </ul>
+                </div>
+                <div class="card card-purple" style="padding: 20px; text-align: center;">
+                    <p style="margin:0; font-weight: bold;">Ticket de Salida: Construye en un papel tu propia matriz simétrica \(4 \times 4\) y entrégala al salir.</p>
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.9rem; text-align: right; margin:0;">Evaluación Formativa</p>
+        </div>
+
+    </div>
+
+    <!-- Barra de Navegación con Selector de Tema -->
+    <div class="nav-bar">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
+        <div class="nav-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+            <span id="slide-indicator">Diapositiva 1 de 8</span>
+        </div>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slide-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+        indicator.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+        
+        if (window.MathJax) {
+            MathJax.typeset();
+        }
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'Modo Claro';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.textContent = 'Modo Oscuro';
+        }
+    }
+</script>
+
+</body>
+</html>

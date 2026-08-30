@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafo Bidireccional y Matriz de Adyacencia</title>
+    
+    <style>
+        :root {
+            --bg-body: #1a1a1a;
+            --bg-wrapper: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --card-bg: #f4f6f9;
+            --card-blue-bg: #eef4fb;
+            --card-blue-text: #1565c0;
+            --nav-bg: #2c3e50;
+            --node-fill: #e3f2fd;
+            --node-stroke: #1565c0;
+            --edge-color: #718096;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-wrapper: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --card-bg: #2a2d32;
+            --card-blue-bg: #1a2736;
+            --card-blue-text: #64b5f6;
+            --nav-bg: #111111;
+            --node-fill: #263238;
+            --node-stroke: #64b5f6;
+            --edge-color: #a0a0a0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+        .presentation-wrapper {
+            width: 100%;
+            max-width: 900px;
+        }
+        .slides-container {
+            background: var(--bg-wrapper);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            padding: 40px;
+            color: var(--text-main);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        h1 {
+            font-size: 1.5rem;
+            border-bottom: 1px solid var(--text-muted);
+            padding-bottom: 12px;
+            margin-top: 0;
+            color: var(--text-main);
+        }
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid var(--text-muted);
+            padding: 10px;
+            text-align: center;
+            color: var(--text-main);
+        }
+        th {
+            background-color: var(--card-blue-bg);
+            color: var(--card-blue-text);
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            padding: 15px 30px;
+            margin-top: 30px;
+            border-radius: 8px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            background: white;
+            color: var(--nav-bg);
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="presentation-wrapper">
+    <div class="slides-container">
+        <h1>Representación de un Grafo Bidireccional y su Matriz de Distancias</h1>
+        
+        <div class="content-grid">
+            <!-- Visualización del Grafo con SVG -->
+            <div class="card">
+                <h3 style="margin-top:0; color: var(--card-blue-text);">Grafo de 3 Ciudades (A, B, C)</h3>
+                <svg viewBox="0 0 300 220" width="100%" height="200">
+                    <!-- Aristas bidireccionales -->
+                    <line x1="60" y1="160" x2="150" y2="50" stroke="var(--edge-color)" stroke-width="3"/>
+                    <text x="90" y="95" fill="var(--text-main)" font-size="12" font-weight="bold">d(A,B)</text>
+                    
+                    <line x1="150" y1="50" x2="240" y2="160" stroke="var(--edge-color)" stroke-width="3"/>
+                    <text x="200" y="95" fill="var(--text-main)" font-size="12" font-weight="bold">d(B,C)</text>
+                    
+                    <line x1="60" y1="160" x2="240" y2="160" stroke="var(--edge-color)" stroke-width="3"/>
+                    <text x="150" y="175" fill="var(--text-main)" font-size="12" font-weight="bold">d(A,C)</text>
+
+                    <!-- Nodos (Ciudades) -->
+                    <circle cx="60" cy="160" r="25" fill="var(--node-fill)" stroke="var(--node-stroke)" stroke-width="3"/>
+                    <text x="60" y="166" fill="var(--text-main)" font-size="18" font-weight="bold" text-anchor="middle">A</text>
+
+                    <circle cx="150" cy="50" r="25" fill="var(--node-fill)" stroke="var(--node-stroke)" stroke-width="3"/>
+                    <text x="150" y="56" fill="var(--text-main)" font-size="18" font-weight="bold" text-anchor="middle">B</text>
+
+                    <circle cx="240" cy="160" r="25" fill="var(--node-fill)" stroke="var(--node-stroke)" stroke-width="3"/>
+                    <text x="240" y="166" fill="var(--text-main)" font-size="18" font-weight="bold" text-anchor="middle">C</text>
+                </svg>
+            </div>
+
+            <!-- Matriz de Adyacencia -->
+            <div class="card">
+                <h3 style="margin-top:0; color: var(--card-blue-text);">Matriz de Adyacencia</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th><th>A</th><th>B</th><th>C</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>A</th><td>0</td><td>d(A,B)</td><td>d(A,C)</td>
+                        </tr>
+                        <tr>
+                            <th>B</th><td>d(B,A)</td><td>0</td><td>d(B,C)</td>
+                        </tr>
+                        <tr>
+                            <th>C</th><td>d(C,A)</td><td>d(C,B)</td><td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.85rem; margin-top: 15px; color: var(--text-muted);">
+                    Al ser carreteras de doble vía, \(d(A,B) = d(B,A)\). Esto evidencia una <strong>matriz simétrica</strong>.
+                </p>
+            </div>
+        </div>
+
+        <!-- Barra de Control -->
+        <div class="nav-bar">
+            <span>Ejemplo de Red de Transporte</span>
+            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'Modo Claro';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.textContent = 'Modo Oscuro';
+        }
+    }
+</script>
+
+</body>
+</html>

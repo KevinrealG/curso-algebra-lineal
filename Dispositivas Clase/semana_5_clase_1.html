@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 1: Solución de Sistemas y la Matriz Inversa 2x2</title>
+    
+    <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1a1a1a;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .presentation-wrapper {
+            width: 100%;
+            max-width: 1050px;
+        }
+        .slides-container {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        .slide {
+            display: none;
+            padding: clamp(30px, 5vw, 50px);
+            box-sizing: border-box;
+            min-height: 550px;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .slide.active {
+            display: flex;
+        }
+        h1 {
+            border-bottom: 1px solid #e0e0e0;
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+            color: #2c3e50;
+            width: 100%;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+        .card {
+            background-color: #f4f6f9;
+            border-radius: 12px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .card-blue { background-color: #eef4fb; color: #1565c0; }
+        .card-purple { background-color: #f4f2fb; color: #6543ed; }
+        .card-red { background-color: #fdf2f2; color: #ef5350; }
+        
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2c3e50;
+            padding: 15px 30px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            color: white;
+        }
+        .nav-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .nav-btn:hover { background-color: #0d47a1; }
+        .nav-btn:disabled { background-color: #555; cursor: not-allowed; }
+        code { background: #e0e0e0; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+<div class="presentation-wrapper">
+    <div class="slides-container">
+
+        <!-- DIAPOSITIVA 1 -->
+        <div class="slide active">
+            <div>
+                <h1>Matriz Inversa \(2 \times 2\) y SEL</h1>
+                <div class="grid-2">
+                    <div class="card card-blue">
+                        <h3 style="margin-top:0;">Meta de Aprendizaje</h3>
+                        <p style="margin:0;">Modelar sistemas de ecuaciones matriciales y utilizar el determinante y la matriz inversa para optimizar decisiones de producción.</p>
+                    </div>
+                    <div class="card card-purple">
+                        <h3 style="margin-top:0;">Ruta de la Sesión</h3>
+                        <ul style="margin:0; padding-left: 20px;">
+                            <li><strong>Reto:</strong> La fábrica de muebles.</li>
+                            <li><strong>Concepto:</strong> El determinante y la inversa \(2 \times 2\).</li>
+                            <li><strong>Acción:</strong> Respuestas dinámicas al mercado.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <p style="color: #7f8c8d; font-size: 0.9rem; text-align: right; margin:0;">Álgebra Lineal | Kevin Sossa</p>
+        </div>
+
+        <!-- DIAPOSITIVA 2 -->
+        <div class="slide">
+            <div>
+                <h1>Apertura: El Reto de la Fábrica (10 min)</h1>
+                <div class="card card-blue" style="margin-bottom: 20px; font-size: 0.95rem;">
+                    <p style="margin:0;"><strong>El Problema:</strong> 44.</span> Una fábrica de muebles de calidad tiene dos divisiones: un taller de máquinas herramienta donde se fabrican las partes de los muebles, y una división de ensamble y terminado en la que se unen las partes para obtener el producto final. Suponga que se tienen 12 empleados en el taller y 20 en la división y que cada empleado trabaja 8 horas. Suponga también que se producen únicamente dos artículos: sillas y mesas. Una silla requiere \(\frac{384}{17}\) horas de maquinado y \(\frac{480}{17}\) horas de ensamble y terminado. Una mesa requiere \(\frac{240}{17}\) horas de maquinado y \(\frac{640}{17}\) horas de ensamble y terminado. Suponiendo que se tiene una demanda ilimitada de estos productos y que el fabricante desea mantener ocupados a todos sus empleados, ¿cuántas sillas y cuántas mesas puede producir esta fábrica al día? </p>
+        
+                </div>
+                <div class="card card-red">
+                    <h3 style="margin-top:0; color:#ef5350;">Preguntas Motivadoras</h3>
+                    <ul style="margin:0; padding-left: 20px;">
+                        <li>¿Cómo estructuramos horas requeridas vs. disponibles en un modelo matricial?</li>
+                        <li>Si mañana faltan 3 empleados, ¿recalculamos todo desde cero con sustitución?</li>
+                        <li>¿Podemos construir un "multiplicador universal" para cualquier hora disponible?</li>
+                    </ul>
+                </div>
+            </div>
+            <p style="color: #7f8c8d; font-size: 0.9rem; text-align: right; margin:0;">Álgebra Lineal | Kevin Sossa</p>
+        </div>
+
+        <!-- DIAPOSITIVA 3 -->
+        <div class="slide">
+            <div>
+                <h1>Exploración: Planteamiento del Modelo (5 min)</h1>
+                <div class="card card-purple" style="text-align: center; padding: 40px;">
+                    <h2 style="color: #6543ed; margin-top:0;">Misión de los Grupos</h2>
+                    <p style="font-size: 1.2rem; margin-bottom: 20px;">Reúnanse en parejas. Tienen 5 minutos para extraer los datos, calcular el total de horas disponibles y escribir el sistema en la forma matricial:</p>
+                    <div style="font-size: 2rem; font-weight: bold; font-family: 'Cambria Math', serif; color: #1565c0;">
+                        \(A \cdot X = B\)
+                    </div>
+                    <p style="font-style: italic; color: #555; margin-top: 20px;">Regla: No intenten resolverlo todavía. Solo construyan el modelo.</p>
+                </div>
+            </div>
+            <p style="color: #7f8c8d; font-size: 0.9rem; text-align: right; margin:0;">Trabajo en Parejas</p>
+        </div>
+
+        <!-- DIAPOSITIVA 4 -->
+        <div class="slide">
+            <div>
+                <h1>Desarrollo Conceptual: La Herramienta Inversa (10 min)</h1>
+                <div class="grid-2">
+                    <div class="card card-blue">
+                        <h3 style="margin-top:0;">Teoría Mínima</h3>
+                        <p style="margin: 0 0 10px 0;">Despejando de \(AX = B\):<br><strong>\(X = A^{-1}B\)</strong></p>
+                        <p style="margin: 0 0 5px 0;">Fórmula \(2 \times 2\):<br>\(A^{-1} = \frac{1}{\det(A)} \begin{pmatrix} d & -b \\ -c & a \end{pmatrix}\)</p>
+                        <p style="margin:0;">\(\det(A) = (ad) - (bc)\)</p>
+                    </div>
+                    <div class="card card-purple">
+                        <h3 style="margin-top:0;">Puente Computacional</h3>
+                        <p>En Python usamos herramientas como SymPy para simplificar procesos complejos:</p>
+                        <code>sympy.Matrix(A).inv()</code>
+                        <p style="margin-top: 15px; font-weight: bold; color: #ef5350;">Verificación:</p>
+                        <p style="margin:0; font-size: 0.9rem;">Si \(\det(A) = 0\), ¿qué significaría en la vida real?</p>
+                    </div>
+                </div>
+            </div>
+            <p style="color: #7f8c8d; font-size: 0.9rem; text-align: right; margin:0;">Álgebra Lineal | Kevin Sossa</p>
+        </div>
+
+        <!-- DIAPOSITIVA 5 -->
+        <div class="slide">
+            <div>
+                <h1>Actividad Guiada y Colaborativa (15 min)</h1>
+                <p style="margin-top:0;">Aplicamos sobre el modelo de la fábrica:</p>
+                <div style="text-align: center; margin-bottom: 20px; font-family: 'Cambria Math', serif; font-size: 1.1rem; color: #1565c0;">
+                    \(A = \begin{pmatrix} \frac{384}{17} & \frac{240}{17} \\ \frac{480}{17} & \frac{640}{17} \end{pmatrix}\) y \(B = \begin{pmatrix} 96 \\ 160 \end{pmatrix}\)
+                </div>
+                <div class="grid-2">
+                    
+                </div>
+            </div>
+            <p style="color: #ef5350; font-weight: bold; font-size: 0.9rem; text-align: right; margin:0;">Álgebra Lineal | Kevin Sossa\(A^{-1}\)</p>
+        </div>
+
+        <!-- DIAPOSITIVA 6 -->
+        <div class="slide">
+            <div>
+                <h1>Aplicación: El Mundo Real (10 min)</h1>
+                <div class="card card-red" style="margin-bottom: 20px;">
+                    <h3 style="margin-top:0; color:#ef5350;">Escenario Dinámico</h3>
+                    <p style="margin:0;">Por una falla eléctrica, hoy la gerencia reporta disponibilidad limitada: <strong>80 horas de maquinado</strong> y <strong>120 horas de ensamble</strong>.</p>
+                </div>
+                <div class="card card-blue" style="text-align: center;">
+                    <h3 style="margin-top:0;">El Reto (3 minutos)</h3>
+                    <p style="margin:0; font-size: 1.1rem;">Usando la matriz inversa \(A^{-1}\) calculada previamente, ¿cuántas sillas y mesas se pueden producir hoy?</p>
+                </div>
+            </div>
+            <p style="color: #7f8c8d; font-size: 0.9rem; text-align: right; margin:0;">Álgebra Lineal | Kevin Sossa</p>
+        </div>
+
+        <!-- DIAPOSITIVA 7 -->
+        <div class="slide">
+            <div>
+                <h1>Para ustedes</h1>
+                <div class="card card-blue" style="margin-bottom: 20px; font-size: 0.95rem;">
+                    <p style="margin:0;"><strong>El Problema:</strong> <span class="ex-num">45.</span> La alacena de ingredientes mágicos de una hechicera contiene 10 onzas de tréboles de cuatro hojas molidos y 14 onzas de raíz de mandrágora en polvo. La alacena se resurte en forma automática siempre y cuando ella termine con todo lo que tiene. Una poción de amor requiere \(\frac{1}{13}\) onzas de tréboles y \(2\frac{2}{13}\) onzas de mandrágora. Una receta de un conocido tratamiento para el resfriado común requiere \(5\frac{5}{13}\) onzas de tréboles y \(10\frac{10}{13}\) onzas de mandrágora. ¿Qué cantidad de la poción de amor y del remedio para resfriado debe combinar la hechicera para usar toda la reserva en su alacena?</p>
+                </div>
+                
+            </div>
+            <p style="color: #7f8c8d; font-size: 0.9rem; text-align: right; margin:0;">Álgebra Lineal | Kevin Sossa</p>
+        </div>
+
+        <!-- DIAPOSITIVA 8 -->
+        
+
+    </div>
+
+    <!-- Barra de Navegación -->
+    <div class="nav-bar">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
+        <span id="slide-indicator">Diapositiva 1 de 8</span>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slide-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+        indicator.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+        
+        // Forzar actualización de MathJax al cambiar de diapositiva
+        if (window.MathJax) {
+            MathJax.typeset();
+        }
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+</script>
+
+</body>
+</html>
