@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informe de Laboratorio - Álgebra Lineal UTB</title>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Álgebra Lineal · Universidad Tecnológica de Bolívar</span>
+<h1>Informe de Laboratorio</h1>
+<h2>Ajuste de Curva Cúbica mediante Sistemas de Ecuaciones Lineales[cite: 6]</h2>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#datos">Datos del Estudiante</a></li>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#tematicas">Temáticas</a></li>
+<li><a href="#problema">Problema de Aplicación</a></li>
+<li><a href="#procedimiento">Procedimiento</a></li>
+<li><a href="#tabla-resultados">Resultados</a></li>
+<li><a href="#interpretacion">Preguntas de Interpretación</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="datos" class="section card">
+    <h2 class="section-title">1. Datos del Estudiante[cite: 6]</h2>
+    <ul>
+        <li><strong>Nombre del estudiante:</strong> Sebastián Pérez T00098921, Jesús cuevas T00098795[cite: 6]</li>
+        <li><strong>Programa:</strong> ingeniería química[cite: 6]</li>
+        <li><strong>Facultad:</strong> ciencias básicas[cite: 6]</li>
+        <li><strong>Grupo:</strong> Z2[cite: 6]</li>
+        <li><strong>Nombre y numero del laboratorio:</strong> laboratorio 1, solución de sistemas de ecuaciones lineales[cite: 6]</li>
+        <li><strong>NRC:</strong> 2653, CBAS-M04A[cite: 6]</li>
+        <li><strong>Fecha:</strong> miercoles, 19 de agosto[cite: 6]</li>
+    </ul>
+</section>
+
+<section id="competencias" class="section card">
+    <h2 class="section-title">2. Competencias por Desarrollar[cite: 6]</h2>
+    <ul>
+        <li>Capacidad para modelar problemas prácticos y reales utilizando sistemas de ecuaciones lineales[cite: 6].</li>
+        <li>Habilidad para aplicar métodos directos de solución como la eliminación gaussiana y el cálculo de la forma escalonada reducida por renglones (RREF)[cite: 6].</li>
+        <li>Dominio del uso de herramientas computacionales como Python (SymPy) para la resolución analítica y simbólica de sistemas matriciales[cite: 6].</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">3. Resultados de Aprendizaje[cite: 6]</h2>
+    <ul>
+        <li>Plantea correctamente la matriz de coeficientes y el vector de términos independientes a partir de un conjunto de puntos experimentales o datos dados[cite: 6].</li>
+        <li>Resuelve sistemas de ecuaciones lineales cuadrados utilizando operaciones elementales entre filas[cite: 6].</li>
+        <li>Interpreta el significado matemático de los coeficientes obtenidos en el modelo de ajuste de curva y verifica su validez reemplazando los puntos originales[cite: 6].</li>
+    </ul>
+</section>
+
+<section id="tematicas" class="section card">
+    <h2 class="section-title">4. Temáticas del Laboratorio[cite: 6]</h2>
+    <ul>
+        <li>Sistemas de Ecuaciones Lineales (SEL)[cite: 6].</li>
+        <li>Matrices, Matriz Aumentada y Eliminación Gaussiana[cite: 6].</li>
+        <li>Forma Escalonada Reducida por Renglones (RREF)[cite: 6].</li>
+        <li>Ajuste de curvas e interpolación polinómica (Ecuación Cúbica)[cite: 6].</li>
+    </ul>
+</section>
+
+<section id="problema" class="section card">
+    <h2 class="section-title">5. Problema de Aplicación[cite: 6]</h2>
+    <p>Se requiere encontrar el polinomio cúbico de la forma $y=a\cdot x^{3}+b\cdot x^{2}+c\cdot x+d$ que pase exactamente por los siguientes cuatro puntos dados en el plano cartesiano[cite: 6]:</p>
+    <ul>
+        <li><strong>Puntos dados:</strong> (0, 2), (1, 1), (2, 4) у (3, 11)[cite: 6].</li>
+        <li><strong>Variables a determinar:</strong> a, b, c, d[cite: 6].</li>
+    </ul>
+    <p>Planteamiento del sistema sustituyendo cada punto en la ecuación cúbica[cite: 6]:</p>
+    <ol>
+        <li>Para (0, 2): $a(0)^{3}+b(0)^{2}+c(0)+d=2==>d=2$[cite: 6]</li>
+        <li>Para (1, 1): $a(1)^{3}+b(1)^{2}+c(1)+d=1==>a+b+c+d=1$[cite: 6]</li>
+        <li>Para (2, 4): $a(2)^{3}+b(2)^{2}+c(2)+d=4==>8a+4b+2c+d=4$[cite: 6]</li>
+        <li>Para (3, 11): $a(3)^{3}+b(3)^{2}+c(3)+d=11==>27a+9b+3c+d=11$[cite: 6]</li>
+    </ol>
+</section>
+
+<section id="procedimiento" class="section card">
+    <h2 class="section-title">6. Procedimiento[cite: 6]</h2>
+    <p>Para resolver el problema planteado, realizamos los siguientes pasos[cite: 6]:</p>
+    <ul>
+        <li><strong>Paso 1:</strong> Armamos la matriz de coeficientes A, el vector b y la matriz aumentada [Alb] con las ecuaciones obtenidas de sustituir los puntos[cite: 6].</li>
+        <li><strong>Paso 2:</strong> Aplicamos el método de eliminación gaussiana mediante operaciones elementales de fila para simplificar la matriz aumentada y encontrar las respuestas[cite: 6].</li>
+        <li><strong>Paso 3:</strong> Verificamos los resultados utilizando Python con la libreria SymPy, usando funciones de cálculo simbólico como rref() y linsolve()[cite: 6].</li>
+    </ul>
+</section>
+
+<section id="tabla-resultados" class="section card">
+    <h2 class="section-title">7. Resultados[cite: 6]</h2>
+    <p>A continuación se presenta la tabla resumen con los datos y resultados requeridos de la actividad[cite: 6]:</p>
+    <div style="overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Elemento[cite: 6]</th>
+                    <th>Resultado[cite: 6]</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Matriz de coeficientes A[cite: 6]</strong></td>
+                    <td>
+                        <pre>[[0, 0, 0, 1],
+ [1, 1, 1, 1],
+ [8, 4, 2, 1],
+ [27, 9, 3, 1]][cite: 6]</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Vector b[cite: 6]</strong></td>
+                    <td>[2, 1, 4, 11]^T[cite: 6]</td>
+                </tr>
+                <tr>
+                    <td><strong>Matriz aumentada [Ab][cite: 6]</strong></td>
+                    <td>
+                        <pre>[[0, 0, 0, 1, 2],
+ [1, 1, 1, 1, 1],
+ [8, 4, 2, 1, 4],
+ [27, 9, 3, 1, 11]][cite: 6]</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Forma escalonada (paso a paso)[cite: 6]</strong></td>
+                    <td>
+                        <p><strong>Paso 1: Intercambiar F1 con F2[cite: 6]</strong></p>
+                        <pre>[[1, 1, 1, 1, 1],
+ [0, 0, 0, 1, 2],
+ [8, 4, 2, 1, 4],
+ [27, 9, 3, 1, 11]][cite: 6]</pre>
+                        <p><strong>Paso 2: F3 -> F3-8 F1 y F4-> F4-27 F1[cite: 6]</strong></p>
+                        <pre>[[1, 1, 1, 1, 1],
+ [0, 0, 0, 1, 2],
+ [0, -4, -6, -7, -4],
+ [0, -18, -24, -26, -16]][cite: 6]</pre>
+                        <p><strong>Paso 3:</strong> Intercambiar F2 con F3 y continuar reduciendo hasta despejar las variables[cite: 6].</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Forma RREF[cite: 6]</strong></td>
+                    <td>
+                        <pre>[[1, 0, 0, 0, 0],
+ [0, 1, 0, 0, 2],
+ [0, 0, 1, 0, -3],
+ [0, 0, 0, 1, 2]][cite: 6]</pre>
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Columnas pivote[cite: 6]</strong></td>
+                    <td>0, 1, 2, 3 (Todas las columnas son pivote)[cite: 6]</td>
+                </tr>
+                <tr>
+                    <td><strong>Solución del sistema[cite: 6]</strong></td>
+                    <td>
+                        <p>$a=0$, $b=2$, $c=-3$, $d=2$[cite: 6]</p>
+                        <p><strong>Formato decimal:</strong> $a=0.0$, $b=2.0$, $c=-3.0$, $d=2.0$[cite: 6]<br>
+                        <strong>Formato fraccionario:</strong> $a=0$, $b=2$, $c=-3$, $d=2$[cite: 6]</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <p style="margin-top: 1rem;"><strong>¿Solución única, infinita o ninguna?</strong> Solución única (el sistema es consistente determinado)[cite: 6].</p>
+    
+    <h3 style="color: var(--primary);">Ecuación del Polinomio Cúbico Obtenido[cite: 6]:</h3>
+    <p>Sustituyendo los valores $a=0$ $b=2$ $c=-3$ y $d=2$ en la ecuación $y=a\cdot x^{3}+b\cdot x^{2}+c\cdot x+d$ obtenemos[cite: 6]:</p>
+    <p style="font-weight: bold; text-align: center;">$y=2x^{2}-3x+2$[cite: 6]</p>
+    <p><em>(Nota: Como el coeficiente a dio 0, la función resultante se reduce a una parábola de segundo grado)[cite: 6].</em></p>
+    
+    <h3 style="color: var(--primary);">Verificación con los cuatro puntos dados[cite: 6]:</h3>
+    <ul>
+        <li>Para $x=0$: $y=2(0)^{2}-3(0)+2=2==>$ Punto (0, 2) [Correcto][cite: 6]</li>
+        <li>Para $x=1$: $y=2(1)^{2}-3(1)+2=1==>$ Punto (1,1) [Correcto][cite: 6]</li>
+        <li>Para $x=2$: $y=2(2)^{2}-3(2)+2=4==>$ Punto (2, 4) [Correcto][cite: 6]</li>
+        <li>Para $x=3$: $y=2(3)^{2}-3(3)+2=11==>$ Punto (3, 11) [Correcto][cite: 6]</li>
+    </ul>
+</section>
+
+<section id="interpretacion" class="section card">
+    <h2 class="section-title">Preguntas de Interpretación[cite: 6]</h2>
+    <ol>
+        <li><strong>Significado de la solución obtenida:</strong> Cada variable (a, b, c, d) representa los coeficientes del polinomio que define la curva[cite: 6]. En un contexto práctico o físico, d es el valor inicial cuando $x=0,$ c representa la inclinación o cambio inicial, y by a controlan la curvatura del modelo[cite: 6]. El valor numerical hallado nos da la fórmula exacta con la que podemos predecir valores intermedios o futuros de los datos[cite: 6].</li>
+        <li><strong>Caso de infinitas soluciones:</strong> Si el sistema tuviera infinitas soluciones, significaría que los puntos dados no son suficientes para fijar una sola curva (por ejemplo, tener solo 2 o 3 puntos para una cúbica)[cite: 6]. Para obtener una solución única, se tendría que agregar una condición o punto experimental extra que restrinja las opciones a una sola curva[cite: 6].</li>
+        <li><strong>Caso de sistema sin solución:</strong> Si el sistema no tuviera solución, indicaría que los puntos no pueden ser conectados exactamente por una sola curva polinómica (tal vez por errores de medición)[cite: 6]. La solución sería usar un método de aproximación como mínimos cuadrados, o ajustar un modelo de mayor grado[cite: 6].</li>
+        <li><strong>Comparación de eliminación gaussiana y rref():</strong> Ambos métodos llegan exactamante a la misma solución final[cite: 6]. La ventaja de rref() es que es mucho más rápido y evita errores humanos al hacer operaciones algebraicas a mano, mientras que el paso a paso sirve para entender cómo funciona el procedimiento por dentro[cite: 6].</li>
+        <li><strong>Ventajas y desventajas de SymPy vs. NumPy:</strong> SymPy trabaja de forma simbólica (con fracciones exactas y sin perder precisión), lo cual es ideal para este tipo de ejercicios académicos[cite: 6]. NumPy hace cálculos numéricos muy rápidos con decimales, pero en ocasiones puede tener ligeros redondeos[cite: 6].</li>
+        <li><strong>Efecto de cambiar coeficientes:</strong> Si se cambia un coeficiente o un valor constante del sistema (como los valores y de los puntos), la curva resultante cambiará de forma, posición o inclinación, ajustándose a los nuevos datos ingresados[cite: 6].</li>
+        <li><strong>Conclusiones sobre la utilidad en el área de estudio:</strong> 1) Los sistemas de ecuaciones lineales nos permiten encontrar modelos matemáticos exactos a partir de datos experimentales tomados en el laboratorio o en campo[cite: 6]. 2) El uso de herramientas de programación en Python facilita la solución de sistemas grandes y complejos, optimizando el tiempo y reduciendo fallas en los cálculos[cite: 6].</li>
+        <li>Por el momento no encontramos fallas a tener o sugerencias que aporta[cite: 6].</li>
+    </ol>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Álgebra Lineal · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>

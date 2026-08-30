@@ -1,10 +1,4 @@
-
-
-# Clase 1
-
-Aquí tienes el plan detallado para la **Clase 1A**, organizado fuera de la tabla para que sea más fácil de leer y seguir:
-
-### Clase 1A: Matrices Elementales (Fundamentos)
+# Clase 1A: Matrices Elementales (Fundamentos)
 
 **Información General**
 
