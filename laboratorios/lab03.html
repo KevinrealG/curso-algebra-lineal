@@ -3,9 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Informe de Laboratorio - Álgebra Lineal UTB</title>
+<title>Guía de Laboratorios - Álgebra Lineal UTB</title>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
 <style>
     :root {
         --primary: #004b87;
@@ -63,11 +77,6 @@
         padding-bottom: 0.5rem;
         margin-top: 0;
     }
-    .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1rem;
-    }
     aside nav ol { padding-left: 1.5rem; }
     aside nav a { color: var(--primary); text-decoration: none; }
     aside nav a:hover { text-decoration: underline; }
@@ -89,6 +98,10 @@
         justify-content: center;
         margin-bottom: 1.5rem;
     }
+    .code-block-wrapper {
+        position: relative;
+        margin-top: 1rem;
+    }
     .code-block {
         background-color: #f1f5f9;
         border: 1px solid var(--border-color);
@@ -96,8 +109,48 @@
         padding: 1rem;
         font-family: 'Courier New', Courier, monospace;
         overflow-x: auto;
+        margin: 0;
+    }
+    .copy-button {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+        z-index: 10;
+    }
+    .copy-button:hover {
+        background-color: #003d6b;
+    }
+    .copy-button.copied {
+        background-color: #059669;
     }
 </style>
+<script>
+function copyCode(button) {
+    const codeBlock = button.parentElement.querySelector('pre');
+    const text = codeBlock.textContent;
+    
+    navigator.clipboard.writeText(text).then(() => {
+        button.textContent = '✓ Copiado!';
+        button.classList.add('copied');
+        
+        setTimeout(() => {
+            button.textContent = 'Copiar';
+            button.classList.remove('copied');
+        }, 2000);
+    }).catch(err => {
+        console.error('Error al copiar: ', err);
+    });
+}
+</script>
 </head>
 <body>
 <header class="hero">
@@ -106,8 +159,9 @@
     <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
 </div>
 <span class="badge">Álgebra Lineal · Universidad Tecnológica de Bolívar</span>
-<h1>Informe de Laboratorio</h1>
-<h2>Ajuste de Curva Cúbica mediante Sistemas de Ecuaciones Lineales[cite: 6]</h2>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 3: Operaciones de matrices e inversa</h2>
+<p>Cálculo de la inversa de una matriz, resolución de sistemas de ecuaciones y multiplicación de matrices utilizando SymPy y NumPy en Python.</p>
 </div>
 </header>
 
@@ -115,188 +169,280 @@
 <aside class="card" style="align-self: start; position: sticky; top: 2rem;">
 <h3>Índice</h3>
 <nav><ol>
-<li><a href="#datos">Datos del Estudiante</a></li>
+<li><a href="#objetivos">Objetivos</a></li>
 <li><a href="#competencias">Competencias</a></li>
 <li><a href="#resultados">Resultados de Aprendizaje</a></li>
-<li><a href="#tematicas">Temáticas</a></li>
-<li><a href="#problema">Problema de Aplicación</a></li>
-<li><a href="#procedimiento">Procedimiento</a></li>
-<li><a href="#tabla-resultados">Resultados</a></li>
-<li><a href="#interpretacion">Preguntas de Interpretación</a></li>
+<li><a href="#recomendaciones">Recomendaciones Generales</a></li>
+<li><a href="#desarrollo">Desarrollo del Laboratorio</a></li>
+<li><a href="#entregables">Compromisos de entrega</a></li>
 </ol></nav>
 </aside>
 
 <main>
-<section id="datos" class="section card">
-    <h2 class="section-title">1. Datos del Estudiante[cite: 6]</h2>
+<section id="objetivos" class="section card">
+    <h2 class="section-title">Objetivos de la Guía</h2>
     <ul>
-        <li><strong>Nombre del estudiante:</strong> Sebastián Pérez T00098921, Jesús cuevas T00098795[cite: 6]</li>
-        <li><strong>Programa:</strong> ingeniería química[cite: 6]</li>
-        <li><strong>Facultad:</strong> ciencias básicas[cite: 6]</li>
-        <li><strong>Grupo:</strong> Z2[cite: 6]</li>
-        <li><strong>Nombre y numero del laboratorio:</strong> laboratorio 1, solución de sistemas de ecuaciones lineales[cite: 6]</li>
-        <li><strong>NRC:</strong> 2653, CBAS-M04A[cite: 6]</li>
-        <li><strong>Fecha:</strong> miercoles, 19 de agosto[cite: 6]</li>
+        <li>Calcular la inversa de una matriz de coeficientes usando SymPy y verificar algebraicamente el resultado.</li>
+        <li>Resolver un sistema de ecuaciones lineales mediante el producto $A^{-1}b$ e interpretar la solución en contexto.</li>
+        <li>Realizar el producto de dos matrices con NumPy y relacionar la operación con su significado en el contexto del problema.</li>
+        <li>Contrastar los resultados computacionales con el procedimiento algebraico manual y articular conclusiones escritas sobre la solución obtenida.</li>
     </ul>
 </section>
 
 <section id="competencias" class="section card">
-    <h2 class="section-title">2. Competencias por Desarrollar[cite: 6]</h2>
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
     <ul>
-        <li>Capacidad para modelar problemas prácticos y reales utilizando sistemas de ecuaciones lineales[cite: 6].</li>
-        <li>Habilidad para aplicar métodos directos de solución como la eliminación gaussiana y el cálculo de la forma escalonada reducida por renglones (RREF)[cite: 6].</li>
-        <li>Dominio del uso de herramientas computacionales como Python (SymPy) para la resolución analítica y simbólica de sistemas matriciales[cite: 6].</li>
+        <li><strong>Digital:</strong> Usar Google Colab, SymPy y NumPy para calcular inversas, resolver sistemas y multiplicar matrices; verificar resultados programáticamente.</li>
+        <li><strong>Matemática:</strong> Reconocer las condiciones de existencia de la inversa de una matriz, aplicar la fórmula $Ax=b\leftrightarrow x=A^{-1}b$ y comprender el significado del producto de matrices.</li>
+        <li><strong>Analítica:</strong> Interpretar cada entrada del resultado matricial en el contexto del problema, distinguiendo qué representa cada fila y columna de la matriz producto.</li>
+        <li><strong>Comunicativa:</strong> Documentar en el notebook el procedimiento seguido, los resultados obtenidos y las conclusiones, con lenguaje técnico preciso.</li>
+        <li><strong>Autónoma:</strong> Explorar la documentación de SymPy y NumPy para comprender los métodos .inv() y el operador @, y aplicarlos con criterio al problema propio.</li>
     </ul>
 </section>
 
 <section id="resultados" class="section card">
-    <h2 class="section-title">3. Resultados de Aprendizaje[cite: 6]</h2>
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
     <ul>
-        <li>Plantea correctamente la matriz de coeficientes y el vector de términos independientes a partir de un conjunto de puntos experimentales o datos dados[cite: 6].</li>
-        <li>Resuelve sistemas de ecuaciones lineales cuadrados utilizando operaciones elementales entre filas[cite: 6].</li>
-        <li>Interpreta el significado matemático de los coeficientes obtenidos en el modelo de ajuste de curva y verifica su validez reemplazando los puntos originales[cite: 6].</li>
+        <li>Determinar si una matriz cuadrada es invertible.</li>
+        <li>Calcular la inversa de una matriz $3\times3$ usando SymPy y verificar que $A\cdot A^{-1}=I$.</li>
+        <li>Obtener la solución de un sistema $Ax=b$ mediante $x=A^{-1}b$ e interpretar cada variable en el contexto del problema.</li>
+        <li>Construir y multiplicar matrices con NumPy, e interpretar la información que entrega cada entrada del resultado.</li>
+        <li>El estudiante documenta el procedimiento completo, los resultados obtenidos y las conclusiones del problema de aplicación en un informe técnico estructurado.</li>
     </ul>
 </section>
 
-<section id="tematicas" class="section card">
-    <h2 class="section-title">4. Temáticas del Laboratorio[cite: 6]</h2>
+<section id="recomendaciones" class="section card">
+    <h2 class="section-title">Recomendaciones Generales</h2>
     <ul>
-        <li>Sistemas de Ecuaciones Lineales (SEL)[cite: 6].</li>
-        <li>Matrices, Matriz Aumentada y Eliminación Gaussiana[cite: 6].</li>
-        <li>Forma Escalonada Reducida por Renglones (RREF)[cite: 6].</li>
-        <li>Ajuste de curvas e interpolación polinómica (Ecuación Cúbica)[cite: 6].</li>
+        <li>El laboratorio se realiza de manera individual o en parejas.</li>
+        <li>A cada estudiante o pareja se le asignará un solo problema.</li>
+        <li>Se debe entregar un preinforme al final de la sesión de 2 horas con los resultados del problema asignado.</li>
+        <li>El informe final (con preguntas de interpretación, conclusiones y recomendaciones) se entrega en la siguiente clase.</li>
+        <li>Use Google Colab (<a href="https://colab.research.google.com" target="_blank">https://colab.research.google.com</a>) y guarde su cuaderno en su unidad de Google Drive.</li>
     </ul>
 </section>
 
-<section id="problema" class="section card">
-    <h2 class="section-title">5. Problema de Aplicación[cite: 6]</h2>
-    <p>Se requiere encontrar el polinomio cúbico de la forma $y=a\cdot x^{3}+b\cdot x^{2}+c\cdot x+d$ que pase exactamente por los siguientes cuatro puntos dados en el plano cartesiano[cite: 6]:</p>
+<section id="desarrollo" class="section card">
+    <h2 class="section-title">Desarrollo del Laboratorio</h2>
+    
+    <h3 style="color: var(--primary);">EJEMPLO PROBLEMA</h3>
+    <p>Una ensambladora de vehículos produce tres modelos: sedán (S), camioneta (C) y SUV (U). La planta opera con tres procesos internos: carrocería (CR), pintura (P) y ensamble mecánico (EM). Cada modelo demanda una cantidad fija de horas en cada proceso.</p>
+    <p>Los registros de la semana de producción indican:</p>
     <ul>
-        <li><strong>Puntos dados:</strong> (0, 2), (1, 1), (2, 4) у (3, 11)[cite: 6].</li>
-        <li><strong>Variables a determinar:</strong> a, b, c, d[cite: 6].</li>
+        <li>El proceso de carrocería acumuló 26 horas en total.</li>
+        <li>El proceso de pintura acumuló 17 horas en total.</li>
+        <li>El proceso de ensamble mecánico acumuló 33 horas en total.</li>
     </ul>
-    <p>Planteamiento del sistema sustituyendo cada punto en la ecuación cúbica[cite: 6]:</p>
-    <ol>
-        <li>Para (0, 2): $a(0)^{3}+b(0)^{2}+c(0)+d=2==>d=2$[cite: 6]</li>
-        <li>Para (1, 1): $a(1)^{3}+b(1)^{2}+c(1)+d=1==>a+b+c+d=1$[cite: 6]</li>
-        <li>Para (2, 4): $a(2)^{3}+b(2)^{2}+c(2)+d=4==>8a+4b+2c+d=4$[cite: 6]</li>
-        <li>Para (3, 11): $a(3)^{3}+b(3)^{2}+c(3)+d=11==>27a+9b+3c+d=11$[cite: 6]</li>
-    </ol>
-</section>
-
-<section id="procedimiento" class="section card">
-    <h2 class="section-title">6. Procedimiento[cite: 6]</h2>
-    <p>Para resolver el problema planteado, realizamos los siguientes pasos[cite: 6]:</p>
-    <ul>
-        <li><strong>Paso 1:</strong> Armamos la matriz de coeficientes A, el vector b y la matriz aumentada [Alb] con las ecuaciones obtenidas de sustituir los puntos[cite: 6].</li>
-        <li><strong>Paso 2:</strong> Aplicamos el método de eliminación gaussiana mediante operaciones elementales de fila para simplificar la matriz aumentada y encontrar las respuestas[cite: 6].</li>
-        <li><strong>Paso 3:</strong> Verificamos los resultados utilizando Python con la libreria SymPy, usando funciones de cálculo simbólico como rref() y linsolve()[cite: 6].</li>
-    </ul>
-</section>
-
-<section id="tabla-resultados" class="section card">
-    <h2 class="section-title">7. Resultados[cite: 6]</h2>
-    <p>A continuación se presenta la tabla resumen con los datos y resultados requeridos de la actividad[cite: 6]:</p>
+    
+    <p>Las horas requeridas por unidad fabricada en cada proceso son:</p>
     <div style="overflow-x: auto;">
         <table>
             <thead>
                 <tr>
-                    <th>Elemento[cite: 6]</th>
-                    <th>Resultado[cite: 6]</th>
+                    <th>Proceso</th>
+                    <th>Sedán</th>
+                    <th>Camioneta</th>
+                    <th>SUV</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Matriz de coeficientes A[cite: 6]</strong></td>
-                    <td>
-                        <pre>[[0, 0, 0, 1],
- [1, 1, 1, 1],
- [8, 4, 2, 1],
- [27, 9, 3, 1]][cite: 6]</pre>
-                    </td>
+                    <td>Carrocería</td>
+                    <td>2 h</td>
+                    <td>4 h</td>
+                    <td>6 h</td>
                 </tr>
                 <tr>
-                    <td><strong>Vector b[cite: 6]</strong></td>
-                    <td>[2, 1, 4, 11]^T[cite: 6]</td>
+                    <td>Pintura</td>
+                    <td>1 h</td>
+                    <td>3 h</td>
+                    <td>4 h</td>
                 </tr>
                 <tr>
-                    <td><strong>Matriz aumentada [Ab][cite: 6]</strong></td>
-                    <td>
-                        <pre>[[0, 0, 0, 1, 2],
- [1, 1, 1, 1, 1],
- [8, 4, 2, 1, 4],
- [27, 9, 3, 1, 11]][cite: 6]</pre>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Forma escalonada (paso a paso)[cite: 6]</strong></td>
-                    <td>
-                        <p><strong>Paso 1: Intercambiar F1 con F2[cite: 6]</strong></p>
-                        <pre>[[1, 1, 1, 1, 1],
- [0, 0, 0, 1, 2],
- [8, 4, 2, 1, 4],
- [27, 9, 3, 1, 11]][cite: 6]</pre>
-                        <p><strong>Paso 2: F3 -> F3-8 F1 y F4-> F4-27 F1[cite: 6]</strong></p>
-                        <pre>[[1, 1, 1, 1, 1],
- [0, 0, 0, 1, 2],
- [0, -4, -6, -7, -4],
- [0, -18, -24, -26, -16]][cite: 6]</pre>
-                        <p><strong>Paso 3:</strong> Intercambiar F2 con F3 y continuar reduciendo hasta despejar las variables[cite: 6].</p>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Forma RREF[cite: 6]</strong></td>
-                    <td>
-                        <pre>[[1, 0, 0, 0, 0],
- [0, 1, 0, 0, 2],
- [0, 0, 1, 0, -3],
- [0, 0, 0, 1, 2]][cite: 6]</pre>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Columnas pivote[cite: 6]</strong></td>
-                    <td>0, 1, 2, 3 (Todas las columnas son pivote)[cite: 6]</td>
-                </tr>
-                <tr>
-                    <td><strong>Solución del sistema[cite: 6]</strong></td>
-                    <td>
-                        <p>$a=0$, $b=2$, $c=-3$, $d=2$[cite: 6]</p>
-                        <p><strong>Formato decimal:</strong> $a=0.0$, $b=2.0$, $c=-3.0$, $d=2.0$[cite: 6]<br>
-                        <strong>Formato fraccionario:</strong> $a=0$, $b=2$, $c=-3$, $d=2$[cite: 6]</p>
-                    </td>
+                    <td>Ensamble mecánico</td>
+                    <td>3 h</td>
+                    <td>5 h</td>
+                    <td>7 h</td>
                 </tr>
             </tbody>
         </table>
     </div>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Parte 1: Sistema de ecuaciones lineales</h3>
+    <p>a) Plantea el sistema de ecuaciones lineales que modela la situación descrita. Identifica la matriz de coeficientes A, y el vector de términos independientes b. Encuentre la inversa de A. Encuentra el producto de la inversa de A por el vector b.</p>
     
-    <p style="margin-top: 1rem;"><strong>¿Solución única, infinita o ninguna?</strong> Solución única (el sistema es consistente determinado)[cite: 6].</p>
+    <div class="code-block-wrapper">
+        <button class="copy-button" onclick="copyCode(this)">Copiar</button>
+        <div class="code-block">
+<pre>import sympy as sp
+
+# Matriz de coeficientes A
+A = sp.Matrix([
+    [2, 4, 6],  # Carrocería
+    [1, 3, 4],  # Pintura
+    [3, 5, 7]   # Ensamble mecánico
+])
+
+# Vector de términos independientes b
+b = sp.Matrix([26, 17, 33])
+
+# Matriz aumentada [A | b]
+Aug = A.row_join(b)
+print("Matriz aumentada [A | b]:")
+sp.pprint(Aug)
+
+# Inversa de A
+A_inv = A.inv()
+print("\nInversa de A:")
+sp.pprint(A_inv)
+
+# Solución: X = A^(-1) * b
+x = A_inv * b
+print("\nSolución del sistema (S,C,U):")
+sp.pprint(x)</pre>
+        </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Parte 2: Multiplicación de matrices y análisis</h3>
+    <p>La planta tiene dos modalidades de operación: turno regular (R) y turno de sobretiempo (SO). El costo por hora de cada proceso varía según la modalidad (matriz V):</p>
     
-    <h3 style="color: var(--primary);">Ecuación del Polinomio Cúbico Obtenido[cite: 6]:</h3>
-    <p>Sustituyendo los valores $a=0$ $b=2$ $c=-3$ y $d=2$ en la ecuación $y=a\cdot x^{3}+b\cdot x^{2}+c\cdot x+d$ obtenemos[cite: 6]:</p>
-    <p style="font-weight: bold; text-align: center;">$y=2x^{2}-3x+2$[cite: 6]</p>
-    <p><em>(Nota: Como el coeficiente a dio 0, la función resultante se reduce a una parábola de segundo grado)[cite: 6].</em></p>
-    
-    <h3 style="color: var(--primary);">Verificación con los cuatro puntos dados[cite: 6]:</h3>
-    <ul>
-        <li>Para $x=0$: $y=2(0)^{2}-3(0)+2=2==>$ Punto (0, 2) [Correcto][cite: 6]</li>
-        <li>Para $x=1$: $y=2(1)^{2}-3(1)+2=1==>$ Punto (1,1) [Correcto][cite: 6]</li>
-        <li>Para $x=2$: $y=2(2)^{2}-3(2)+2=4==>$ Punto (2, 4) [Correcto][cite: 6]</li>
-        <li>Para $x=3$: $y=2(3)^{2}-3(3)+2=11==>$ Punto (3, 11) [Correcto][cite: 6]</li>
-    </ul>
+    <div style="overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Proceso</th>
+                    <th>Turno regular ($/h)</th>
+                    <th>Sobretiempo ($/h)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Carrocería</td>
+                    <td>$85.000</td>
+                    <td>$127.000</td>
+                </tr>
+                <tr>
+                    <td>Pintura</td>
+                    <td>$70.000</td>
+                    <td>$105.000</td>
+                </tr>
+                <tr>
+                    <td>Ensamble mecánico</td>
+                    <td>$95.000</td>
+                    <td>$142.000</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <p style="margin-top: 1rem;">a) Calcula el producto $P=A\cdot V,$ donde A es la matriz de coeficientes de la Parte 1. Interpreta la información de la matriz P. ¿Qué información concreta representa en el contexto de la fábrica?</p>
+
+    <div class="code-block-wrapper">
+        <button class="copy-button" onclick="copyCode(this)">Copiar</button>
+        <div class="code-block">
+<pre>import numpy as np
+
+# Matriz de coeficientes A
+A = np.array([
+    [2, 4, 6],
+    [1, 3, 4],
+    [3, 5, 7]
+], dtype=float)
+
+# Matriz de costos V (turno regular y sobretiempo)
+V = np.array([
+    [85000, 127000],  # Carrocería
+    [70000, 105000],  # Pintura
+    [95000, 142000]   # Ensamble mecánico
+], dtype=float)
+
+# Producto P = A * V
+P = A @ V
+print("Matriz P = A * V:")
+print(P)
+
+# Etiquetas para interpretar
+procesos = ["Carroceria", "Pintura", "Ensamble mecánico"]
+turnos = ["Turno regular ($/unidad)", "Sobretiempo ($/unidad)"]
+
+print("\nInterpretación de P:")
+for i, proceso in enumerate(procesos):
+    for j, turno in enumerate(turnos):
+        print(f" {proceso} {turno}: ${P[i, j]:,.0f}")</pre>
+        </div>
+    </div>
 </section>
 
-<section id="interpretacion" class="section card">
-    <h2 class="section-title">Preguntas de Interpretación[cite: 6]</h2>
-    <ol>
-        <li><strong>Significado de la solución obtenida:</strong> Cada variable (a, b, c, d) representa los coeficientes del polinomio que define la curva[cite: 6]. En un contexto práctico o físico, d es el valor inicial cuando $x=0,$ c representa la inclinación o cambio inicial, y by a controlan la curvatura del modelo[cite: 6]. El valor numerical hallado nos da la fórmula exacta con la que podemos predecir valores intermedios o futuros de los datos[cite: 6].</li>
-        <li><strong>Caso de infinitas soluciones:</strong> Si el sistema tuviera infinitas soluciones, significaría que los puntos dados no son suficientes para fijar una sola curva (por ejemplo, tener solo 2 o 3 puntos para una cúbica)[cite: 6]. Para obtener una solución única, se tendría que agregar una condición o punto experimental extra que restrinja las opciones a una sola curva[cite: 6].</li>
-        <li><strong>Caso de sistema sin solución:</strong> Si el sistema no tuviera solución, indicaría que los puntos no pueden ser conectados exactamente por una sola curva polinómica (tal vez por errores de medición)[cite: 6]. La solución sería usar un método de aproximación como mínimos cuadrados, o ajustar un modelo de mayor grado[cite: 6].</li>
-        <li><strong>Comparación de eliminación gaussiana y rref():</strong> Ambos métodos llegan exactamante a la misma solución final[cite: 6]. La ventaja de rref() es que es mucho más rápido y evita errores humanos al hacer operaciones algebraicas a mano, mientras que el paso a paso sirve para entender cómo funciona el procedimiento por dentro[cite: 6].</li>
-        <li><strong>Ventajas y desventajas de SymPy vs. NumPy:</strong> SymPy trabaja de forma simbólica (con fracciones exactas y sin perder precisión), lo cual es ideal para este tipo de ejercicios académicos[cite: 6]. NumPy hace cálculos numéricos muy rápidos con decimales, pero en ocasiones puede tener ligeros redondeos[cite: 6].</li>
-        <li><strong>Efecto de cambiar coeficientes:</strong> Si se cambia un coeficiente o un valor constante del sistema (como los valores y de los puntos), la curva resultante cambiará de forma, posición o inclinación, ajustándose a los nuevos datos ingresados[cite: 6].</li>
-        <li><strong>Conclusiones sobre la utilidad en el área de estudio:</strong> 1) Los sistemas de ecuaciones lineales nos permiten encontrar modelos matemáticos exactos a partir de datos experimentales tomados en el laboratorio o en campo[cite: 6]. 2) El uso de herramientas de programación en Python facilita la solución de sistemas grandes y complejos, optimizando el tiempo y reduciendo fallas en los cálculos[cite: 6].</li>
-        <li>Por el momento no encontramos fallas a tener o sugerencias que aporta[cite: 6].</li>
-    </ol>
+<section id="entregables" class="section card">
+    <h2 class="section-title">Compromisos de Entrega</h2>
+    
+    <h3 style="color: var(--primary);">Entrega del Preinforme</h3>
+    <p><strong>Fecha de entrega del preinforme:</strong> Al finalizar la sesión de laboratorio.</p>
+    <p>Al finalizar la sesión de laboratorio (2 horas) compartir con el docente el notebook de Colab con las especificaciones indicadas para el preinforme.</p>
+    <p>Copie esto en una celda de texto (Markdown):</p>
+    
+    <div class="code-block-wrapper">
+        <button class="copy-button" onclick="copyCode(this)">Copiar</button>
+        <div class="code-block">
+<pre># Laboratorio 3.
+## Curso y Sección: [NRC] Sección [102]
+## Integrantes:
+- **Nombre 1:** [Nombre Completo] - Código: [Código]
+- **Nombre 2:** [Nombre Completo] - Código: [Código]
+## Fecha: [Fecha]
+## Tabla de Contenido
+1. Configuración del entorno
+2. Actividad 1: Sistema de ecuaciones lineales
+3. Actividad 2: Multiplicación de matrices y análisis
+4. Recopilación de resultados</pre>
+        </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Entrega del Informe Final</h3>
+    <ul>
+        <li><strong>Entrega del informe final:</strong> Digital por Teams.</li>
+        <li><strong>Formato:</strong> PDF o documento de Word bien comentado.</li>
+    </ul>
+    <p>Incluir en el encabezado del archivo:</p>
+    <ul>
+        <li>Nombre y número del laboratorio.</li>
+        <li>Nombres y códigos estudiantiles de los integrantes.</li>
+        <li>Código del curso (NRC)</li>
+    </ul>
+
+    <h2 class="section-title" style="margin-top: 2rem;">Rúbrica de Evaluación</h2>
+    <div style="overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Ítem a evaluar</th>
+                    <th>Porcentaje</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Preinforme: Configuración correcta del entorno y Google Colab</td>
+                    <td>15%</td>
+                </tr>
+                <tr>
+                    <td>Preinforme: Implementación correcta de matrices y comandos(inv() y  A @ V), Y entrega en PDF</td>
+                    <td>25%</td>
+                </tr>
+                <tr>
+                    <td>Informe Final: Análisis de Solución obtenida con Matriz inversa.</td>
+                    <td>20%</td>
+                </tr>
+                <tr>
+                    <td>Informe Final: Interpretación del producto de matrices</td>
+                    <td>20%</td>
+                </tr>
+                <tr>
+                    <td>Informe Final: Documentación, formato (PDF) y entrega en Savio</td>
+                    <td>20%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </section>
 </main>
 </div>
