@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación 3.1 - Quiz Interactivo</title>
+    
+    <!-- Importamos MathJax para el renderizado de matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Variables CSS para facilitar la implementación del modo claro y oscuro */
+        :root {
+            --bg-body: #f4f6f9;
+            --bg-card: #ffffff;
+            --text-main: #333333;
+            --border-color: #e0e0e0;
+            --primary-color: #1565c0;
+            --hover-bg: #f0f4f8;
+            --correct-border: #2e7d32;
+            --correct-bg: #e8f5e9;
+            --incorrect-border: #c62828;
+            --incorrect-bg: #ffebee;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #e0e0e0;
+            --border-color: #333333;
+            --primary-color: #64b5f6;
+            --hover-bg: #2a2d32;
+            --correct-border: #4caf50;
+            --correct-bg: #1b5e20;
+            --incorrect-border: #ef5350;
+            --incorrect-bg: #b71c1c;
+        }
+
+        /* Estilos generales del documento */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        /* Estilos para los bloques de preguntas */
+        .question-block {
+            background: var(--bg-card);
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        /* Clases dinámicas aplicadas por JavaScript tras la evaluación */
+        .question-block.correct {
+            border-left-color: var(--correct-border);
+            background-color: var(--correct-bg);
+        }
+        .question-block.incorrect {
+            border-left-color: var(--incorrect-border);
+            background-color: var(--incorrect-bg);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* Estilos para las opciones de respuesta */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: var(--hover-bg);
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        /* Controles interactivos */
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: #ffffff; /* El texto del botón siempre será blanco por contraste */
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        #result-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <!-- Botón para alternar el tema -->
+    <button type="button" class="theme-toggle" onclick="toggleTheme()">Cambiar a Modo Oscuro</button>
+
+    <h1>AUTOEVALUACIÓN 3.1</h1>
+
+    <!-- Formulario que agrupa todas las preguntas -->
+    <form id="quiz-form">
+        
+        <!-- Pregunta I (Selección única) -->
+        <div class="question-block" id="block-q1">
+            <div class="question-text">I) ¿Cuál de los siguientes es el cofactor de 3 en \( \begin{pmatrix} 1 & 2 & 3 \\ 2 & -2 & 1 \\ 4 & 0 & 2 \end{pmatrix} \)?</div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q1" value="a"> a) 8</label>
+                <label class="option-label"><input type="radio" name="q1" value="b"> b) -8</label>
+                <label class="option-label"><input type="radio" name="q1" value="c"> c) 3</label>
+                <label class="option-label"><input type="radio" name="q1" value="d"> d) 6</label>
+                <label class="option-label"><input type="radio" name="q1" value="e"> e) -10</label>
+                <label class="option-label"><input type="radio" name="q1" value="f"> f) 0</label>
+            </div>
+        </div>
+
+        <!-- Pregunta II (Selección única) -->
+        <div class="question-block" id="block-q2">
+            <div class="question-text">II) ¿Cuál de las siguientes es 0 para toda a y b?</div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q2" value="a"> a) \( \begin{vmatrix} a & b \\ -b & a \end{vmatrix} \)</label>
+                <label class="option-label"><input type="radio" name="q2" value="b"> b) \( \begin{vmatrix} a & -b \\ -a & b \end{vmatrix} \)</label>
+                <label class="option-label"><input type="radio" name="q2" value="c"> c) \( \begin{vmatrix} a & a \\ b & -b \end{vmatrix} \)</label>
+            </div>
+            <label class="option-label" style="margin-top: 10px;">
+                <input type="radio" name="q2" value="d"> d) Los determinantes no se pueden establecer porque no se parecen los valores de a y b.
+            </label>
+        </div>
+
+        <!-- Pregunta III (Selección única) -->
+        <div class="question-block" id="block-q3">
+            <div class="question-text">III) Si \( A = \begin{pmatrix} 2 & -1 & 5 & 6 \\ 0 & 3 & 2 & 4 \\ 0 & 0 & -2 & 15 \\ 0 & 0 & 0 & 1 \end{pmatrix} \), entonces \(\det A =\) ________.</div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q3" value="a"> a) 0</label>
+                <label class="option-label"><input type="radio" name="q3" value="b"> b) 12</label>
+                <label class="option-label"><input type="radio" name="q3" value="c"> c) -12</label>
+                <label class="option-label"><input type="radio" name="q3" value="d"> d) 6</label>
+                <label class="option-label"><input type="radio" name="q3" value="e"> e) -6</label>
+            </div>
+        </div>
+
+        <!-- Pregunta IV (Selección múltiple usando checkboxes) -->
+        <div class="question-block" id="block-q4">
+            <div class="question-text">IV) ¿Cuáles de las siguientes matrices no son invertibles? (Seleccione todas las que apliquen)</div>
+            <div class="options-grid" style="grid-template-columns: 1fr 1fr;">
+                <label class="option-label"><input type="checkbox" name="q4" value="a"> a) \( \begin{pmatrix} 2 & 4 & 7 \\ 0 & 3 & 0 \\ 0 & 0 & 1 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q4" value="b"> b) \( \begin{pmatrix} 2 & 4 & 7 \\ 0 & 0 & 3 \\ 0 & 0 & 1 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q4" value="c"> c) \( \begin{pmatrix} 2 & -1 & 5 & 2 \\ 0 & 3 & 1 & 6 \\ 0 & 0 & 0 & 4 \\ 0 & 0 & 0 & 7 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q4" value="d"> d) \( \begin{pmatrix} 2 & -1 & 5 & 2 \\ 0 & 3 & 1 & 6 \\ 0 & 0 & 4 & 0 \\ 0 & 0 & 0 & 7 \end{pmatrix} \)</label>
+            </div>
+        </div>
+
+        <button type="submit">Evaluar mis respuestas</button>
+    </form>
+
+    <div id="result-container"></div>
+
+    <script>
+        // Función para cambiar el tema
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.querySelector('.theme-toggle');
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeBtn.textContent = 'Cambiar a Modo Claro';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeBtn.textContent = 'Cambiar a Modo Oscuro';
+            }
+        }
+
+        // Definimos el objeto con las respuestas correctas
+        // Nota: q4 es un arreglo porque requiere múltiples respuestas correctas
+        const correctAnswers = {
+            q1: 'a',
+            q2: 'b',
+            q3: 'c',
+            q4: ['b', 'c']
+        };
+
+        // Escuchamos el evento 'submit' del formulario
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Previene que la página se recargue al enviar
+            
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            // Lógica de evaluación pregunta por pregunta
+            for (let question in correctAnswers) {
+                const block = document.getElementById('block-' + question);
+                
+                // Reiniciamos las clases dinámicas
+                block.classList.remove('correct', 'incorrect');
+
+                // Evaluamos si la respuesta correcta es un arreglo (Pregunta IV)
+                if (Array.isArray(correctAnswers[question])) {
+                    // Seleccionamos todos los checkboxes marcados para esta pregunta
+                    const checkedOptions = Array.from(document.querySelectorAll(`input[name="${question}"]:checked`)).map(el => el.value);
+                    
+                    // Comprobamos que el arreglo de respuestas coincida exactamente en tamaño y valores
+                    const isCorrect = checkedOptions.length === correctAnswers[question].length && 
+                                      checkedOptions.every(val => correctAnswers[question].includes(val));
+                    
+                    if (isCorrect) {
+                        block.classList.add('correct');
+                        score++;
+                    } else {
+                        block.classList.add('incorrect');
+                    }
+                } else {
+                    // Lógica para preguntas de selección única (radio buttons)
+                    const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                    if (selectedOption && selectedOption.value === correctAnswers[question]) {
+                        block.classList.add('correct');
+                        score++;
+                    } else {
+                        block.classList.add('incorrect');
+                    }
+                }
+            }
+
+            // Desplegamos el resultado final al usuario
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+            
+            if (score === totalQuestions) {
+                resultContainer.style.color = 'var(--correct-border)';
+                resultContainer.innerHTML = `¡Excelente trabajo! Puntuación perfecta: ${score}/${totalQuestions}`;
+            } else {
+                resultContainer.style.color = 'var(--incorrect-border)';
+                resultContainer.innerHTML = `Tu puntuación es: ${score}/${totalQuestions}. ¡Revisa los bloques en rojo e inténtalo de nuevo!`;
+            }
+            
+            // Animación suave de desplazamiento hacia los resultados
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
