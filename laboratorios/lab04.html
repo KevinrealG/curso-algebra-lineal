@@ -4,7 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Guía de Laboratorios - Álgebra Lineal UTB</title>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            options: {
+                skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+            }
+        };
+    </script>
 <style>
     :root {
         --primary: #004b87;
@@ -102,7 +115,7 @@
 </div>
 <span class="badge">Álgebra Lineal · Universidad Tecnológica de Bolívar</span>
 <h1>Guía de Laboratorios</h1>
-<h2>Laboratorio 3: Inversas de matrices y solución a sistemas de ecuaciones.</h2>
+<h2>Laboratorio 4: Determinantes y solución a sistemas de ecuaciones.</h2>
 <p>Comprender el concepto de determinante y su relación con la invertibilidad de una matriz, aplicándolo a la resolución de sistemas lineales y problemas de ajuste de curvas.</p>
 </div>
 </header>
@@ -151,10 +164,9 @@
 <section id="resultados" class="section card">
     <h2 class="section-title">Resultados de Aprendizaje</h2>
     <ul>
-        <li>Calcular el determinante de una matriz $2	imes2$ y $3	imes3$ mediante expansión por cofactores.</li>
-        <li>Calcular determinantes de matrices $n	imes n$ mediante reducción por filas.</li>
-        <li>Determinar si una matriz es invertible usando el criterio $det(A)
-e0$.</li>
+        <li>Calcular el determinante de una matriz $2 \times 2$ y $3 \times 3$ mediante expansión por cofactores.</li>
+        <li>Calcular determinantes de matrices $n \times n$ mediante reducción por filas.</li>
+        <li>Determinar si una matriz es invertible usando el criterio $det(A) \neq 0$.</li>
         <li>Aplicar la regla de Cramer para resolver sistemas de ecuaciones lineales.</li>
         <li>Resolver problemas de ajuste de curvas planas cuadráticas usando determinantes.</li>
         <li>Analizar cadenas de Markov y determinar distribuciones estacionarias.</li>
@@ -178,7 +190,7 @@ e0$.</li>
 <section id="teoria" class="section card">
     <h2 class="section-title">CONTENIDOS TEÓRICOS</h2>
     <ol>
-        <li><strong>Determinante de una matriz:</strong> El determinante es una función que asigna a cada matriz cuadrada A un número real denotado por $det(A)$ o $|A|$. Para una matriz $2	imes2$:
+        <li><strong>Determinante de una matriz:</strong> El determinante es una función que asigna a cada matriz cuadrada A un número real denotado por $det(A)$ o $|A|$. Para una matriz $2 \times2$:
             $det([[a,b],[c,d]])=a\cdot d-b\cdot c$<br>
             Para matrices de orden superior, el determinante se calcula mediante expansión por cofactores o por reducción por filas (eliminación gaussiana).
         </li>
@@ -192,12 +204,9 @@ e0$.</li>
                 <li>Si se multiplica una fila por k, el determinante se multiplica por k</li>
             </ul>
         </li>
-        <li><strong>Relación con la invertibilidad:</strong> Una matriz cuadrada A es invertible si y solo si $det(A)
-e0$. Además, el sistema $Ax=b$ tiene solución única si y solo si $det(A)
-e0$.</li>
-        <li><strong>Regla de Cramer:</strong> Para un sistema $Ax=b$ con $det(A)
-e0$, la solución está dada por: $x_i=det(A_i)/det(A)$, donde $A_i$ es la matriz A con la columna i reemplazada por b.</li>
-        <li><strong>Interpretación geométrica:</strong> El valor absoluto del determinante de una matriz $2	imes2$ representa el área del paralelogramo formado por sus columnas. Para una matriz $3	imes3$, representa el volumen del paralelepípedo.</li>
+        <li><strong>Relación con la invertibilidad:</strong> Una matriz cuadrada A es invertible si y solo si $det(A) \neq 0$. Además, el sistema $Ax=b$ tiene solución única si y solo si $det(A) \neq 0$.</li>
+        <li><strong>Regla de Cramer:</strong> Para un sistema $Ax=b$ con $det(A) \neq 0$, la solución está dada por: $x_i=det(A_i)/det(A)$, donde $A_i$ es la matriz A con la columna i reemplazada por b.</li>
+        <li><strong>Interpretación geométrica:</strong> El valor absoluto del determinante de una matriz $2\times2$ representa el área del paralelogramo formado por sus columnas. Para una matriz $3\times3$, representa el volumen del paralelepípedo.</li>
     </ol>
 </section>
 
@@ -205,10 +214,10 @@ e0$, la solución está dada por: $x_i=det(A_i)/det(A)$, donde $A_i$ es la matri
     <h2 class="section-title">METODOLOGÍA DEL LABORATORIO</h2>
     <ul>
         <li>Conformar parejas de trabajo y asignar roles (conductor y navegante).</li>
-        <li>Crear un cuaderno en Google Colab: <code>Lab4_Algebra_Lienal_Problema_X.ipynb</code></li>
+        <li>Crear un cuaderno en Google Colab: <code>Lab4_Algebra_Lineal_Problema_X.ipynb</code></li>
         <li>Instalar e importar las librerías NumPy, SymPy y Matplotlib.</li>
         <li>Leer la introducción teórica y estudiar el Problema 0 (resuelto como ejemplo).</li>
-        <li>Seleccionar el problema asignado por el docente (1 al 10).</li>
+        <li>Resolver el problema asignado.</li>
         <li>Responder las 11 preguntas de cada problema (5 cálculo, 4 interpretación, 2 sugerencia).</li>
         <li>Implementar la solución en Python usando las librerías indicadas.</li>
         <li>Generar al menos una visualización gráfica con Matplotlib (2D o 3D).</li>
@@ -312,7 +321,7 @@ Error maximo:", error)
     # Grafica
     fig, ax = plt.subplots(figsize=(8, 6))
     ax.plot(x, y, 'ro', label='Observaciones', markersize=8)
-    theta = np.linspace(0, 2*np.pi, 400)
+    
     xv = np.linspace(5.5, 7.8, 200)
     yv = np.linspace(0.3, 3.7, 200)
     X, Y = np.meshgrid(xv, yv)
@@ -331,11 +340,9 @@ La matriz no es invertible.")</pre>
 
     <h4 style="color: var(--primary); margin-top: 1rem;">Paso 3: Respuestas argumentadas a las 11 preguntas:</h4>
     <ul>
-        <li><strong>A1: Construya la matriz A(5x5) y el vector b(5x1) asociados al problema. Escriba sus entradas y explique su dimensión.</strong><br>Matriz A (5x5): cada fila corresponde a un punto y las columnas son $x^{2}$, $xy$, $y^{2}$, $x$, $y$. Vector b $(5	imes1)=[-1,-1,-1,-1,-1]$ porque $F=1$ y los términos se pasan al lado derecho. (Ver código)</li>
-        <li><strong>A2: Calcule el determinante de A usando SymPy. Indique si el sistema es invertible ($det(A)
-e0$).</strong><br>El determinante de A es aproximadamente -3.9244e-3 (depende de los datos). Como $det(A)
-e0$, A es invertible y el sistema tiene solución única. (Ver código)</li>
-        <li><strong>A3: Calcule la inversa $(A)^{-1}$ (si existe) y resuelva el sistema de ecuaciones para obtener $X=(A)^{-1}(-b)$. Presente los coeficientes A, B, C, D, E, F.</strong><br>La inversa $A^{-1}$ existe. La solución es $A pprox0.614276$, $B pprox-687944$, $C pprox694209$, $D pprox-3.270295$, $E pprox-0.432910,$ F $ pprox1.000000$. La cónica ajustada es una elipse. (Ver código)</li>
+        <li><strong>A1: Construya la matriz A(5x5) y el vector b(5x1) asociados al problema. Escriba sus entradas y explique su dimensión.</strong><br>Matriz A (5x5): cada fila corresponde a un punto y las columnas son $x^{2}$, $xy$, $y^{2}$, $x$, $y$. Vector b $(5 \times 1)=[-1,-1,-1,-1,-1]$ porque $F=1$ y los términos se pasan al lado derecho. (Ver código)</li>
+        <li><strong>A2: Calcule el determinante de A usando SymPy. Indique si el sistema es invertible ($det(A) \neq 0$).</strong><br>El determinante de A es aproximadamente -3.9244e-3 (depende de los datos). Como $det(A) \neq 0$, A es invertible y el sistema tiene solución única. (Ver código)</li>
+        <li><strong>A3: Calcule la inversa $(A)^{-1}$ (si existe) y resuelva el sistema de ecuaciones para obtener $X=(A)^{-1}(-b)$. Presente los coeficientes A, B, C, D, E, F.</strong><br>La inversa $A^{-1}$ existe. La solución es $A \approx 0.614276$, $B \approx -687944$, $C \approx 694209$, $D \approx -3.270295$, $E \approx -0.432910$, $F \approx 1.000000$. La cónica ajustada es una elipse. (Ver código)</li>
         <li><strong>A4: Verifique la solución calculando AX y comparando con (-b). Reporte el error máximo absoluto.</strong><br>Al verificar $A\cdot x$ se obtiene el vector b con un error máximo del orden de $10^{-14}$, lo que confirma la solución. (Ver código)</li>
         <li><strong>A5: Genere con Matplotlib la gráfica de la trayectoria</strong><br>La gráfica muestra la elipse ajustada pasando por los cinco puntos observados. (Ver código)</li>
         <li><strong>B1: Interprete el significado de la entrada $a_{11}$ de la matriz en el contexto del problema.</strong><br>$a_{11}=x_{1}{}^{2}$ mide la contribución cuadrática de la coordenada x del primer punto a la cónica.</li>
@@ -345,6 +352,7 @@ e0$, A es invertible y el sistema tiene solución única. (Ver código)</li>
         <li><strong>C1: Sugiera una modificación en los coeficientes de A o en las entradas de b que haría que el sistema tenga infinitas soluciones o ninguna. Justifique matemáticamente su respuesta.</strong><br>Si los cinco puntos fueran colineales $y=kx$, con $k=$ const.), la matriz A sería singular ( $det(A)=0)$ y el sistema no tendría solución única, o tendría infinitas soluciones.</li>
         <li><strong>C2: Proponga una modificación al modelo (por ejemplo, agregar una variable, cambiar una ecuación o agregar una restricción) que mejoraría la representación del fenómeno real. Explique qué cambiaría en la matriz A y en el vector b.</strong><br>Podría agregarse un sexto punto o modificar la ecuación a una cónica general con F libre, lo que cambiaría la dimensión del sistema y permitiría más grados de libertad.</li>
     </ul>
+    
 </section>
 
 <section id="evaluacion" class="section card">
