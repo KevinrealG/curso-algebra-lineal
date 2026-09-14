@@ -153,16 +153,102 @@
 
 <div class="presentation-wrapper">
     <div class="slides-container">
+        <!-- DIAPOSITIVA: Determinante de una matriz 2 x 2 -->
+        <div class="slide">
+            <h1>Determinante de una Matriz 2 &times; 2</h1>
+            <div class="card">
+                <p>Sea \( A = \begin{pmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{pmatrix} \) una matriz de \( 2 \times 2 \). El determinante de \( A \) se define como:</p>
+                <div class="math-block">
+                    \[ \det A = |A| = a_{11}a_{22} - a_{12}a_{21} \]
+                </div>
+            </div>
+        </div>
 
-        <!-- DIAPOSITIVA 1 -->
-        <div class="slide active">
+        <!-- DIAPOSITIVA: Definición de Determinante de 3 x 3 y Nota -->
+        <div class="slide">
             <h1>Determinante de 3 &times; 3</h1>
             <div class="card">
-                <p>Sea \( A = \begin{pmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{pmatrix} \). Entonces el determinante de \(A\) se define como:</p>
+                <p>Sea \( A = \begin{pmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{pmatrix} \). El determinante se define como:</p>
                 <div class="math-block">
                     \[ \det A = |A| = a_{11}\begin{vmatrix} a_{22} & a_{23} \\ a_{32} & a_{33} \end{vmatrix} - a_{12}\begin{vmatrix} a_{21} & a_{23} \\ a_{31} & a_{33} \end{vmatrix} + a_{13}\begin{vmatrix} a_{21} & a_{22} \\ a_{31} & a_{32} \end{vmatrix} \]
                 </div>
-                <div class="citation"></div>
+                <div class="card card-purple" style="margin-top: 15px; padding: 15px; font-size: 1rem;">
+                    <strong>Nota:</strong> Observe el signo menos antes del segundo término del lado derecho.
+                </div>
+            </div>
+        </div>
+
+        
+
+        <div class="slide">
+            <h1>Regla de Sarrus: Diagonales y Signos</h1>
+            <div class="card" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                <p style="margin-bottom: 10px; font-size: 1.1rem;">Esquema gráfico para el cálculo de productos positivos y negativos:</p>
+                <div style="background: var(--card-blue-bg); padding: 15px; border-radius: 12px; border: 1px solid var(--border-color); display: inline-block;">
+                    <svg viewBox="0 0 350 200" style="width: 100%; max-width: 360px; height: auto; font-family: 'Merriweather', serif; font-size: 18px;">
+                        <!-- Barras verticales del determinante -->
+                        <line x1="60" y1="35" x2="60" y2="155" stroke="var(--text-main)" stroke-width="2.5"></line>
+                        <line x1="210" y1="35" x2="210" y2="155" stroke="var(--text-main)" stroke-width="2.5"></line>
+
+                        <!-- Elementos de la matriz (3x3 con 2 columnas repetidas) -->
+                        <!-- Fila 1 -->
+                        <text x="75" y="60" fill="var(--text-main)">a₁₁</text>
+                        <text x="110" y="60" fill="var(--text-main)">a₁₂</text>
+                        <text x="145" y="60" fill="var(--text-main)">a₁₃</text>
+                        <text x="180" y="60" fill="var(--text-muted)">a₁₁</text>
+                        <text x="215" y="60" fill="var(--text-muted)">a₁₂</text>
+
+                        <!-- Fila 2 -->
+                        <text x="75" y="100" fill="var(--text-main)">a₂₁</text>
+                        <text x="110" y="100" fill="var(--text-main)">a₂₂</text>
+                        <text x="145" y="100" fill="var(--text-main)">a₂₃</text>
+                        <text x="180" y="100" fill="var(--text-muted)">a₂₁</text>
+                        <text x="215" y="100" fill="var(--text-muted)">a₂₂</text>
+
+                        <!-- Fila 3 -->
+                        <text x="75" y="140" fill="var(--text-main)">a₃₁</text>
+                        <text x="110" y="140" fill="var(--text-main)">a₃₂</text>
+                        <text x="145" y="140" fill="var(--text-main)">a₃₃</text>
+                        <text x="180" y="140" fill="var(--text-muted)">a₃₁</text>
+                        <text x="215" y="140" fill="var(--text-muted)">a₃₂</text>
+
+                        <!-- Líneas diagonales positivas (hacia abajo: \) -->
+                        <line x1="80" y1="42" x2="155" y2="148" stroke="#3b82f6" stroke-width="2"></line>
+                        <line x1="115" y1="42" x2="190" y2="148" stroke="#3b82f6" stroke-width="2"></line>
+                        <line x1="150" y1="42" x2="225" y2="148" stroke="#3b82f6" stroke-width="2"></line>
+
+                        <!-- Líneas diagonales negativas (hacia arriba invertidas: /) -->
+                        <line x1="75" y1="148" x2="150" y2="42" stroke="#ef4444" stroke-width="2"></line>
+                        <line x1="110" y1="148" x2="185" y2="42" stroke="#ef4444" stroke-width="2"></line>
+                        <line x1="145" y1="148" x2="220" y2="42" stroke="#ef4444" stroke-width="2"></line>
+
+                        <!-- Signos (+) abajo -->
+                        <text x="150" y="175" fill="#3b82f6" font-weight="bold" font-size="18">+</text>
+                        <text x="185" y="175" fill="#3b82f6" font-weight="bold" font-size="18">+</text>
+                        <text x="220" y="175" fill="#3b82f6" font-weight="bold" font-size="18">+</text>
+
+                        <!-- Signos (-) arriba -->
+                        <text x="150" y="22" fill="#ef4444" font-weight="bold" font-size="18">-</text>
+                        <text x="185" y="22" fill="#ef4444" font-weight="bold" font-size="18">-</text>
+                        <text x="220" y="22" fill="#ef4444" font-weight="bold" font-size="18">-</text>
+                    </svg>
+                </div>
+                <p style="font-size: 0.9rem; margin-top: 8px;">
+                    Los productos con flechas hacia abajo se suman (<span style="color: #3b82f6; font-weight: bold;">+</span>) y los que van hacia arriba se restan (<span style="color: #ef4444; font-weight: bold;">-</span>).
+                </p>
+            </div>
+        </div>
+        <!-- DIAPOSITIVA: Cálculo de Determinante 3 x 3 por Diagonales -->
+        <div class="slide">
+            <h1>Cálculo de un Determinante de 3 &times; 3 por Diagonales</h1>
+            <div class="card">
+                <p>Se escribe la matriz \(A\) y se le adjuntan sus primeras dos columnas a la derecha. A continuación se calculan los seis productos:</p>
+                <div class="math-block">
+                    \[ |A| = a_{11}a_{22}a_{33} + a_{12}a_{23}a_{31} + a_{13}a_{21}a_{32} - a_{13}a_{22}a_{31} - a_{11}a_{23}a_{32} - a_{12}a_{21}a_{33} \]
+                </div>
+                <p style="font-size: 0.95rem; margin-top: 10px;">
+                    Los productos con flechas hacia abajo se suman tal como están; los productos con flechas hacia arriba se multiplican por un signo menos antes de sumarlos.
+                </p>
             </div>
         </div>
 
@@ -230,6 +316,79 @@
                 <div class="citation"></div>
             </div>
         </div>
+        <div class="slide">
+    <h1>Interpretación Geométrica (2 &times; 2)</h1>
+    <div class="card">
+        <p>
+            Sea \( A = \begin{pmatrix} a & b \\ c & d \end{pmatrix} \). En la figura 3.1 se graficaron los puntos \( (a, c) \) y \( (b, d) \) en el plano \( xy \) y se dibujaron los segmentos de recta de \( (0, 0) \) a cada uno de estos puntos. Se supone que estas dos rectas no son colineales. Esto equivale a suponer que \( (b, d) \) no es un múltiplo de \( (a, c) \).
+        </p>
+        <p>
+            El <strong>área generada por \( A \)</strong> se define como el área del paralelogramo con cuatro vértices en \( (0, 0), (a, c), (b, d) \) y \( (a + b, c + d) \).
+        </p>
+
+        <!-- Gráfico SVG del Paralelogramo -->
+        <div style="text-align: center; margin: 20px 0;">
+            <svg viewBox="0 0 450 350" style="width: 100%; max-width: 500px; height: auto; font-family: 'Segoe UI', sans-serif; font-size: 14px; background-color: var(--bg-wrapper); padding: 10px; border-radius: 8px;">
+                
+                <!-- Definición de flechas para los ejes -->
+                <defs>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--text-main)" />
+                    </marker>
+                </defs>
+
+                <!-- Ejes X e Y -->
+                <line x1="20" y1="280" x2="420" y2="280" stroke="var(--text-main)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+                <line x1="200" y1="330" x2="200" y2="20" stroke="var(--text-main)" stroke-width="1.5" marker-end="url(#arrow)"></line>
+
+                <!-- Etiquetas de los ejes y origen -->
+                <text x="425" y="285" fill="var(--text-main)" font-style="italic">x</text>
+                <text x="185" y="25" fill="var(--text-main)" font-style="italic">y</text>
+                <text x="185" y="295" fill="var(--text-main)">0</text>
+
+                <!-- Segmentos azules OA, OB, AC y BC -->
+                <line x1="200" y1="280" x2="360" y2="220" stroke="#2563eb" stroke-width="2"></line> <!-- OA -->
+                <line x1="200" y1="280" x2="100" y2="110" stroke="#2563eb" stroke-width="2"></line> <!-- OB -->
+                <line x1="360" y1="220" x2="260" y2="50" stroke="#2563eb" stroke-width="2"></line>  <!-- AC -->
+                <line x1="100" y1="110" x2="260" y2="50" stroke="#2563eb" stroke-width="2"></line>  <!-- BC -->
+
+                <!-- Líneas punteadas de proyección -->
+                <!-- Para B(b,d) -->
+                <line x1="100" y1="110" x2="100" y2="280" stroke="var(--text-main)" stroke-width="1.5" stroke-dasharray="4,4"></line>
+                <text x="85" y="200" fill="var(--text-main)" font-style="italic">d</text>
+                <text x="145" y="275" fill="var(--text-main)" font-style="italic">b</text>
+
+                <!-- Para C(a+b, c+d) relativas a B -->
+                <line x1="100" y1="110" x2="260" y2="110" stroke="var(--text-main)" stroke-width="1.5" stroke-dasharray="4,4"></line>
+                <line x1="260" y1="50" x2="260" y2="110" stroke="var(--text-main)" stroke-width="1.5" stroke-dasharray="4,4"></line>
+                <text x="180" y="128" fill="var(--text-main)" font-style="italic">a</text>
+                <text x="268" y="85" fill="var(--text-main)" font-style="italic">c</text>
+
+                <!-- Recta perpendicular OQ -->
+                <line x1="200" y1="280" x2="132" y2="98" stroke="var(--text-main)" stroke-width="1.5"></line>
+                
+                <!-- Símbolo de ángulo recto en Q -->
+                <polygon points="132,98 142,94 146,104 136,108" fill="none" stroke="var(--text-main)" stroke-width="1.5"></polygon>
+                <text x="115" y="90" fill="var(--text-main)" font-weight="bold">Q</text>
+
+                <!-- Puntos y Etiquetas (Vértices) -->
+                <circle cx="200" cy="280" r="4" fill="var(--text-main)"></circle>
+                <circle cx="360" cy="220" r="4" fill="#2563eb"></circle>
+                <circle cx="100" cy="110" r="4" fill="#2563eb"></circle>
+                <circle cx="260" cy="50" r="4" fill="#2563eb"></circle>
+
+                <text x="365" y="225" fill="var(--text-main)">A<tspan font-style="italic">(a, c)</tspan></text>
+                <text x="45" y="105" fill="var(--text-main)">B<tspan font-style="italic">(b, d)</tspan></text>
+                <text x="245" y="40" fill="var(--text-main)">C<tspan font-style="italic">(a + b, c + d)</tspan></text>
+            </svg>
+        </div>
+
+        <p style="font-size: 0.95rem; margin-top: 10px;">
+            <strong style="color: var(--primary-color);">Figura 3.1</strong><br>
+            \( Q \) está en el segmento de línea \( BC \) y también en la recta perpendicular a \( BC \) que pasa por el origen. El área del paralelogramo es real \( (\overline{OQ})(\overline{OA}) \).
+        </p>
+    </div>
+</div>
 
         <!-- DIAPOSITIVA 7 -->
         <div class="slide">

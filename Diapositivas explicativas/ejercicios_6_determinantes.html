@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Problemas 3.1 - Cálculo de Determinantes</title>
+    
+    <!-- MathJax para renderizar notación matemática de matrices y determinantes -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --bg-body: #f4f6f9;
+            --bg-card: #ffffff;
+            --text-main: #2c3e50;
+            --border-color: #e0e0e0;
+            --primary-color: #1565c0;
+            --hover-bg: #eef4fb;
+            --accent: #64b5f6;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #e0e0e0;
+            --border-color: #333333;
+            --primary-color: #64b5f6;
+            --hover-bg: #2a2d32;
+            --accent: #1565c0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: block;
+            margin: 0 auto 20px auto;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .question-block {
+            background: var(--bg-card);
+            padding: 25px 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-size: 1.15rem;
+            color: var(--primary-color);
+        }
+
+        /* Cuadrículas adaptables para organizar los ejercicios */
+        .exercise-grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            align-items: center;
+        }
+
+        .exercise-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+            gap: 20px;
+            align-items: center;
+        }
+
+        .exercise-item {
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .exercise-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: var(--hover-bg);
+        }
+
+        .exercise-num {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            min-width: 25px;
+        }
+
+        .math-content {
+            overflow-x: auto;
+            flex-grow: 1;
+        }
+
+        .theory-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .theory-item {
+            padding: 12px 15px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            background-color: var(--bg-card);
+            display: flex;
+            gap: 15px;
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <button type="button" class="theme-toggle" onclick="toggleTheme()">Cambiar a Modo Oscuro</button>
+
+    <h1>Problemas 3.1</h1>
+
+    <!-- SECCIÓN 1: PROBLEMAS 1 AL 8 (3x3) -->
+    <div class="question-block">
+        <div class="question-text">En los problemas 1 al 8 calcule el determinante (matrices de 3 &times; 3).</div>
+        <div class="exercise-grid-4">
+            <div class="exercise-item"><span class="exercise-num">1.</span> <span class="math-content">\( \begin{vmatrix} 7 & 9 & -5 \\ 9 & 3 & 1 \\ -8 & -8 & 10 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">2.</span> <span class="math-content">\( \begin{vmatrix} 1 & 0 & 3 \\ 0 & 1 & 4 \\ 2 & 1 & 0 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">3.</span> <span class="math-content">\( \begin{vmatrix} -8 & 4 & -6 \\ 1 & -3 & -3 \\ -3 & -4 & -1 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">4.</span> <span class="math-content">\( \begin{vmatrix} 10 & 10 & -8 \\ -7 & 0 & -2 \\ 10 & 6 & 9 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">5.</span> <span class="math-content">\( \begin{vmatrix} 3 & -1 & 4 \\ 6 & 3 & 5 \\ 2 & -1 & 6 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">6.</span> <span class="math-content">\( \begin{vmatrix} -1 & 0 & 6 \\ 0 & 2 & 4 \\ 1 & 2 & -3 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">7.</span> <span class="math-content">\( \begin{vmatrix} 5 & 0 & 10 \\ 2 & 4 & 1 \\ 9 & 9 & 6 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">8.</span> <span class="math-content">\( \begin{vmatrix} -2 & 3 & 1 \\ 4 & 6 & 5 \\ 0 & 2 & 1 \end{vmatrix} \)</span></div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 2: PROBLEMAS 9 AL 16 (Fracciones y Matrices más grandes) -->
+    <div class="question-block">
+        <div class="question-text">En los problemas 9 al 16 calcule el determinante.</div>
+        <div class="exercise-grid-2">
+            <div class="exercise-item"><span class="exercise-num">9.</span> <span class="math-content">\( \begin{vmatrix} \frac{2}{3} & \frac{2}{3} & 1 \\ 0 & 3 & 2 \\ \frac{10}{3} & 3 & \frac{7}{3} \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">10.</span> <span class="math-content">\( \begin{vmatrix} -2 & -10 & 7 & 0 \\ 0 & -5 & 4 & -1 \\ 0 & -10 & 0 & 0 \\ 0 & 0 & 0 & 6 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">11.</span> <span class="math-content">\( \begin{vmatrix} 2 & 0 & 3 & 1 \\ 0 & 1 & 4 & 2 \\ 0 & 0 & 1 & 5 \\ 1 & 2 & 3 & 0 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">12.</span> <span class="math-content">\( \begin{vmatrix} -3 & 0 & 0 & 0 \\ -4 & 7 & 0 & 0 \\ 5 & 8 & -1 & 0 \\ 2 & 3 & 0 & 6 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">13.</span> <span class="math-content">\( \begin{vmatrix} 2 & -3 & 0 & -4 & 0 \\ 0 & 5 & -3 & 0 & 1 \\ 3 & 0 & -2 & 5 & 4 \\ 0 & 2 & 0 & 1 & -1 \\ 0 & 1 & 7 & 0 & 1 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">14.</span> <span class="math-content">\( \begin{vmatrix} 2 & 3 & -1 & 4 & 5 \\ 0 & 1 & 7 & 8 & 2 \\ 0 & 0 & 4 & -1 & 5 \\ 0 & 0 & 0 & -2 & 8 \\ 0 & 0 & 0 & 0 & 6 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">15.</span> <span class="math-content">\( \begin{vmatrix} 0 & 0 & 0 & 0 & 0 \\ 0 & 7 & 0 & 0 & 0 \\ -9 & 1 & 0 & 0 & 0 \\ -6 & 0 & 0 & -2 & -7 \\ 9 & -9 & 0 & -5 & 0 \end{vmatrix} \)</span></div>
+            <div class="exercise-item"><span class="exercise-num">16.</span> <span class="math-content">\( \begin{vmatrix} -8 & 0 & 0 & -10 & 0 \\ 0 & -8 & 0 & -7 & 1 \\ 0 & 9 & -3 & 0 & -4 \\ -5 & 0 & 7 & 5 & 5 \\ -2 & 0 & -10 & 3 & -7 \end{vmatrix} \)</span></div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 3: PROBLEMAS TEÓRICOS 17 AL 22 -->
+    <div class="question-block">
+        <div class="question-text">Demostraciones y Propiedades (Problemas 17 a 22)</div>
+        <ul class="theory-list">
+            <li class="theory-item"><span class="exercise-num">17.</span> <span>Demuestre que si \(A\) y \(B\) son matrices diagonales de \(n \times n\), entonces \( \det AB = \det A \det B \).</span></li>
+            <li class="theory-item"><span class="exercise-num">18.</span> <span>Demuestre que si \(A\) y \(B\) son matrices triangulares inferiores, entonces \( \det AB = \det A \det B \).</span></li>
+            <li class="theory-item"><span class="exercise-num">19.</span> <span>Demuestre que, en general, no se cumple que \( \det(A + B) = \det A + \det B \). (Use un contraejemplo.)</span></li>
+            <li class="theory-item"><span class="exercise-num">20.</span> <span>Muestre que si \(A\) es triangular, entonces \( \det A \neq 0 \) si y sólo si todos los elementos en la diagonal de \(A\) son diferentes de cero.</span></li>
+            <li class="theory-item"><span class="exercise-num">21.</span> <span>Pruebe el teorema 3.1.3 cuando \(A\) tiene coordenadas \((0, c)\) o \((a, 0)\).</span></li>
+            <li class="theory-item"><span class="exercise-num">22.</span> <span>Más sobre la interpretación geométrica del determinante: sean \( \mathbf{u}_1 \) y \( \mathbf{u}_2 \) dos vectores y sean \( \mathbf{v}_1 = A\mathbf{v}_1 \) (corregido: \( A\mathbf{u}_1 \)) y \( \mathbf{v}_2 = A\mathbf{u}_2 \). Demuestre que (área generada por \( \mathbf{v}_1 \) y \( \mathbf{v}_2 \)) = \( |\det A| \) (área generada por \( \mathbf{u}_1 \) y \( \mathbf{u}_2 \)).</span></li>
+        </ul>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.querySelector('.theme-toggle');
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeBtn.textContent = 'Cambiar a Modo Claro';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeBtn.textContent = 'Cambiar a Modo Oscuro';
+            }
+        }
+    </script>
+</body>
+</html>
