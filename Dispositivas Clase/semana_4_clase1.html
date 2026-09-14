@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase: Matrices Elementales</title>
+    
+    <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
+    
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --bg-body: #1a1a1a;
+            --bg-wrapper: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --card-bg: #f4f6f9;
+            --card-blue-bg: #eef4fb;
+            --card-blue-text: #1565c0;
+            --card-purple-bg: #f4f2fb;
+            --card-purple-text: #6543ed;
+            --nav-bg: #2c3e50;
+            --correct-bg: #e8f5e9;
+            --correct-text: #2e7d32;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-wrapper: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --card-bg: #2a2d32;
+            --card-blue-bg: #1a2736;
+            --card-blue-text: #64b5f6;
+            --card-purple-bg: #251f38;
+            --card-purple-text: #b39ddb;
+            --nav-bg: #111111;
+            --correct-bg: #1b5e20;
+            --correct-text: #a5d6a7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+        .presentation-wrapper {
+            width: 100%;
+            max-width: 950px;
+        }
+        .slides-container {
+            background: var(--bg-wrapper);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .slide {
+            display: none;
+            padding: clamp(30px, 5vw, 50px);
+            box-sizing: border-box;
+            min-height: 550px;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .slide.active {
+            display: flex;
+        }
+        h1 {
+            border-bottom: 2px solid var(--card-blue-text);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+            color: var(--card-blue-text);
+            text-align: center;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-sizing: border-box;
+            color: var(--text-main);
+            font-size: 1.15rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 15px;
+        }
+        .math-block {
+            background-color: var(--card-blue-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            padding: 15px 30px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .nav-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .nav-btn:hover { background-color: #0d47a1; }
+        .nav-btn:disabled { background-color: #555; cursor: not-allowed; }
+        
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            background: white;
+            color: var(--nav-bg);
+        }
+
+        /* Estilos para la sección de práctica */
+        .quiz-question {
+            margin-bottom: 20px;
+        }
+        .quiz-options label {
+            display: block;
+            padding: 10px;
+            background: var(--card-purple-bg);
+            color: var(--card-purple-text);
+            margin: 8px 0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+        .quiz-options label:hover {
+            opacity: 0.8;
+        }
+        .answer-reveal {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: var(--correct-bg);
+            color: var(--correct-text);
+            border-radius: 6px;
+            font-weight: bold;
+        }
+        .reveal-btn {
+            background-color: var(--card-purple-text);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="presentation-wrapper">
+    <div class="slides-container">
+
+        <!-- DIAPOSITIVA 1: Definición -->
+        <div class="slide active">
+            <h1>Definición: Matriz Elemental</h1>
+            <div class="card">
+                <p><strong>Definición 1:</strong> Una matriz (cuadrada) \(E\) de \(n \times n\) se denomina una <strong>matriz elemental</strong> si se puede obtener a partir de la matriz identidad, \(I_n\), de \(n \times n\) mediante una sola operación elemental con renglones.</p>
+                <div class="math-block">
+                    Ejemplo a partir de \(I_3\): 
+                    \[ I_3 = \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} \xrightarrow{R_2 \rightarrow 3R_2} \begin{pmatrix} 1 & 0 & 0 \\ 0 & 3 & 0 \\ 0 & 0 & 1 \end{pmatrix} = E \]
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 2: Tipos de operaciones -->
+        <div class="slide">
+            <h1>Tipos de Matrices Elementales</h1>
+            <div class="card">
+                <p>Las matrices elementales se denotan por \(E\), o por \(cR_i\), \(R_j + cR_i\), o por \(P_{ij}\) de acuerdo con la forma en que se obtuvo de \(I\).</p>
+                <ul>
+                    <li><strong>i)</strong> Multiplicar el renglón \(i\) por un número \(c\) diferente de cero \((R_i \rightarrow cR_i)\).</li>
+                    <li><strong>ii)</strong> Sumar un múltiplo del renglón \(i\) al renglón \(j\) \((R_j \rightarrow R_j + cR_i)\).</li>
+                    <li><strong>iii)</strong> Permutar (intercambiar) los renglones \(i\) y \(j\) \((R_i \rightleftarrows R_j \text{ o } P_{ij})\).</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 3: Teorema de Operaciones -->
+        <div class="slide">
+            <h1>Operaciones como Multiplicación</h1>
+            <div class="card">
+                <p><strong>Teorema 1:</strong> Para realizar una operación elemental por renglón en una matriz \(A\) se multiplica \(A\) por la izquierda por la matriz elemental adecuada.</p>
+                <div class="math-block" style="background-color: var(--card-purple-bg); color: var(--card-purple-text);">
+                    Sea \( A = \begin{pmatrix} 1 & 3 & 2 & 1 \\ 4 & 2 & 3 & -5 \\ 3 & 1 & -2 & 4 \end{pmatrix} \). <br><br>
+                    Para aplicar \( (R_3 - 2R_1 \rightarrow R_3) \), multiplicamos por la matriz elemental correspondiente:
+                    \[ \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ -2 & 0 & 1 \end{pmatrix} \begin{pmatrix} 1 & 3 & 2 & 1 \\ 4 & 2 & 3 & -5 \\ 3 & 1 & -2 & 4 \end{pmatrix} = \begin{pmatrix} 1 & 3 & 2 & 1 \\ 4 & 2 & 3 & -5 \\ 1 & -5 & -6 & 2 \end{pmatrix} \]
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 4: Matrices Inversas -->
+        <div class="slide">
+            <h1>Inversa de una Matriz Elemental</h1>
+            <div class="card">
+                <p><strong>Teorema 2:</strong> Toda matriz elemental es invertible. El inverso de una matriz elemental es una matriz del mismo tipo.</p>
+                <table style="width: 100%; text-align: left; margin-top: 15px; border-collapse: collapse;">
+                    <tr style="border-bottom: 2px solid var(--text-muted);">
+                        <th style="padding: 10px;">Operación para \(E\)</th>
+                        <th style="padding: 10px;">Operación para \(E^{-1}\)</th>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--text-muted);">
+                        <td style="padding: 10px;">Multiplica el renglón \(i\) de \(A\) por \(c \neq 0\)</td>
+                        <td style="padding: 10px;">Multiplica el renglón \(i\) de \(A\) por \(\frac{1}{c}\)</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid var(--text-muted);">
+                        <td style="padding: 10px;">Suma \(c \cdot (\text{renglón } i)\) al renglón \(j\)</td>
+                        <td style="padding: 10px;">Suma \(-c \cdot (\text{renglón } i)\) al renglón \(j\)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;">Permuta los renglones \(i\) y \(j\) de \(A\)</td>
+                        <td style="padding: 10px;">Permuta los renglones \(i\) y \(j\) de \(A\)</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 5: Descomposición -->
+        <div class="slide">
+            <h1>Producto de Matrices Elementales</h1>
+            <div class="card">
+                <p><strong>Teorema 3:</strong> Una matriz cuadrada es invertible si y sólo si es el producto de matrices elementales.</p>
+                <div class="math-block">
+                    Si \(A\) es invertible, se puede reducir a la identidad \(I\) mediante operaciones elementales \(E_1, E_2, \dots, E_m\):
+                    \[ E_m \cdots E_2 E_1 A = I \]
+                    Multiplicando por las inversas correspondientes:
+                    \[ A = E_1^{-1} E_2^{-1} \cdots E_m^{-1} \]
+                    Como la inversa de una elemental es elemental, ¡\(A\) es un producto de elementales!
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 6: Práctica Teórica -->
+        <div class="slide">
+            <h1>Práctica: Autoevaluación Teórica</h1>
+            <div class="card">
+                <p>Indique si las afirmaciones son verdaderas o falsas:</p>
+                
+                <div class="quiz-question">
+                    <strong>I)</strong> El producto de dos matrices elementales es una matriz elemental.
+                    <button class="reveal-btn" onclick="toggleAnswer('ans1')">Ver Respuesta</button>
+                    <div id="ans1" class="answer-reveal">Falso. (La combinación de dos operaciones ya no es "una sola operación" desde la identidad).</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>II)</strong> El inverso de una matriz elemental es una matriz elemental.
+                    <button class="reveal-btn" onclick="toggleAnswer('ans2')">Ver Respuesta</button>
+                    <div id="ans2" class="answer-reveal">Verdadero. (Según el Teorema 2).</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>III)</strong> Toda matriz se puede escribir como el producto de matrices elementales.
+                    <button class="reveal-btn" onclick="toggleAnswer('ans3')">Ver Respuesta</button>
+                    <div id="ans3" class="answer-reveal">Falso. (Solo las matrices invertibles pueden escribirse así).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 7: Práctica Aplicada -->
+        <div class="slide">
+            <h1>Práctica: Encuentre la Inversa</h1>
+            <div class="card">
+                <p>Elija la opción que represente la respuesta correcta para la inversa de la siguiente matriz elemental:</p>
+                
+                <div class="math-block" style="margin-bottom: 20px;">
+                    La inversa de \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 3 & 1 \end{pmatrix} \) es:
+                </div>
+
+                <div class="quiz-options">
+                    <label>
+                        <input type="radio" name="q_inv"> 
+                        a) \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 1/3 & 1 \end{pmatrix} \)
+                    </label>
+                    <label>
+                        <input type="radio" name="q_inv"> 
+                        b) \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & -1 & 0 \\ 0 & -3 & -1 \end{pmatrix} \)
+                    </label>
+                    <label onclick="document.getElementById('ans4').style.display = 'block';">
+                        <input type="radio" name="q_inv"> 
+                        c) \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & -3 & 1 \end{pmatrix} \)
+                    </label>
+                </div>
+                
+                <div id="ans4" class="answer-reveal" style="background-color: var(--correct-bg); margin-top: 15px;">
+                    ¡Correcto! La operación original es \(R_3 + 3R_2 \rightarrow R_3\). Su inversa aplica la operación contraria: \(R_3 - 3R_2 \rightarrow R_3\).
+                </div>
+
+            </div>
+        </div>
+        <!-- DIAPOSITIVA FINAL: Resumen 2.6 -->
+<div class="slide">
+    <h1>RESUMEN </h1>
+    <div class="card">
+        <ul style="padding-left: 20px;">
+            <li style="margin-bottom: 15px;">
+                <strong>Una matriz elemental</strong> es una matriz cuadrada que se obtiene llevando a cabo exactamente una operación con renglones sobre la matriz identidad. Los tres tipos de matrices elementales son:
+                <ul style="margin-top: 10px; padding-left: 20px; list-style-type: circle;">
+                    <li style="margin-bottom: 8px;"><strong>\( cR_i \)</strong>: se multiplica el renglón \( i \) de \( I \) por \( c \); \( c \neq 0 \).</li>
+                    <li style="margin-bottom: 8px;"><strong>\( R_j + cR_i \)</strong>: se multiplica el renglón \( i \) de \( I \) por \( c \) y se suma al renglón \( j \).</li>
+                    <li style="margin-bottom: 8px;"><strong>\( P_{ij} \)</strong>: se permutan los renglones \( i \) y \( j \).</li>
+                </ul>
+            </li>
+            <li style="margin-bottom: 15px;">
+                Una matriz cuadrada es invertible si y sólo si es el producto de matrices elementales.
+            </li>
+            <li>
+                Cualquier matriz cuadrada se puede escribir como el producto de matrices elementales y una matriz triangular superior.
+            </li>
+        </ul>
+    </div>
+</div>
+
+    </div>
+
+    <!-- Barra de Navegación -->
+    <div class="nav-bar">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
+        <div class="nav-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+            <span id="slide-indicator">Diapositiva 1 de 7</span>
+        </div>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slide-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+        
+        indicator.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+        
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'Modo Claro';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.textContent = 'Modo Oscuro';
+        }
+    }
+
+    function toggleAnswer(id) {
+        const el = document.getElementById(id);
+        if (el.style.display === 'block') {
+            el.style.display = 'none';
+        } else {
+            el.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>

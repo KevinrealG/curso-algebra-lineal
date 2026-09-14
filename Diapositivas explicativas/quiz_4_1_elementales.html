@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación 2.6 - Quiz Interactivo</title>
+    
+    <!-- MathJax para renderizar notación matemática -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --bg-body: #f4f6f9;
+            --bg-card: #ffffff;
+            --text-main: #2c3e50;
+            --border-color: #e0e0e0;
+            --primary-color: #1565c0;
+            --hover-bg: #eef4fb;
+            --correct-border: #2e7d32;
+            --correct-bg: #e8f5e9;
+            --incorrect-border: #c62828;
+            --incorrect-bg: #ffebee;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --text-main: #e0e0e0;
+            --border-color: #333333;
+            --primary-color: #64b5f6;
+            --hover-bg: #2a2d32;
+            --correct-border: #4caf50;
+            --correct-bg: #1b5e20;
+            --incorrect-border: #ef5350;
+            --incorrect-bg: #b71c1c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            color: var(--text-main);
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 10px;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: block;
+            margin: 0 auto 20px auto;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .question-block {
+            background: var(--bg-card);
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .question-block.correct {
+            border-left-color: var(--correct-border);
+            background-color: var(--correct-bg);
+        }
+
+        .question-block.incorrect {
+            border-left-color: var(--incorrect-border);
+            background-color: var(--incorrect-bg);
+        }
+
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        /* Estilo por defecto para opciones en bloque */
+        .options-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Cuadrícula de 2 columnas para las opciones de matrices */
+        @media (min-width: 600px) {
+            .options-matrix-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            transition: background-color 0.2s;
+        }
+
+        .option-label:hover {
+            background-color: var(--hover-bg);
+        }
+
+        input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        button[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        button[type="submit"]:hover {
+            opacity: 0.9;
+        }
+
+        #result-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+    <button type="button" class="theme-toggle" onclick="toggleTheme()">Cambiar a Modo Oscuro</button>
+
+    <h1>AUTOEVALUACIÓN 2.6</h1>
+
+    <form id="quiz-form">
+        
+        <h2>De las afirmaciones siguientes indique si son falsas o verdaderas:</h2>
+
+        <!-- Pregunta I -->
+        <div class="question-block" id="block-q1">
+            <div class="question-text">I) El producto de dos matrices elementales es una matriz elemental.</div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q1" value="v"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q1" value="f"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta II -->
+        <div class="question-block" id="block-q2">
+            <div class="question-text">II) El inverso de una matriz elemental es una matriz elemental.</div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q2" value="v"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q2" value="f"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta III -->
+        <div class="question-block" id="block-q3">
+            <div class="question-text">III) Toda matriz se puede escribir como el producto de matrices elementales.</div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q3" value="v"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q3" value="f"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta IV -->
+        <div class="question-block" id="block-q4">
+            <div class="question-text">IV) Toda matriz cuadrada se puede escribir como el producto de matrices elementales.</div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q4" value="v"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q4" value="f"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta V -->
+        <div class="question-block" id="block-q5">
+            <div class="question-text">V) Toda matriz invertible se puede escribir como el producto de matrices elementales.</div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q5" value="v"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q5" value="f"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta VI -->
+        <div class="question-block" id="block-q6">
+            <div class="question-text">VI) Toda matriz cuadrada se puede escribir como el producto de matrices elementales y una matriz triangular superior.</div>
+            <div class="options-grid">
+                <label class="option-label"><input type="radio" name="q6" value="v"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q6" value="f"> Falso</label>
+            </div>
+        </div>
+
+        <h2>Elija la opción que represente la respuesta correcta:</h2>
+
+        <!-- Pregunta VII -->
+        <div class="question-block" id="block-q7">
+            <div class="question-text">VII) La inversa de \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 3 & 1 \end{pmatrix} \) es:</div>
+            <div class="options-matrix-grid">
+                <label class="option-label">
+                    <input type="radio" name="q7" value="a"> 
+                    a) \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & -3 & 1 \end{pmatrix} \)
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q7" value="b"> 
+                    b) \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & \frac{1}{3} & 1 \end{pmatrix} \)
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q7" value="c"> 
+                    c) \( \begin{pmatrix} 1 & -3 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} \)
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q7" value="d"> 
+                    d) \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 3 & 1 \end{pmatrix} \)
+                </label>
+            </div>
+        </div>
+
+        <!-- Pregunta VIII -->
+        <div class="question-block" id="block-q8">
+            <div class="question-text">VIII) La inversa de \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 4 \end{pmatrix} \) es:</div>
+            <div class="options-matrix-grid">
+                <label class="option-label">
+                    <input type="radio" name="q8" value="a"> 
+                    a) \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & -4 \end{pmatrix} \)
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q8" value="b"> 
+                    b) \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & \frac{1}{4} \end{pmatrix} \)
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q8" value="c"> 
+                    c) \( \begin{pmatrix} \frac{1}{4} & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix} \)
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q8" value="d"> 
+                    d) \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 4 \end{pmatrix} \)
+                </label>
+            </div>
+        </div>
+
+        <!-- Pregunta IX -->
+        <div class="question-block" id="block-q9">
+            <div class="question-text">IX) La inversa de \( \begin{pmatrix} 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix} \) es:</div>
+            <div class="options-matrix-grid">
+                <label class="option-label">
+                    <input type="radio" name="q9" value="a"> 
+                    a) \( \begin{pmatrix} 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & -1 \end{pmatrix} \)
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q9" value="b"> 
+                    b) \( \begin{pmatrix} 0 & -1 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & -1 \end{pmatrix} \)
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q9" value="c"> 
+                    c) \( \begin{pmatrix} 1 & 0 & 0 \\ 0 & 0 & 1 \\ 0 & 1 & 0 \end{pmatrix} \)
+                </label>
+                <label class="option-label">
+                    <input type="radio" name="q9" value="d"> 
+                    d) \( \begin{pmatrix} 0 & 1 & 0 \\ 1 & 0 & 0 \\ 0 & 0 & 1 \end{pmatrix} \)
+                </label>
+            </div>
+        </div>
+
+        <button type="submit">Evaluar respuestas</button>
+    </form>
+
+    <div id="result-container"></div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const themeBtn = document.querySelector('.theme-toggle');
+            if (body.getAttribute('data-theme') === 'light') {
+                body.setAttribute('data-theme', 'dark');
+                themeBtn.textContent = 'Cambiar a Modo Claro';
+            } else {
+                body.setAttribute('data-theme', 'light');
+                themeBtn.textContent = 'Cambiar a Modo Oscuro';
+            }
+        }
+
+        // Diccionario de respuestas basado en la imagen del libro
+        const correctAnswers = {
+            q1: 'f', // I) F
+            q2: 'v', // II) V
+            q3: 'f', // III) F
+            q4: 'f', // IV) F
+            q5: 'v', // V) V
+            q6: 'v', // VI) V
+            q7: 'a', // VII) a
+            q8: 'b', // VIII) b
+            q9: 'd'  // IX) d
+        };
+
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            // Limpiar y evaluar cada bloque
+            for (let question in correctAnswers) {
+                const block = document.getElementById('block-' + question);
+                block.classList.remove('correct', 'incorrect');
+
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                
+                if (selectedOption && selectedOption.value === correctAnswers[question]) {
+                    block.classList.add('correct');
+                    score++;
+                } else {
+                    block.classList.add('incorrect');
+                }
+            }
+
+            // Mostrar el contenedor de resultados
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+            
+            if (score === totalQuestions) {
+                resultContainer.style.color = 'var(--correct-border)';
+                resultContainer.innerHTML = `¡Excepcional! Puntuación perfecta: ${score}/${totalQuestions}`;
+            } else {
+                resultContainer.style.color = 'var(--incorrect-border)';
+                resultContainer.innerHTML = `Tu puntuación es: ${score}/${totalQuestions}. ¡Revisa los bloques en rojo y prueba de nuevo!`;
+            }
+            
+            // Hacer scroll hasta el resultado final suavemente
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
