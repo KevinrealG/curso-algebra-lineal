@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase: Determinantes</title>
+    
+    <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --bg-body: #1a1a1a;
+            --bg-wrapper: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --card-bg: #f4f6f9;
+            --card-blue-bg: #eef4fb;
+            --card-blue-text: #1565c0;
+            --card-purple-bg: #f4f2fb;
+            --card-purple-text: #6543ed;
+            --nav-bg: #2c3e50;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-wrapper: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --card-bg: #2a2d32;
+            --card-blue-bg: #1a2736;
+            --card-blue-text: #64b5f6;
+            --card-purple-bg: #251f38;
+            --card-purple-text: #b39ddb;
+            --nav-bg: #111111;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+        .presentation-wrapper {
+            width: 100%;
+            max-width: 900px;
+        }
+        .slides-container {
+            background: var(--bg-wrapper);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .slide {
+            display: none;
+            padding: clamp(30px, 5vw, 50px);
+            box-sizing: border-box;
+            min-height: 500px;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .slide.active {
+            display: flex;
+        }
+        h1 {
+            border-bottom: 2px solid var(--card-blue-text);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+            color: var(--card-blue-text);
+            text-align: center;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-sizing: border-box;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .math-block {
+            background-color: var(--card-blue-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            padding: 15px 30px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .nav-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .nav-btn:hover { background-color: #0d47a1; }
+        .nav-btn:disabled { background-color: #555; cursor: not-allowed; }
+        
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            background: white;
+            color: var(--nav-bg);
+        }
+        .citation {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: 15px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="presentation-wrapper">
+    <div class="slides-container">
+        <!-- DIAPOSITIVA: Propiedad 1 - Producto de Matrices -->
+        <div class="slide">
+            <h1>1. Producto de Matrices</h1>
+            <div class="card">
+                <p>El determinante del producto de dos matrices cuadradas es igual al producto de sus determinantes individuales:</p>
+                <div class="math-block">
+                    \[ \det(AB) = \det(A) \cdot \det(B) \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 10px;">
+                    <strong>Ejemplo:</strong> Si \( A = \begin{pmatrix} 1 & 2 \\ 0 & 3 \end{pmatrix} \) (\(\det A = 3\)) y \( B = \begin{pmatrix} 2 & 0 \\ 1 & 4 \end{pmatrix} \) (\(\det B = 8\)), entonces el producto \( AB = \begin{pmatrix} 4 & 8 \\ 3 & 12 \end{pmatrix} \) tiene un determinante de \(\det(AB) = 24\) (que es igual a \(3 \times 8\)).
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA: Propiedad 2 - Determinante de la Transpuesta -->
+        <div class="slide">
+            <h1>2. Determinante de la Transpuesta</h1>
+            <div class="card">
+                <p>Intercambiar las filas por columnas de una matriz no altera el valor de su determinante:</p>
+                <div class="math-block">
+                    \[ \det(A^T) = \det(A) \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 10px;">
+                    <strong>Ejemplo:</strong> Si \( A = \begin{pmatrix} 2 & 1 \\ 5 & 3 \end{pmatrix} \), su determinante es \((2)(3) - (1)(5) = 1\). Su transpuesta es \( A^T = \begin{pmatrix} 2 & 5 \\ 1 & 3 \end{pmatrix} \), cuyo determinante también es \((2)(3) - (5)(1) = 1\).
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA: Propiedad 3 - Fila o Columna Nula -->
+        <div class="slide">
+            <h1>3. Fila o Columna Nula (Vector Cero)</h1>
+            <div class="card">
+                <p>Si todos los elementos de una fila o de una columna en una matriz son ceros, su determinante es automáticamente cero:</p>
+                <div class="math-block">
+                    \[ \det(A) = 0 \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 10px;">
+                    <strong>Ejemplo:</strong> 
+                    \[ \begin{vmatrix} 4 & 5 & 7 \\ 0 & 0 & 0 \\ 1 & 2 & 3 \end{vmatrix} = 0 \]
+                    Esto ocurre porque al expandir por cofactores a lo largo de la fila de ceros, todos los términos se multiplican por cero.
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA: Propiedad 4 - Multiplicación por una Constante -->
+        <div class="slide">
+            <h1>4. Multiplicación por una Constante</h1>
+            <div class="card">
+                <p>Si se multiplica una fila (o columna) completa de una matriz por una constante \(k\), el determinante queda multiplicado por esa misma constante:</p>
+                <div class="math-block">
+                    \[ \det(B) = k \cdot \det(A) \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 10px;">
+                    <strong>Ejemplo:</strong> Si multiplicamos la primera fila de \( A = \begin{pmatrix} 1 & 2 \\ 3 & 4 \end{pmatrix} \) (\(\det A = -2\)) por \(5\), obtenemos \( B = \begin{pmatrix} 5 & 10 \\ 3 & 4 \end{pmatrix} \), cuyo determinante es \(-10\) (es decir, \(5 \times -2\)).
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA: Propiedad 5 - Intercambio de Filas -->
+        <div class="slide">
+            <h1>5. Intercambio de Filas o Columnas</h1>
+            <div class="card">
+                <p>Si se intercambian dos filas (o dos columnas) de una matriz, el determinante cambia únicamente de signo:</p>
+                <div class="math-block">
+                    \[ \det(B) = -\det(A) \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 10px;">
+                    <strong>Ejemplo:</strong> Si intercambiamos las filas de \( \begin{vmatrix} 1 & 2 \\ 3 & 4 \end{vmatrix} \) (que da \(-2\)), obtenemos \( \begin{vmatrix} 3 & 4 \\ 1 & 2 \end{vmatrix} \), cuyo resultado es \((3)(2) - (4)(1) = 2\) (el signo opuesto).
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA: Propiedad 6 - Filas o Columnas Iguales -->
+        <div class="slide">
+            <h1>6. Filas o Columnas Iguales</h1>
+            <div class="card">
+                <p>Si una matriz tiene dos filas (o dos columnas) idénticas, su determinante es igual a cero:</p>
+                <div class="math-block">
+                    \[ \det(A) = 0 \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 10px;">
+                    <strong>Ejemplo:</strong> 
+                    \[ \begin{vmatrix} 2 & 3 & 1 \\ 4 & 5 & 6 \\ 2 & 3 & 1 \end{vmatrix} = 0 \]
+                    Esto es una consecuencia directa de la propiedad de intercambio: si intercambiamos las filas iguales, la matriz no cambia, pero su determinante debe cambiar de signo (\(x = -x \implies x = 0\)).
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA: Propiedad 7 - Fila o Columna Múltiplo -->
+        <div class="slide">
+            <h1>7. Fila o Columna Múltiplo de Otra</h1>
+            <div class="card">
+                <p>Si una fila (o columna) es un múltiplo escalar de otra fila (o columna), el determinante es cero:</p>
+                <div class="math-block">
+                    \[ \det(A) = 0 \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 10px;">
+                    <strong>Ejemplo:</strong> 
+                    \[ \begin{vmatrix} 1 & 2 & 3 \\ 2 & 4 & 6 \\ 5 & 0 & 1 \end{vmatrix} = 0 \]
+                    Notarás que la segunda fila es exactamente el doble (\(2\times\)) de la primera fila, lo que genera dependencia lineal y anula el determinante.
+                </p>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- Barra de Navegación con Selector de Tema -->
+    <div class="nav-bar">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
+        <div class="nav-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+            <span id="slide-indicator">Diapositiva 1 de 8</span>
+        </div>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    </div></div>
+/</div>
+<script>
+    // Variables para la lógica de diapositivas
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slide-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    // Función para actualizar la vista de la diapositiva
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+        
+        // Actualizar el texto del indicador
+        indicator.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+        
+        // Deshabilitar botones en los extremos
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+        
+        // Forzar a MathJax a renderizar de nuevo si es necesario
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    }
+
+    // Función que se ejecuta al presionar los botones "Anterior" o "Siguiente"
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+
+    // Función para cambiar entre modo claro y oscuro
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'Modo Claro';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.textContent = 'Modo Oscuro';
+        }
+    }
+</script>
+
+</body>
+</html>
