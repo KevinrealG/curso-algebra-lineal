@@ -180,6 +180,42 @@
                 </div>
             </div>
         </div>
+        <!-- DIAPOSITIVA: Reto Industrial - Regla de Cramer -->
+        <div class="slide">
+            <h1>Reto Industrial: Cierre de Producción en Reficar</h1>
+            <div class="card">
+                <p><strong>Contexto del Problema:</strong> El gerente de producción necesita un reporte urgente. La refinería produce tres combustibles: Gasolina Premium (\(x\)), Jet Fuel (\(y\) - Combustible B) y Diésel (\(z\)). El sistema de monitoreo colapsó, arrojando únicamente el total de aditivos consumidos en el turno.</p>
+                <p><strong>La instrucción:</strong> <em>"No hay tiempo para recalcular toda la producción. Usa los datos del inventario para decirme exclusivamente cuántos barriles de Jet Fuel (\(y\)) produjimos hoy"</em>.</p>
+                
+                <h3 style="color: var(--card-blue-text); margin-top: 20px;">Datos Técnicos (Ficha de Consumo)</h3>
+                <ul style="margin-bottom: 15px; line-height: 1.6;">
+                    <li><strong>1 Barril de Gasolina (\(x\)):</strong> 4L Antidetonante, 2L Detergente, 1L Antioxidante.</li>
+                    <li><strong>1 Barril de Jet Fuel (\(y\)):</strong> 2L Antidetonante, 5L Detergente, 2L Antioxidante.</li>
+                    <li><strong>1 Barril de Diésel (\(z\)):</strong> 1L Antidetonante, 2L Detergente, 4L Antioxidante.</li>
+                </ul>
+                
+                <p><strong>Inventario Consumido Hoy (Términos Independientes):</strong> 4,100L de Antidetonante, 6,000L de Detergente, y 4,100L de Antioxidante.</p>
+
+                <div class="math-block">
+                    \[ 
+                    \begin{cases} 
+                    4x + 2y + 1z = 4100 \\ 
+                    2x + 5y + 2z = 6000 \\ 
+                    1x + 2y + 4z = 4100 
+                    \end{cases} 
+                    \]
+                </div>
+
+                <div class="card card-purple" style="margin-top: 20px; padding: 15px;">
+                    <strong style="color: var(--card-purple-text); font-size: 1.1rem;">Misión del Estudiante (Regla de Cramer):</strong>
+                    <ol style="margin-top: 10px; margin-bottom: 0; line-height: 1.6;">
+                        <li>Calcular el determinante global del sistema \( \det(A) \) para asegurar que el modelo es consistente.</li>
+                        <li>Construir la matriz modificada \( A_y \), sustituyendo exclusivamente la columna del Jet Fuel por el vector de inventario consumido.</li>
+                        <li>Calcular el \( \det(A_y) \) y aplicar la fracción de Cramer \( \left( y = \frac{\det(A_y)}{\det(A)} \right) \) para entregarle al gerente la cifra exacta.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
 
         <!-- DIAPOSITIVA 3: Exploración -->
         <div class="slide">
