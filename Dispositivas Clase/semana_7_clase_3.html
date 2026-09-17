@@ -153,6 +153,140 @@
 <div class="presentation-wrapper">
     <div class="slides-container">
         <!-- DIAPOSITIVA: Propiedad 1 - Producto de Matrices -->
+         <!-- DIAPOSITIVA: Regla de Cramer -->
+          <!-- DIAPOSITIVA 1: Información General -->
+        <div class="slide">
+            <h1>La Regla de Cramer</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">1. Información General (1 Hora)</h3>
+                <p><strong>Tema:</strong> Solución de sistemas de ecuaciones lineales mediante la Regla de Cramer.</p>
+                <p><strong>Competencia:</strong> Aplicar determinantes para aislar y resolver variables específicas en sistemas lineales, evaluando la eficiencia del método.</p>
+                <p><strong>Recursos:</strong> Pizarras, aplicación web propia / Google Colab.</p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 2: Apertura -->
+        <div class="slide">
+            <h1>2. Apertura: El Reto (10 min)</h1>
+            <div class="card">
+                <p><strong>Proyección de modelo de distribución:</strong> Una refinería produce 3 tipos de combustible usando 3 aditivos distintos. Hoy, el gerente de producción solo necesita saber <em>cuánto del Combustible B</em> se produjo, ignorando el resto.</p>
+                <div class="card card-purple" style="margin-top: 15px; padding: 15px;">
+                    <strong style="color: var(--card-purple-text);">Preguntas Motivadoras:</strong>
+                    <ul style="margin-bottom: 0;">
+                        <li>Usando eliminación de Gauss, ¿podemos calcular el Combustible B sin calcular también el A y el C?</li>
+                        <li>¿Existirá un "atajo" matemático que relacione los inventarios totales directamente con una sola variable?</li>
+                        <li>Si el determinante global del sistema es cero, ¿qué le pasaría a nuestro atajo?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 3: Exploración -->
+        <div class="slide">
+            <h1>3. Exploración (5 min)</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">Análisis de Hipótesis en Parejas</h3>
+                <p>Analicen la siguiente fracción matemática:</p>
+                <div class="math-block">
+                    \[ x = \frac{\det(A_x)}{\det(A)} \]
+                </div>
+                <p style="font-size: 1.1rem; text-align: center; margin-top: 15px;">
+                    <strong>Debate (3 minutos):</strong> ¿Qué representa la matriz \( A_x \)? ¿Por qué el determinante de \( A \) va en el denominador?
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 4: Desarrollo Conceptual -->
+        <div class="slide">
+            <h1>4. Desarrollo Conceptual (10 min)</h1>
+            <div class="card">
+                <p><strong>Teoría Mínima:</strong> La Regla de Cramer permite encontrar el valor de la incógnita \( x_i \) mediante la fórmula:</p>
+                <div class="math-block">
+                    \[ x_i = \frac{\det(A_i)}{\det(A)} \]
+                </div>
+                <p>La matriz \( A_i \) se construye <strong>sustituyendo la columna \( i \)</strong> de la matriz original por el vector de términos independientes \( b \).</p>
+                <div class="card" style="background-color: var(--card-blue-bg); margin-top: 15px; padding: 15px;">
+                    <strong>Verificación rápida:</strong> ¿Por qué la Regla de Cramer exige que el sistema tenga el mismo número de ecuaciones que de incógnitas?
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 5: Actividad Guiada -->
+        <div class="slide">
+            <h1>5. Actividad Guiada y Colaborativa (15 min)</h1>
+            <div class="card">
+                <p><strong>Práctica Deliberada:</strong> Resolución de un sistema \( 3 \times 3 \) modelando el reto inicial de la refinería.</p>
+                <h4 style="color: var(--card-blue-text);">Roles por equipo (3 personas):</h4>
+                <ul>
+                    <li><strong>Estudiante 1:</strong> Calcula el determinante base \( \det(A) \). <em>(Validación del docente requerida para avanzar)</em>.</li>
+                    <li><strong>Estudiante 2:</strong> Construye la matriz modificada \( A_y \) y calcula su determinante.</li>
+                    <li><strong>Estudiante 3:</strong> Ejecuta la división final e interpreta el resultado económico.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 6: Aplicación -->
+        <div class="slide">
+            <h1>6. Aplicación Tecnológica (10 min)</h1>
+            <div class="card">
+                <p>Ingresa a la aplicación web o a Google Colab.</p>
+                <div style="background-color: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; font-family: monospace; margin: 15px 0;">
+                    # Ejemplo en Python<br>
+                    det_A = np.linalg.det(A)<br>
+                    det_Ay = np.linalg.det(A_y)<br>
+                    variable_y = det_Ay / det_A
+                </div>
+                <p><strong>Misión:</strong> Modifiquen el vector de inventarios \( b \) (simulando una escasez repentina de un aditivo) y recalculen rápidamente solo la variable asignada usando código.</p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 7: Cierre y Reflexión -->
+        <div class="slide">
+            <h1>7. Cierre y Reflexión (5 min)</h1>
+            <div class="card">
+                <h3 style="color: var(--card-purple-text); margin-top: 0;">Debate de Alto Nivel</h3>
+                <p>
+                    Ya sabemos que calcular un determinante grande (ej. \( 50 \times 50 \)) computacionalmente es ineficiente debido a la cantidad de operaciones requeridas.
+                </p>
+                <p style="font-weight: bold; font-size: 1.1rem; margin-top: 20px;">
+                    Entonces, para sistemas masivos en Data Science, ¿es la Regla de Cramer el mejor método computacional o solo una herramienta teórica potente?
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 8: Consolidación -->
+        <div class="slide">
+            <h1>8. Actividad Final (5 min)</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">Ticket de Salida (Mini-proyecto rápido)</h3>
+                <p>Antes de salir del aula, en una hoja de papel:</p>
+                <ol style="line-height: 1.8;">
+                    <li>Escribe una matriz \( 2 \times 2 \) inventada.</li>
+                    <li>Escribe un vector de términos independientes \( b \).</li>
+                    <li>Plantea <strong>solo la fracción de Cramer</strong> para la variable \( y \), indicando cómo quedarían las matrices en el numerador y denominador. <em>(No es necesario resolver la operación matemática)</em>.</li>
+                </ol>
+                <p style="margin-top: 15px; font-style: italic; color: var(--text-muted);">Entrega tu hoja al profesor al salir.</p>
+            </div>
+        </div>
+        <div class="slide">
+            <h1>Regla de Cramer</h1>
+            <div class="card">
+                <p>La <strong>Regla de Cramer</strong> es un teorema matemático que proporciona una fórmula explícita para la solución de un sistema de ecuaciones lineales utilizando determinantes.</p>
+                <p>Dado un sistema representado matricialmente como \( AX = B \), si el determinante de la matriz de coeficientes \( A \) es distinto de cero (\( \det(A) \neq 0 \)), el sistema tiene una solución única dada por:</p>
+                
+                <div class="math-block">
+                    \[ x_i = \frac{\det(A_i)}{\det(A)} \]
+                </div>
+                
+                <p style="font-size: 1rem; margin-top: 10px;">
+                    Donde \( A_i \) es la matriz que se obtiene al reemplazar la <strong>columna \( i \)</strong> de la matriz original \( A \) por el vector columna de términos independientes \( B \).
+                </p>
+                
+                <div class="card card-purple" style="margin-top: 15px; padding: 15px; font-size: 1rem;">
+                    <strong>Condición Fundamental:</strong> Si \( \det(A) = 0 \), no se puede aplicar la Regla de Cramer porque implicaría una división por cero. En ese caso, el sistema no tiene una solución única (puede ser incompatible o tener infinitas soluciones).
+                </div>
+            </div>
+        </div>
         <div class="slide">
             <h1>1. Producto de Matrices</h1>
             <div class="card">

@@ -152,6 +152,39 @@
 
 <div class="presentation-wrapper">
     <div class="slides-container">
+        <!-- DIAPOSITIVA: Matriz Adjunta -->
+        <div class="slide">
+            <h1>Matriz Adjunta</h1>
+            <div class="card">
+                <p>La <strong>matriz adjunta</strong> (denotada como \( \text{Adj}(A) \)) de una matriz cuadrada es la transpuesta de su matriz de cofactores \( C \).</p>
+                <div class="math-block">
+                    \[ \text{Adj}(A) = C^T \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 10px;">
+                    Esta matriz es un paso intermedio fundamental para calcular la matriz inversa de forma algebraica, utilizando la siguiente fórmula:
+                </p>
+                <div class="math-block" style="background-color: var(--card-purple-bg); color: var(--card-purple-text); padding: 15px;">
+                    \[ A^{-1} = \frac{1}{\det(A)} \text{Adj}(A) \]
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA: Determinante de la Matriz Inversa -->
+        <div class="slide">
+            <h1>Determinante de la Matriz Inversa</h1>
+            <div class="card">
+                <p>El determinante de la inversa de una matriz es igual al recíproco (o inverso multiplicativo) del determinante de la matriz original:</p>
+                <div class="math-block">
+                    \[ \det(A^{-1}) = \frac{1}{\det(A)} \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 10px;">
+                    <strong>Ejemplo:</strong> Si calculamos que el determinante de una matriz \( A \) es \( 5 \) (es decir, \( \det(A) = 5 \)), no necesitamos calcular toda la matriz inversa para hallar su determinante. Simplemente aplicamos esta propiedad: \( \det(A^{-1}) = \frac{1}{5} \).
+                </p>
+                <div class="card" style="background-color: var(--card-blue-bg); margin-top: 15px; padding: 15px; font-size: 0.95rem;">
+                    <strong>Nota importante:</strong> Esta propiedad ilustra claramente por qué una matriz con \( \det(A) = 0 \) no es invertible, ya que la división por cero no está definida matemáticamente.
+                </div>
+            </div>
+        </div>
         <!-- DIAPOSITIVA: Propiedad 1 - Producto de Matrices -->
         <div class="slide">
             <h1>1. Producto de Matrices</h1>
