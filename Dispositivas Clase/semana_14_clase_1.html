@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 14 - Transformaciones lineales</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-body: #f4f7fb;
+            --bg-wrapper: #ffffff;
+            --text-main: #2c3e50;
+            --card-bg: #f4f6f9;
+            --card-blue-bg: #eef4fb;
+            --card-blue-text: #1565c0;
+            --nav-bg: #2c3e50;
+        }
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-wrapper: #1e1e1e;
+            --text-main: #e0e0e0;
+            --card-bg: #2a2d32;
+            --card-blue-bg: #1a2736;
+            --card-blue-text: #64b5f6;
+            --nav-bg: #111111;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .presentation-wrapper { width: 100%; max-width: 900px; }
+        .slides-container {
+            background: var(--bg-wrapper);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            overflow: hidden;
+            position: relative;
+        }
+        .slide {
+            display: none;
+            padding: clamp(30px, 5vw, 50px);
+            box-sizing: border-box;
+            min-height: 500px;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .slide.active { display: flex; }
+        h1 {
+            border-bottom: 2px solid var(--card-blue-text);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+            color: var(--card-blue-text);
+            text-align: center;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-sizing: border-box;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .math-block {
+            background-color: var(--card-blue-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            padding: 15px 30px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            color: white;
+        }
+        .nav-controls { display: flex; align-items: center; gap: 15px; }
+        .nav-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .nav-btn:hover { background-color: #0d47a1; }
+        .nav-btn:disabled { background-color: #555; cursor: not-allowed; }
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body data-theme="light">
+<div class="presentation-wrapper">
+    <div class="slides-container">
+        <div class="slide active">
+            <h1>Semana 14 - Transformaciones lineales</h1>
+            <div class="card">
+                <p><strong>Objetivo:</strong> estudiar funciones entre espacios vectoriales que preservan suma y escalar.</p>
+                <p>Se analiza la definición, el núcleo, la imagen y la matriz asociada.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Definición</h1>
+            <div class="card">
+                <p>Una transformación lineal cumple:</p>
+                <div class="math-block">
+                    \[ T(u+v) = T(u) + T(v), \quad T(cu) = cT(u) \]
+                </div>
+                <p>Esto hace que la estructura del espacio vectorial se conserve.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Núcleo e imagen</h1>
+            <div class="card">
+                <p>El núcleo es el conjunto de vectores que se transforman en cero.</p>
+                <div class="math-block">
+                    \[ \ker(T) = \{v \in V : T(v)=0\} \]
+                </div>
+                <p>La imagen es el conjunto de todos los resultados que la transformación produce.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Matriz asociada</h1>
+            <div class="card">
+                <p>Una transformación lineal entre espacios finitos puede representarse por una matriz.</p>
+                <div class="math-block">
+                    \[ T(x) = Ax \]
+                </div>
+                <p>La matriz refleja la acción de la transformación en la base elegida.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Transformaciones geométricas</h1>
+            <div class="card">
+                <p>Ejemplos clásicos: rotaciones, reflexiones y proyecciones.</p>
+                <ul>
+                    <li>Reflexión respecto a un eje</li>
+                    <li>Rotación en el plano</li>
+                    <li>Proyección sobre una recta</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Cierre de semana</h1>
+            <div class="card">
+                <p>Se aplican las ideas a problemas geométricos y algebraicos.</p>
+                <ul>
+                    <li>Ejemplo guiado</li>
+                    <li>Actividad de reflexión</li>
+                    <li>Conexión con espacios vectoriales</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
+        <div class="nav-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+            <span id="slide-indicator">Diapositiva 1 de 6</span>
+        </div>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slide-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function updateSlide() {
+        slides.forEach((slide, index) => slide.classList.toggle('active', index === currentSlide));
+        indicator.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+        if (window.MathJax) MathJax.typesetPromise();
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'Modo Claro';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.textContent = 'Modo Oscuro';
+        }
+    }
+
+    updateSlide();
+</script>
+</body>
+</html>

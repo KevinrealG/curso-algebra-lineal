@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 16 - Revisión y cierre</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-body: #f4f7fb;
+            --bg-wrapper: #ffffff;
+            --text-main: #2c3e50;
+            --card-bg: #f4f6f9;
+            --card-blue-bg: #eef4fb;
+            --card-blue-text: #1565c0;
+            --nav-bg: #2c3e50;
+        }
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-wrapper: #1e1e1e;
+            --text-main: #e0e0e0;
+            --card-bg: #2a2d32;
+            --card-blue-bg: #1a2736;
+            --card-blue-text: #64b5f6;
+            --nav-bg: #111111;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .presentation-wrapper { width: 100%; max-width: 900px; }
+        .slides-container {
+            background: var(--bg-wrapper);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            overflow: hidden;
+            position: relative;
+        }
+        .slide {
+            display: none;
+            padding: clamp(30px, 5vw, 50px);
+            box-sizing: border-box;
+            min-height: 500px;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .slide.active { display: flex; }
+        h1 {
+            border-bottom: 2px solid var(--card-blue-text);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+            color: var(--card-blue-text);
+            text-align: center;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-sizing: border-box;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .math-block {
+            background-color: var(--card-blue-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            padding: 15px 30px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            color: white;
+        }
+        .nav-controls { display: flex; align-items: center; gap: 15px; }
+        .nav-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .nav-btn:hover { background-color: #0d47a1; }
+        .nav-btn:disabled { background-color: #555; cursor: not-allowed; }
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body data-theme="light">
+<div class="presentation-wrapper">
+    <div class="slides-container">
+        <div class="slide active">
+            <h1>Semana 16 - Revisión y cierre</h1>
+            <div class="card">
+                <p><strong>Objetivo:</strong> consolidar los conceptos principales del curso.</p>
+                <p>Se revisan vectores, matrices, determinantes, espacios vectoriales y transformaciones lineales.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Repaso general</h1>
+            <div class="card">
+                <ul>
+                    <li>Vectores y operaciones</li>
+                    <li>Matrices y sistemas</li>
+                    <li>Determinantes e inversas</li>
+                    <li>Espacios vectoriales</li>
+                    <li>Transformaciones lineales</li>
+                    <li>Autovalores y autovectores</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Conexión entre temas</h1>
+            <div class="card">
+                <p>El álgebra lineal conecta estructuras algebraicas, geometría y resolución de problemas aplicados.</p>
+                <div class="math-block">
+                    \[ Ax = b, \quad \det(A) \neq 0, \quad T(v) = Av \]
+                </div>
+                <p>Estos conceptos aparecen en modelado matemático, ciencia y tecnología.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Preguntas y dudas</h1>
+            <div class="card">
+                <p>Se dedica un espacio para resolver dudas conceptuales y dudas de ejercicios.</p>
+                <ul>
+                    <li>Pregunta 1</li>
+                    <li>Pregunta 2</li>
+                    <li>Pregunta 3</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Taller de preparación</h1>
+            <div class="card">
+                <p>Se recomienda practicar ejercicios de cada unidad para reforzar la comprensión.</p>
+                <ul>
+                    <li>Repaso de temas</li>
+                    <li>Ejercicios combinados</li>
+                    <li>Evaluación formativa</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Cierre del curso</h1>
+            <div class="card">
+                <p>Gracias por su participación. El objetivo es consolidar una base sólida para cursos avanzados.</p>
+                <p><strong>Mensaje final:</strong> el álgebra lineal es una herramienta esencial para modelar y resolver problemas reales.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
+        <div class="nav-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+            <span id="slide-indicator">Diapositiva 1 de 6</span>
+        </div>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slide-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function updateSlide() {
+        slides.forEach((slide, index) => slide.classList.toggle('active', index === currentSlide));
+        indicator.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+        if (window.MathJax) MathJax.typesetPromise();
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'Modo Claro';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.textContent = 'Modo Oscuro';
+        }
+    }
+
+    updateSlide();
+</script>
+</body>
+</html>

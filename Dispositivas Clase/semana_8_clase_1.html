@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase: Vectores</title>
+
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        :root {
+            --bg-body: #f4f7fb;
+            --bg-wrapper: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --card-bg: #f4f6f9;
+            --card-blue-bg: #eef4fb;
+            --card-blue-text: #1565c0;
+            --card-purple-bg: #f4f2fb;
+            --card-purple-text: #6543ed;
+            --nav-bg: #2c3e50;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-wrapper: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --card-bg: #2a2d32;
+            --card-blue-bg: #1a2736;
+            --card-blue-text: #64b5f6;
+            --card-purple-bg: #251f38;
+            --card-purple-text: #b39ddb;
+            --nav-bg: #111111;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+
+        .presentation-wrapper {
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .slides-container {
+            background: var(--bg-wrapper);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            overflow: hidden;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .slide {
+            display: none;
+            padding: clamp(30px, 5vw, 50px);
+            box-sizing: border-box;
+            min-height: 500px;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--text-main);
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        h1 {
+            border-bottom: 2px solid var(--card-blue-text);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+            color: var(--card-blue-text);
+            text-align: center;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-sizing: border-box;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .math-block {
+            background-color: var(--card-blue-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            padding: 15px 30px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+
+        .nav-btn:hover { background-color: #0d47a1; }
+        .nav-btn:disabled { background-color: #555; cursor: not-allowed; }
+
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+
+        .theme-toggle:hover {
+            background: white;
+            color: var(--nav-bg);
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="presentation-wrapper">
+    <div class="slides-container">
+        <div class="slide active">
+            <h1>Introducción a los Vectores</h1>
+            <div class="card">
+                <p>El estudio de vectores y matrices es la médula del álgebra lineal. En la actualidad, casi todas las ramas de la física clásica y moderna se representan mediante el lenguaje de vectores.</p>
+                <p>Los vectores también se usan cada vez más en las ciencias biológicas y sociales.</p>
+                <div class="card" style="margin-top: 20px; padding: 15px; background-color: var(--card-purple-bg);">
+                    <strong>Nota histórica:</strong> El estudio de los vectores comenzó esencialmente con el trabajo del matemático irlandés sir William Hamilton (1805-1865).
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Vector Renglón</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">Definición: Vector renglón de \(n\) componentes</h3>
+                <p>Un vector de \(n\) componentes se define como un conjunto ordenado de \(n\) números escritos de la siguiente manera:</p>
+                <div class="math-block">
+                    \[ (x_1, x_2, \dots, x_n) \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 15px;">
+                    En esta notación, \(x_1\) se denomina la primera componente del vector, \(x_2\) es la segunda componente, y así sucesivamente. En términos generales, \(x_k\) se denomina la \(k\)-ésima componente del vector.
+                </p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Vector Columna</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">Definición: Vector columna de \(n\) componentes</h3>
+                <p>Un vector columna de \(n\) componentes es un conjunto ordenado de \(n\) números escritos de la siguiente manera:</p>
+                <div class="math-block">
+                    \[
+                    \begin{pmatrix}
+                    x_1 \\
+                    x_2 \\
+                    \vdots \\
+                    x_n
+                    \end{pmatrix}
+                    \]
+                </div>
+                <div class="card" style="background-color: var(--card-blue-bg); margin-top: 15px; padding: 15px; font-size: 0.95rem;">
+                    <strong>Observación:</strong> El orden en que se escriben las componentes de un vector es sumamente importante. Es evidente que los vectores \((1, 2)\) y \((2, 1)\) no son iguales.
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Los Espacios \(\mathbb{R}^n\) y \(\mathbb{C}^n\)</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">Definición: El símbolo \(\mathbb{R}^n\)</h3>
+                <p>Se usa el símbolo \(\mathbb{R}^n\) para denotar al conjunto de todos los vectores de dimensión \(n\), donde cada \(a_i\) es un número <strong>real</strong>.</p>
+
+                <h3 style="color: var(--card-blue-text); margin-top: 25px;">Definición: El símbolo \(\mathbb{C}^n\)</h3>
+                <p>De manera similar, se usa el símbolo \(\mathbb{C}^n\) para denotar al conjunto de todos los vectores de dimensión \(n\), donde cada \(c_i\) es un número <strong>complejo</strong>.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Aritmética Vectorial: Producto Escalar</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">Definición: Producto escalar de dos vectores</h3>
+                <p>Sean \(a\) y \(b\) dos vectores de dimensión \(n\). Entonces el producto escalar de \(a\) y \(b\), denotado por \(\mathbf{a \cdot b}\), está dado por:</p>
+                <div class="math-block">
+                    \[ a \cdot b = a_1b_1 + a_2b_2 + \dots + a_nb_n \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 15px;">
+                    Debido a la notación, el producto escalar se llama con frecuencia <strong>producto punto</strong> o <strong>producto interno</strong> de los vectores.
+                </p>
+                <div class="card" style="margin-top: 15px; padding: 15px; font-size: 0.95rem; background-color: var(--card-purple-bg);">
+                    <strong>¡Advertencia!</strong> Al tomar el producto escalar de \(a\) y \(b\) es necesario que \(a\) y \(b\) tengan el mismo número de componentes.
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Propiedades del Producto Escalar</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">Teorema</h3>
+                <p>Sean \(a\), \(b\) y \(c\) tres vectores de dimensión \(n\) y sea \(\alpha\) un escalar. Entonces:</p>
+                <ul style="line-height: 2; margin-top: 15px;">
+                    <li><strong>i)</strong> \( a \cdot 0 = 0 \)</li>
+                    <li><strong>ii) Ley conmutativa:</strong> \( a \cdot b = b \cdot a \)</li>
+                    <li><strong>iii) Ley distributiva:</strong> \( a \cdot (b + c) = a \cdot b + a \cdot c \)</li>
+                    <li><strong>iv)</strong> \( (\alpha a) \cdot b = \alpha (a \cdot b) \)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Nota sobre la Ley Asociativa</h1>
+            <div class="card">
+                <p>Observe que <strong>no existe una ley asociativa</strong> para el producto escalar.</p>
+                <p style="font-size: 1rem; margin-top: 15px;">
+                    La expresión \( a \cdot (b \cdot c) \) no tiene sentido porque ninguno de los dos lados de la ecuación está definido.
+                </p>
+                <div class="card" style="background-color: var(--card-blue-bg); margin-top: 15px; padding: 15px;">
+                    <strong>Explicación:</strong> Para el lado izquierdo, esto se concluye a partir de que \( a \cdot b \) es un escalar y el producto escalar del escalar \( a \cdot b \) y el vector \( c \) no está definido.
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-bar">
+            <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+                <span id="slide-indicator">Diapositiva 1 de 7</span>
+            </div>
+            <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slide-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+
+        indicator.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+
+        if (window.MathJax) {
+            MathJax.typesetPromise();
+        }
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'Modo Claro';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.textContent = 'Modo Oscuro';
+        }
+    }
+
+    updateSlide();
+</script>
+
+</body>
+</html>

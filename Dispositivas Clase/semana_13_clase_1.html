@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 13 - Espacios vectoriales</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-body: #f4f7fb;
+            --bg-wrapper: #ffffff;
+            --text-main: #2c3e50;
+            --card-bg: #f4f6f9;
+            --card-blue-bg: #eef4fb;
+            --card-blue-text: #1565c0;
+            --nav-bg: #2c3e50;
+        }
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-wrapper: #1e1e1e;
+            --text-main: #e0e0e0;
+            --card-bg: #2a2d32;
+            --card-blue-bg: #1a2736;
+            --card-blue-text: #64b5f6;
+            --nav-bg: #111111;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .presentation-wrapper { width: 100%; max-width: 900px; }
+        .slides-container {
+            background: var(--bg-wrapper);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            overflow: hidden;
+            position: relative;
+        }
+        .slide {
+            display: none;
+            padding: clamp(30px, 5vw, 50px);
+            box-sizing: border-box;
+            min-height: 500px;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .slide.active { display: flex; }
+        h1 {
+            border-bottom: 2px solid var(--card-blue-text);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+            color: var(--card-blue-text);
+            text-align: center;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-sizing: border-box;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .math-block {
+            background-color: var(--card-blue-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            padding: 15px 30px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            color: white;
+        }
+        .nav-controls { display: flex; align-items: center; gap: 15px; }
+        .nav-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .nav-btn:hover { background-color: #0d47a1; }
+        .nav-btn:disabled { background-color: #555; cursor: not-allowed; }
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body data-theme="light">
+<div class="presentation-wrapper">
+    <div class="slides-container">
+        <div class="slide active">
+            <h1>Semana 13 - Espacios vectoriales</h1>
+            <div class="card">
+                <p><strong>Objetivo:</strong> introducir la estructura abstracta de un espacio vectorial.</p>
+                <p>Se estudian subespacios, combinaciones lineales, dependencia e independencia lineal, bases y dimensión.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Definición de espacio vectorial</h1>
+            <div class="card">
+                <p>Un espacio vectorial es un conjunto con dos operaciones: suma y multiplicación por escalar.</p>
+                <div class="math-block">
+                    \[ u + v \in V, \quad \alpha u \in V \]
+                </div>
+                <p>Ejemplos: \(\mathbb{R}^n\), polinomios y matrices.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Subespacios vectoriales</h1>
+            <div class="card">
+                <p>Un subconjunto \(W\) de un espacio vectorial \(V\) es subespacio si es cerrado bajo suma y producto por escalar.</p>
+                <ul>
+                    <li>Contiene al vector cero</li>
+                    <li>Cierra la suma</li>
+                    <li>Cierra la multiplicación por escalar</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Combinación lineal</h1>
+            <div class="card">
+                <p>Un vector es combinación lineal de otros si se puede escribir como suma ponderada.</p>
+                <div class="math-block">
+                    \[ v = c_1v_1 + c_2v_2 + \cdots + c_kv_k \]
+                </div>
+                <p>Esto permite describir el span de un conjunto de vectores.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Dependencia e independencia lineal</h1>
+            <div class="card">
+                <p>Un conjunto es linealmente independiente si ninguna combinación no trivial da cero.</p>
+                <div class="math-block">
+                    \[ c_1v_1 + c_2v_2 + \cdots + c_kv_k = 0 \Rightarrow c_i = 0 \]
+                </div>
+                <p>Cuando esto no ocurre, el conjunto es dependiente.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Base y dimensión</h1>
+            <div class="card">
+                <p>Una base es un conjunto linealmente independiente que genera todo el espacio.</p>
+                <div class="math-block">
+                    \[ \dim(V) = \text{número de vectores en una base} \]
+                </div>
+                <p>La dimensión describe la “cantidad de direcciones” del espacio.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
+        <div class="nav-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+            <span id="slide-indicator">Diapositiva 1 de 6</span>
+        </div>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slide-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function updateSlide() {
+        slides.forEach((slide, index) => slide.classList.toggle('active', index === currentSlide));
+        indicator.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+        if (window.MathJax) MathJax.typesetPromise();
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'Modo Claro';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.textContent = 'Modo Oscuro';
+        }
+    }
+
+    updateSlide();
+</script>
+</body>
+</html>

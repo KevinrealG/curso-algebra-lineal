@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interactivo: Vectores (4.1 y 4.2)</title>
+    
+    <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --bg-body: #1a1a1a;
+            --bg-wrapper: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --card-bg: #f4f6f9;
+            --card-blue-text: #1565c0;
+            --nav-bg: #2c3e50;
+            --border-color: #ddd;
+            --primary-color: #1565c0;
+            --success-color: #2e7d32;
+            --error-color: #c62828;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-wrapper: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --card-bg: #2a2d32;
+            --card-blue-text: #64b5f6;
+            --nav-bg: #111111;
+            --border-color: #444;
+            --primary-color: #64b5f6;
+            --success-color: #81c784;
+            --error-color: #e57373;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+        .presentation-wrapper {
+            width: 100%;
+            max-width: 900px;
+        }
+        .slides-container {
+            background: var(--bg-wrapper);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .slide {
+            display: none;
+            padding: clamp(20px, 4vw, 40px);
+            box-sizing: border-box;
+            min-height: 500px;
+            flex-direction: column;
+            color: var(--text-main);
+        }
+        .slide.active {
+            display: flex;
+        }
+        h1 {
+            border-bottom: 2px solid var(--card-blue-text);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            color: var(--card-blue-text);
+            text-align: center;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 25px;
+            box-sizing: border-box;
+            color: var(--text-main);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            max-height: 65vh; 
+            overflow-y: auto;
+        }
+        .quiz-question {
+            margin-bottom: 25px; 
+            padding-bottom: 15px; 
+            border-bottom: 1px solid var(--border-color);
+        }
+        .quiz-question:last-child {
+            border-bottom: none;
+        }
+        .options-grid {
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 15px; 
+            margin-top: 15px;
+        }
+        label {
+            cursor: pointer; 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 10px;
+            padding: 5px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        label:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+        [data-theme="dark"] label:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        input[type="radio"] {
+            margin-top: 6px;
+        }
+        .feedback {
+            font-weight: bold; 
+            margin-top: 10px;
+            font-size: 1rem;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            padding: 15px 30px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.8; }
+        .btn:disabled { background-color: #555; cursor: not-allowed; }
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .theme-toggle:hover {
+            background: white;
+            color: var(--nav-bg);
+        }
+    </style>
+</head>
+<body data-theme="light">
+
+<div class="presentation-wrapper">
+    <div class="slides-container">
+        
+        <!-- DIAPOSITIVA 1: Autoevaluación 4.1 -->
+        <div class="slide active">
+            <h1>Autoevaluación 4.1</h1>
+            <div class="card">
+                
+                <!-- 4.1 - Q1 -->
+                <div class="quiz-question">
+                    <h3 style="color: var(--card-blue-text);">I) Un vector es ________.</h3>
+                    <div class="options-grid">
+                        <label><input type="radio" name="q41_1" value="a"> <span><strong>a)</strong> dos puntos en el plano \(xy\).</span></label>
+                        <label><input type="radio" name="q41_1" value="b"> <span><strong>b)</strong> un segmento de recta entre dos puntos.</span></label>
+                        <label><input type="radio" name="q41_1" value="c"> <span><strong>c)</strong> un segmento de recta dirigido de un punto a otro.</span></label>
+                        <label><input type="radio" name="q41_1" value="d"> <span><strong>d)</strong> una colección de segmentos de recta dirigidos equivalentes.</span></label>
+                    </div>
+                    <p id="fb_q41_1" class="feedback"></p>
+                </div>
+
+                <!-- 4.1 - Q2 -->
+                <div class="quiz-question">
+                    <h3 style="color: var(--card-blue-text);">II) Si \(P = (3, -4)\) y \(Q = (8, 6)\), el vector \(\overrightarrow{PQ}\) tiene longitud ________.</h3>
+                    <div class="options-grid">
+                        <label><input type="radio" name="q41_2" value="a"> <span><strong>a)</strong> \(\vert{}3\vert{} + \vert{}-4\vert{}\)</span></label>
+                        <label><input type="radio" name="q41_2" value="b"> <span><strong>b)</strong> \((3)^2 + (-4)^2\)</span></label>
+                        <label><input type="radio" name="q41_2" value="c"> <span><strong>c)</strong> \((3 - 8)^2 + (-4 - 6)^2\)</span></label>
+                        <label><input type="radio" name="q41_2" value="d"> <span><strong>d)</strong> \(\sqrt{(8 - 3)^2 + (6 - (-4))^2}\)</span></label>
+                    </div>
+                    <p id="fb_q41_2" class="feedback"></p>
+                </div>
+
+                <!-- 4.1 - Q3 -->
+                <div class="quiz-question">
+                    <h3 style="color: var(--card-blue-text);">III) La dirección del vector \((4, 8)\) es ________.</h3>
+                    <div class="options-grid">
+                        <label><input type="radio" name="q41_3" value="a"> <span><strong>a)</strong> \(\pi\)</span></label>
+                        <label><input type="radio" name="q41_3" value="b"> <span><strong>b)</strong> \(\tan^{-1}(8 - 4)\)</span></label>
+                        <label><input type="radio" name="q41_3" value="c"> <span><strong>c)</strong> \(\left(\frac{8}{4}\right)\pi\)</span></label>
+                        <label><input type="radio" name="q41_3" value="d"> <span><strong>d)</strong> \(\tan^{-1}\left(\frac{8}{4}\right)\)</span></label>
+                    </div>
+                    <p id="fb_q41_3" class="feedback"></p>
+                </div>
+
+                <!-- 4.1 - Q4 -->
+                <div class="quiz-question">
+                    <h3 style="color: var(--card-blue-text);">IV) Si \(\mathbf{u} = (3, 4)\) y \(\mathbf{v} = (5, 8)\), entonces \(\mathbf{u} + \mathbf{v}\) ________.</h3>
+                    <div class="options-grid">
+                        <label><input type="radio" name="q41_4" value="a"> <span><strong>a)</strong> \((7, 13)\)</span></label>
+                        <label><input type="radio" name="q41_4" value="b"> <span><strong>b)</strong> \((8, 12)\)</span></label>
+                        <label><input type="radio" name="q41_4" value="c"> <span><strong>c)</strong> \((2, 4)\)</span></label>
+                        <label><input type="radio" name="q41_4" value="d"> <span><strong>d)</strong> \((15, 32)\)</span></label>
+                    </div>
+                    <p id="fb_q41_4" class="feedback"></p>
+                </div>
+
+                <!-- 4.1 - Q5 -->
+                <div class="quiz-question">
+                    <h3 style="color: var(--card-blue-text);">V) Si \(\mathbf{u} = (4, 3)\), entonces el vector unitario con la misma dirección que \(\mathbf{u}\) es ________.</h3>
+                    <div class="options-grid">
+                        <label><input type="radio" name="q41_5" value="a"> <span><strong>a)</strong> \((0.4, 0.3)\)</span></label>
+                        <label><input type="radio" name="q41_5" value="b"> <span><strong>b)</strong> \((0.8, 0.6)\)</span></label>
+                        <label><input type="radio" name="q41_5" value="c"> <span><strong>c)</strong> \(\left(\frac{4}{5}, \frac{3}{5}\right)\)</span></label>
+                        <label><input type="radio" name="q41_5" value="d"> <span><strong>d)</strong> \(\left(\frac{4}{7}, \frac{3}{7}\right)\)</span></label>
+                    </div>
+                    <p id="fb_q41_5" class="feedback"></p>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" onclick="evaluarSeccion('41')">Evaluar Sección 4.1</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 2: Autoevaluación 4.2 -->
+        <div class="slide">
+            <h1>Autoevaluación 4.2</h1>
+            <div class="card">
+                
+                <!-- 4.2 - Q1 -->
+                <div class="quiz-question">
+                    <h3 style="color: var(--card-blue-text);">I) \(\mathbf{i} \cdot \mathbf{j} =\) ________.</h3>
+                    <div class="options-grid">
+                        <label><input type="radio" name="q42_1" value="a"> <span><strong>a)</strong> 1</span></label>
+                        <label><input type="radio" name="q42_1" value="b"> <span><strong>b)</strong> \(\sqrt{(0-1)^2 + (1-0)^2}\)</span></label>
+                        <label><input type="radio" name="q42_1" value="c"> <span><strong>c)</strong> 0</span></label>
+                        <label><input type="radio" name="q42_1" value="d"> <span><strong>d)</strong> \(\mathbf{i} + \mathbf{j}\)</span></label>
+                    </div>
+                    <p id="fb_q42_1" class="feedback"></p>
+                </div>
+
+                <!-- 4.2 - Q2 -->
+                <div class="quiz-question">
+                    <h3 style="color: var(--card-blue-text);">II) \((3, 4) \cdot (3, 2) =\) ________.</h3>
+                    <div class="options-grid">
+                        <label><input type="radio" name="q42_2" value="a"> <span><strong>a)</strong> \((3+3)(4+2) = 36\)</span></label>
+                        <label><input type="radio" name="q42_2" value="b"> <span><strong>b)</strong> \((3)(3) + (4)(2) = 17\)</span></label>
+                        <label><input type="radio" name="q42_2" value="c"> <span><strong>c)</strong> \((3-3)(2-4) = 0\)</span></label>
+                        <label><input type="radio" name="q42_2" value="d"> <span><strong>d)</strong> \((3)(3) - (4)(2) = 1\)</span></label>
+                    </div>
+                    <p id="fb_q42_2" class="feedback"></p>
+                </div>
+
+                <!-- 4.2 - Q3 -->
+                <div class="quiz-question">
+                    <h3 style="color: var(--card-blue-text);">III) El coseno del ángulo entre \(\mathbf{i} + \mathbf{j}\) e \(\mathbf{i} - \mathbf{j}\) es ________.</h3>
+                    <div class="options-grid">
+                        <label><input type="radio" name="q42_3" value="a"> <span><strong>a)</strong> \(0\mathbf{i} + 0\mathbf{j}\)</span></label>
+                        <label><input type="radio" name="q42_3" value="b"> <span><strong>b)</strong> 0</span></label>
+                        <label><input type="radio" name="q42_3" value="c"> <span><strong>c)</strong> \(\sqrt{2}\)</span></label>
+                        <label><input type="radio" name="q42_3" value="d"> <span><strong>d)</strong> \(\frac{1}{\sqrt{2} + 0}\)</span></label>
+                    </div>
+                    <p id="fb_q42_3" class="feedback"></p>
+                </div>
+
+                <!-- 4.2 - Q4 -->
+                <div class="quiz-question">
+                    <h3 style="color: var(--card-blue-text);">IV) Los vectores \(2\mathbf{i} - 12\mathbf{j}\) y \(3\mathbf{i} + \left(\frac{1}{2}\right)\mathbf{j}\) son ________.</h3>
+                    <div class="options-grid">
+                        <label><input type="radio" name="q42_4" value="a"> <span><strong>a)</strong> Ni paralelos ni ortogonales</span></label>
+                        <label><input type="radio" name="q42_4" value="b"> <span><strong>b)</strong> Paralelos</span></label>
+                        <label><input type="radio" name="q42_4" value="c"> <span><strong>c)</strong> Ortogonales</span></label>
+                        <label><input type="radio" name="q42_4" value="d"> <span><strong>d)</strong> Idénticos</span></label>
+                    </div>
+                    <p id="fb_q42_4" class="feedback"></p>
+                </div>
+
+                <!-- 4.2 - Q5 -->
+                <div class="quiz-question">
+                    <h3 style="color: var(--card-blue-text);">V) \(\text{Proy}_{\mathbf{w}} \mathbf{u} =\) ________.</h3>
+                    <div class="options-grid">
+                        <label><input type="radio" name="q42_5" value="a"> <span><strong>a)</strong> \(\frac{\mathbf{u} \cdot \mathbf{w}}{\vert{}\mathbf{w}\vert{}}\)</span></label>
+                        <label><input type="radio" name="q42_5" value="b"> <span><strong>b)</strong> \(\frac{\mathbf{w}}{\vert{}\mathbf{w}\vert{}}\)</span></label>
+                        <label><input type="radio" name="q42_5" value="c"> <span><strong>c)</strong> \(\frac{\mathbf{u} \cdot \mathbf{w}}{\vert{}\mathbf{w}\vert{}\vert{}\mathbf{w}\vert{}}\mathbf{w}\)</span></label>
+                        <label><input type="radio" name="q42_5" value="d"> <span><strong>d)</strong> \(\frac{\mathbf{u} \cdot \mathbf{w}}{\vert{}\mathbf{u}\vert{}\vert{}\mathbf{u}\vert{}}\mathbf{w}\)</span></label>
+                    </div>
+                    <p id="fb_q42_5" class="feedback"></p>
+                </div>
+
+                <div style="text-align: center; margin-top: 20px;">
+                    <button class="btn" onclick="evaluarSeccion('42')">Evaluar Sección 4.2</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navegación -->
+    <div class="nav-bar">
+        <button class="btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
+        <div class="nav-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+            <span id="slide-indicator">Sección 1 de 2</span>
+        </div>
+        <button class="btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    </div>
+</div>
+
+<script>
+    // --- NAVEGACIÓN ---
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slide-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+        indicator.textContent = `Sección ${currentSlide + 1} de ${slides.length}`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'Modo Claro';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.textContent = 'Modo Oscuro';
+        }
+    }
+
+    // --- EVALUACIÓN DE RESPUESTAS ---
+    const respuestas = {
+        '41': {
+            'q41_1': 'd',
+            'q41_2': 'd',
+            'q41_3': 'd',
+            'q41_4': 'b',
+            'q41_5': ['b', 'c'] // El libro indica que b = c son correctas matemáticamente
+        },
+        '42': {
+            'q42_1': 'c',
+            'q42_2': 'b',
+            'q42_3': 'b',
+            'q42_4': 'c',
+            'q42_5': 'c'
+        }
+    };
+
+    function evaluarSeccion(seccion) {
+        const respuestasSeccion = respuestas[seccion];
+        
+        for (let pregunta in respuestasSeccion) {
+            const seleccion = document.querySelector(`input[name="${pregunta}"]:checked`);
+            const feedback = document.getElementById(`fb_${pregunta}`);
+            const correcta = respuestasSeccion[pregunta];
+            
+            if (!seleccion) {
+                feedback.textContent = "⚠️ Por favor, selecciona una respuesta.";
+                feedback.style.color = "orange";
+            } else {
+                // Maneja tanto respuestas únicas como arreglos (caso V de 4.1 donde b=c)
+                const esCorrecta = Array.isArray(correcta) 
+                    ? correcta.includes(seleccion.value) 
+                    : seleccion.value === correcta;
+
+                if (esCorrecta) {
+                    feedback.textContent = "✅ ¡Correcto!";
+                    feedback.style.color = "var(--success-color)";
+                } else {
+                    feedback.textContent = "❌ Incorrecto. Inténtalo de nuevo.";
+                    feedback.style.color = "var(--error-color)";
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

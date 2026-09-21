@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semana 9 - Matrices y operaciones</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-body: #f4f7fb;
+            --bg-wrapper: #ffffff;
+            --text-main: #2c3e50;
+            --text-muted: #7f8c8d;
+            --card-bg: #f4f6f9;
+            --card-blue-bg: #eef4fb;
+            --card-blue-text: #1565c0;
+            --card-purple-bg: #f4f2fb;
+            --card-purple-text: #6543ed;
+            --nav-bg: #2c3e50;
+        }
+        [data-theme="dark"] {
+            --bg-body: #121212;
+            --bg-wrapper: #1e1e1e;
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --card-bg: #2a2d32;
+            --card-blue-bg: #1a2736;
+            --card-blue-text: #64b5f6;
+            --card-purple-bg: #251f38;
+            --card-purple-text: #b39ddb;
+            --nav-bg: #111111;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+        .presentation-wrapper { width: 100%; max-width: 900px; }
+        .slides-container {
+            background: var(--bg-wrapper);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            overflow: hidden;
+            position: relative;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .slide {
+            display: none;
+            padding: clamp(30px, 5vw, 50px);
+            box-sizing: border-box;
+            min-height: 500px;
+            flex-direction: column;
+            justify-content: center;
+            color: var(--text-main);
+        }
+        .slide.active { display: flex; }
+        h1 {
+            border-bottom: 2px solid var(--card-blue-text);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+            font-size: clamp(1.8rem, 2.5vw, 2.2rem);
+            color: var(--card-blue-text);
+            text-align: center;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 30px;
+            box-sizing: border-box;
+            color: var(--text-main);
+            font-size: 1.2rem;
+            line-height: 1.6;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .math-block {
+            background-color: var(--card-blue-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            text-align: center;
+            overflow-x: auto;
+        }
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--nav-bg);
+            padding: 15px 30px;
+            border-bottom-left-radius: 16px;
+            border-bottom-right-radius: 16px;
+            color: white;
+        }
+        .nav-controls { display: flex; align-items: center; gap: 15px; }
+        .nav-btn {
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .nav-btn:hover { background-color: #0d47a1; }
+        .nav-btn:disabled { background-color: #555; cursor: not-allowed; }
+        .theme-toggle {
+            background: transparent;
+            border: 2px solid white;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body data-theme="light">
+<div class="presentation-wrapper">
+    <div class="slides-container">
+<!-- DIAPOSITIVA 1: Definición Geométrica -->
+        <div class="slide active">
+            <h1>Vectores en el Plano (\(\mathbb{R}^2\))</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">Definición Geométrica de un Vector</h3>
+                <p>
+                    El conjunto de todos los segmentos de recta dirigidos equivalentes a un segmento de recta dirigido dado se llama vector[cite: 34]. 
+                </p>
+                <p>
+                    Cualquier segmento de recta en ese conjunto se denomina <strong>representación del vector</strong>[cite: 34]. Esto significa que, en el plano, podemos trasladar el segmento manteniendo su longitud y dirección, y seguirá representando el mismo vector físico[cite: 34].
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 2: Definición Algebraica -->
+        <div class="slide">
+            <h1>Definición Algebraica</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">Definición Algebraica de un Vector</h3>
+                <p>
+                    Un vector \( \mathbf{v} \) en el plano \( xy \) es un par ordenado de números reales \( (a, b) \)[cite: 34].
+                </p>
+                <div class="math-block">
+                    \[ \mathbf{v} = (a, b) \]
+                </div>
+                <p style="font-size: 1rem; margin-top: 15px;">
+                    Los números \( a \) y \( b \) se denominan <strong>elementos</strong> o <strong>componentes</strong> del vector \( \mathbf{v} \)[cite: 34]. El vector cero es el par ordenado \( (0, 0) \)[cite: 34].
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 3: Magnitud -->
+        <div class="slide">
+            <h1>Magnitud de un Vector</h1>
+            <div class="card">
+                <p>
+                    La <strong>magnitud</strong> o longitud de un vector se define utilizando el teorema de Pitágoras[cite: 34, 35]. 
+                </p>
+                <p>
+                    Para un vector \( \mathbf{v} = (a, b) \), su magnitud, denotada como \( |\mathbf{v}| \), se calcula con la siguiente fórmula[cite: 34]:
+                </p>
+                <div class="math-block">
+                    \[ |\mathbf{v}| = \sqrt{a^2 + b^2} \]
+                </div>
+                <div class="card card-purple" style="margin-top: 15px; padding: 15px; font-size: 0.95rem;">
+                    <strong>Ejemplo:</strong> Para el vector \( (3, 4) \), la magnitud es \( \sqrt{3^2 + 4^2} = \sqrt{9 + 16} = 5 \)[cite: 35].
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 4: Dirección -->
+        <div class="slide">
+            <h1>Dirección de un Vector</h1>
+            <div class="card">
+                <p>
+                    Se define la <strong>dirección</strong> de un vector \( \mathbf{v} = (a, b) \) como el ángulo \( \theta \), medido en radianes, que forma el vector con el lado positivo del eje \( x \)[cite: 35]. 
+                </p>
+                <p>
+                    Por convención, se escoge \( \theta \) tal que \( 0 \le \theta < 2\pi \)[cite: 35]. La dirección se puede deducir usando trigonometría básica:
+                </p>
+                <div class="math-block">
+                    \[ \tan \theta = \frac{b}{a} \quad (\text{si } a \neq 0) \]
+                </div>
+                <p style="font-size: 0.95rem; margin-top: 15px; color: var(--text-muted);">
+                    <em>Nota: Es necesario determinar en qué cuadrante se encuentra el vector para calcular el ángulo correcto mediante \( \arctan \)[cite: 35, 36].</em>
+                </p>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 5: Producto por un Escalar -->
+        <div class="slide">
+            <h1>Producto por un Escalar</h1>
+            <div class="card">
+                <p>
+                    Al multiplicar un vector \( \mathbf{v} \) por un escalar \( \alpha \), su magnitud se escala[cite: 37]:
+                </p>
+                <div class="math-block">
+                    \[ |\alpha \mathbf{v}| = |\alpha| \sqrt{a^2 + b^2} = |\alpha| |\mathbf{v}| \]
+                </div>
+                <h4 style="color: var(--card-blue-text); margin-top: 20px;">Efecto en la Dirección:</h4>
+                <ul style="line-height: 1.6;">
+                    <li>Si \( \alpha > 0 \), entonces \( \alpha \mathbf{v} \) está en el mismo cuadrante que \( \mathbf{v} \) y tiene la <strong>misma dirección</strong>[cite: 37].</li>
+                    <li>Si \( \alpha < 0 \), entonces \( \alpha \mathbf{v} \) tiene la <strong>dirección opuesta</strong> a la de \( \mathbf{v} \)[cite: 37].</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 6: Desigualdad del Triángulo -->
+        <div class="slide">
+            <h1>La Desigualdad del Triángulo</h1>
+            <div class="card">
+                <p>
+                    Una de las propiedades geométricas más importantes al sumar vectores es la <strong>desigualdad del triángulo</strong>[cite: 38]. 
+                </p>
+                <p>
+                    Para cualesquiera dos vectores \( \mathbf{u} \) y \( \mathbf{v} \), se cumple que[cite: 38]:
+                </p>
+                <div class="math-block">
+                    \[ |\mathbf{u} + \mathbf{v}| \le |\mathbf{u}| + |\mathbf{v}| \]
+                </div>
+                <div class="card" style="background-color: var(--card-blue-bg); margin-top: 15px; padding: 15px;">
+                    <strong>Interpretación:</strong> Esta desigualdad formaliza el hecho geométrico de que un segmento de recta es la distancia más corta entre dos puntos[cite: 38].
+                </div>
+            </div>
+        </div>
+
+        <!-- DIAPOSITIVA 7: Vectores Unitarios -->
+        <div class="slide">
+            <h1>Vector Unitario y su Representación</h1>
+            <div class="card">
+                <h3 style="color: var(--card-blue-text); margin-top: 0;">Definición 4.1.3: Vector Unitario</h3>
+                <p>
+                    Un <strong>vector unitario</strong> es un vector con longitud 1[cite: 39].
+                </p>
+                <h4 style="color: var(--card-blue-text); margin-top: 20px;">Vectores Base \( \mathbf{i} \) y \( \mathbf{j} \):</h4>
+                <p>
+                    Existen dos vectores especiales en \( \mathbb{R}^2 \) que nos permiten representar cualquier otro vector. Se denota el vector \( (1, 0) \) por el símbolo \( \mathbf{i} \) y el vector \( (0, 1) \) por el símbolo \( \mathbf{j} \)[cite: 39].
+                </p>
+                <p>
+                    Cualquier vector \( \mathbf{v} = (a, b) \) en el plano se puede escribir en términos de \( \mathbf{i} \) y \( \mathbf{j} \) como[cite: 39]:
+                </p>
+                <div class="math-block">
+                    \[ \mathbf{v} = a\mathbf{i} + b\mathbf{j} \]
+                </div>
+            </div>
+        </div>
+
+    <div class="nav-bar">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
+        <div class="nav-controls">
+            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
+            <span id="slide-indicator">Diapositiva 1 de 6</span>
+        </div>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const indicator = document.getElementById('slide-indicator');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+
+    function updateSlide() {
+        slides.forEach((slide, index) => slide.classList.toggle('active', index === currentSlide));
+        indicator.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
+        prevBtn.disabled = currentSlide === 0;
+        nextBtn.disabled = currentSlide === slides.length - 1;
+        if (window.MathJax) MathJax.typesetPromise();
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
+        updateSlide();
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const themeBtn = document.querySelector('.theme-toggle');
+        if (body.getAttribute('data-theme') === 'light') {
+            body.setAttribute('data-theme', 'dark');
+            themeBtn.textContent = 'Modo Claro';
+        } else {
+            body.setAttribute('data-theme', 'light');
+            themeBtn.textContent = 'Modo Oscuro';
+        }
+    }
+
+    updateSlide();
+</script>
+</body>
+</html>
