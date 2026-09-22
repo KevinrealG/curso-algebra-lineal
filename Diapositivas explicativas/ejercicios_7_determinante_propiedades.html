@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoja de Práctica: Determinantes</title>
+    
+    <!-- Librería MathJax para renderizar las matrices y ecuaciones -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Variables de color y tipografía para mantener un diseño limpio */
+        :root {
+            --bg-color: #f0f2f5;
+            --paper-color: #ffffff;
+            --text-color: #333333;
+            --primary-blue: #1565c0;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        /* Contenedor principal que simula una hoja de papel */
+        .document-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: var(--paper-color);
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Estilos para los encabezados */
+        h1 {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            color: #444;
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-left: 4px solid var(--primary-blue);
+            margin-top: 40px;
+        }
+
+        /* Uso de CSS Grid para alinear los problemas en columnas 
+           'repeat(auto-fit, minmax(200px, 1fr))' crea columnas responsivas */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        /* Estilo individual para cada problema */
+        .problem-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Número del problema en negrita y color azul */
+        .problem-number {
+            font-weight: bold;
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="document-container">
+        <h1>PROBLEMAS 3.2: Propiedades de los Determinantes</h1>
+
+        <!-- SECCIÓN 1: Ejercicios de cálculo numérico -->
+        <h2>De los problemas 1 al 27 evalúe el determinante usando los métodos de esta sección.</h2>
+        <p style="font-size: 0.9rem; color: #666; margin-top: -10px; margin-bottom: 20px;">
+            (Selección de ejercicios representativos del texto base)
+        </p>
+
+        <div class="problems-grid">
+            <!-- Problema 1[cite: 44] -->
+            <div class="problem-item">
+                <span class="problem-number">1.</span>
+                <div>
+                    \[ \begin{vmatrix} 4 & -1 \\ -1 & 5 \end{vmatrix} \]
+                </div>
+            </div>
+
+            <!-- Problema 4[cite: 44] -->
+            <div class="problem-item">
+                <span class="problem-number">4.</span>
+                <div>
+                    \[ \begin{vmatrix} 2 & -1 & 0 \\ 3 & -2 & 0 \\ 5 & 1 & 6 \end{vmatrix} \]
+                </div>
+            </div>
+
+            <!-- Problema 10[cite: 44] -->
+            <div class="problem-item">
+                <span class="problem-number">10.</span>
+                <div>
+                    \[ \begin{vmatrix} 2 & -1 & 3 \\ 4 & 0 & 6 \\ 5 & -2 & 3 \end{vmatrix} \]
+                </div>
+            </div>
+
+            <!-- Problema 13[cite: 44] -->
+            <div class="problem-item">
+                <span class="problem-number">13.</span>
+                <div>
+                    \[ \begin{vmatrix} 2 & -3 & 1 & 4 \\ 0 & -2 & 0 & 0 \\ 3 & 7 & -1 & 2 \\ 4 & 1 & -3 & 8 \end{vmatrix} \]
+                </div>
+            </div>
+
+            <!-- Problema 19[cite: 45] -->
+            <div class="problem-item">
+                <span class="problem-number">19.</span>
+                <div>
+                    \[ \begin{vmatrix} 0 & 0 & -4 & -5 \\ 0 & 0 & -2 & -2 \\ 0 & 0 & 5 & 0 \\ 0 & 0 & 4 & 0 \end{vmatrix} \]
+                </div>
+            </div>
+
+            <!-- Problema 22[cite: 45] -->
+            <div class="problem-item">
+                <span class="problem-number">22.</span>
+                <div>
+                    \[ \begin{vmatrix} 1 & -1 & 2 & 0 & 0 \\ 3 & 1 & 4 & 0 & 0 \\ 2 & -1 & 5 & 0 & 0 \\ 0 & 0 & 0 & 2 & 3 \\ 0 & 0 & 0 & -1 & 4 \end{vmatrix} \]
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: Ejercicios de propiedades algebraicas abstractas -->
+        <h2>De los problemas 28 al 36 calcule el determinante suponiendo que \(\begin{vmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{vmatrix} = 6\)</h2>
+        
+        <div class="problems-grid">
+            <!-- Problema 28[cite: 45] -->
+            <div class="problem-item">
+                <span class="problem-number">28.</span>
+                <div>
+                    \[ \begin{vmatrix} a_{31} & a_{32} & a_{33} \\ a_{21} & a_{22} & a_{23} \\ a_{11} & a_{12} & a_{13} \end{vmatrix} \]
+                </div>
+            </div>
+
+            <!-- Problema 29[cite: 45] -->
+            <div class="problem-item">
+                <span class="problem-number">29.</span>
+                <div>
+                    \[ \begin{vmatrix} a_{31} & a_{32} & a_{33} \\ a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \end{vmatrix} \]
+                </div>
+            </div>
+
+            <!-- Problema 34[cite: 45] -->
+            <div class="problem-item">
+                <span class="problem-number">34.</span>
+                <div>
+                    \[ \begin{vmatrix} a_{11} & 2a_{13} & a_{12} \\ a_{21} & 2a_{23} & a_{22} \\ a_{31} & 2a_{33} & a_{32} \end{vmatrix} \]
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: Demostración -->
+        <h2>Problema Teórico</h2>
+        <div style="padding: 20px; background-color: #f8f9fa; border-radius: 8px; border: 1px solid var(--border-color);">
+            <p>
+                <span class="problem-number" style="margin-right: 10px;">37.</span> 
+                Usando la propiedad 3.2.2, demuestre que si \(\alpha\) es un escalar y \(A\) es de tamaño \(n \times n\), entonces \(\det(\alpha A) = \alpha^n \det(A)\).
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

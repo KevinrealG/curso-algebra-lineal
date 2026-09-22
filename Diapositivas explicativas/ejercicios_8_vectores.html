@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoja de Práctica: Vectores en el Plano</title>
+    
+    <!-- Librería MathJax para renderizar la notación matemática -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Variables de color para mantener la consistencia del diseño */
+        :root {
+            --bg-color: #f0f2f5;
+            --paper-color: #ffffff;
+            --text-color: #333333;
+            --primary-blue: #1565c0;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        /* Contenedor que simula la hoja de trabajo física */
+        .document-container {
+            max-width: 850px;
+            margin: 0 auto;
+            background-color: var(--paper-color);
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            color: #444;
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-left: 4px solid var(--primary-blue);
+            margin-top: 35px;
+        }
+
+        /* Grid para organizar los ejercicios cortos en 3 columnas responsivas */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        /* Grid para organizar los ejercicios más largos en 1 columna */
+        .problems-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .problem-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .problem-number {
+            font-weight: bold;
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            min-width: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="document-container">
+        <h1>PROBLEMAS 4.1: Vectores en el Plano</h1>
+
+        <!-- SECCIÓN 1: Magnitud y dirección -->
+        <h2>De los problemas 1 al 19 encuentre la magnitud y dirección del vector dado.</h2>
+        
+        <div class="problems-grid">
+            <!-- Ejercicios extraídos de la fuente 46 -->
+            <div class="problem-item">
+                <span class="problem-number">1.</span>
+                <div>\( \mathbf{v} = (4, 4) \)</div>
+            </div>
+            <div class="problem-item">
+                <span class="problem-number">2.</span>
+                <div>\( \mathbf{v} = (\sqrt{3}, -2) \)</div>
+            </div>
+            <div class="problem-item">
+                <span class="problem-number">6.</span>
+                <div>\( \mathbf{v} = (-1, \frac{1}{3}) \)</div>
+            </div>
+            <div class="problem-item">
+                <span class="problem-number">8.</span>
+                <div>\( \mathbf{v} = (-2, \sqrt{3}) \)</div>
+            </div>
+            
+            <!-- Ejercicios extraídos de la fuente 47 -->
+            <div class="problem-item">
+                <span class="problem-number">10.</span>
+                <div>\( \mathbf{v} = (1, -\sqrt{3}) \)</div>
+            </div>
+            <div class="problem-item">
+                <span class="problem-number">11.</span>
+                <div>\( \mathbf{v} = (\frac{1}{2}, -\frac{1}{2}) \)</div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: Operaciones con vectores -->
+        <h2>Operaciones aritméticas y representación gráfica</h2>
+        
+        <div class="problems-list">
+            <!-- Ejercicios extraídos de la fuente 47 -->
+            <div class="problem-item">
+                <span class="problem-number">20.</span>
+                <div>
+                    Sea \( \mathbf{u} = (2, 3) \) y \( \mathbf{v} = (-5, 4) \). Encuentre: 
+                    <br>a) \( 3\mathbf{u} \); 
+                    b) \( \mathbf{u} + \mathbf{v} \); 
+                    c) \( \mathbf{v} - \mathbf{u} \); 
+                    d) \( 2\mathbf{u} - 7\mathbf{v} \). 
+                    <br><br><em>Bosqueje estos vectores.</em>
+                </div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">21.</span>
+                <div>
+                    Sea \( \mathbf{u} = -2\mathbf{i} + \mathbf{j} \) y \( \mathbf{v} = 4\mathbf{i} + 5\mathbf{j} \). Encuentre: 
+                    <br>a) \( \mathbf{u} + \mathbf{v} \); 
+                    b) \( \mathbf{u} - \mathbf{v} \); 
+                    c) \( \mathbf{v} - \mathbf{u} \); 
+                    d) \( -2\mathbf{u} + 3\mathbf{v} \); 
+                    e) \( 2\mathbf{u} - 3\mathbf{v} \); 
+                    f) \( \mathbf{u} + 2\mathbf{v} \). 
+                    <br><br><em>Bosqueje estos vectores.</em>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: Demostración teórica -->
+        <h2>Demostración</h2>
+        
+        <div class="problems-list">
+            <!-- Ejercicio extraído de la fuente 47 -->
+            <div class="problem-item" style="background-color: #e8f4fd; border-color: #bbdefb;">
+                <span class="problem-number">26.</span>
+                <div>
+                    Demuestre que si \( \mathbf{v} = a\mathbf{i} + b\mathbf{j} \neq \mathbf{0} \), entonces 
+                    \[ \mathbf{u} = \frac{a}{\sqrt{a^2 + b^2}}\mathbf{i} + \frac{b}{\sqrt{a^2 + b^2}}\mathbf{j} \] 
+                    es un vector unitario que tiene la misma dirección que \( \mathbf{v} \).
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 4: Vectores unitarios -->
+        <h2>De los problemas 27 al 34 encuentre un vector unitario que tenga la misma dirección que el vector dado.</h2>
+        
+        <div class="problems-grid">
+            <!-- Ejercicios extraídos de la fuente 47 -->
+            <div class="problem-item">
+                <span class="problem-number">27.</span>
+                <div>\( \mathbf{v} = 2\mathbf{i} + 6\mathbf{j} \)</div>
+            </div>
+            <div class="problem-item">
+                <span class="problem-number">28.</span>
+                <div>\( \mathbf{v} = 4\mathbf{i} - 6\mathbf{j} \)</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
