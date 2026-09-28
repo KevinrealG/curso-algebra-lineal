@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Álgebra Lineal UTB</title>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .download-btn {
+        display: inline-block;
+        background-color: var(--primary);
+        color: #fff;
+        text-decoration: none;
+        padding: 0.75rem 1.25rem;
+        border-radius: 10px;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        transition: background-color 0.2s ease;
+    }
+    .download-btn:hover {
+        background-color: #003d6e;
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+        margin-top: 1rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Álgebra Lineal · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio: Vectores y matrices en el fútbol.</h2>
+<p>Suma de matrices, suma de vectores, magnitud, dirección y producto punto con datos de una liga simulada.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#objetivos">Objetivos de la Guía</a></li>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#recomendaciones">Recomendaciones Generales</a></li>
+<li><a href="#teoria">Contenidos Teóricos</a></li>
+<li><a href="#metodologia">Metodología del Laboratorio</a></li>
+<li><a href="#datos">Descripción de la Base de Datos</a></li>
+<li><a href="#entorno">Configuración del Entorno</a></li>
+<li><a href="#desarrollo">Desarrollo del Laboratorio</a></li>
+<li><a href="#entregables">Entregables y Referencias</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="objetivos" class="section card">
+    <h2 class="section-title">Objetivos de la Guía</h2>
+    <ul>
+        <li>Organizar datos de un equipo en matrices e interpretar sus filas, columnas y elementos.</li>
+        <li>Sumar matrices del mismo tamaño e interpretar el resultado en el contexto del problema.</li>
+        <li>Construir el vector de una jugadora como suma de sus vectores por temporada.</li>
+        <li>Calcular la magnitud y la dirección de vectores de R² e interpretarlas como nivel de producción y tipo de perfil.</li>
+        <li>Calcular el ángulo entre dos vectores mediante el producto punto y usarlo para comparar perfiles.</li>
+        <li>Utilizar Python (Pandas, NumPy, Matplotlib) en Google Colab para leer un archivo de Excel, hacer los cálculos y visualizar resultados.</li>
+    </ul>
+</section>
+
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li><strong>Competencia matemática:</strong> Operar con matrices y vectores (suma, magnitud, dirección, producto punto y ángulo) e interpretar sus resultados.</li>
+        <li><strong>Competencia digital:</strong> Leer datos de Excel con Pandas, construir matrices y hacer operaciones vectoriales con NumPy.</li>
+        <li><strong>Competencia analítica:</strong> Distinguir entre la magnitud de un vector (intensidad del rendimiento) y su dirección (composición del rendimiento) al comparar jugadoras.</li>
+        <li><strong>Competencia comunicativa:</strong> Elaborar informes técnicos que documenten procedimientos, resultados y conclusiones.</li>
+        <li><strong>Competencia autónoma:</strong> Gestionar el tiempo de trabajo y aprender de manera independiente mediante la documentación de librerías.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Explicar qué representan las filas, las columnas y cada elemento de una matriz de datos.</li>
+        <li>Calcular la suma de dos matrices y verificarla con un elemento.</li>
+        <li>Obtener el vector total de una jugadora como suma de vectores y relacionarlo con la suma de una fila de la matriz.</li>
+        <li>Calcular la magnitud y la dirección de un vector de R² e interpretarlas.</li>
+        <li>Calcular el ángulo entre dos vectores con el producto punto y ordenar jugadoras según su similitud de perfil.</li>
+        <li>Identificar la mejor y la peor temporada de un equipo a partir de un diagrama de barras.</li>
+    </ul>
+</section>
+
+<section id="recomendaciones" class="section card">
+    <h2 class="section-title">Recomendaciones Generales</h2>
+    <ul>
+        <li>El laboratorio se realiza de manera individual o en parejas.</li>
+        <li>Se debe entregar un preinforme al final de la sesión con los resultados del ejemplo resuelto.</li>
+        <li>El informe final (con preguntas de interpretación, conclusiones y recomendaciones) se entrega antes de la siguiente clase.</li>
+        <li>Use Google Colab (<a href="https://colab.research.google.com" target="_blank">https://colab.research.google.com</a>) y guarde su cuaderno en su unidad de Google Drive.</li>
+        <li>
+            <a class="download-btn" href="Liga_Caribe_Vectores.xlsx" download>
+                Descargar datos: Liga_Caribe_Vectores.xlsx
+            </a>
+        </li>
+        <li>Los datos del archivo son simulados: la liga, los equipos y las jugadoras son ficticios.</li>
+    </ul>
+</section>
+
+<section id="teoria" class="section card">
+    <h2 class="section-title">CONTENIDOS TEÓRICOS</h2>
+    <ol>
+        <li><strong>Matrices:</strong> Una matriz de tamaño $m \times n$ es un arreglo de números con m filas y n columnas. El elemento que está en la fila i y la columna j se escribe $a_{ij}$. En una matriz de datos hay que definir siempre qué representa cada fila, cada columna y cada elemento.<br>
+        $A = [a_{ij}]$ para $i = 1, \dots, m$ (filas) y $j = 1, \dots, n$ (columnas).
+        </li>
+        <li><strong>Suma de matrices:</strong> Dos matrices se pueden sumar solo si tienen el mismo tamaño. La suma se hace elemento a elemento:<br>
+        $P = G + A \implies p_{ij} = g_{ij} + a_{ij}$.<br>
+        El resultado tiene sentido cuando los elementos que se suman miden cosas compatibles. En este laboratorio, goles más asistencias da el número de goles en los que participó una jugadora.
+        </li>
+        <li><strong>Vectores de R² y suma de vectores:</strong> Un vector de R² es un par ordenado $v = (v_1, v_2)$. La suma de vectores se hace componente a componente:<br>
+        $u + v = (u_1 + v_1, u_2 + v_2)$.<br>
+        Si una jugadora tiene un vector (goles, asistencias) en cada temporada, su vector total es la suma de todos ellos. Esa suma coincide con sumar la fila de la jugadora en la matriz de goles y en la matriz de asistencias.
+        </li>
+        <li><strong>Magnitud y dirección:</strong><br>
+        $\|v\| = \sqrt{v_1^2 + v_2^2}$<br>
+        $\theta = \tan^{-1}(v_2 / v_1)$.<br>
+        La magnitud es la longitud del vector. La dirección es el ángulo que forma el vector con el eje horizontal. En Python se usa <code>np.arctan2(v2, v1)</code>, que da el ángulo correcto aunque $v_1$ sea 0. Como los goles y las asistencias no son negativos, las direcciones de este laboratorio están entre 0° y 90°.
+        </li>
+        <li><strong>Producto punto y ángulo entre vectores:</strong><br>
+        $u \cdot v = u_1 v_1 + u_2 v_2$<br>
+        $\cos \theta = \frac{u \cdot v}{\|u\| \|v\|}$.<br>
+        El ángulo $\theta$ entre dos vectores se obtiene con $\theta = \cos^{-1}(\cos \theta)$. En R², ese ángulo también es la diferencia entre las direcciones de los dos vectores, lo que sirve para verificar los cálculos.
+        </li>
+        <li><strong>Magnitud y ángulo en el análisis de rendimiento:</strong>
+            <ul>
+                <li>Un ángulo cercano a 0° significa que los vectores tienen una dirección muy similar: por ejemplo, la proporción entre goles y asistencias de las dos jugadoras es parecida.</li>
+                <li>Un ángulo cercano a 90° significa perfiles muy distintos: por ejemplo, una jugadora que casi solo marca goles y otra que casi solo da asistencias.</li>
+                <li>El ángulo mide similitud de perfil; no indica que una jugadora sea mejor que otra. Dos jugadoras pueden formar un ángulo de 0° aunque una tenga muchos más goles y asistencias.</li>
+                <li>La magnitud permite analizar la intensidad o nivel global del rendimiento; el ángulo permite analizar la similitud entre perfiles.</li>
+                <li>Cuando un vector tiene componentes muy pequeñas (por ejemplo, 2 goles y 1 asistencia), su dirección cambia mucho con un solo gol más. Esas direcciones son poco confiables.</li>
+            </ul>
+        </li>
+    </ol>
+</section>
+
+<section id="metodologia" class="section card">
+    <h2 class="section-title">METODOLOGÍA DEL LABORATORIO</h2>
+    <ul>
+        <li>Conformar parejas de trabajo y asignar roles (conductor y navegante).</li>
+        <li>Crear un cuaderno en Google Colab: <code>Lab_Vectores_Matrices_Futbol.ipynb</code>.</li>
+        <li>Importar las librerías Pandas, NumPy y Matplotlib.</li>
+        <li>Leer la introducción teórica y la descripción de la base de datos.</li>
+        <li>Desarrollar el ejemplo resuelto paso a paso, leyendo la explicación de cada paso antes de ejecutar el código.</li>
+        <li>Generar las visualizaciones indicadas con Matplotlib.</li>
+        <li>Responder las preguntas de interpretación.</li>
+        <li>Documentar cada paso, resultado e interpretación en el notebook.</li>
+        <li>Compartir el notebook como preinforme mediante enlace de Google Colab.</li>
+    </ul>
+</section>
+
+<section id="datos" class="section card">
+    <h2 class="section-title">DESCRIPCIÓN DE LA BASE DE DATOS</h2>
+    <p>El archivo <code>Liga_Caribe_Vectores.xlsx</code> contiene datos simulados de una liga ficticia de cinco equipos (Tiburones FC, Corales SC, Pelícanos FC, Alcatraces FC e Iguanas del Dique) durante 10 temporadas, de 2016 a 2025. En este laboratorio se usan las hojas «Jugadoras» y «Partidos».</p>
+    
+    <h3 style="color: var(--primary);">Hoja «Jugadoras» (666 filas)</h3>
+    <p>Cada fila corresponde a una jugadora en una temporada. Cada equipo tiene 18 jugadoras en total; no todas estuvieron en el equipo las 10 temporadas. Si una jugadora no aparece en una temporada, no estuvo en el equipo ese año.</p>
+    <ul>
+        <li><strong>ID:</strong> código de la jugadora (J001, J002, …).</li>
+        <li><strong>Nombre, Equipo y Posición:</strong> identificación de la jugadora. La posición puede ser DEL (delantera), MED (mediocampista) o DEF (defensa).</li>
+        <li><strong>Temporada:</strong> año de la temporada.</li>
+        <li><strong>Goles y Asistencias</strong> (encabezados azules): las dos componentes del vector de la jugadora en esa temporada.</li>
+    </ul>
+    <p>La hoja está ordenada por equipo y por jugadora. El primer equipo es Tiburones FC y la primera jugadora es Camila Ortega; el cuaderno usa esos valores por defecto.</p>
+
+    <h3 style="color: var(--primary);">Hoja «Partidos» (1.000 filas)</h3>
+    <p>Cada fila es un partido de un equipo: 5 equipos × 10 temporadas × 20 partidos. En cada temporada, cada equipo enfrenta 5 veces a cada uno de sus 4 rivales. En este laboratorio se usan las columnas Equipo, Temporada, Goles a favor y Puntos (3 por victoria, 1 por empate y 0 por derrota).</p>
+
+    <h3 style="color: var(--primary);">Hoja INSTRUCCIONES</h3>
+    <p>La hoja «Instrucciones» resume la estructura del archivo. La hoja «Pesos» pertenece a otra actividad y no se usa en este laboratorio.</p>
+</section>
+
+<section id="entorno" class="section card">
+    <h2 class="section-title">CONFIGURACIÓN DEL ENTORNO EN GOOGLE COLAB</h2>
+    
+    <h3 style="color: var(--primary);">Paso 1: Crear un nuevo cuaderno en Google Colab</h3>
+    <ul>
+        <li>Ingrese a <a href="https://colab.research.google.com" target="_blank">https://colab.research.google.com</a></li>
+        <li>Haga clic en Nuevo cuaderno</li>
+        <li>Cambie el nombre del cuaderno a: <code>Lab_Vectores_Matrices_Futbol.ipynb</code></li>
+    </ul>
+
+    <h3 style="color: var(--primary);">Paso 2: Importar librerías necesarias</h3>
+    <div class="code-block">
+<pre>import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt</pre>
+    </div>
+    <p><code>pandas</code> lee el Excel y organiza los datos en tablas; <code>numpy</code> hace las operaciones con vectores; <code>matplotlib</code> dibuja las gráficas. Las tres vienen instaladas en Google Colab.</p>
+
+    <h3 style="color: var(--primary);">Paso 3: Verificar la instalación</h3>
+    <div class="code-block">
+<pre># Verificar versiones
+print(f"Pandas version: {pd.__version__}")
+print(f"NumPy version: {np.__version__}")</pre>
+    </div>
+</section>
+
+<section id="desarrollo" class="section card">
+    <h2 class="section-title">DESARROLLO DEL LABORATORIO</h2>
+    <h3 style="color: var(--primary);">EJEMPLO RESUELTO: Análisis de las jugadoras de un equipo y búsqueda de una sustituta</h3>
+    <p>El cuerpo técnico del primer equipo del archivo necesita organizar los goles y las asistencias de sus jugadoras a lo largo de 10 temporadas, conocer el nivel y el tipo de perfil de cada una, y responder una pregunta concreta:</p>
+</section>
+
+<section id="entregables" class="section card">
+    <h2 class="section-title">PREGUNTAS DE INTERPRETACIÓN (PRE-INFORME)</h2>
+    <ul>
+        <li><strong>Fecha de entrega del preinforme:</strong> Al finalizar la sesión de laboratorio.</li>
+        <li><strong>Fecha de entrega del informe final:</strong> Antes de la siguiente clase.</li>
+        <li><strong>Entrega del preinforme:</strong> Al finalizar la sesión de laboratorio por Teams. Enviado en link de Google Colab.</li>
+        <li><strong>Entrega del informe final:</strong> En la fecha indicada por el docente.</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Referencias</h3>
+    <ul>
+        <li>Grossman, S. I. (2012). Álgebra Lineal (8ª ed.). McGraw-Hill.</li>
+        <li>Anton, H., & Rorres, C. (2010). Elementary Linear Algebra (10th ed.). John Wiley & Sons.</li>
+        <li>Lay, D. C. (2012). Álgebra Lineal y sus aplicaciones. Pearson Education.</li>
+        <li>Google Colab: <a href="https://colab.research.google.com/" target="_blank">https://colab.research.google.com/</a></li>
+        <li>Documentación de Pandas: <a href="https://pandas.pydata.org/docs/" target="_blank">https://pandas.pydata.org/docs/</a></li>
+        <li>Documentación de NumPy: <a href="https://numpy.org/doc/" target="_blank">https://numpy.org/doc/</a></li>
+        <li>Documentación de Matplotlib: <a href="https://matplotlib.org/" target="_blank">https://matplotlib.org/</a></li>
+    </ul>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Álgebra Lineal · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>
