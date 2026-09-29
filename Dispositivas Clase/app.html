@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Álgebra Lineal: Vectores y Productos Finanzas</title>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <!-- PyScript -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2023.11.1/core.css" />
+    <script type="module" src="https://pyscript.net/releases/2023.11.1/core.js"></script>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; padding: 20px; background-color: #f9f9f9; color: #333;}
+        .panel { padding: 20px; background: #fff; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);}
+        .view-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+        .view-tab { background: #e7edf5; color: #1a365d; }
+        .view-tab.active { background: #1a365d; color: #fff; }
+        .view-panel { display: none; }
+        .view-panel.active { display: block; }
+        .view-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .chart-box { width: 100%; height: 500px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 10px; box-sizing: border-box;}
+        button { background: #2a78d6; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        select, input { padding: 6px; border: 1px solid #ccc; border-radius: 4px; margin-right: 15px; }
+        h1, h2 { color: #1a365d; }
+    </style>
+</head>
+<body>
+
+    <h1>Análisis Vectorial de Productos</h1>
+    
+    <div class="panel">
+        <label><b>1. Sube tu archivo (Finanzas_Productos.xlsx):</b> </label>
+        <input type="file" id="file-upload" accept=".xlsx, .xls"><br><br>
+        
+        <label><b>Producto A:</b> <select id="prodA"></select></label>
+        <label><b>Producto B:</b> <select id="prodB"></select></label>
+    </div>
+
+    <div class="view-tabs" role="tablist" aria-label="Vistas de comparación">
+        <button class="view-tab active" data-view="radar-view" role="tab" aria-selected="true">Características</button>
+        <button class="view-tab" data-view="plane-view" role="tab" aria-selected="false">Vectores en R²</button>
+        <button class="view-tab" data-view="space-view" role="tab" aria-selected="false">Vectores en R³</button>
+    </div>
+
+    <section id="radar-view" class="view-panel active" role="tabpanel">
+        <div id="radar-chart" class="chart-box"></div>
+    </section>
+    <section id="plane-view" class="view-panel" role="tabpanel">
+        <div class="panel view-controls">
+            <label><b>Eje x:</b> <select id="x-variable"></select></label>
+            <label><b>Eje y:</b> <select id="y-variable"></select></label>
+        </div>
+        <div id="math-results-2d" class="panel"><i>Carga el archivo para comenzar la comparación.</i></div>
+        <div id="vector-chart" class="chart-box"></div>
+    </section>
+    <section id="space-view" class="view-panel" role="tabpanel">
+        <div class="panel view-controls">
+            <label><b>Eje x:</b> <select id="x3-variable"></select></label>
+            <label><b>Eje y:</b> <select id="y3-variable"></select></label>
+            <label><b>Eje z:</b> <select id="z3-variable"></select></label>
+        </div>
+        <div id="math-results-3d" class="panel"><i>Carga el archivo para comenzar la comparación.</i></div>
+        <div id="vector-3d-chart" class="chart-box"></div>
+    </div>
+
+    <!-- Configuración de PyScript con las librerías de Data Science -->
+    <py-config>
+        packages = ["pandas", "openpyxl", "numpy"]
+    </py-config>
+    
+    <!-- Lógica en Python -->
+    <script type="py">
+        import asyncio
+        import io
+        import numpy as np
+        import pandas as pd
+        from pyodide.ffi import create_proxy, to_js
+        import js
+
+        df_base = None
+
+        async def process_file(event):
+            global df_base
+            file_list = event.target.files
+            if not file_list: return
+            
+            # Cargar archivo local en memoria para pandas
+            array_buffer = await file_list.item(0).arrayBuffer()
+            file_bytes = array_buffer.to_bytes()
+            
+            # Extraemos la hoja 'Base'
+            df_base = pd.read_excel(io.BytesIO(file_bytes), sheet_name='Base', index_col='Producto')
+            
+            # Poblar las listas desplegables del DOM
+            prodA = js.document.getElementById("prodA")
+            prodB = js.document.getElementById("prodB")
+            prodA.innerHTML = ""
+            prodB.innerHTML = ""
+            
+            for prod in df_base.index:
+                opt1 = js.document.createElement("option")
+                opt1.value = opt1.text = prod
+                prodA.appendChild(opt1)
+                
+                opt2 = js.document.createElement("option")
+                opt2.value = opt2.text = prod
+                prodB.appendChild(opt2)
+                
+            prodB.selectedIndex = 1 # Seleccionamos un producto distinto para el comparador
+
+            variables = ['Precio', 'Oferta', 'Demanda', 'Variabilidad', 'Confiabilidad']
+            for selector_id in ['x-variable', 'y-variable', 'x3-variable', 'y3-variable', 'z3-variable']:
+                selector = js.document.getElementById(selector_id)
+                selector.innerHTML = ""
+                for variable in variables:
+                    option = js.document.createElement("option")
+                    option.value = option.text = variable
+                    selector.appendChild(option)
+            js.document.getElementById('y-variable').value = 'Oferta'
+            js.document.getElementById('y3-variable').value = 'Oferta'
+            js.document.getElementById('z3-variable').value = 'Demanda'
+            update_charts(None)
+
+        def to_plotly(value):
+            return to_js(value, dict_converter=js.Object.fromEntries)
+
+        def update_charts(event):
+            global df_base
+            if df_base is None: return
+            
+            pA = js.document.getElementById("prodA").value
+            pB = js.document.getElementById("prodB").value
+            
+            cols_r5 = ['Precio', 'Oferta', 'Demanda', 'Variabilidad', 'Confiabilidad']
+            features = df_base[cols_r5].astype(float)
+            feature_min = features.min()
+            feature_range = (features.max() - feature_min).replace(0, np.nan)
+            standardized = 1 + 9 * (features - feature_min) / feature_range
+            standardized.loc[:, feature_range.isna()] = 5.5
+            vecA_5d = standardized.loc[pA]
+            vecB_5d = standardized.loc[pB]
+
+            radar_data = [
+                {
+                    "type": "scatterpolar",
+                    "r": vecA_5d.values.tolist(),
+                    "theta": vecA_5d.index.tolist(),
+                    "fill": "toself",
+                    "name": pA,
+                    "line": {"color": "#1baf7a"}
+                },
+                {
+                    "type": "scatterpolar",
+                    "r": vecB_5d.values.tolist(),
+                    "theta": vecB_5d.index.tolist(),
+                    "fill": "toself",
+                    "name": pB,
+                    "line": {"color": "#eb6834"}
+                }
+            ]
+            radar_layout = {
+                "title": "Características estandarizadas (escala 1–10)",
+                "polar": {"radialaxis": {"visible": True, "range": [1, 10], "tickvals": [1, 3, 5, 7, 9, 10]}},
+                "margin": {"t": 60}
+            }
+            js.Plotly.newPlot("radar-chart", to_plotly(radar_data), to_plotly(radar_layout))
+
+            variables_2d = [js.document.getElementById('x-variable').value, js.document.getElementById('y-variable').value]
+            variables_3d = [js.document.getElementById('x3-variable').value, js.document.getElementById('y3-variable').value, js.document.getElementById('z3-variable').value]
+            render_vector_view('vector-chart', 'math-results-2d', variables_2d, pA, pB)
+            render_vector_view('vector-3d-chart', 'math-results-3d', variables_3d, pA, pB)
+
+        def render_vector_view(chart_id, results_id, variables, pA, pB):
+            vector_a = df_base.loc[pA, variables].astype(float).to_numpy()
+            vector_b = df_base.loc[pB, variables].astype(float).to_numpy()
+            norm_a = np.linalg.norm(vector_a)
+            norm_b = np.linalg.norm(vector_b)
+            dot_product = np.dot(vector_a, vector_b)
+            cosine = dot_product / (norm_a * norm_b) if norm_a and norm_b else float('nan')
+            angle = np.degrees(np.arccos(np.clip(cosine, -1.0, 1.0))) if np.isfinite(cosine) else float('nan')
+            components_a = ', '.join(f'{value:.2f}' for value in vector_a)
+            components_b = ', '.join(f'{value:.2f}' for value in vector_b)
+            dimension_label = 'R²' if len(variables) == 2 else 'R³'
+            js.document.getElementById(results_id).innerHTML = f'''
+                <h3 style="margin-top:0;">Resultados en {dimension_label} ({', '.join(variables)})</h3>
+                <p><strong>{pA}:</strong> ({components_a}) &nbsp;|&nbsp; <strong>Magnitud:</strong> {norm_a:.2f}</p>
+                <p><strong>{pB}:</strong> ({components_b}) &nbsp;|&nbsp; <strong>Magnitud:</strong> {norm_b:.2f}</p>
+                <p><strong>Producto punto:</strong> {dot_product:.2f} &nbsp;|&nbsp; <strong>Coseno:</strong> {cosine:.4f} &nbsp;|&nbsp; <strong>Ángulo:</strong> {angle:.2f}°</p>
+            '''
+
+            colors = ['#1baf7a', '#eb6834']
+            names = [pA, pB]
+            vectors = [vector_a, vector_b]
+            if len(variables) == 2:
+                points = np.concatenate((np.zeros((1, 2)), np.array(vectors)))
+                axis_values = points.ravel()
+                low, high = float(np.min(axis_values)), float(np.max(axis_values))
+                padding = max((high - low) * 0.12, 1)
+                annotations = []
+                for values, name, color in zip(vectors, names, colors):
+                    annotations.append({
+                        'x': float(values[0]), 'y': float(values[1]), 'ax': 0, 'ay': 0,
+                        'xref': 'x', 'yref': 'y', 'axref': 'x', 'ayref': 'y',
+                        'showarrow': True, 'arrowcolor': color, 'arrowhead': 3,
+                        'arrowsize': 1.5, 'arrowwidth': 3, 'text': f'<b>{name}</b>',
+                        'font': {'size': 12, 'color': color}
+                    })
+                layout = {
+                    'title': f'Vectores en R²: {variables[0]} y {variables[1]}',
+                    'xaxis': {'title': variables[0], 'range': [low - padding, high + padding], 'zeroline': True},
+                    'yaxis': {'title': variables[1], 'range': [low - padding, high + padding], 'zeroline': True, 'scaleanchor': 'x'},
+                    'annotations': annotations, 'margin': {'t': 60}
+                }
+                js.Plotly.newPlot(chart_id, to_plotly([]), to_plotly(layout), to_plotly({'responsive': True}))
+            else:
+                traces = []
+                for values, name, color in zip(vectors, names, colors):
+                    traces.append({
+                        'type': 'scatter3d', 'mode': 'lines+markers', 'name': name,
+                        'x': [0, float(values[0])], 'y': [0, float(values[1])], 'z': [0, float(values[2])],
+                        'line': {'color': color, 'width': 7},
+                        'marker': {'size': [3, 6], 'color': color}
+                    })
+                traces.append({
+                    'type': 'scatter3d', 'mode': 'markers', 'name': 'Origen',
+                    'x': [0], 'y': [0], 'z': [0], 'marker': {'size': 4, 'color': '#333'}
+                })
+                axis_range = []
+                for index in range(3):
+                    extent = max(abs(float(vector[index])) for vector in vectors)
+                    axis_range.append([-extent * 1.15, extent * 1.15] if extent else [-1, 1])
+                layout = {
+                    'title': f'Vectores en R³: {", ".join(variables)}',
+                    'scene': {
+                        'xaxis': {'title': variables[0], 'range': axis_range[0]},
+                        'yaxis': {'title': variables[1], 'range': axis_range[1]},
+                        'zaxis': {'title': variables[2], 'range': axis_range[2]},
+                        'aspectmode': 'cube'
+                    },
+                    'margin': {'t': 60}
+                }
+                js.Plotly.newPlot(chart_id, to_plotly(traces), to_plotly(layout), to_plotly({'responsive': True}))
+
+        def switch_view(event):
+            selected_view = event.currentTarget.getAttribute('data-view')
+            for tab in js.document.querySelectorAll('.view-tab'):
+                active = tab.getAttribute('data-view') == selected_view
+                tab.classList.toggle('active', active)
+                tab.setAttribute('aria-selected', 'true' if active else 'false')
+            for panel in js.document.querySelectorAll('.view-panel'):
+                panel.classList.toggle('active', panel.id == selected_view)
+            chart_id = {'radar-view': 'radar-chart', 'plane-view': 'vector-chart', 'space-view': 'vector-3d-chart'}[selected_view]
+            js.Plotly.Plots.resize(js.document.getElementById(chart_id))
+
+        # Configuración de Event Listeners del DOM hacia las funciones de Python
+        upload_proxy = create_proxy(process_file)
+        js.document.getElementById("file-upload").addEventListener("change", upload_proxy)
+        
+        update_proxy = create_proxy(update_charts)
+        for element_id in ['prodA', 'prodB', 'x-variable', 'y-variable', 'x3-variable', 'y3-variable', 'z3-variable']:
+            js.document.getElementById(element_id).addEventListener('change', update_proxy)
+
+        tab_proxy = create_proxy(switch_view)
+        for tab in js.document.querySelectorAll('.view-tab'):
+            tab.addEventListener('click', tab_proxy)
+    </script>
+</body>
+</html>
