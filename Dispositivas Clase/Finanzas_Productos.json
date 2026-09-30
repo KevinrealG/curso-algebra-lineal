@@ -1,0 +1,182 @@
+[
+  {
+    "Producto": "Petróleo Brent",
+    "Categoría": "Energía",
+    "Precio": 85.2,
+    "Oferta": 950,
+    "Demanda": 1020,
+    "Variabilidad": 22.5,
+    "Confiabilidad": 78
+  },
+  {
+    "Producto": "Gas Natural",
+    "Categoría": "Energía",
+    "Precio": 3.45,
+    "Oferta": 880,
+    "Demanda": 910,
+    "Variabilidad": 28.3,
+    "Confiabilidad": 72
+  },
+  {
+    "Producto": "Oro",
+    "Categoría": "Metales preciosos",
+    "Precio": 2350,
+    "Oferta": 120,
+    "Demanda": 145,
+    "Variabilidad": 8.2,
+    "Confiabilidad": 95
+  },
+  {
+    "Producto": "Plata",
+    "Categoría": "Metales preciosos",
+    "Precio": 28.4,
+    "Oferta": 210,
+    "Demanda": 240,
+    "Variabilidad": 12.7,
+    "Confiabilidad": 88
+  },
+  {
+    "Producto": "Platino",
+    "Categoría": "Metales preciosos",
+    "Precio": 980,
+    "Oferta": 85,
+    "Demanda": 92,
+    "Variabilidad": 14.1,
+    "Confiabilidad": 84
+  },
+  {
+    "Producto": "Cobre",
+    "Categoría": "Metales industriales",
+    "Precio": 4.25,
+    "Oferta": 760,
+    "Demanda": 810,
+    "Variabilidad": 11.8,
+    "Confiabilidad": 90
+  },
+  {
+    "Producto": "Litio",
+    "Categoría": "Metales industriales",
+    "Precio": 14500,
+    "Oferta": 95,
+    "Demanda": 110,
+    "Variabilidad": 25.6,
+    "Confiabilidad": 68
+  },
+  {
+    "Producto": "Bitcoin",
+    "Categoría": "Criptomonedas",
+    "Precio": 68000,
+    "Oferta": 45,
+    "Demanda": 62,
+    "Variabilidad": 38.4,
+    "Confiabilidad": 55
+  },
+  {
+    "Producto": "Ethereum",
+    "Categoría": "Criptomonedas",
+    "Precio": 3500,
+    "Oferta": 68,
+    "Demanda": 85,
+    "Variabilidad": 35.2,
+    "Confiabilidad": 58
+  },
+  {
+    "Producto": "Electricidad",
+    "Categoría": "Energía",
+    "Precio": 95.4,
+    "Oferta": 820,
+    "Demanda": 875,
+    "Variabilidad": 18.9,
+    "Confiabilidad": 80
+  },
+  {
+    "Producto": "Trigo",
+    "Categoría": "Agropecuarios",
+    "Precio": 620,
+    "Oferta": 340,
+    "Demanda": 365,
+    "Variabilidad": 16.4,
+    "Confiabilidad": 82
+  },
+  {
+    "Producto": "Maíz",
+    "Categoría": "Agropecuarios",
+    "Precio": 185.5,
+    "Oferta": 520,
+    "Demanda": 545,
+    "Variabilidad": 14.2,
+    "Confiabilidad": 85
+  },
+  {
+    "Producto": "Café Arábica",
+    "Categoría": "Agropecuarios",
+    "Precio": 240.8,
+    "Oferta": 180,
+    "Demanda": 195,
+    "Variabilidad": 19.7,
+    "Confiabilidad": 76
+  },
+  {
+    "Producto": "Cacao",
+    "Categoría": "Agropecuarios",
+    "Precio": 8500,
+    "Oferta": 95,
+    "Demanda": 108,
+    "Variabilidad": 21.3,
+    "Confiabilidad": 74
+  },
+  {
+    "Producto": "Azúcar",
+    "Categoría": "Agropecuarios",
+    "Precio": 22.3,
+    "Oferta": 410,
+    "Demanda": 430,
+    "Variabilidad": 13.5,
+    "Confiabilidad": 83
+  },
+  {
+    "Producto": "Algodón",
+    "Categoría": "Agropecuarios",
+    "Precio": 88.6,
+    "Oferta": 275,
+    "Demanda": 290,
+    "Variabilidad": 15.8,
+    "Confiabilidad": 81
+  },
+  {
+    "Producto": "Ganado Bovino",
+    "Categoría": "Agropecuarios",
+    "Precio": 185.4,
+    "Oferta": 230,
+    "Demanda": 245,
+    "Variabilidad": 10.2,
+    "Confiabilidad": 89
+  },
+  {
+    "Producto": "S&P 500",
+    "Categoría": "Índices bursátiles",
+    "Precio": 5800,
+    "Oferta": 60,
+    "Demanda": 78,
+    "Variabilidad": 12.9,
+    "Confiabilidad": 92
+  },
+  {
+    "Producto": "Nasdaq 100",
+    "Categoría": "Índices bursátiles",
+    "Precio": 20500,
+    "Oferta": 42,
+    "Demanda": 58,
+    "Variabilidad": 16.7,
+    "Confiabilidad": 88
+  },
+  {
+    "Producto": "Bono 10Y EE.UU.",
+    "Categoría": "Renta fija",
+    "Precio": 4.35,
+    "Oferta": 700,
+    "Demanda": 730,
+    "Variabilidad": 6.8,
+    "Confiabilidad": 94
+  }
+]

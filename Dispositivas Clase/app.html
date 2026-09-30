@@ -17,6 +17,13 @@
         .view-panel { display: none; }
         .view-panel.active { display: block; }
         .view-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 12px; }
+        .data-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+        .instructions, .view-intro, .help-copy { max-width: 900px; line-height: 1.55; }
+        .instructions { margin: 8px 0 16px; }
+        .view-intro { margin: 0 0 12px; }
+        .status { color: #43536a; min-height: 1.5em; }
+        details { margin-top: 12px; }
+        summary { cursor: pointer; font-weight: 600; color: #1a365d; }
         .chart-box { width: 100%; height: 500px; background: #fff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); padding: 10px; box-sizing: border-box;}
         button { background: #2a78d6; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; }
         button:disabled { background: #ccc; cursor: not-allowed; }
@@ -29,11 +36,22 @@
     <h1>Análisis Vectorial de Productos</h1>
     
     <div class="panel">
-        <label><b>1. Sube tu archivo (Finanzas_Productos.xlsx):</b> </label>
-        <input type="file" id="file-upload" accept=".xlsx, .xls"><br><br>
-        
-        <label><b>Producto A:</b> <select id="prodA"></select></label>
-        <label><b>Producto B:</b> <select id="prodB"></select></label>
+        <h2>Comienza una comparación</h2>
+        <p class="instructions">1. Carga el Excel con una hoja llamada <b>Base</b> o usa los datos de muestra. 2. Elige dos productos. 3. Abre una vista: los gráficos se actualizan al cambiar una selección.</p>
+        <div class="data-actions">
+            <label for="file-upload" title="El archivo debe incluir una hoja Base con Producto y las variables de comparación."><b>Usar mi archivo Excel:</b></label>
+            <input type="file" id="file-upload" accept=".xlsx, .xls" title="Selecciona un archivo Excel con la hoja Base.">
+            <button id="load-sample" disabled title="Carga los 20 productos de muestra guardados en Finanzas_Productos.json.">Cargar datos de muestra</button>
+        </div>
+        <p id="data-status" class="status" role="status" aria-live="polite">Preparando la aplicación…</p>
+        <div class="view-controls">
+            <label title="Primer producto que se incluirá en las gráficas."><b>Producto A:</b> <select id="prodA" disabled></select></label>
+            <label title="Segundo producto que se incluirá en las gráficas."><b>Producto B:</b> <select id="prodB" disabled></select></label>
+        </div>
+        <details>
+            <summary>Cómo interpretar los resultados</summary>
+            <p class="help-copy">En el radar, 1 representa el menor valor y 10 el mayor de cada variable entre los productos cargados; es una escala relativa, no una calificación de calidad. En R² y R³ se usan los valores originales. La magnitud indica la longitud del vector; el producto punto y el ángulo ayudan a comparar su dirección. Estas medidas describen los datos, no predicen el rendimiento financiero.</p>
+        </details>
     </div>
 
     <div class="view-tabs" role="tablist" aria-label="Vistas de comparación">
@@ -43,22 +61,25 @@
     </div>
 
     <section id="radar-view" class="view-panel active" role="tabpanel">
+        <p class="view-intro">Compara cinco características a la vez. Cada eje se estandariza por separado de 1 a 10 usando todos los productos del conjunto cargado.</p>
         <div id="radar-chart" class="chart-box"></div>
     </section>
     <section id="plane-view" class="view-panel" role="tabpanel">
         <div class="panel view-controls">
-            <label><b>Eje x:</b> <select id="x-variable"></select></label>
-            <label><b>Eje y:</b> <select id="y-variable"></select></label>
+            <label title="Variable que determina la coordenada horizontal de cada vector."><b>Eje x:</b> <select id="x-variable" disabled></select></label>
+            <label title="Variable que determina la coordenada vertical de cada vector."><b>Eje y:</b> <select id="y-variable" disabled></select></label>
         </div>
+        <p class="view-intro">Elige dos variables. Cada flecha representa un producto y parte del origen (0, 0); sus coordenadas son los valores originales de esas variables.</p>
         <div id="math-results-2d" class="panel"><i>Carga el archivo para comenzar la comparación.</i></div>
         <div id="vector-chart" class="chart-box"></div>
     </section>
     <section id="space-view" class="view-panel" role="tabpanel">
         <div class="panel view-controls">
-            <label><b>Eje x:</b> <select id="x3-variable"></select></label>
-            <label><b>Eje y:</b> <select id="y3-variable"></select></label>
-            <label><b>Eje z:</b> <select id="z3-variable"></select></label>
+            <label title="Variable que determina la coordenada horizontal de cada vector."><b>Eje x:</b> <select id="x3-variable" disabled></select></label>
+            <label title="Variable que determina la profundidad de cada vector."><b>Eje y:</b> <select id="y3-variable" disabled></select></label>
+            <label title="Variable que determina la altura de cada vector."><b>Eje z:</b> <select id="z3-variable" disabled></select></label>
         </div>
+        <p class="view-intro">Elige tres variables para ver cada producto como una flecha desde el origen en el espacio tridimensional. Puedes girar la gráfica con el mouse.</p>
         <div id="math-results-3d" class="panel"><i>Carga el archivo para comenzar la comparación.</i></div>
         <div id="vector-3d-chart" class="chart-box"></div>
     </div>
@@ -79,34 +100,23 @@
 
         df_base = None
 
-        async def process_file(event):
+        def activate_dataset(dataframe, status_message):
             global df_base
-            file_list = event.target.files
-            if not file_list: return
-            
-            # Cargar archivo local en memoria para pandas
-            array_buffer = await file_list.item(0).arrayBuffer()
-            file_bytes = array_buffer.to_bytes()
-            
-            # Extraemos la hoja 'Base'
-            df_base = pd.read_excel(io.BytesIO(file_bytes), sheet_name='Base', index_col='Producto')
-            
-            # Poblar las listas desplegables del DOM
+            df_base = dataframe
+
             prodA = js.document.getElementById("prodA")
             prodB = js.document.getElementById("prodB")
             prodA.innerHTML = ""
             prodB.innerHTML = ""
-            
             for prod in df_base.index:
-                opt1 = js.document.createElement("option")
-                opt1.value = opt1.text = prod
-                prodA.appendChild(opt1)
-                
-                opt2 = js.document.createElement("option")
-                opt2.value = opt2.text = prod
-                prodB.appendChild(opt2)
-                
-            prodB.selectedIndex = 1 # Seleccionamos un producto distinto para el comparador
+                for selector in [prodA, prodB]:
+                    option = js.document.createElement("option")
+                    option.value = option.text = prod
+                    selector.appendChild(option)
+            prodA.removeAttribute('disabled')
+            prodB.removeAttribute('disabled')
+            if len(df_base.index) > 1:
+                prodB.selectedIndex = 1
 
             variables = ['Precio', 'Oferta', 'Demanda', 'Variabilidad', 'Confiabilidad']
             for selector_id in ['x-variable', 'y-variable', 'x3-variable', 'y3-variable', 'z3-variable']:
@@ -116,10 +126,33 @@
                     option = js.document.createElement("option")
                     option.value = option.text = variable
                     selector.appendChild(option)
+                selector.removeAttribute('disabled')
             js.document.getElementById('y-variable').value = 'Oferta'
             js.document.getElementById('y3-variable').value = 'Oferta'
             js.document.getElementById('z3-variable').value = 'Demanda'
+            js.document.getElementById('data-status').textContent = status_message
             update_charts(None)
+
+        async def process_file(event):
+            file_list = event.target.files
+            if not file_list: return
+            # Cargar archivo local en memoria para pandas
+            array_buffer = await file_list.item(0).arrayBuffer()
+            file_bytes = array_buffer.to_bytes()
+            # Extraemos la hoja 'Base'
+            dataframe = pd.read_excel(io.BytesIO(file_bytes), sheet_name='Base', index_col='Producto')
+            activate_dataset(dataframe, f"Archivo cargado: {file_list.item(0).name}")
+
+        async def load_sample(event):
+            try:
+                response = await js.fetch('Finanzas_Productos.json')
+                if not response.ok:
+                    raise ValueError(f"No se pudo leer el JSON (HTTP {response.status}).")
+                records = (await response.json()).to_py()
+                dataframe = pd.DataFrame(records).set_index('Producto')
+                activate_dataset(dataframe, f"Datos de muestra cargados: {len(dataframe)} productos.")
+            except Exception as error:
+                js.document.getElementById('data-status').textContent = f"No se pudieron cargar los datos de muestra: {error}. Abre la aplicación desde un servidor local para permitir la lectura del JSON."
 
         def to_plotly(value):
             return to_js(value, dict_converter=js.Object.fromEntries)
@@ -255,6 +288,11 @@
         # Configuración de Event Listeners del DOM hacia las funciones de Python
         upload_proxy = create_proxy(process_file)
         js.document.getElementById("file-upload").addEventListener("change", upload_proxy)
+
+        sample_proxy = create_proxy(load_sample)
+        js.document.getElementById("load-sample").addEventListener("click", sample_proxy)
+        js.document.getElementById("load-sample").disabled = False
+        js.document.getElementById("data-status").textContent = "Listo. Carga tu Excel o prueba el conjunto de muestra."
         
         update_proxy = create_proxy(update_charts)
         for element_id in ['prodA', 'prodB', 'x-variable', 'y-variable', 'x3-variable', 'y3-variable', 'z3-variable']:
