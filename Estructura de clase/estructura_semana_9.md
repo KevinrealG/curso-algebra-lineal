@@ -41,6 +41,7 @@ https://kevinrealg.github.io/curso-algebra-lineal/Dispositivas%20Clase/app_futbo
 
 * Los equipos suman sus vectores de $\mathbb{R}^5$ (simulando la creación de un "equipo" o "portafolio" combinado).
 * Se introduce la representación geométrica estricta de $\mathbb{R}^3$ en la pizarra (ejes $x, y, z$). Los estudiantes grafican un vector de 3 componentes.
+https://kevinrealg.github.io/calculadora-distribuciones/algebra 
 
 **6. Aplicación (10 min)**
 

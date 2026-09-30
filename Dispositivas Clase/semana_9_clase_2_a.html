@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Producto Escalar, Ángulos y Proyecciones</title>
+    <!-- MathJax para renderizado de fórmulas matemáticas -->
+<script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        /* Estilos heredados de la plantilla original */
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul { list-style: none; padding: 0; }
+        li {
+            font-size: clamp(1rem, 1.6vw, 1.5rem);
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .math-eq {
+            font-size: clamp(1.2rem, 2.2vw, 2.2rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+        }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body.dark-theme .matrix-card { background: #242424; border-color: #444; }
+        body.dark-theme .slide-intro { background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%); border-color: #2c4a68; }
+
+        .slide.active { display: flex; }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Definición Global de Marcadores SVG para Flechas -->
+    <svg style="width:0; height:0; position:absolute;">
+        <defs>
+            <marker id="arrow-axis" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 2 L 10 5 L 0 8 z" fill="var(--text-color)" />
+            </marker>
+            <marker id="arrow-u" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 2 L 10 5 L 0 8 z" fill="var(--blue)" />
+            </marker>
+            <marker id="arrow-v" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 2 L 10 5 L 0 8 z" fill="var(--green)" />
+            </marker>
+            <marker id="arrow-proy" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 2 L 10 5 L 0 8 z" fill="#f57c00" />
+            </marker>
+        </defs>
+    </svg>
+
+    <div class="slides-container">
+
+        <!-- Slide 1: Producto Escalar y Magnitud -->
+        <div class="slide active">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">Definiciones Algebraicas</p>
+                <h1>Producto Escalar y Magnitud</h1>
+            </div>
+            
+            <div class="grid-layout" style="align-items: start;">
+                <div class="matrix-card" style="border-top: 5px solid var(--blue);">
+                    <h3 style="color: var(--blue); margin-top: 0; text-align: center;">El Producto Escalar</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 10px;">Para vectores en $\mathbb{R}^2$, $\mathbf{u} = (a_1, b_1)$ y $\mathbf{v} = (a_2, b_2)$:</p>
+                    <div class="math-eq" style="background: #f4f6f9; padding: 10px; border-radius: 8px;">
+                        $$ \mathbf{u} \cdot \mathbf{v} = a_1a_2 + b_1b_2 $$
+                    </div>
+                    <p style="font-size: 1.1rem; margin-top: 20px; margin-bottom: 10px;">Para vectores en $\mathbb{R}^3$, $\mathbf{u} = (a_1, b_1, c_1)$ y $\mathbf{v} = (a_2, b_2, c_2)$:</p>
+                    <div class="math-eq" style="background: #f4f6f9; padding: 10px; border-radius: 8px;">
+                        $$ \mathbf{u} \cdot \mathbf{v} = a_1a_2 + b_1b_2 + c_1c_2 $$
+                    </div>
+                </div>
+
+                <div class="matrix-card" style="border-top: 5px solid var(--green); display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="color: var(--green); margin-top: 0; text-align: center;">Teorema 4.2.1</h3>
+                    <p style="font-size: 1.1rem; text-align: center; margin-bottom: 20px;">Una propiedad fundamental establece que el cuadrado de la magnitud de un vector es igual a su producto escalar consigo mismo:</p>
+                    <div class="math-eq" style="font-size: 2.5rem; color: var(--green);">
+                        $$ |\mathbf{v}|^2 = \mathbf{v} \cdot \mathbf{v} $$
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Ángulo entre Vectores -->
+        <div class="slide">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">Relaciones Geométricas</p>
+                <h1>Ángulo entre Vectores</h1>
+            </div>
+
+            <div class="slide-intro">
+                <p>El ángulo $\varphi$ entre dos vectores diferentes de cero se define como el ángulo no negativo más pequeño entre ellos, situado en el intervalo <strong>$[0, \pi]$</strong>.</p>
+            </div>
+
+            <div class="grid-layout" style="margin-top: 20px;">
+                <div class="matrix-card" style="border-left: 5px solid var(--blue);">
+                    <h3 style="color: var(--blue); margin-top: 0;">Teorema 4.2.2</h3>
+                    <p style="font-size: 1.05rem;">Utilizando la ley de los cosenos, se deduce la fórmula para calcular este ángulo:</p>
+                    <div class="math-eq">
+                        $$ \cos\varphi = \frac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{u}||\mathbf{v}|} $$
+                    </div>
+                </div>
+
+                <div class="matrix-card" style="border-left: 5px solid #ff9800;">
+                    <h3 style="color: #ff9800; margin-top: 0;">Definición Trigonométrica</h3>
+                    <p style="font-size: 1.05rem;">A partir de la ecuación anterior, el producto escalar también se puede reescribir como:</p>
+                    <div class="math-eq" style="color: #ff9800;">
+                        $$ \mathbf{u} \cdot \mathbf{v} = |\mathbf{u}||\mathbf{v}|\cos\varphi $$
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Paralelismo y Ortogonalidad -->
+        <div class="slide">
+            <h1 style="font-size: clamp(1.4rem, 2.5vw, 2.5rem);">Paralelismo y Ortogonalidad</h1>
+            
+            <div class="grid-layout" style="align-items: stretch; margin-top: 15px;">
+                <!-- Vectores Paralelos -->
+                <div class="matrix-card" style="border-top: 5px solid var(--blue); text-align: center; padding: 30px;">
+                    <div style="font-size: 3.5rem; margin-bottom: 10px;">⇅</div>
+                    <h2 style="color: var(--blue); margin-top: 0;">Vectores Paralelos</h2>
+                    <ul style="text-align: left; font-size: 1.1rem; line-height: 1.6;">
+                        <li>El ángulo entre ellos es $0$ o $\pi$.</li>
+                        <li>Tienen la misma dirección o direcciones opuestas.</li>
+                        <li>Uno es un <strong>múltiplo escalar</strong> del otro:</li>
+                    </ul>
+                    <div class="math-eq" style="font-size: 1.8rem;">$$ \mathbf{v} = \alpha\mathbf{u} $$</div>
+                </div>
+
+                <!-- Vectores Ortogonales -->
+                <div class="matrix-card" style="border-top: 5px solid #d32f2f; text-align: center; padding: 30px;">
+                    <div style="font-size: 3.5rem; margin-bottom: 10px;">⦜</div>
+                    <h2 style="color: #d32f2f; margin-top: 0;">Vectores Ortogonales</h2>
+                    <ul style="text-align: left; font-size: 1.1rem; line-height: 1.6;">
+                        <li>Son perpendiculares.</li>
+                        <li>El ángulo que forman es $\pi/2$.</li>
+                        <li><strong>Teorema 4.2.4:</strong> Son ortogonales si y sólo si su producto escalar es cero:</li>
+                    </ul>
+                    <div class="math-eq" style="font-size: 1.8rem; color: #d32f2f;">$$ \mathbf{u} \cdot \mathbf{v} = 0 $$</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Proyección de Vectores -->
+        <div class="slide">
+            <h1 style="border-bottom-color: #7b1fa2;">Proyección de Vectores</h1>
+            
+            <div class="grid-layout" style="align-items: start;">
+                <div class="matrix-card" style="border-left: 5px solid #7b1fa2;">
+                    <h3 style="color: #7b1fa2; margin-top: 0;">Fórmula Algebraica</h3>
+                    <p style="font-size: 1.1rem;">La proyección de un vector $\mathbf{u}$ sobre un vector $\mathbf{v}$ se calcula mediante:</p>
+                    <div class="math-eq" style="color: #7b1fa2; font-size: 1.8rem;">
+                        $$ \text{proy}_{\mathbf{v}}\mathbf{u} = \frac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{v}|^2}\mathbf{v} $$
+                    </div>
+                    <div style="margin-top: 15px; background: #f3e5f5; padding: 15px; border-radius: 8px;">
+                        <p style="margin: 0; font-size: 1rem;">El término escalar $\frac{\mathbf{u} \cdot \mathbf{v}}{|\mathbf{v}|}$ se denomina <strong>componente</strong> de $\mathbf{u}$ en la dirección de $\mathbf{v}$.</p>
+                    </div>
+                </div>
+                
+                <div class="matrix-card" style="border-left: 5px solid var(--text-color);">
+                    <h3 style="margin-top: 0;">Propiedades de la Proyección</h3>
+                    <ul style="font-size: 1.1rem; line-height: 1.6;">
+                        <li>El vector diferencia $\mathbf{w} = \mathbf{u} - \text{proy}_{\mathbf{v}}\mathbf{u}$ es siempre <strong>ortogonal</strong> al vector $\mathbf{v}$.</li>
+                        <li>Si $\mathbf{u} \cdot \mathbf{v} > 0$, la proyección tiene la <strong>misma dirección</strong> que $\mathbf{v}$.</li>
+                        <li>Si $\mathbf{u} \cdot \mathbf{v} < 0$, tienen <strong>direcciones opuestas</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Interpretación Geométrica (Figura 4.17) -->
+        <div class="slide">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">Análisis Visual</p>
+                <h1>Interpretación Geométrica (Fig. 4.17)</h1>
+            </div>
+
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro" style="margin-bottom: 15px;">
+                        <p style="margin: 0; font-weight: bold; color: var(--blue);">Solución de Proyección en $\mathbb{R}^2$:</p>
+                        <p style="margin: 5px 0 0 0; font-size: 1rem;">$\mathbf{u} = 2\mathbf{i} - 3\mathbf{j}$ proyectado sobre $\mathbf{v} = \mathbf{i} + \mathbf{j}$</p>
+                    </div>
+                    <ul style="font-size: 1rem; line-height: 1.5;">
+                        <li><span style="color: var(--green); font-weight: bold;">Vector v:</span> Parte hacia el primer cuadrante.</li>
+                        <li><span style="color: var(--blue); font-weight: bold;">Vector u:</span> Parte hacia el cuarto cuadrante.</li>
+                        <li><span style="color: #f57c00; font-weight: bold;">Proyección:</span> Al ser el factor $-\frac{1}{2}$, la proyección es $-\frac{1}{2}\mathbf{i} - \frac{1}{2}\mathbf{j}$. Apunta en <em>sentido opuesto</em> a $\mathbf{v}$ (tercer cuadrante).</li>
+                        <li><strong>Vector Diferencia:</strong> Cierra el triángulo rectángulo (línea discontinua) y es equivalente a $\frac{5}{2}\mathbf{i} - \frac{5}{2}\mathbf{j}$.</li>
+                    </ul>
+                </div>
+                
+                <div class="visual-container">
+                    <div class="matrix-card" style="text-align: center; width: 100%; max-width: 320px; padding: 20px;">
+                        <!-- SVG de la Figura 4.17 -->
+                        <svg viewBox="0 0 200 200" style="width: 100%; height: auto; max-width: 250px;">
+                            <!-- Ejes -->
+                            <line x1="100" y1="20" x2="100" y2="180" stroke="var(--text-color)" stroke-width="1.5" marker-end="url(#arrow-axis)" marker-start="url(#arrow-axis)"/>
+                            <line x1="20" y1="100" x2="180" y2="100" stroke="var(--text-color)" stroke-width="1.5" marker-end="url(#arrow-axis)" marker-start="url(#arrow-axis)"/>
+                            
+                            <!-- Recta de acción de v -->
+                            <line x1="60" y1="140" x2="140" y2="60" stroke="#ccc" stroke-width="1" stroke-dasharray="4"/>
+
+                            <!-- Vector v (1, 1) -> Escalado x20 -->
+                            <line x1="100" y1="100" x2="120" y2="80" stroke="var(--green)" stroke-width="3" marker-end="url(#arrow-v)"/>
+                            <text x="125" y="75" fill="var(--green)" font-weight="bold" font-style="italic">v</text>
+
+                            <!-- Vector u (2, -3) -> Escalado x20 -->
+                            <line x1="100" y1="100" x2="140" y2="160" stroke="var(--blue)" stroke-width="3" marker-end="url(#arrow-u)"/>
+                            <text x="145" y="165" fill="var(--blue)" font-weight="bold" font-style="italic">u</text>
+
+                            <!-- Vector Proyección (-0.5, -0.5) -> Escalado x20 -->
+                            <line x1="100" y1="100" x2="90" y2="110" stroke="#f57c00" stroke-width="3" marker-end="url(#arrow-proy)"/>
+                            <text x="50" y="125" fill="#f57c00" font-weight="bold" font-size="12">proy_v(u)</text>
+
+                            <!-- Vector Diferencia (Ortogonal) -->
+                            <line x1="90" y1="110" x2="140" y2="160" stroke="var(--text-color)" stroke-width="2" stroke-dasharray="4"/>
+                            
+                            <!-- Símbolo de Ángulo Recto -->
+                            <polygon points="90,110 95,115 100,110 95,105" fill="none" stroke="var(--text-color)" stroke-width="1"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación y Tema[cite: 24] -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <script>
+        // Lógica de navegación heredada de la plantilla base[cite: 24]
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+    </script>
+</body>
+</html>

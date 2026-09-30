@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vectores en Rn, Producto Punto y Ortogonalidad</title>
+    <!-- MathJax -->
+<script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul { list-style: none; padding: 0; }
+        li {
+            font-size: clamp(1rem, 1.8vw, 1.5rem);
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        .visual-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .math-eq {
+            font-size: clamp(1.2rem, 2.2vw, 2.2rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 10px 0;
+            line-height: 1.4;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(20px, 3vw, 40px);
+            width: 100%;
+            align-items: center;
+        }
+        .slide-intro {
+            background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
+            border: 1px solid #dcefff;
+            border-radius: 16px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+        }
+        .slide-intro p { margin: 0 0 10px; font-size: clamp(1rem, 1.5vw, 1.25rem); line-height: 1.5; }
+        .matrix-card {
+            background: white;
+            border: 1px solid #dcefff;
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
+        }
+        
+        /* Tema oscuro */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body.dark-theme .matrix-card { background: #242424; border-color: #444; }
+        body.dark-theme .slide-intro { background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%); border-color: #2c4a68; }
+
+        .slide.active { display: flex; }
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; }
+            .grid-layout { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slide 1: Apertura -->
+        <div class="slide">
+            <div style="margin-bottom: 20px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">Apertura</p>
+                <h1>El Reto de $\mathbb{R}^4$</h1>
+            </div>
+            
+            <div class="grid-layout" style="align-items: start;">
+                <div class="matrix-card" style="border-top: 6px solid var(--blue); text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">🏃‍♂️</div>
+                    <h2 style="color: var(--blue); margin-top: 0;">Jugador A</h2>
+                    <div class="math-eq" style="font-size: 2rem;">$$ A = (9, 2, 8, 1) $$</div>
+                </div>
+                <div class="matrix-card" style="border-top: 6px solid var(--green); text-align: center;">
+                    <div style="font-size: 3rem; margin-bottom: 10px;">🏃‍♂️</div>
+                    <h2 style="color: var(--green); margin-top: 0;">Jugador B</h2>
+                    <div class="math-eq" style="font-size: 2rem;">$$ B = (5, 5, 5, 5) $$</div>
+                </div>
+            </div>
+
+            <div class="slide-intro" style="margin-top: 30px; border-left: 5px solid #ff9800;">
+                <p style="font-weight: bold; color: #f57c00;">Preguntas Motivadoras:</p>
+                <ol style="font-size: 1.1rem; line-height: 1.6; margin-bottom: 0;">
+                    <li>A simple vista, ¿quién es el jugador más "completo" o con mayor volumen de juego total?</li>
+                    <li>¿Cómo medimos la "distancia" en habilidades entre el Jugador A y el Jugador B?</li>
+                    <li>Si un jugador solo ataca y otro solo defiende, ¿cómo se relacionan sus vectores en el espacio?</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 2: Exploración -->
+        <div class="slide">
+            <h1 style="border-bottom-color: var(--blue);">Misión de Exploración</h1>
+            <div class="matrix-card" style="margin-top: 20px; text-align: center; padding: 40px; border-top: 6px solid var(--green);">
+                <div style="font-size: 4rem; margin-bottom: 15px;">🧠</div>
+                <h2 style="color: var(--blue); font-size: 1.8rem; margin-top: 0;">Trabajo en Parejas (5 min)</h2>
+                <p style="font-size: 1.4rem; line-height: 1.6;">Inventen una manera matemática de resumir los 4 números del Jugador A $(9, 2, 8, 1)$ en <strong>un solo número</strong> que represente su "tamaño total".</p>
+                <p style="color: #666; font-style: italic; margin-top: 20px;">* Sin utilizar fórmulas previas, confíen en su intuición.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Desarrollo Conceptual -->
+        <div class="slide">
+            <div style="margin-bottom: 15px;">
+                <p style="color: var(--blue); font-weight: bold; margin: 0; text-transform: uppercase;">Teoría</p>
+                <h1>Geometría en $\mathbb{R}^n$</h1>
+            </div>
+            
+            <div class="grid-layout" style="gap: 20px;">
+                <div class="matrix-card" style="border-left: 5px solid var(--blue); padding: 15px 20px;">
+                    <h3 style="color: var(--blue); margin: 0;">Producto Punto</h3>
+                    <div class="math-eq" style="font-size: 1.3rem;">$$ u \cdot v = \sum u_i v_i $$</div>
+                </div>
+                
+                <div class="matrix-card" style="border-left: 5px solid var(--green); padding: 15px 20px;">
+                    <h3 style="color: var(--green); margin: 0;">Norma (Magnitud)</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 0.9rem; color: #666;">Extensión del Teorema de Pitágoras</p>
+                    <div class="math-eq" style="font-size: 1.3rem;">$$ \lVert v \rVert = \sqrt{v \cdot v} $$</div>
+                </div>
+                
+                <div class="matrix-card" style="border-left: 5px solid #ff9800; padding: 15px 20px;">
+                    <h3 style="color: #f57c00; margin: 0;">Distancia Euclidiana</h3>
+                    <div class="math-eq" style="font-size: 1.3rem;">$$ d(u,v) = \lVert u - v \rVert $$</div>
+                </div>
+                
+                <div class="matrix-card" style="border-left: 5px solid #9c27b0; padding: 15px 20px;">
+                    <h3 style="color: #9c27b0; margin: 0;">Ortogonalidad</h3>
+                    <p style="margin: 5px 0 0 0; font-size: 0.9rem;">No comparten "sombra" de habilidades.</p>
+                    <div class="math-eq" style="font-size: 1.3rem;">$$ \text{Si } u \cdot v = 0, u \perp v $$</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Actividad Guiada -->
+        <div class="slide">
+            <h1>Práctica Deliberada en $\mathbb{R}^5$</h1>
+            <div class="matrix-card" style="border-top: 5px solid var(--blue); padding: 30px;">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                    <div style="font-size: 2.5rem;">👥</div>
+                    <h3 style="color: var(--blue); margin: 0; font-size: 1.5rem;">Misión en Equipos</h3>
+                </div>
+                <p style="font-size: 1.2rem; margin-bottom: 20px;">Cada grupo recibirá los perfiles numéricos en $\mathbb{R}^5$ de tres entidades diferentes.</p>
+                <ol style="font-size: 1.2rem; line-height: 1.6;">
+                    <li><strong>Ranking:</strong> Calculen la <em>Norma</em> $\lVert v \rVert$ de cada perfil para ordenarlos por su "magnitud" total.</li>
+                    <li><strong>Ortogonalidad:</strong> Calculen el <em>Producto Punto</em> entre los pares de vectores para identificar si existen perfiles ortogonales ($u \cdot v = 0$).</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Slide 5: Aplicación -->
+        <div class="slide">
+            <h1>Aplicación: Economía e Ingeniería</h1>
+            <div class="grid-layout">
+                <div>
+                    <div class="slide-intro">
+                        <p><strong>Escenario Analítico:</strong></p>
+                        <p>Imaginemos que agrupamos las variables de <em>inflación</em> y <em>desempleo</em> en un vector, y la variable de <em>crecimiento</em> en otro.</p>
+                    </div>
+                    <p style="font-size: 1.2rem; line-height: 1.6; font-weight: bold; color: var(--blue);">Si al analizarlos descubrimos que ambos vectores son ORTOGONALES ($u \cdot v = 0$)...</p>
+                    <ul style="font-size: 1.1rem;">
+                        <li>¿Qué implicaría esto sobre la relación entre esos fenómenos económicos?</li>
+                        <li><em>(Pista: Concepto de independencia lineal / variables no correlacionadas).</em></li>
+                    </ul>
+                </div>
+                <div class="visual-container">
+                    <div style="font-size: 8rem;">📈</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Cierre y Reflexión -->
+        <div class="slide">
+            <h1 style="border-bottom-color: #7b1fa2;">Cierre y Reflexión</h1>
+            <div class="matrix-card" style="margin-top: 40px; padding: 50px; text-align: center; border-top: 8px solid #7b1fa2; border-radius: 20px;">
+                <div style="font-size: 4rem; margin-bottom: 20px;">♟️</div>
+                <p style="font-size: 1.5rem; line-height: 1.6; color: var(--text-color); font-style: italic;">
+                    "Si la <strong>Distancia Euclidiana</strong> $d(u,v)$ entre dos competidores en el mercado es muy cercana a cero...<br><br>
+                    ¿Qué decisión gerencial o estratégica tomarían respecto a ellos?"
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 7: Consolidación -->
+        <div class="slide">
+            <h1 style="border-bottom-color: var(--green);">Quiz de Mano Alzada</h1>
+            <p style="font-size: 1.2rem; text-align: center;">Indicador visual: ¿El producto punto de estos vectores en $\mathbb{R}^2$ es 0 o distinto de 0?</p>
+            
+            <div style="display: flex; justify-content: center; gap: 30px; margin-top: 30px;">
+                <div class="matrix-card" style="text-align: center; padding: 20px; border: 2px dashed #ccc;">
+                    <div style="font-size: 4rem; margin-bottom: 10px;">👎</div>
+                    <h3 style="margin: 0; color: #c62828;">Es 0</h3>
+                    <p style="margin: 5px 0 0 0; color: #666;">(Ortogonales)</p>
+                </div>
+                <div class="matrix-card" style="text-align: center; padding: 20px; border: 2px dashed #ccc;">
+                    <div style="font-size: 4rem; margin-bottom: 10px;">👍</div>
+                    <h3 style="margin: 0; color: var(--green);">Distinto de 0</h3>
+                    <p style="margin: 5px 0 0 0; color: #666;">(No ortogonales)</p>
+                </div>
+            </div>
+
+            <div class="slide-intro" style="margin-top: 30px; text-align: center;">
+                <p style="font-size: 1.2rem; margin: 0; font-weight: bold; color: var(--blue);">Atentos a la pizarra para los 3 pares de vectores.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Controles -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const slidesContainer = document.querySelector('.slides-container');
+        let currentSlideIndex = 0;
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) {
+                currentSlideIndex = 0;
+            } else if (index < 0) {
+                currentSlideIndex = slides.length - 1;
+            } else {
+                currentSlideIndex = index;
+            }
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        slidesContainer.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+    </script>
+</body>
+</html>
