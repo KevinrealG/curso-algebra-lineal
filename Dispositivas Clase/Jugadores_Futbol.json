@@ -1,0 +1,22 @@
+[
+  {"Jugador":"Alex Rivas","Equipo":"Atletico del Puerto","Posicion":"Portero","Velocidad":62,"Tiro":28,"Pase":71,"Regate":45,"Defensa":32,"Fisico":78},
+  {"Jugador":"Bruno Salas","Equipo":"Atletico del Puerto","Posicion":"Defensa","Velocidad":76,"Tiro":48,"Pase":68,"Regate":61,"Defensa":84,"Fisico":82},
+  {"Jugador":"Camilo Vega","Equipo":"Atletico del Puerto","Posicion":"Defensa","Velocidad":81,"Tiro":55,"Pase":74,"Regate":69,"Defensa":79,"Fisico":77},
+  {"Jugador":"Dario Montes","Equipo":"Atletico del Puerto","Posicion":"Mediocampista","Velocidad":73,"Tiro":67,"Pase":86,"Regate":81,"Defensa":70,"Fisico":74},
+  {"Jugador":"Esteban Luna","Equipo":"Atletico del Puerto","Posicion":"Delantero","Velocidad":88,"Tiro":84,"Pase":69,"Regate":83,"Defensa":38,"Fisico":79},
+  {"Jugador":"Fabian Rojas","Equipo":"Deportivo Sierra","Posicion":"Portero","Velocidad":58,"Tiro":24,"Pase":67,"Regate":42,"Defensa":35,"Fisico":81},
+  {"Jugador":"Gael Pardo","Equipo":"Deportivo Sierra","Posicion":"Defensa","Velocidad":79,"Tiro":51,"Pase":73,"Regate":64,"Defensa":88,"Fisico":85},
+  {"Jugador":"Hugo Cardenas","Equipo":"Deportivo Sierra","Posicion":"Defensa","Velocidad":72,"Tiro":46,"Pase":77,"Regate":58,"Defensa":91,"Fisico":89},
+  {"Jugador":"Ivan Beltran","Equipo":"Deportivo Sierra","Posicion":"Mediocampista","Velocidad":82,"Tiro":71,"Pase":92,"Regate":87,"Defensa":68,"Fisico":76},
+  {"Jugador":"Jeronimo Acosta","Equipo":"Deportivo Sierra","Posicion":"Delantero","Velocidad":93,"Tiro":89,"Pase":72,"Regate":91,"Defensa":34,"Fisico":83},
+  {"Jugador":"Kevin Duarte","Equipo":"Union Bahia","Posicion":"Portero","Velocidad":65,"Tiro":31,"Pase":75,"Regate":49,"Defensa":30,"Fisico":73},
+  {"Jugador":"Lucas Mena","Equipo":"Union Bahia","Posicion":"Defensa","Velocidad":84,"Tiro":57,"Pase":79,"Regate":72,"Defensa":82,"Fisico":80},
+  {"Jugador":"Martin Cobo","Equipo":"Union Bahia","Posicion":"Defensa","Velocidad":75,"Tiro":43,"Pase":70,"Regate":60,"Defensa":86,"Fisico":91},
+  {"Jugador":"Nicolas Rey","Equipo":"Union Bahia","Posicion":"Mediocampista","Velocidad":87,"Tiro":74,"Pase":89,"Regate":90,"Defensa":66,"Fisico":72},
+  {"Jugador":"Oscar Vidal","Equipo":"Union Bahia","Posicion":"Delantero","Velocidad":85,"Tiro":92,"Pase":76,"Regate":86,"Defensa":41,"Fisico":87},
+  {"Jugador":"Pablo Funes","Equipo":"Real del Valle","Posicion":"Portero","Velocidad":60,"Tiro":26,"Pase":69,"Regate":44,"Defensa":37,"Fisico":84},
+  {"Jugador":"Rafael Sosa","Equipo":"Real del Valle","Posicion":"Defensa","Velocidad":77,"Tiro":49,"Pase":82,"Regate":66,"Defensa":93,"Fisico":88},
+  {"Jugador":"Santiago Neri","Equipo":"Real del Valle","Posicion":"Defensa","Velocidad":86,"Tiro":62,"Pase":78,"Regate":75,"Defensa":80,"Fisico":79},
+  {"Jugador":"Tomas Gil","Equipo":"Real del Valle","Posicion":"Mediocampista","Velocidad":78,"Tiro":80,"Pase":94,"Regate":88,"Defensa":73,"Fisico":75},
+  {"Jugador":"Ulises Cano","Equipo":"Real del Valle","Posicion":"Delantero","Velocidad":90,"Tiro":86,"Pase":80,"Regate":89,"Defensa":39,"Fisico":86}
+]

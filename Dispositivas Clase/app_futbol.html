@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Comparador vectorial de jugadores</title>
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #20312c;
+            --muted: #62716b;
+            --paper: #f4f6f1;
+            --surface: #fff;
+            --green: #147d64;
+            --green-dark: #0c5949;
+            --coral: #e76f51;
+            --line: #dce4dc;
+        }
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 28px; background: var(--paper); color: var(--ink); font-family: "Segoe UI", sans-serif; }
+        main { max-width: 1120px; margin: 0 auto; }
+        h1, h2, h3, p { margin-top: 0; }
+        h1 { margin-bottom: 8px; font-size: 32px; }
+        h2 { font-size: 19px; }
+        .eyebrow { color: var(--green); font-size: 12px; font-weight: 700; text-transform: uppercase; }
+        .lede, .view-intro, .help-copy { max-width: 850px; line-height: 1.55; color: var(--muted); }
+        .panel { padding: 20px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; margin: 20px 0; }
+        .controls, .axis-controls { display: flex; flex-wrap: wrap; align-items: end; gap: 14px; }
+        .controls { align-items: center; }
+        label { display: grid; gap: 6px; font-size: 14px; font-weight: 650; }
+        select, input[type="file"] { min-height: 40px; max-width: 100%; padding: 7px 10px; border: 1px solid #c9d5cc; border-radius: 5px; background: white; color: var(--ink); font: inherit; }
+        select { min-width: 180px; }
+        button { min-height: 40px; padding: 8px 15px; border: 0; border-radius: 5px; background: var(--green); color: white; cursor: pointer; font: inherit; font-weight: 650; }
+        button:hover { background: var(--green-dark); }
+        button:disabled, select:disabled { opacity: .55; cursor: not-allowed; }
+        .status { min-height: 1.5em; margin: 12px 0 0; color: var(--muted); }
+        details { margin-top: 16px; }
+        summary { width: fit-content; cursor: pointer; color: var(--green-dark); font-weight: 650; }
+        .tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 14px; }
+        .tab { background: #e2e9e2; color: var(--green-dark); }
+        .tab.active { background: var(--green-dark); color: white; }
+        .view { display: none; }
+        .view.active { display: block; }
+        .axis-controls { padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 12px; }
+        .chart { width: 100%; min-height: 490px; padding: 8px; background: white; border: 1px solid var(--line); border-radius: 8px; }
+        .results { line-height: 1.65; }
+        .legend-a { color: var(--green); }
+        .legend-b { color: var(--coral); }
+        @media (max-width: 640px) {
+            body { padding: 16px; }
+            h1 { font-size: 26px; }
+            .chart { min-height: 390px; padding: 2px; }
+            .controls > *, .axis-controls > * { width: 100%; }
+            select, input[type="file"] { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<main>
+    <p class="eyebrow">Laboratorio de álgebra lineal</p>
+    <h1>Comparador vectorial de jugadores</h1>
+    <p class="lede">Ratings y equipos completamente simulados para practicar comparaciones. No representan estadísticas oficiales ni el rendimiento real de jugadores.</p>
+
+    <section class="panel" aria-labelledby="data-title">
+        <h2 id="data-title">Datos y jugadores</h2>
+        <p class="help-copy">Carga el conjunto de muestra o selecciona otro archivo JSON con una lista de jugadores y sus habilidades numéricas. Después elige dos jugadores; las gráficas se actualizarán automáticamente.</p>
+        <div class="controls">
+            <button id="sample-button" type="button" title="Carga los 20 jugadores simulados incluidos con esta aplicación." disabled>Cargar jugadores de muestra</button>
+            <label for="json-file" title="El JSON debe contener Jugador, Equipo, Posicion y los valores numéricos de las habilidades.">Cargar otro JSON
+                <input id="json-file" type="file" accept="application/json,.json" disabled>
+            </label>
+            <label for="player-a" title="Primer jugador de la comparación.">Jugador A
+                <select id="player-a" disabled></select>
+            </label>
+            <label for="player-b" title="Segundo jugador de la comparación.">Jugador B
+                <select id="player-b" disabled></select>
+            </label>
+        </div>
+        <p id="status" class="status" role="status" aria-live="polite">Cargando la aplicación…</p>
+        <details>
+            <summary>Cómo leer los gráficos y resultados</summary>
+            <p class="help-copy">El radar escala cada habilidad de 1 a 10 respecto al mínimo y máximo de los jugadores cargados; es una comparación relativa, no una nota de calidad. En R² y R³, cada vector parte del origen y conserva los ratings originales. Su magnitud es la longitud; el producto punto y el ángulo comparan direcciones. Un ángulo menor indica direcciones más parecidas, pero no implica que un jugador sea mejor.</p>
+        </details>
+    </section>
+
+    <nav class="tabs" role="tablist" aria-label="Vistas de comparación">
+        <button class="tab active" id="tab-radar" type="button" role="tab" aria-selected="true" aria-controls="view-radar" data-view="view-radar">Radar de habilidades</button>
+        <button class="tab" id="tab-2d" type="button" role="tab" aria-selected="false" aria-controls="view-2d" data-view="view-2d">Vectores en R²</button>
+        <button class="tab" id="tab-3d" type="button" role="tab" aria-selected="false" aria-controls="view-3d" data-view="view-3d">Vectores en R³</button>
+    </nav>
+
+    <section class="view active" id="view-radar" role="tabpanel" aria-labelledby="tab-radar">
+        <p class="view-intro">Seis habilidades estandarizadas a una escala de 1–10 usando todos los jugadores cargados.</p>
+        <div id="radar-chart" class="chart"></div>
+    </section>
+    <section class="view" id="view-2d" role="tabpanel" aria-labelledby="tab-2d">
+        <div class="axis-controls">
+            <label for="x2">Variable x
+                <select id="x2" disabled title="Habilidad representada en el eje horizontal."></select>
+            </label>
+            <label for="y2">Variable y
+                <select id="y2" disabled title="Habilidad representada en el eje vertical."></select>
+            </label>
+        </div>
+        <p class="view-intro">Elige dos habilidades para representar cada jugador como un vector en el plano.</p>
+        <div id="results-2d" class="panel results">Carga los jugadores para ver la comparación.</div>
+        <div id="vector-chart" class="chart"></div>
+    </section>
+    <section class="view" id="view-3d" role="tabpanel" aria-labelledby="tab-3d">
+        <div class="axis-controls">
+            <label for="x3">Variable x
+                <select id="x3" disabled title="Habilidad representada en el eje x."></select>
+            </label>
+            <label for="y3">Variable y
+                <select id="y3" disabled title="Habilidad representada en el eje y."></select>
+            </label>
+            <label for="z3">Variable z
+                <select id="z3" disabled title="Habilidad representada en el eje z."></select>
+            </label>
+        </div>
+        <p class="view-intro">Elige tres habilidades. Arrastra sobre el gráfico para girar la vista tridimensional.</p>
+        <div id="results-3d" class="panel results">Carga los jugadores para ver la comparación.</div>
+        <div id="vector-3d-chart" class="chart"></div>
+    </section>
+</main>
+<script>
+    const metricKeys = ['Velocidad', 'Tiro', 'Pase', 'Regate', 'Defensa', 'Fisico'];
+    const metricLabels = ['Velocidad', 'Remate', 'Pase', 'Regate', 'Defensa', 'Físico'];
+    const colors = ['#147d64', '#e76f51'];
+    let players = [];
+
+    const byId = (id) => document.getElementById(id);
+    const htmlSafe = (value) => String(value).replace(/[&<>"']/g, (character) => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
+
+    function showStatus(message) {
+        byId('status').textContent = message;
+    }
+
+    function fillSelect(select, values, selectedValue) {
+        select.replaceChildren(...values.map((value) => new Option(value.label || value, value.key || value)));
+        if (selectedValue) select.value = selectedValue;
+        select.disabled = false;
+    }
+
+    function validatePlayers(records) {
+        if (!Array.isArray(records) || records.length < 2) {
+            throw new Error('El JSON debe incluir al menos dos jugadores.');
+        }
+        for (const player of records) {
+            if (!player.Jugador || metricKeys.some((key) => !Number.isFinite(Number(player[key])))) {
+                throw new Error('Cada jugador debe tener nombre y los seis ratings numéricos requeridos.');
+            }
+        }
+    }
+
+    function loadPlayers(records, source) {
+        validatePlayers(records);
+        players = records;
+        fillSelect(byId('player-a'), players.map((player) => ({label: player.Jugador, key: player.Jugador})));
+        fillSelect(byId('player-b'), players.map((player) => ({label: player.Jugador, key: player.Jugador})), players[1].Jugador);
+        fillSelect(byId('x2'), metricKeys, 'Velocidad');
+        fillSelect(byId('y2'), metricKeys, 'Pase');
+        fillSelect(byId('x3'), metricKeys, 'Velocidad');
+        fillSelect(byId('y3'), metricKeys, 'Pase');
+        fillSelect(byId('z3'), metricKeys, 'Tiro');
+        showStatus(`${source}: ${players.length} jugadores cargados. Ratings simulados en escala original de 1 a 100.`);
+        renderAll();
+    }
+
+    function plot(id, data, layout) {
+        const element = byId(id);
+        const config = {responsive: true, displaylogo: false};
+        if (element.data) Plotly.react(element, data, layout, config);
+        else Plotly.newPlot(element, data, layout, config);
+    }
+
+    function renderAll() {
+        if (players.length < 2) return;
+        const playerA = players.find((player) => player.Jugador === byId('player-a').value);
+        const playerB = players.find((player) => player.Jugador === byId('player-b').value);
+        if (!playerA || !playerB) return;
+
+        const minimums = Object.fromEntries(metricKeys.map((key) => [key, Math.min(...players.map((player) => Number(player[key])))]));
+        const maximums = Object.fromEntries(metricKeys.map((key) => [key, Math.max(...players.map((player) => Number(player[key])))]));
+        const normalized = (player) => metricKeys.map((key) => maximums[key] === minimums[key] ? 5.5 : 1 + 9 * (Number(player[key]) - minimums[key]) / (maximums[key] - minimums[key]));
+
+        const radar = [playerA, playerB].map((player, index) => ({
+            type: 'scatterpolar',
+            r: normalized(player),
+            theta: metricLabels,
+            fill: 'toself',
+            name: player.Jugador,
+            line: {color: colors[index]},
+            hovertemplate: `${player.Jugador}<br>%{theta}: %{r:.1f}/10<extra></extra>`
+        }));
+        plot('radar-chart', radar, {
+            title: 'Comparación estandarizada de habilidades',
+            polar: {radialaxis: {visible: true, range: [1, 10], tickvals: [1, 3, 5, 7, 9, 10]}},
+            margin: {t: 65, b: 35, l: 45, r: 45}
+        });
+
+        renderVector('2d', playerA, playerB);
+        renderVector('3d', playerA, playerB);
+    }
+
+    function renderVector(dimension, playerA, playerB) {
+        const is3d = dimension === '3d';
+        const ids = is3d ? ['x3', 'y3', 'z3'] : ['x2', 'y2'];
+        const variables = ids.map((id) => byId(id).value);
+        const vectorA = variables.map((key) => Number(playerA[key]));
+        const vectorB = variables.map((key) => Number(playerB[key]));
+        const magnitudeA = Math.hypot(...vectorA);
+        const magnitudeB = Math.hypot(...vectorB);
+        const dot = vectorA.reduce((sum, value, index) => sum + value * vectorB[index], 0);
+        const cosine = magnitudeA && magnitudeB ? Math.max(-1, Math.min(1, dot / (magnitudeA * magnitudeB))) : NaN;
+        const angle = Number.isFinite(cosine) ? Math.acos(cosine) * 180 / Math.PI : NaN;
+        const label = is3d ? 'R³' : 'R²';
+        const formatVector = (vector) => `(${vector.map((value) => value.toFixed(1)).join(', ')})`;
+        byId(`results-${dimension}`).innerHTML = `<h3>Resultados en ${label}: ${variables.map((key) => htmlSafe(metricLabels[metricKeys.indexOf(key)])).join(', ')}</h3><p><strong class="legend-a">${htmlSafe(playerA.Jugador)}</strong> ${formatVector(vectorA)} · magnitud ${magnitudeA.toFixed(2)}</p><p><strong class="legend-b">${htmlSafe(playerB.Jugador)}</strong> ${formatVector(vectorB)} · magnitud ${magnitudeB.toFixed(2)}</p><p>Producto punto ${dot.toFixed(2)} · coseno ${cosine.toFixed(4)} · ángulo ${angle.toFixed(2)}°</p>`;
+
+        if (!is3d) {
+            const extent = Math.max(...vectorA, ...vectorB, 1) * 1.15;
+            const annotations = [playerA, playerB].map((player, index) => ({
+                x: Number(player[variables[0]]), y: Number(player[variables[1]]), ax: 0, ay: 0,
+                xref: 'x', yref: 'y', axref: 'x', ayref: 'y', showarrow: true,
+                arrowcolor: colors[index], arrowhead: 3, arrowsize: 1.5, arrowwidth: 3,
+                text: `<b>${htmlSafe(player.Jugador)}</b>`, font: {color: colors[index], size: 12}
+            }));
+            plot('vector-chart', [], {
+                title: `Vectores en R²: ${metricLabels[metricKeys.indexOf(variables[0])]} y ${metricLabels[metricKeys.indexOf(variables[1])]}`,
+                xaxis: {title: metricLabels[metricKeys.indexOf(variables[0])], range: [0, extent], zeroline: true},
+                yaxis: {title: metricLabels[metricKeys.indexOf(variables[1])], range: [0, extent], zeroline: true, scaleanchor: 'x'},
+                annotations, margin: {t: 65}
+            });
+            return;
+        }
+
+        const traces = [playerA, playerB].map((player, index) => ({
+            type: 'scatter3d', mode: 'lines+markers', name: player.Jugador,
+            x: [0, Number(player[variables[0]])], y: [0, Number(player[variables[1]])], z: [0, Number(player[variables[2]])],
+            line: {color: colors[index], width: 7}, marker: {size: [3, 6], color: colors[index]}
+        }));
+        traces.push({type: 'scatter3d', mode: 'markers', name: 'Origen', x: [0], y: [0], z: [0], marker: {size: 4, color: '#26352f'}});
+        const axis = (key) => ({title: metricLabels[metricKeys.indexOf(key)], range: [0, Math.max(Number(playerA[key]), Number(playerB[key]), 1) * 1.15]});
+        plot('vector-3d-chart', traces, {
+            title: `Vectores en R³: ${variables.map((key) => metricLabels[metricKeys.indexOf(key)]).join(', ')}`,
+            scene: {xaxis: axis(variables[0]), yaxis: axis(variables[1]), zaxis: axis(variables[2]), aspectmode: 'cube'},
+            margin: {t: 65}
+        });
+    }
+
+    document.querySelectorAll('.tab').forEach((tab) => tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach((item) => {
+            const active = item === tab;
+            item.classList.toggle('active', active);
+            item.setAttribute('aria-selected', String(active));
+        });
+        document.querySelectorAll('.view').forEach((view) => view.classList.toggle('active', view.id === tab.dataset.view));
+        const chartId = {'view-radar': 'radar-chart', 'view-2d': 'vector-chart', 'view-3d': 'vector-3d-chart'}[tab.dataset.view];
+        if (byId(chartId).data) Plotly.Plots.resize(byId(chartId));
+    }));
+
+    ['player-a', 'player-b', 'x2', 'y2', 'x3', 'y3', 'z3'].forEach((id) => byId(id).addEventListener('change', renderAll));
+    byId('sample-button').addEventListener('click', async () => {
+        try {
+            const response = await fetch('./Jugadores_Futbol.json');
+            if (!response.ok) throw new Error(`Error HTTP ${response.status}`);
+            loadPlayers(await response.json(), 'Datos de muestra');
+        } catch (error) {
+            showStatus(`No se pudo leer el JSON. Abre esta app desde un servidor local. Detalle: ${error.message}`);
+        }
+    });
+    byId('json-file').addEventListener('change', async (event) => {
+        const file = event.target.files[0];
+        if (!file) return;
+        try {
+            loadPlayers(JSON.parse(await file.text()), `Archivo ${file.name}`);
+        } catch (error) {
+            showStatus(`No se pudo cargar el JSON: ${error.message}`);
+        }
+    });
+
+    byId('sample-button').disabled = false;
+    byId('json-file').disabled = false;
+    showStatus('Listo. Carga el JSON de muestra para empezar.');
+</script>
+</body>
+</html>

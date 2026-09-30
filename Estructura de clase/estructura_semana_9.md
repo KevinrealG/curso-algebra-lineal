@@ -20,8 +20,8 @@ Para conectar el álgebra lineal con los intereses de estudiantes de ingeniería
 
 * **Reto:** Proyecta un gráfico radar (telaraña) de un jugador de fútbol famoso o un análisis de riesgo de una acción bursátil con 8 variables distintas. https://kevinrealg.github.io/curso-algebra-lineal/Dispositivas%20Clase/app.html 
 * **Preguntas Motivadoras:**
-1. Si en un plano cartesiano ($\mathbb{R}^2$) necesitamos 2 coordenadas para ubicar un punto, ¿cuántas coordenadas necesitamos para definir matemáticamente a este jugador?
-2. ¿Es posible dibujar un espacio de 8 dimensiones?
+1. Si en un plano cartesiano ($\mathbb{R}^2$) necesitamos 2 coordenadas para ubicar un punto, ¿cuántas coordenadas necesitamos para definir matemáticamente a este producto?
+2. ¿Es posible dibujar un espacio de 5 dimensiones?
 3. Si no podemos dibujarlo, ¿significa que sus propiedades matemáticas (como la suma de habilidades) dejan de existir?
 
 
