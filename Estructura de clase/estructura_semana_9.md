@@ -33,6 +33,7 @@ Para conectar el álgebra lineal con los intereses de estudiantes de ingeniería
 **4. Desarrollo Conceptual (10 min)**
 
 * Formaliza la definición matemática de un vector en $\mathbb{R}^n$ como una n-tupla ordenada.
+https://kevinrealg.github.io/curso-algebra-lineal/Dispositivas%20Clase/app_futbol.html 
 * Establece la conexión: Un vector ya no es solo "una flecha en el espacio", es una **estructura de datos** o un registro en una base de datos.
 * **Verificación:** ¿Qué significaría en la vida real multiplicar el vector de nuestro jugador por un escalar $k = 1.5$?
 
