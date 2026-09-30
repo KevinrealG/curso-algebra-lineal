@@ -11,7 +11,7 @@
             }
         };
     </script>
-    <title>Sistemas de Ecuaciones 2x2 y Ejercicios Vectoriales</title>
+    <title>Taller 8: Vectores en el plano</title>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root {
@@ -374,118 +374,10 @@
 <body>
     <div class="slides-container">
 
-        <!-- Slide 1 a 8 originales (Conservadas) -->
-        <div class="slide">
-            <div class="grid-layout">
-                <div>
-                    <h1>Introducción a Sistemas de Ecuaciones Lineales(SEL)</h1>
-                    <ul>
-                        <li>Objetivo: Resolver sistemas lineales 2x2.</li>
-                        <li>Competencia: Modelar matemáticamente problemas reales.</li>
-                    </ul>
-                </div>
-                <div class="visual-container">
-                    <!-- Icono Ingeniería -->
-                    <svg viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 2 -->
-        <div class="slide">
-            <h1>Reto Inicial</h1>
-            <ul>
-                <li>Una planta produce dos tipos de aleaciones/productos financieros. El producto A requiere 2 horas de máquina y $5 de materia prima; el B requiere 3 horas y $2. Disponemos de 100 horas y $120. ¿Cuántos productos de cada tipo se pueden hacer?</li>
-                <li>¿Qué variables desconocemos?</li>
-                <li>¿Qué restricciones existen?</li>
-                <li>¿Cómo comprobarían una respuesta?</li>
-            </ul>
-        </div>
-
-        <!-- Slide 3 -->
-        <div class="slide">
-            <h1>Del problema al modelo matemático</h1>
-            <div class="math-eq">x = Cantidad producto A</div>
-            <div class="math-eq">y = Cantidad producto B</div>
-            
-            <div class="visual-container">
-                <div class="flow-diagram">
-                    <span>Problema</span> ➔ <span>Variables</span> ➔ <span>Ecuaciones</span>
-                </div>
-            </div>
-        </div>
-        <!-- Slide 4: Intuición Geométrica -->
-        <div class="slide">
-            <div style="width: 100%; margin-bottom: 20px;">
-                <p style="color: var(--blue); font-weight: bold; margin: 0; font-size: 1.2rem; text-transform: uppercase;">1 · Intuición Geométrica</p>
-                <h1>La idea de “lineal” comienza con la recta</h1>
-            </div>
-            <div class="grid-layout">
-                <div style="background-color: #f4f5f7; padding: 40px; border-radius: 12px; text-align: center;">
-                    <div class="math-eq" style="font-size: clamp(2rem, 4vw, 4rem); font-weight: bold; margin-bottom: 20px;">y = mx + b</div>
-                    <div class="math-eq" style="color: #5c6bc0; font-size: clamp(1.5rem, 3vw, 2.5rem); margin-bottom: 30px; font-weight: bold;">m = Δy / Δx</div>
-                </div>
-                <div class="visual-container" style="flex-direction: column;">
-                    <svg viewBox="-20 -20 240 240" stroke="var(--text-color)">
-                        <line x1="0" y1="200" x2="200" y2="200" stroke-width="2" />
-                        <line x1="100" y1="0" x2="100" y2="220" stroke-width="2" />
-                        <text x="190" y="215" font-size="12" fill="var(--text-color)" stroke="none" font-family="sans-serif" font-weight="bold">x</text>
-                        <text x="110" y="10" font-size="12" fill="var(--text-color)" stroke="none" font-family="sans-serif" font-weight="bold">y</text>
-                        <line x1="25" y1="180" x2="175" y2="70" stroke="var(--blue)" stroke-width="4" stroke-linecap="round" />
-                    </svg>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 5 -->
-        <div class="slide">
-            <div class="grid-layout">
-                <div>
-                    <h1>¿Qué es una solución?</h1>
-                    <ul>
-                        <li>Satisface ambas ecuaciones simultáneamente.</li>
-                        <li>Es el punto de intersección.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Slide 6 -->
-        <div class="slide" style="padding: clamp(10px, 3vw, 40px);">
-            <div style="text-align: center; margin-bottom: 25px;">
-                <h1 style="border: none; margin-bottom: 5px; padding-bottom: 0; font-size: clamp(1.5rem, 3vw, 2.5rem);">SISTEMAS DE ECUACIONES LINEALES 2×2</h1>
-                <p style="font-size: clamp(1.1rem, 2vw, 1.4rem); margin-top: 0; color: #555;">Interpretación geométrica</p>
-            </div>
-        </div>
-        <!-- Slide 7 -->
-        <div class="slide">
-            <h1>Método de Sustitución</h1>
-            <ul class="step-list">
-                <li>Despejar una variable.</li>
-                <li>Sustituir en la otra ecuación.</li>
-                <li>Resolver la ecuación resultante.</li>
-            </ul>
-        </div>
-        <!-- Slide 8 -->
-        <div class="slide">
-            <div class="grid-layout">
-                <div>
-                    <h1>SEL de  m ecuaciones y n incógnitas</h1>
-                    <ul>
-                        <li>Tienen "m" ecuaciones.</li>
-                        <li>Se modelan con matrices (Ax = b).</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- DIAPOSITIVA NUEVA 1: PROBLEMAS 4.1 (9 al 26) -->
+        <!-- Taller 8: Vectores en el plano -->
         <!-- ========================================== -->
         <div class="slide active">
-            <div class="problem-section-title">PROBLEMAS 4.1 (Vectores en el plano) - Parte 1</div>
+            <div class="problem-section-title">TALLER 8: VECTORES EN EL PLANO</div>
             
             <div class="problem-grid-3" style="margin-top: 20px;">
                 <div class="problem-list-item"><span class="num">9.</span> \(\mathbf{v} = (3, -8)\)</div>
@@ -582,7 +474,7 @@
     <script>
         const slides = document.querySelectorAll('.slide');
         const slidesContainer = document.querySelector('.slides-container');
-        let currentSlideIndex = 8; // Inicializa en la primera diapositiva nueva (índice 8)
+        let currentSlideIndex = 0;
         let touchStartX = 0;
 
         function showSlide(index) {
