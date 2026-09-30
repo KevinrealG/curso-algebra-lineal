@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemas de Ecuaciones y Ejercicios Vectoriales</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --blue: #005b96;
+            --green: #4caf50;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide {
+            width: min(92vw, 1200px);
+            min-height: auto;
+            max-height: calc(100dvh - 100px);
+            height: auto;
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            box-sizing: border-box;
+            position: relative;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+        .slides-container {
+            width: 100%;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0 0 110px;
+            box-sizing: border-box;
+        }
+        h1 {
+            color: var(--blue);
+            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            margin-bottom: 20px;
+            text-align: left;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            font-size: clamp(1rem, 2vw, 2.2rem);
+            margin-bottom: 20px;
+            position: relative;
+            padding-left: 40px;
+            line-height: 1.4;
+        }
+        li::before {
+            content: '➤';
+            color: var(--green);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+        
+        /* --- ESTILOS PARA LOS PROBLEMAS --- */
+        .problem-section-title {
+            background-color: var(--blue);
+            color: white;
+            padding: 10px 20px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+        }
+        .problem-instruction {
+            background-color: #eef4fb;
+            padding: 15px 20px;
+            border-left: 4px solid var(--blue);
+            font-size: 1.1rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            color: #444;
+        }
+        .problem-grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        .problem-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        .problem-list-item {
+            background: white;
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .problem-list-item span.num {
+            font-weight: bold;
+            color: var(--blue);
+            min-width: 30px;
+        }
+        .problem-text-item {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            padding-left: 20px;
+            text-indent: -20px;
+        }
+        .problem-text-item span.num {
+            font-weight: bold;
+            color: var(--blue);
+            margin-right: 5px;
+        }
+
+        /* --- TEMA OSCURO --- */
+        body.dark-theme {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --blue: #64b5f6;
+        }
+        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body.dark-theme .problem-instruction { background-color: #1a2a3a; color: #ccc; border-color: var(--blue); }
+        body.dark-theme .problem-list-item { background: #2a2a2a; border-color: #444; }
+
+        .slide.active { display: flex; }
+
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(0);
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.8);
+            padding: 8px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+        .controls:hover { transform: translateX(-50%) translateY(-2px); }
+        button {
+            padding: 10px 18px;
+            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-weight: bold;
+            cursor: pointer;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.25s ease;
+        }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+
+        @media (max-width: 768px) {
+            .slide { width: min(96vw, 100%); padding: 20px; border-radius: 16px; }
+            .problem-grid-3, .problem-grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+
+        <!-- Slides originales (1 a 8 conservadas como placeholder visual) -->
+        <div class="slide">
+            <h1>Sistemas de Ecuaciones Lineales</h1>
+            <ul><li>Objetivo: Resolver sistemas lineales.</li></ul>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 1: PROBLEMAS 4.2 (1 al 13) -->
+        <!-- ========================================== -->
+        <div class="slide active">
+            <div class="problem-section-title">PROBLEMAS 4.2 (Parte 1)</div>
+            <div class="problem-instruction">De los problemas 1 al 11 calcule el producto escalar de los dos vectores y el coseno del ángulo entre ellos.</div>
+            
+            <div class="problem-grid-3">
+                <div class="problem-list-item"><span class="num">1.</span> \(\mathbf{u} = 3\mathbf{i} - 5\mathbf{j}; \mathbf{v} = -\mathbf{i} + \mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">2.</span> \(\mathbf{u} = \mathbf{i} + \mathbf{j}; \mathbf{v} = \mathbf{i} - \mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">3.</span> \(\mathbf{u} = 3\mathbf{i}; \mathbf{v} = -7\mathbf{j}\)</div>
+                
+                <div class="problem-list-item"><span class="num">4.</span> \(\mathbf{u} = \begin{pmatrix} 3 \\ -8 \end{pmatrix}; \mathbf{v} = \begin{pmatrix} -5 \\ 1 \end{pmatrix}\)</div>
+                <div class="problem-list-item"><span class="num">5.</span> \(\mathbf{u} = \begin{pmatrix} -\frac{1}{2} \\ 1 \end{pmatrix}; \mathbf{v} = \begin{pmatrix} 2 \\ 2 \end{pmatrix}\)</div>
+                <div class="problem-list-item"><span class="num">6.</span> \(\mathbf{u} = \alpha\mathbf{i}; \mathbf{v} = \beta\mathbf{j}; \alpha, \beta\) reales</div>
+                
+                <div class="problem-list-item"><span class="num">7.</span> \(\mathbf{u} = \begin{pmatrix} 10 \\ 10 \end{pmatrix}; \mathbf{v} = \begin{pmatrix} -7 \\ 10 \end{pmatrix}\)</div>
+                <div class="problem-list-item"><span class="num">8.</span> \(\mathbf{u} = 2\mathbf{i} + 5\mathbf{j}; \mathbf{v} = 5\mathbf{i} + 2\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">9.</span> \(\mathbf{u} = \begin{pmatrix} 0 \\ -4 \end{pmatrix}; \mathbf{v} = \begin{pmatrix} 3 \\ 3 \end{pmatrix}\)</div>
+            </div>
+            
+            <div class="problem-grid-2">
+                <div class="problem-list-item"><span class="num">10.</span> \(\mathbf{u} = \alpha\mathbf{i} + 2\mathbf{j}; \mathbf{v} = 3\mathbf{i} + \beta\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">11.</span> \(\mathbf{u} = 4\mathbf{i} + 5\mathbf{j}; \mathbf{v} = 5\mathbf{i} - 4\mathbf{j}\)</div>
+            </div>
+
+            <div class="problem-text-item"><span class="num">12.</span> Demuestre que para cualesquiera números reales \(\alpha\) y \(\beta\), los vectores \(\mathbf{u} = \alpha\mathbf{i} + \beta\mathbf{j}\) y \(\mathbf{v} = \beta\mathbf{i} - \alpha\mathbf{j}\) son ortogonales.</div>
+            <div class="problem-text-item"><span class="num">13.</span> Sean \(\mathbf{u}, \mathbf{v}\) y \(\mathbf{w}\) tres vectores arbitrarios. Explique por qué el producto \(\mathbf{u} \cdot \mathbf{v} \cdot \mathbf{w}\) no está definido.</div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 2: PROBLEMAS 4.2 (14 al 38) -->
+        <!-- ========================================== -->
+        <div class="slide">
+            <div class="problem-section-title">PROBLEMAS 4.2 (Parte 2)</div>
+            <div class="problem-instruction">De los problemas 14 al 20 determine si los vectores dados son ortogonales, paralelos o ninguno de los dos. Después esboce cada par.</div>
+            
+            <div class="problem-grid-3">
+                <div class="problem-list-item"><span class="num">14.</span> \(\mathbf{u} = 3\mathbf{i} - 12\mathbf{j}; \mathbf{v} = -8\mathbf{i} - 2\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">15.</span> \(\mathbf{u} = \begin{pmatrix} -2 \\ 9 \end{pmatrix}; \mathbf{v} = \begin{pmatrix} 6 \\ 10 \end{pmatrix}\)</div>
+                <div class="problem-list-item"><span class="num">16.</span> \(\mathbf{u} = 2\mathbf{i} - 3\mathbf{j}; \mathbf{v} = -9\mathbf{i} + 6\mathbf{j}\)</div>
+                
+                <div class="problem-list-item"><span class="num">17.</span> \(\mathbf{u} = \begin{pmatrix} 0 \\ -4 \end{pmatrix}; \mathbf{v} = \begin{pmatrix} -3 \\ 3 \end{pmatrix}\)</div>
+                <div class="problem-list-item"><span class="num">18.</span> \(\mathbf{u} = -\mathbf{i} \sqrt{3} + 2\mathbf{j}; \mathbf{v} = -\mathbf{i} 2\sqrt{3} + 3\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">19.</span> \(\mathbf{u} = 7\mathbf{i}; \mathbf{v} = -23\mathbf{j}\)</div>
+                
+                <div class="problem-list-item"><span class="num">20.</span> \(\mathbf{u} = 2\mathbf{i} - 4\mathbf{j}; \mathbf{v} = -\mathbf{i} + 3\mathbf{j}\)</div>
+            </div>
+
+            <div class="problem-text-item"><span class="num">21.</span> Sean \(\mathbf{u} = -3\mathbf{i} + 6\mathbf{j}\) y \(\mathbf{v} = 2\mathbf{i} + \alpha\mathbf{j}\). Determine \(\alpha\) tal que: a) \(\mathbf{u}\) y \(\mathbf{v}\) son ortogonales. b) \(\mathbf{u}\) y \(\mathbf{v}\) son paralelos. c) El ángulo entre \(\mathbf{u}\) y \(\mathbf{v}\) es \(\frac{\pi}{4}\). d) El ángulo entre \(\mathbf{u}\) y \(\mathbf{v}\) es \(\frac{\pi}{3}\).</div>
+            <div class="problem-text-item"><span class="num">22.</span> Sean \(\mathbf{u} = \alpha\mathbf{i} - 4\mathbf{j}\) y \(\mathbf{v} = 2\mathbf{i} + \beta\mathbf{j}\). Determine \(\alpha\) y \(\beta\) tales que: a) \(\mathbf{u}\) y \(\mathbf{v}\) son ortogonales. b) \(\mathbf{u}\) y \(\mathbf{v}\) son paralelos. c) El ángulo entre \(\mathbf{u}\) y \(\mathbf{v}\) es \(\frac{\pi}{4}\). d) El ángulo entre \(\mathbf{u}\) y \(\mathbf{v}\) es \(\frac{\pi}{3}\).</div>
+            <div class="problem-text-item"><span class="num">23.</span> En el problema 21 demuestre que no existe un valor de \(\alpha\) para el que \(\mathbf{u}\) y \(\mathbf{v}\) tienen direcciones opuestas.</div>
+            <div class="problem-text-item"><span class="num">24.</span> Encuentre condiciones para \(\alpha\) y \(\beta\) del problema 22 para que \(\mathbf{u}\) y \(\mathbf{v}\) tengan la misma dirección.</div>
+
+            <div class="problem-instruction" style="margin-top: 15px;">En los problemas 25 al 38 calcule \(proy_{\mathbf{v}} \mathbf{u}\).</div>
+            <div class="problem-grid-3">
+                <div class="problem-list-item"><span class="num">25.</span> \(\mathbf{u} = 3\mathbf{i}; \mathbf{v} = \mathbf{i} + \mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">26.</span> \(\mathbf{u} = \begin{pmatrix} 3 \\ -5 \end{pmatrix}; \mathbf{v} = \begin{pmatrix} -10 \\ 5 \end{pmatrix}\)</div>
+                <div class="problem-list-item"><span class="num">27.</span> \(\mathbf{u} = 2\mathbf{i} - 3\mathbf{j}; \mathbf{v} = -9\mathbf{i} + 6\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">28.</span> \(\mathbf{u} = 2\mathbf{i} + \mathbf{j}; \mathbf{v} = \mathbf{i} - 2\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">29.</span> \(\mathbf{u} = \begin{pmatrix} 7 \\ -4 \end{pmatrix}; \mathbf{v} = \begin{pmatrix} 8 \\ 6 \end{pmatrix}\)</div>
+                <div class="problem-list-item"><span class="num">30.</span> \(\mathbf{u} = -\mathbf{i} - 2\mathbf{j}; \mathbf{v} = 5\mathbf{i} + 7\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">31.</span> \(\mathbf{u} = \mathbf{i} + \mathbf{j}; \mathbf{v} = 2\mathbf{i} - 3\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">32.</span> \(\mathbf{u} = -\mathbf{i} \sqrt{3} + 2\mathbf{j}; \mathbf{v} = -\mathbf{i} 2\sqrt{3} - 3\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">33.</span> \(\mathbf{u} = -\mathbf{i} \sqrt{5} + \mathbf{j} 2\sqrt{3}; \mathbf{v} = -\mathbf{i} 3\sqrt{3} - \mathbf{j} 2\sqrt{5}\)</div>
+            </div>
+            <div class="problem-grid-2">
+                <div class="problem-list-item"><span class="num">34.</span> \(\mathbf{u} = \alpha\mathbf{i} + \beta\mathbf{j}; \mathbf{v} = \mathbf{i} + \mathbf{j}; \alpha\) y \(\beta\) reales positivos</div>
+                <div class="problem-list-item"><span class="num">35.</span> \(\mathbf{u} = \begin{pmatrix} 2 \\ 9 \end{pmatrix}; \mathbf{v} = \begin{pmatrix} 4 \\ -1 \end{pmatrix}\)</div>
+                <div class="problem-list-item"><span class="num">36.</span> \(\mathbf{u} = 7\mathbf{i} + 2\mathbf{j}; \mathbf{v} = 4\mathbf{i} - 6\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">37.</span> \(\mathbf{u} = \alpha\mathbf{i} - \beta\mathbf{j}; \mathbf{v} = \mathbf{i} + \mathbf{j}; \alpha\) y \(\beta\) reales positivos con \(\alpha > \beta\)</div>
+                <div class="problem-list-item"><span class="num">38.</span> \(\mathbf{u} = \begin{pmatrix} -1 \\ -2 \end{pmatrix}; \mathbf{v} = \begin{pmatrix} 6 \\ 6 \end{pmatrix}\)</div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 3: PROBLEMAS 4.2 (39 al 53) -->
+        <!-- ========================================== -->
+        <div class="slide">
+            <div class="problem-section-title">PROBLEMAS 4.2 (Parte 3)</div>
+            
+            <div class="problem-text-item"><span class="num">39.</span> Sean \(\mathbf{u} = a_1\mathbf{i} + b_1\mathbf{j}\) y \(\mathbf{v} = a_2\mathbf{i} + b_2\mathbf{j}\). Establezca una condición sobre \(a_1, b_1, a_2\) y \(b_2\) que asegure que \(\mathbf{v}\) y \(proy_{\mathbf{v}} \mathbf{u}\) tengan la misma dirección.</div>
+            <div class="problem-text-item"><span class="num">40.</span> En el problema 39 establezca una condición que asegure que \(\mathbf{v}\) y \(proy_{\mathbf{v}} \mathbf{u}\) tengan direcciones opuestas.</div>
+            <div class="problem-text-item"><span class="num">41.</span> Sean \(P = (-1, 1), Q = (5, 2), R = (2, -5)\) y \(S = (1, -2)\). Calcule \(proy_{\vec{PQ}} \vec{RS}\) y \(proy_{\vec{RS}} \vec{PQ}\).</div>
+            <div class="problem-text-item"><span class="num">42.</span> Sean \(P = (-1, 4), Q = (2, 1), R = (-7, -5)\) y \(S = (1, 1)\). Calcule \(proy_{\vec{PR}} \vec{QS}\) y \(proy_{\vec{QS}} \vec{PR}\).</div>
+            <div class="problem-text-item"><span class="num">43.</span> Pruebe que los vectores diferentes de cero \(\mathbf{u}\) y \(\mathbf{v}\) son paralelos si y sólo si \(\mathbf{v} = \alpha\mathbf{u}\) para alguna constante \(\alpha\). [Sugerencia: Demuestre que \(\cos \phi = \pm 1\) si y sólo si \(\mathbf{v} = \alpha\mathbf{u}\).]</div>
+            <div class="problem-text-item"><span class="num">44.</span> Pruebe que \(\mathbf{u}\) y \(\mathbf{v}\) son ortogonales si y sólo si \(\mathbf{u} \cdot \mathbf{v} = 0\).</div>
+            <div class="problem-text-item"><span class="num">45.</span> Demuestre que el vector \(\mathbf{v} = a\mathbf{i} + b\mathbf{j}\) es ortogonal a la recta \(ax + by + c = 0\).</div>
+            <div class="problem-text-item"><span class="num">46.</span> Demuestre que el vector \(\mathbf{u} = b\mathbf{i} + a\mathbf{j}\) es paralelo a la recta \(ax + by + c = 0\).</div>
+            <div class="problem-text-item"><span class="num">47.</span> Un triángulo tiene vértices \((-1, 3), (10, 1)\) y \((23, -6)\). Encuentre el coseno de cada ángulo.</div>
+            <div class="problem-text-item"><span class="num">48.</span> Un triángulo tiene vértices \((a_1, b_1), (a_2, b_2)\) y \((a_3, b_3)\). Encuentre el coseno de cada ángulo.</div>
+            <div class="problem-text-item"><span class="num">*49.</span> La desigualdad de Cauchy-Schwarz establece que para cualesquiera números reales \(a_1, a_2, b_1\) y \(b_2\):<br> \( \left| \sum_{i=1}^2 a_i b_i \right| \leq \sqrt{\left(\sum_{i=1}^2 a_i^2\right) \left(\sum_{i=1}^2 b_i^2\right)} \).<br> Utilice el producto escalar para probar esta fórmula. ¿Bajo qué circunstancias se puede sustituir la desigualdad por una igualdad?</div>
+            <div class="problem-text-item"><span class="num">*50.</span> Pruebe que la distancia más corta entre un punto y una recta se mide por una línea que pasa por el punto y es perpendicular a la recta.</div>
+            <div class="problem-text-item"><span class="num">51.</span> Encuentre la distancia entre \(P = (-3, 2)\) y la recta que pasa por los puntos \(Q = (-1, 7)\) y \(R = (3, 5)\).</div>
+            <div class="problem-text-item"><span class="num">52.</span> Encuentre la distancia entre \((3, 7)\) y la recta que va a lo largo del vector \(\mathbf{v} = 2\mathbf{i} - 3\mathbf{j}\) que pasa por el origen.</div>
+            <div class="problem-text-item"><span class="num">53.</span> Sea \(A\) una matriz de \(2 \times 2\) tal que cada columna es un vector unitario y que las dos columnas son ortogonales. Demuestre que \(A\) es invertible y que \(A^{-1} = A^T\) (A se conoce como matriz ortogonal).</div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 4: PROBLEMAS 4.3 (1 al 28) -->
+        <!-- ========================================== -->
+        <div class="slide">
+            <div class="problem-section-title" style="background-color: #2e7d32;">PROBLEMAS 4.3 (Parte 1)</div>
+            <div class="problem-instruction" style="border-left-color: #2e7d32;">De los problemas 1 al 6 encuentre la distancia entre los puntos:</div>
+            
+            <div class="problem-grid-3">
+                <div class="problem-list-item"><span class="num">1.</span> \((3, -4, 7); (3, -4, 9)\)</div>
+                <div class="problem-list-item"><span class="num">2.</span> \((2, -3, -1); (1, -1, 4)\)</div>
+                <div class="problem-list-item"><span class="num">3.</span> \((-2, 1, 3); (4, 1, 3)\)</div>
+                <div class="problem-list-item"><span class="num">4.</span> \(P = \begin{pmatrix} 7 \\ 9 \\ -8 \end{pmatrix}, Q = \begin{pmatrix} 9 \\ 3 \\ -8 \end{pmatrix}\)</div>
+                <div class="problem-list-item"><span class="num">5.</span> \(P = \begin{pmatrix} -1/2 \\ 2 \\ -1 \end{pmatrix}, Q = \begin{pmatrix} 2 \\ 1/2 \\ 3 \end{pmatrix}\)</div>
+                <div class="problem-list-item"><span class="num">6.</span> \(P = \begin{pmatrix} 10 \\ 0 \\ 6 \end{pmatrix}, Q = \begin{pmatrix} -8 \\ -2 \\ 9 \end{pmatrix}\)</div>
+            </div>
+
+            <div class="problem-instruction" style="border-left-color: #2e7d32;">En los problemas 7 al 26 encuentre la magnitud y los cosenos directores del vector dado.</div>
+            <div class="problem-grid-3">
+                <div class="problem-list-item"><span class="num">7.</span> \(\mathbf{v} = 3\mathbf{i} - 2\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">8.</span> \(\mathbf{v} = 3\mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">9.</span> \(\mathbf{v} = -10\mathbf{i} + 7\mathbf{j} + 9\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">10.</span> \(\mathbf{v} = -3\mathbf{i}\)</div>
+                <div class="problem-list-item"><span class="num">11.</span> \(\mathbf{v} = 2\mathbf{i} - \mathbf{j} - 3\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">12.</span> \(\mathbf{v} = 4\mathbf{i} - \mathbf{j}\)</div>
+                <div class="problem-list-item"><span class="num">13.</span> \(\mathbf{v} = 4\mathbf{i} + 5\mathbf{j} + 5\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">14.</span> \(\mathbf{v} = -3\mathbf{i} - 5\mathbf{j} - 3\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">15.</span> \(\mathbf{v} = \mathbf{j} - 4\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">16.</span> \(\mathbf{v} = 2\mathbf{i} + 4\mathbf{j} + 3\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">17.</span> \(\mathbf{v} = \mathbf{i} + 5\mathbf{j} + 2\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">18.</span> \(\mathbf{v} = -\mathbf{i} + \mathbf{j} + \mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">19.</span> \(\mathbf{v} = 4\mathbf{i} - 10\mathbf{j} - 5\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">20.</span> \(\mathbf{v} = -4\mathbf{i} - 6\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">21.</span> \(\mathbf{v} = -\mathbf{i} + \mathbf{j} - \mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">22.</span> \(\mathbf{v} = -10\mathbf{i} - 8\mathbf{j} + 7\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">23.</span> \(\mathbf{v} = -\mathbf{i} - \mathbf{j} - \mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">24.</span> \(\mathbf{v} = 2\mathbf{i} + 5\mathbf{j} - 7\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">25.</span> \(\mathbf{v} = 150\mathbf{i} - 120\mathbf{j} - 180\mathbf{k}\)</div>
+                <div class="problem-list-item"><span class="num">26.</span> \(\mathbf{v} = -10\mathbf{i} - \mathbf{j} - 2\mathbf{k}\)</div>
+            </div>
+            
+            <div class="problem-text-item"><span class="num">27.</span> Los tres ángulos directores de cierto vector unitario son los mismos y están entre cero y \(\frac{\pi}{2}\). ¿Cuál es el vector?</div>
+            <div class="problem-text-item"><span class="num">28.</span> Encuentre un vector de magnitud 8 que tenga la misma dirección que el vector del problema 27.</div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 5: PROBLEMAS 4.3 (29 al 55) -->
+        <!-- ========================================== -->
+        <div class="slide">
+            <div class="problem-section-title" style="background-color: #2e7d32;">PROBLEMAS 4.3 (Parte 2)</div>
+            
+            <div class="problem-text-item"><span class="num">29.</span> Demuestre que no existe un vector unitario cuyos ángulos directores sean \(\frac{\pi}{6}, \frac{\pi}{3}, \frac{\pi}{4}\).</div>
+            <div class="problem-text-item"><span class="num">30.</span> Sea \(P = (-2, 1, 4)\) y \(Q = (3, 5, -8)\). Encuentre un vector unitario en la misma dirección de \(\vec{PQ}\).</div>
+            <div class="problem-text-item"><span class="num">31.</span> Sea \(P = (3, 1, -3)\) y \(Q = (2, 4, 6)\). Encuentre un vector unitario cuya dirección es opuesta a la de \(\vec{PQ}\).</div>
+            <div class="problem-text-item"><span class="num">32.</span> Utilizando \(P\) y \(Q\) del problema 31, encuentre todos los puntos \(R\) tales que \(\vec{PR} \perp \vec{PQ}\).</div>
+            <div class="problem-text-item"><span class="num">*33.</span> Demuestre que el conjunto de puntos que satisfacen la condición del problema 32 y la condición \(|\vec{PR}| = 1\) forman un círculo.</div>
+            <div class="problem-text-item"><span class="num">34.</span> Desigualdad del triángulo. Si \(\mathbf{u}\) y \(\mathbf{v}\) están en \(\mathbb{R}^3\), demuestre que \(|\mathbf{u} + \mathbf{v}| \leq |\mathbf{u}| + |\mathbf{v}|\).</div>
+            <div class="problem-text-item"><span class="num">35.</span> ¿Bajo qué circunstancias puede sustituirse la desigualdad en el problema 34 por un signo de igualdad?</div>
+
+            <div class="problem-instruction" style="border-left-color: #2e7d32;">En los problemas 36 al 51, sea \(\mathbf{u} = 3\mathbf{i} - 4\mathbf{j} - \mathbf{k}, \mathbf{v} = -4\mathbf{i} + 2\mathbf{j} + 4\mathbf{k}, \mathbf{w} = \mathbf{i} - 7\mathbf{j} + 6\mathbf{k}, \mathbf{t} = -4\mathbf{i} + 3\mathbf{j} - 5\mathbf{k}\).</div>
+            <div class="problem-grid-3">
+                <div class="problem-list-item"><span class="num">36.</span> Calcule \(\mathbf{u} + \mathbf{v}\)</div>
+                <div class="problem-list-item"><span class="num">37.</span> Calcule \(2\mathbf{u} - 3\mathbf{v}\)</div>
+                <div class="problem-list-item"><span class="num">38.</span> Calcule \(3\mathbf{u} - 2\mathbf{v}\)</div>
+                <div class="problem-list-item"><span class="num">39.</span> Calcule \(\mathbf{t} + 3\mathbf{w} - \mathbf{v}\)</div>
+                <div class="problem-list-item"><span class="num">40.</span> Calcule \(2\mathbf{u} + 7\mathbf{w} + 5\mathbf{v}\)</div>
+                <div class="problem-list-item"><span class="num">41.</span> Calcule \(\mathbf{w} \cdot (\mathbf{u} + \mathbf{v})\)</div>
+                <div class="problem-list-item"><span class="num">42.</span> Calcule \(2\mathbf{v} + 7\mathbf{t} - \mathbf{w}\)</div>
+                <div class="problem-list-item"><span class="num">43.</span> Calcule \(\mathbf{u} \cdot \mathbf{v}\)</div>
+                <div class="problem-list-item"><span class="num">44.</span> Calcule \((3\mathbf{t} - 2\mathbf{u}) \cdot (5\mathbf{v} + 2\mathbf{w})\)</div>
+                <div class="problem-list-item"><span class="num">45.</span> Calcule \(|\mathbf{w}|\)</div>
+                <div class="problem-list-item"><span class="num">46.</span> Calcule \(\mathbf{u} \cdot \mathbf{w} - \mathbf{w} \cdot \mathbf{t}\)</div>
+                <div class="problem-list-item"><span class="num">47.</span> Calcule el ángulo entre \(\mathbf{u}\) y \(\mathbf{w}\)</div>
+                <div class="problem-list-item"><span class="num">48.</span> Calcule el ángulo entre \(\mathbf{t}\) y \(\mathbf{w}\)</div>
+                <div class="problem-list-item"><span class="num">49.</span> Calcule \(proy_{\mathbf{u}} \mathbf{v}\)</div>
+                <div class="problem-list-item"><span class="num">50.</span> Calcule \(proy_{\mathbf{t}} \mathbf{w}\)</div>
+                <div class="problem-list-item"><span class="num">51.</span> Calcule \(\mathbf{w} \cdot proy_{\mathbf{t}} \mathbf{v}\)</div>
+            </div>
+
+            <div class="problem-text-item"><span class="num">52.</span> Pruebe el teorema 4.3.1. [Sugerencia: Utilice el teorema de Pitágoras dos veces en la figura 4.26.]</div>
+            <div class="problem-text-item"><span class="num">53.</span> Pruebe el teorema 4.3.2.</div>
+            <div class="problem-text-item"><span class="num">54.</span> Pruebe el teorema 4.3.3.</div>
+            <div class="problem-text-item"><span class="num">55.</span> Pruebe el teorema 4.3.4.</div>
+        </div>
+
+    </div>
+
+    <!-- Controles de Navegación -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Cambiar Tema</button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlideIndex = 1; 
+        let touchStartX = 0;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        const slidesContainer = document.querySelector('.slides-container');
+        slidesContainer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        slidesContainer.addEventListener('touchend', e => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const deltaX = touchEndX - touchStartX;
+            if (deltaX > 50) prevSlide();
+            else if (deltaX < -50) nextSlide();
+        }, { passive: true });
+    </script>
+</body>
+</html>
