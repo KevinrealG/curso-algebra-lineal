@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplicaciones Financieras: Producto Cruz y Triple Producto Escalar</title>
+    <title>El Producto Vectorial - Aplicaciones</title>
 <script>
         MathJax = {
             tex: {
@@ -16,6 +16,7 @@
         :root {
             --blue: #005b96;
             --green: #4caf50;
+            --red: #ef5350;
             --bg-color: #f4fbf4;
             --text-color: #333;
         }
@@ -30,13 +31,10 @@
             align-items: center;
             min-height: 100vh;
             overflow-x: hidden;
-            overflow-y: auto;
         }
         .slide {
             width: min(92vw, 1200px);
-            min-height: auto;
-            max-height: calc(100dvh - 100px);
-            height: auto;
+            min-height: calc(100dvh - 100px);
             margin: 2vh 0;
             background: white;
             border-radius: 20px;
@@ -47,76 +45,51 @@
             padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
             box-sizing: border-box;
             position: relative;
-            overflow-y: auto;
-            overflow-x: hidden;
         }
         .slides-container {
             width: 100%;
-            min-height: 100dvh;
-            overflow-x: hidden;
-            overflow-y: auto;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 0 110px;
-            box-sizing: border-box;
+            padding-bottom: 110px;
         }
+        .slide.active { display: flex; }
+        
         h1 {
             color: var(--blue);
-            font-size: clamp(1.5rem, 3vw, 3.5rem);
+            font-size: clamp(1.5rem, 3vw, 3rem);
             margin-bottom: 20px;
             text-align: left;
             border-bottom: 4px solid var(--green);
             padding-bottom: 10px;
             display: inline-block;
         }
-        ul { list-style: none; padding: 0; }
+        ul, ol { padding: 0; padding-left: 20px; }
         li {
-            font-size: clamp(1rem, 2vw, 2.2rem);
-            margin-bottom: 20px;
-            position: relative;
-            padding-left: 40px;
-            line-height: 1.4;
-        }
-        li::before {
-            content: '➤';
-            color: var(--green);
-            position: absolute;
-            left: 0;
-            top: 2px;
-        }
-        .visual-container {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 20px;
+            font-size: clamp(1rem, 1.8vw, 1.5rem);
+            margin-bottom: 15px;
+            line-height: 1.5;
         }
         .math-eq {
-            font-size: clamp(1.25rem, 2.4vw, 3rem);
+            font-size: clamp(1.2rem, 2.2vw, 2rem);
             font-family: 'Cambria Math', serif;
             color: var(--blue);
-            margin: 10px 0;
-            line-height: 1.4;
+            margin: 15px 0;
+            text-align: center;
         }
         .grid-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: clamp(20px, 3vw, 40px);
             width: 100%;
-            align-items: center;
+            align-items: start;
         }
         .slide-intro {
             background: linear-gradient(135deg, #f6fbff 0%, #eef8ff 100%);
             border: 1px solid #dcefff;
             border-radius: 16px;
-            padding: 16px 20px;
-            margin-bottom: 18px;
-        }
-        .slide-intro p {
-            margin: 0 0 10px;
-            font-size: clamp(1rem, 1.5vw, 1.25rem);
-            line-height: 1.5;
+            padding: 20px;
+            margin-bottom: 20px;
         }
         .matrix-card {
             background: white;
@@ -125,37 +98,24 @@
             padding: 22px;
             box-shadow: 0 8px 20px rgba(0, 91, 150, 0.08);
         }
-        .step-list li::before { content: '✓'; }
-        
-        .class-badge {
-            background-color: var(--green);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 1rem;
+        .info-pill {
             display: inline-block;
+            background: var(--blue);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-right: 8px;
             margin-bottom: 10px;
-            text-transform: uppercase;
         }
-
-        /* Tema oscuro */
-        body.dark-theme {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --blue: #64b5f6;
-        }
-        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        body.dark-theme .slide-intro { background: linear-gradient(135deg, #1a2a3a 0%, #121e2b 100%); border-color: #2c4a68; }
-        body.dark-theme .matrix-card { background: #242424; border-color: #444; }
-
-        .slide.active { display: flex; }
-
+        
+        /* Controles */
         .controls {
             position: fixed;
             bottom: 20px;
             left: 50%;
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%);
             display: flex;
             gap: 10px;
             z-index: 1000;
@@ -165,10 +125,9 @@
             border-radius: 999px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.12);
         }
-        .controls:hover { transform: translateX(-50%) translateY(-2px); }
         button {
             padding: 10px 18px;
-            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             border: 2px solid var(--green);
@@ -177,300 +136,251 @@
             color: var(--blue);
             transition: all 0.25s ease;
         }
-        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
-        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+        button:hover { background-color: var(--green); color: white; }
 
-        @media (max-width: 768px) {
-            .slide { width: min(96vw, 100%); padding: 20px; border-radius: 16px; }
-            .slides-container { padding-bottom: 110px; }
-            .grid-layout { grid-template-columns: 1fr; }
-            h1 { text-align: center; border-bottom-width: 3px; }
-        }
+        /* Dark Theme */
+        body.dark-theme { --bg-color: #121212; --text-color: #e0e0e0; --blue: #64b5f6; }
+        body.dark-theme .slide { background: #1e1e1e; }
+        body.dark-theme .slide-intro { background: #1a232c; border-color: #2c3e50; }
+        body.dark-theme .matrix-card { background: #242424; border-color: #444; }
+        body.dark-theme button { background-color: #333; color: white; border-color: var(--blue); }
     </style>
 </head>
 <body>
     <div class="slides-container">
 
-        <!-- ========================================== -->
-        <!-- CLASE 1: Producto Cruz -->
-        <!-- ========================================== -->
-
-        <!-- Slide 1: Encuadre -->
+        <!-- SLIDE 1: Información General -->
         <div class="slide active">
-            <span class="class-badge">Clase 1</span>
-            <h1>Fabricando Cobertura: El Producto Cruz en Finanzas</h1>
+            <h1>1. Información General</h1>
             <div class="slide-intro">
-                <p><strong>Meta de Aprendizaje:</strong> Diseñar instrumentos financieros sintéticos (ortogonales) para cobertura perfecta de riesgo en \(\mathbb{R}^3\).</p>
-            </div>
-            <h3>Ruta de Aprendizaje:</h3>
-            <ol style="font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1.6;">
-                <li>El Reto de Bloomberg</li>
-                <li>El Motor Matemático</li>
-                <li>Portafolios Sintéticos</li>
-            </ol>
-        </div>
-
-        <!-- Slide 2: El Reto -->
-        <div class="slide">
-            <span class="class-badge">Clase 1</span>
-            <h1>Apertura: El Reto</h1>
-            <div class="matrix-card">
-                <p style="text-align: left; color: var(--text-color); font-size: 1.2rem; margin-top: 0;"><strong>Contexto:</strong> Terminal de Bloomberg. Dos fondos actuales proyectados en 3 escenarios (Optimista, Neutro, Pesimista).</p>
-                <p style="text-align: left; color: #c62828; font-size: 1.2rem;"><strong>El Problema:</strong> El CEO exige un tercer activo con cero correlación con los dos primeros.</p>
-            </div>
-            <ul style="margin-top: 20px;">
-                <li>¿Cómo "fabricamos" un activo matemáticamente independiente desde cero?</li>
-                <li>Si los dos fondos actuales forman un plano de rendimientos, ¿hacia dónde debe apuntar el nuevo fondo?</li>
-                <li>¿Qué impacto tiene este activo "perpendicular" en el riesgo total del portafolio?</li>
-            </ul>
-        </div>
-
-        <!-- Slide 3: Exploración -->
-        <div class="slide">
-            <span class="class-badge">Clase 1</span>
-            <h1>Exploración (Hipótesis)</h1>
-            <div class="slide-intro">
-                <p><strong>Misión (Parejas - 5 min):</strong> Tienen el Fondo \(u = (1, 1, 0)\) y el Fondo \(v = (0, 1, 1)\).</p>
-            </div>
-            <div style="background-color: #fff3e0; border-left: 5px solid #ff9800; padding: 20px; border-radius: 8px;">
-                <h2 style="color: #e65100; margin-top: 0;">El Reto:</h2>
-                <p style="font-size: 1.3rem;">Intuyan los valores del Fondo \(w\) para que su producto punto con \(u\) y con \(v\) sea exactamente cero. <strong>Prohibido usar fórmulas</strong>, solo lógica aritmética.</p>
+                <p style="font-size: 1.4rem; font-weight: bold; color: var(--blue);">Tema: El Producto Vectorial (Cruz)</p>
+               </div>
+            
+           
+            
+            <div class="matrix-card" style="margin-top: 20px; border-left: 5px solid var(--green);">
+                <h3 style="color: var(--green); margin-top: 0;">Competencia a Desarrollar:</h3>
+                <p style="font-size: 1.3rem;">Aplicar el producto vectorial en \(\mathbb{R}^3\) para calcular torques mecánicos, evaluar la independencia lineal de sistemas robóticos y diseñar instrumentos de cobertura financiera ortogonales.</p>
             </div>
         </div>
 
-        <!-- Slide 4: Desarrollo Conceptual -->
+        <!-- SLIDE 2: Apertura -->
         <div class="slide">
-            <span class="class-badge">Clase 1</span>
-            <h1>Desarrollo Conceptual: El Creador de Activos</h1>
-            <div class="math-eq" style="text-align: center; background: #f4f5f7; padding: 20px; border-radius: 12px;">
-                \(u \times v = (u_2v_3 - u_3v_2)\mathbf{i} - (u_1v_3 - u_3v_1)\mathbf{j} + (u_1v_2 - u_2v_1)\mathbf{k}\)
-            </div>
-            <div class="grid-layout" style="margin-top: 20px; align-items: start;">
-                <div>
-                    <h3 style="color: var(--blue);">Traducción Financiera</h3>
-                    <ul>
-                        <li style="font-size: 1.2rem;"><strong>Dirección:</strong> Pesos (ponderaciones) del nuevo portafolio de cobertura.</li>
-                        <li style="font-size: 1.2rem;"><strong>Magnitud \(|u \times v|\):</strong> "Prima de diversificación" (grado de independencia).</li>
-                    </ul>
-                </div>
-                <div class="matrix-card" style="background: #e8f5e9; border-color: #81c784;">
-                    <h4 style="color: #2e7d32; margin-top: 0;">Punto de Control</h4>
-                    <p style="color: var(--text-color);">Si \(u \times v = (0,0,0)\), ¿qué significa para nuestra estrategia de diversificación?</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 5: Actividad Guiada -->
-        <div class="slide">
-            <span class="class-badge">Clase 1</span>
-            <h1>Actividad Guiada (Práctica Deliberada)</h1>
-            <div class="slide-intro">
-                <p><strong>Misión:</strong> Dos proyectos de inversión (\(A\) y \(B\)) con flujos a 3 años.</p>
-            </div>
-            <h3>Roles y Procedimiento:</h3>
-            <ul class="step-list">
-                <li>Calculen manualmente \(A \times B\) para crear el "Proyecto C" de cobertura.</li>
-                <li>Verifiquen la ortogonalidad: \((A \times B) \cdot A = 0\).</li>
-            </ul>
-        </div>
-
-        <!-- Slide 6: Aplicación -->
-        <div class="slide">
-            <span class="class-badge">Clase 1</span>
-            <h1>Aplicación: El Mundo Real</h1>
+            <h1>2. Apertura: El Reto del Torque </h1>
             <div class="grid-layout">
                 <div>
-                    <h2 style="color: var(--blue);">Laboratorio Computacional</h2>
-                    <p style="font-size: 1.2rem;">Abran Google Colab o Excel.</p>
-                    <div style="background-color: #2c3e50; color: #ecf0f1; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 1.1rem; margin-top: 15px;">
-                        import numpy as np<br>
-                        # Inserte su código aquí
+                    <div class="slide-intro" style="background: #fff3e0; border-color: #ffcc80;">
+                        <strong>El Reto (Contexto Visual):</strong> Imaginen a un mecánico industrial intentando aflojar un perno atascado con una llave de tuercas.
                     </div>
+                    <h3 style="color: var(--blue);">Preguntas Motivadoras:</h3>
+                    <ul style="font-size: 1.1rem;">
+                        <li>Si empujas el extremo de la llave con una fuerza determinada, ¿hacia dónde se orienta exactamente el resultado de ese esfuerzo y cómo sabe el perno si debe apretarse o aflojarse?</li>
+                        <li>¿Por qué si empujas la llave exactamente en la misma dirección en la que apunta el mango no logras ningún giro, sin importar cuánta fuerza apliques?</li>
+                        <li>¿Cómo podemos calcular matemáticamente tanto la magnitud de la fuerza de giro como su dirección espacial exacta en \(\mathbb{R}^3\)?</li>
+                    </ul>
                 </div>
-                <div class="matrix-card">
-                    <h3 style="color: #c62828; margin-top: 0;">Reto</h3>
-                    <p style="font-size: 1.2rem; color: var(--text-color); text-align: left;">Usando el dataset de 3 escenarios de mercado y la función <code>np.cross()</code>, extraigan el vector ortogonal para dos criptomonedas altamente volátiles.</p>
+                <!-- Gráfico de Llave de Tuercas (SVG) -->
+                <div style="display: flex; justify-content: center; align-items: center;">
+                    <svg viewBox="0 0 200 200" width="80%">
+                        <circle cx="100" cy="100" r="20" fill="#78909c" />
+                        <polygon points="100,85 115,100 100,115 85,100" fill="#455a64" />
+                        <path d="M 115,90 L 190,40 L 200,55 L 125,105 Z" fill="#b0bec5" stroke="#78909c" stroke-width="2"/>
+                        <!-- Vectores -->
+                        <line x1="100" y1="100" x2="180" y2="50" stroke="var(--blue)" stroke-width="3" marker-end="url(#arrow-blue)"/>
+                        <text x="140" y="60" fill="var(--blue)" font-weight="bold">r (brazo)</text>
+                        <line x1="180" y1="50" x2="160" y2="10" stroke="var(--red)" stroke-width="3" marker-end="url(#arrow-red)"/>
+                        <text x="170" y="25" fill="var(--red)" font-weight="bold">F (fuerza)</text>
+                    </svg>
+                </div>
+            </div>
+            <!-- Definición de flechas SVG -->
+            <svg style="width:0; height:0; position:absolute;">
+                <defs>
+                    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 2 L 10 5 L 0 8 z" fill="var(--blue)" /></marker>
+                    <marker id="arrow-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 2 L 10 5 L 0 8 z" fill="var(--red)" /></marker>
+                </defs>
+            </svg>
+        </div>
+
+        <!-- SLIDE 3: Exploración -->
+        <div class="slide">
+            <h1>3. Exploración: Hipótesis Física </h1>
+            <div class="matrix-card" style="border-top: 5px solid var(--blue); margin-top: 30px;">
+                <h2 style="color: var(--blue); text-align: center;">Dinámica en Parejas</h2>
+                <p style="font-size: 1.4rem; text-align: center; max-width: 800px; margin: 0 auto;">
+                    Utilicen su <strong>antebrazo</strong> como el brazo de la llave (\(\vec{r}\)) y su <strong>mano libre</strong> como la fuerza aplicada (\(\vec{F}\)).
+                </p>
+                <div style="background: #eef4fb; padding: 20px; border-radius: 10px; margin-top: 25px;">
+                    <p style="font-size: 1.3rem; margin: 0; text-align: center;">
+                        <strong>Misión:</strong> Simulen el empuje y debatan rápidamente hacia dónde "apunta" imaginariamente el eje de giro del perno antes de recibir la teoría formal.
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 7: Cierre -->
+        <!-- SLIDE 4: Desarrollo Conceptual I -->
         <div class="slide">
-            <span class="class-badge">Clase 1</span>
-            <h1>Cierre y Consolidación</h1>
-            <div style="background: #e3f2fd; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
-                <h3 style="color: #1565c0; margin-top: 0;">Reflexión</h3>
-                <p style="font-size: 1.3rem; margin-bottom: 0;">Si el vector resultante tiene pesos negativos, ¿qué operación financiera real representa en el mercado?</p>
-            </div>
-            <div style="border-left: 5px solid var(--green); padding-left: 20px;">
-                <h3 style="color: var(--green);">Ticket de Salida (One-Minute Paper)</h3>
-                <p style="font-size: 1.2rem;">Explica en un párrafo por qué el producto cruz es una herramienta de gestión de riesgos y no solo de geometría.</p>
-            </div>
-        </div>
-
-        <!-- ========================================== -->
-        <!-- CLASE 2: Triple Producto Escalar -->
-        <!-- ========================================== -->
-
-        <!-- Slide 8: Encuadre -->
-        <div class="slide">
-            <span class="class-badge" style="background-color: var(--blue);">Clase 2</span>
-            <h1>Auditoría de Riesgo: El "Volumen" Financiero</h1>
-            <div class="slide-intro">
-                <p><strong>Meta de Aprendizaje:</strong> Evaluar la dependencia lineal de un portafolio de 3 activos usando el triple producto escalar.</p>
-            </div>
-            <h3>Ruta de Aprendizaje:</h3>
-            <ol style="font-size: clamp(1.2rem, 2vw, 1.8rem); line-height: 1.6;">
-                <li>El Paquete de Inversión</li>
-                <li>Propiedades y Volumen</li>
-                <li>Algoritmo de Arbitraje</li>
-            </ol>
-        </div>
-
-        <!-- Slide 9: El Reto -->
-        <div class="slide">
-            <span class="class-badge" style="background-color: var(--blue);">Clase 2</span>
-            <h1>Apertura: El Reto</h1>
-            <div class="matrix-card">
-                <p style="text-align: left; color: var(--text-color); font-size: 1.2rem; margin-top: 0;"><strong>Contexto:</strong> Un banco ofrece 3 estrategias comerciales (\(u, v, w\)) cobrando una alta comisión por "cobertura tridimensional".</p>
-            </div>
-            <ul style="margin-top: 20px;">
-                <li>¿Cómo auditamos si las 3 estrategias son independientes o si una es solo un reempaquetado de las otras dos?</li>
-                <li>Si graficamos estos activos y su "volumen" es cero, ¿qué nos están vendiendo realmente?</li>
-            </ul>
-        </div>
-
-        <!-- Slide 10: Exploración -->
-        <div class="slide">
-            <span class="class-badge" style="background-color: var(--blue);">Clase 2</span>
-            <h1>Exploración (Hipótesis)</h1>
-            <div class="slide-intro">
-                <p><strong>Misión (Parejas - 5 min):</strong> Analicen los activos \(u=(1,0,0)\), \(v=(0,1,0)\) y \(w=(2,3,0)\).</p>
-            </div>
-            <div style="background-color: #fff3e0; border-left: 5px solid #ff9800; padding: 20px; border-radius: 8px;">
-                <h2 style="color: #e65100; margin-top: 0;">El Reto:</h2>
-                <p style="font-size: 1.3rem;">Debatan si el activo \(w\) aporta diversificación real o si pueden replicarlo comprando solo \(u\) y \(v\).</p>
-            </div>
-        </div>
-
-        <!-- Slide 11: Desarrollo Conceptual -->
-        <div class="slide">
-            <span class="class-badge" style="background-color: var(--blue);">Clase 2</span>
-            <h1 style="font-size: clamp(1.2rem, 2.5vw, 2.5rem);">Desarrollo Conceptual: El Volumen Financiero</h1>
-            <div class="grid-layout" style="align-items: start;">
+            <h1 style="font-size: 2.2rem;">4. Desarrollo Conceptual I: El Torque y sus Propiedades </h1>
+            
+            <div class="grid-layout">
                 <div>
-                    <h3 style="color: var(--blue);">Propiedades Tácticas</h3>
-                    <p style="font-size: 1.1rem;"><strong>Anticonmutatividad:</strong> \(u \times v = -(v \times u)\)<br>
-                    <span style="color: #666; font-size: 1rem;">(Cambiar el orden invierte la posición: de largo a corto).</span></p>
-                    
-                    <div class="math-eq" style="font-size: 1.8rem; background: #f4f5f7; padding: 10px; border-radius: 8px; text-align: center;">
-                        Triple Producto Escalar:<br>
-                        \(u \cdot (v \times w)\)
+                    <h3 style="color: var(--blue);">La Relación Física (Torque)</h3>
+                    <ul style="font-size: 1rem;">
+                        <li><strong>\(\vec{r}\) (Posición):</strong> Del pivote al punto de fuerza.</li>
+                        <li><strong>\(\vec{F}\) (Fuerza):</strong> Magnitud y dirección del empuje.</li>
+                    </ul>
+                    <div class="math-eq" style="font-size: 1.5rem; background: #f4f5f7; padding: 10px; border-radius: 8px;">
+                        Vector Torque: \(\vec{\tau} = \vec{r} \times \vec{F}\)
                     </div>
+                    <p style="font-size: 1rem;">Genera un vector estrictamente perpendicular al plano, representando el eje de rotación.</p>
                 </div>
-                <div class="matrix-card" style="background: #e8f5e9; border-color: #81c784;">
-                    <h3 style="color: #2e7d32; margin-top: 0;">Traducción Financiera</h3>
-                    <p style="text-align: left; font-size: 1.1rem; margin-bottom: 10px;">El resultado representa el "Volumen".</p>
-                    <ul style="padding-left: 20px; text-align: left;">
-                        <li style="font-size: 1.1rem; margin-bottom: 10px;"><strong>Volumen \(\neq 0\):</strong> Base completa, diversificación real.</li>
-                        <li style="font-size: 1.1rem; margin-bottom: 0; color: #c62828;"><strong>Volumen \(= 0\):</strong> Activos coplanarios. Existe un activo redundante.</li>
+                
+                <div>
+                    <h3 style="color: var(--green);">Magnitud y Propiedades</h3>
+                    <ul style="font-size: 1rem;">
+                        <li><strong>Magnitud:</strong> \(\Vert\vec{u} \times \vec{v}\Vert = \Vert\vec{u}\Vert \Vert\vec{v}\Vert \sin(\theta)\).<br> Si \(\theta = 0^\circ\), el seno es 0 (no hay torque).</li>
+                        <li><strong>Regla de la Mano Derecha:</strong> Si los dedos giran de \(\vec{r}\) hacia \(\vec{F}\), el pulgar indica el avance (adentro/afuera).</li>
+                        <li><strong>Anticonmutativa:</strong> \(\vec{u} \times \vec{v} = -(\vec{v} \times \vec{u})\). Invertir el orden invierte el sentido de giro (aprieta vs afloja).</li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 12: Actividad Guiada -->
+        <!-- SLIDE 5: Actividad Guiada -->
         <div class="slide">
-            <span class="class-badge" style="background-color: var(--blue);">Clase 2</span>
-            <h1>Actividad Guiada (Práctica Deliberada)</h1>
+            <h1>5. Actividad Guiada: Cálculo Exacto </h1>
             <div class="slide-intro">
-                <p><strong>Misión de Auditoría:</strong> Usen las estrategias del Reto inicial.</p>
+                <p><strong>Escenario:</strong> Un perno ubicado en el origen recibe un vector de posición \(\vec{r} = (0.2, 0.4, 0)\) metros y una fuerza aplicada \(\vec{F} = (0, 50, -10)\) Newtons.</p>
             </div>
-            <h3>Procedimiento:</h3>
-            <ol style="font-size: clamp(1.1rem, 2vw, 1.5rem); line-height: 1.6;">
-                <li>Calculen el "área base": \(v \times w\).</li>
-                <li>Calculen el volumen total: \(u \cdot (v \times w)\).</li>
-                <li>Redacten el memo de diagnóstico (Sólido vs. Redundante).</li>
-            </ol>
+            
+            <h3 style="color: var(--blue);">Resolución Grupal:</h3>
+            <p>Estructuremos el determinante de \(3 \times 3\) con los vectores unitarios \(\hat{i}, \hat{j}, \hat{k}\):</p>
+            
+            <div class="math-eq" style="font-size: 2.2rem;">
+                $$ \vec{\tau} = \vec{r} \times \vec{F} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ 0.2 & 0.4 & 0 \\ 0 & 50 & -10 \end{vmatrix} $$
+            </div>
+            
+            <div class="matrix-card" style="margin-top: 20px; text-align: center;">
+                <strong>Resultado:</strong> Calculen los componentes y obtengan el vector de torque exacto y su norma para verificar la torsión.
+            </div>
         </div>
 
-        <!-- Slide 13: Aplicación -->
+        <!-- SLIDE 6: Desarrollo Conceptual II -->
         <div class="slide">
-            <span class="class-badge" style="background-color: var(--blue);">Clase 2</span>
-            <h1>Aplicación: El Mundo Real</h1>
+            <h1 style="font-size: 2.2rem;">6. Aplicación II: Calibración y Control de un Dron </h1>
+            <p><strong>El Escenario:</strong> Un dron en \(\mathbb{R}^3\) requiere que sus propulsores sean linealmente independientes (no coplanares). El área del producto cruz funciona como un indicador de independencia.</p>
+            
+            <div class="grid-layout" style="margin-top: 20px;">
+                <!-- Caso 1: Error -->
+                <div class="matrix-card" style="border-top: 4px solid var(--red); background: #ffebee;">
+                    <h3 style="color: var(--red); margin-top: 0;">Fallo del Sistema (Dependencia)</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 5px;">Propulsor 1: \(\vec{A} = [2, 4, 0]\)</p>
+                    <p style="font-size: 1.1rem; margin-top: 0;">Propulsor 2: \(\vec{B} = [4, 8, 0]\)</p>
+                    <div class="math-eq" style="font-size: 1.2rem;">
+                        \(\vec{A} \times \vec{B} = [0, 0, (16) - (16)] = [0, 0, 0]\)
+                    </div>
+                    <p style="font-size: 0.95rem;"><strong>Magnitud Cero:</strong> Los propulsores hacen lo mismo; el dron pierde control direccional.</p>
+                </div>
+                
+                <!-- Caso 2: Éxito -->
+                <div class="matrix-card" style="border-top: 4px solid var(--green); background: #e8f5e9;">
+                    <h3 style="color: var(--green); margin-top: 0;">Navegación Correcta (Independencia)</h3>
+                    <p style="font-size: 1.1rem; margin-bottom: 5px;">Propulsor 1: \(\vec{A} = [2, 0, 0]\)</p>
+                    <p style="font-size: 1.1rem; margin-top: 0;">Propulsor 3: \(\vec{C} = [0, 3, 0]\)</p>
+                    <div class="math-eq" style="font-size: 1.2rem;">
+                        \(\vec{A} \times \vec{C} = [0, 0, (6) - (0)] = [0, 0, 6]\)
+                    </div>
+                    <p style="font-size: 0.95rem;"><strong>Magnitud 6:</strong> Área no nula. Son linealmente independientes, permitiendo vuelo estable en 3D.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: Aplicación III -->
+        <div class="slide" style="padding-top: 30px;">
+            <h1 style="font-size: 2rem;">7. Aplicación III: Cobertura de Riesgos Financieros </h1>
+            <p style="font-size: 1.1rem; margin-top: 0;">Espacio de escenarios: <strong>x:</strong> Crecimiento, <strong>y:</strong> Estabilidad, <strong>z:</strong> Crisis.</p>
+            
             <div class="grid-layout">
                 <div>
-                    <h2 style="color: var(--blue);">Laboratorio Computacional</h2>
-                    <p style="font-size: 1.2rem;">Simulación de Auditoría en Python.</p>
-                    <div style="background-color: #2c3e50; color: #ecf0f1; padding: 20px; border-radius: 8px; font-family: monospace; font-size: 1.1rem; margin-top: 15px;">
-                        import numpy as np<br>
-                        # np.dot(u, np.cross(v, w))
+                    <h3 style="color: var(--blue); font-size: 1.2rem;">Activos Base:</h3>
+                    <ul style="font-size: 1rem;">
+                        <li><strong>Defensivo (a):</strong> \((0, 0, 2)\) (Sube en crisis)</li>
+                        <li><strong>Especulativo (b):</strong> \((3, 0, -2)\) (Sube en bonanza)</li>
+                        <li><strong>Mercado Tradicional (c):</strong> \((1, 1, 1)\) (Moderado)</li>
+                    </ul>
+                    <div class="slide-intro" style="padding: 15px; margin-top: 10px;">
+                        <strong>El Reto:</strong> Hallar un activo sintético \(\mathbf{w}\) ortogonal a <em>b</em> y <em>c</em>: \( \mathbf{w} = \mathbf{b} \times \mathbf{c} \)
+                    </div>
+                    <div class="math-eq" style="font-size: 1.2rem; text-align: left; padding-left: 10px;">
+                        \(x = (0)(1) - (-2)(1) = \mathbf{2}\)<br>
+                        \(y = (-2)(1) - (3)(1) = \mathbf{-5}\)<br>
+                        \(z = (3)(1) - (0)(1) = \mathbf{3}\)<br>
+                        <strong>\( \mathbf{w} = (2, -5, 3) \)</strong>
                     </div>
                 </div>
+                
                 <div class="matrix-card">
-                    <h3 style="color: var(--blue); margin-top: 0;">Análisis de Resultados</h3>
-                    <p style="font-size: 1.2rem; color: var(--text-color); text-align: left;">Desarrollar el modelo para evaluar la dependencia de un set de activos del mercado en tiempo real.</p>
+                    <h3 style="color: var(--green); margin-top: 0; font-size: 1.2rem;">Interpretación Financiera de \(w\):</h3>
+                    <ul style="font-size: 1rem;">
+                        <li><strong>\(x = 2\) (Crecimiento):</strong> Apuesta positiva con 2 unidades para equilibrar ganancias en tiempos buenos.</li>
+                        <li style="color: var(--red);"><strong>\(y = -5\) (Estabilidad):</strong> ¡El freno de mano! Posición corta (short) de 5 unidades. Resta valor cuando el mercado está aburrido para neutralizar inercias.</li>
+                        <li><strong>\(z = 3\) (Crisis):</strong> Apuesta positiva. Inyecta ganancias exactamente cuando el mercado se desploma, rescatando el capital.</li>
+                    </ul>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 14: Cierre -->
+        <!-- SLIDE 8: Cierre -->
         <div class="slide">
-            <span class="class-badge" style="background-color: var(--blue);">Clase 2</span>
-            <h1>Cierre y Consolidación</h1>
-            <div style="background: #e3f2fd; padding: 25px; border-radius: 12px; margin-bottom: 25px;">
-                <h3 style="color: #1565c0; margin-top: 0;">Síntesis de la Auditoría</h3>
-                <p style="font-size: 1.3rem; margin-bottom: 0;">¿Cómo nos protege matemáticamente el cálculo de volumen frente a comisiones ocultas por activos redundantes?</p>
+            <h1>8. Cierre y Reflexión </h1>
+            
+            <div class="matrix-card" style="border-top: 5px solid var(--blue); margin-bottom: 30px;">
+                <h3 style="color: var(--blue); margin-top: 0;">Pregunta de Integración:</h3>
+                <p style="font-size: 1.3rem;">"¿Qué tienen en común un mecánico apretando un perno, un programador calibrando los propulsores de un dron y un gestor financiero cubriendo un fondo de inversión frente a una crisis?"</p>
+                <div class="slide-intro" style="margin-bottom: 0;">
+                    <em>Respuesta: Todos utilizan la geometría del producto cruz para controlar direcciones perpendiculares, magnitudes y riesgos en espacios multidimensionales.</em>
+                </div>
             </div>
-            <div style="border-left: 5px solid var(--green); padding-left: 20px;">
-                <h3 style="color: var(--green);">Conclusión Final</h3>
-                <p style="font-size: 1.2rem;">Relación entre la geometría tridimensional y la eficiencia del portafolio.</p>
+            
+            <div style="background: var(--green); color: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);">
+                <h3 style="margin-top: 0;">Actividad Final (Ticket de Salida)</h3>
+                <p style="font-size: 1.2rem; margin-bottom: 0;">En un papel, escribe una breve frase explicando cómo la magnitud del producto cruz distingue un sistema físico inútil (vectores colineales) de un sistema de cobertura exitoso. Entrégalo al salir.</p>
             </div>
         </div>
 
     </div>
 
-    <!-- Controles de Navegación y Tema -->
+    <!-- Controles de Navegación -->
     <div class="controls">
         <button onclick="prevSlide()">Anterior</button>
         <button onclick="nextSlide()">Siguiente</button>
-        <button onclick="toggleTheme()">Cambiar Tema</button>
+        <button onclick="toggleTheme()">Modo Oscuro</button>
     </div>
 
     <script>
         const slides = document.querySelectorAll('.slide');
-        const slidesContainer = document.querySelector('.slides-container');
         let currentSlideIndex = 0;
-        let touchStartX = 0;
 
         function showSlide(index) {
             slides.forEach(slide => slide.classList.remove('active'));
-            if (index >= slides.length) {
-                currentSlideIndex = 0;
-            } else if (index < 0) {
-                currentSlideIndex = slides.length - 1;
-            } else {
-                currentSlideIndex = index;
-            }
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
             slides[currentSlideIndex].classList.add('active');
+            window.scrollTo(0,0);
         }
 
         function nextSlide() { showSlide(currentSlideIndex + 1); }
         function prevSlide() { showSlide(currentSlideIndex - 1); }
         function toggleTheme() { document.body.classList.toggle('dark-theme'); }
 
-        function handleTouchStart(event) { touchStartX = event.touches[0].clientX; }
-        function handleTouchEnd(event) {
-            const touchEndX = event.changedTouches[0].clientX;
-            const deltaX = touchEndX - touchStartX;
-            if (deltaX > 50) prevSlide();
-            else if (deltaX < -50) nextSlide();
-        }
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
 
         showSlide(currentSlideIndex);
-
-        slidesContainer.addEventListener('touchstart', handleTouchStart, { passive: true });
-        slidesContainer.addEventListener('touchend', handleTouchEnd, { passive: true });
     </script>
 </body>
 </html>

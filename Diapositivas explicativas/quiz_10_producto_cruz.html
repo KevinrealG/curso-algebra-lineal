@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz: Autoevaluación 4.3</title>
-    <!-- MathJax para fórmulas matemáticas -->
+    <title>Autoevaluación 4.4 - Vectores</title>
 <script>
         MathJax = {
             tex: {
@@ -14,10 +13,11 @@
         };
     </script>    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        /* Estilos base de tu presentación original */
+        /* Estilos Base de la Plantilla */
         :root {
             --blue: #005b96;
             --green: #4caf50;
+            --pink: #e91e63;
             --bg-color: #f4fbf4;
             --text-color: #333;
         }
@@ -36,8 +36,7 @@
         }
         .slide {
             width: min(92vw, 1200px);
-            min-height: auto;
-            max-height: calc(100dvh - 100px);
+            min-height: calc(100dvh - 100px);
             height: auto;
             margin: 2vh 0;
             background: white;
@@ -46,160 +45,105 @@
             display: none;
             flex-direction: column;
             justify-content: flex-start;
-            padding: clamp(20px, 4vw, 60px) clamp(20px, 4vw, 80px);
+            padding: clamp(30px, 4vw, 60px) clamp(30px, 4vw, 80px);
             box-sizing: border-box;
             position: relative;
-            overflow-y: auto;
-            overflow-x: hidden;
         }
         .slides-container {
             width: 100%;
-            min-height: 100dvh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 0 0 110px;
-            box-sizing: border-box;
+            padding-bottom: 110px;
         }
+        .slide.active { display: flex; }
+        
         h1 {
             color: var(--blue);
-            font-size: clamp(1.5rem, 3vw, 3.5rem);
-            margin-bottom: 20px;
+            font-size: clamp(2rem, 3.5vw, 3.5rem);
+            margin-bottom: 30px;
             text-align: left;
             border-bottom: 4px solid var(--green);
             padding-bottom: 10px;
             display: inline-block;
         }
 
-        /* --- ESTILOS ESPECÍFICOS DEL QUIZ --- */
-        .slide-header {
-            width: 100%;
-            margin-bottom: 30px;
-        }
-        .slide-kicker {
+        .math-eq {
+            font-size: clamp(1.8rem, 3vw, 3.5rem);
+            font-family: 'Cambria Math', serif;
             color: var(--blue);
-            font-weight: 700;
-            margin: 0;
-            font-size: clamp(0.8rem, 1.2vw, 1.1rem);
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
+            margin: 20px 0;
+            text-align: center;
+            font-weight: bold;
         }
-        .slide-title {
-            color: var(--blue);
-            font-size: clamp(2.3rem, 4vw, 4.5rem);
-            line-height: 1.05;
-            margin: 8px 0 0;
-            padding-bottom: 12px;
-            border-bottom: 3px solid var(--green);
-            display: block;
-            width: 100%;
-            letter-spacing: -0.04em;
-            font-weight: 800;
+
+        /* --- Estilos para el Cuestionario --- */
+        .question-number {
+            color: var(--pink);
+            font-weight: bold;
+            font-size: 2.5rem;
+            margin-right: 15px;
         }
-        .quiz-question {
-            margin-bottom: 25px;
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            border-left: 6px solid var(--blue);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            font-size: 1.15rem;
-            line-height: 1.6;
-        }
-        .quiz-question strong.num {
-            color: var(--blue);
-            font-size: 1.3rem;
-            margin-right: 8px;
-        }
-        .quiz-options {
+        
+        .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 15px;
-            font-size: 1.1rem;
+            gap: 20px;
+            margin: 40px 0;
+            width: 100%;
         }
-        .option-card {
-            background: var(--bg-color);
-            padding: 12px 18px;
-            border-radius: 8px;
-            border: 1px solid #dcefff;
+
+        .option-item {
+            background: #fff0f5;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 1.8rem;
+            color: var(--text-color);
+            border: 2px solid #f8bbd0;
             display: flex;
             align-items: center;
-            gap: 10px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
-            color: var(--blue);
-            font-weight: 500;
+            justify-content: center;
+            gap: 15px;
         }
-        .option-card input {
-            margin: 0;
-            accent-color: var(--blue);
-            transform: scale(1.15);
-        }
-        .option-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,91,150,0.1);
-        }
-        .option-card.correct-option {
-            background: #e8f5e9;
-            border-color: #4caf50;
-            color: #1b5e20;
-        }
-        .option-card.incorrect-option {
-            background: #ffebee;
-            border-color: #d32f2f;
-            color: #7f1d1d;
-        }
-        .quiz-question.correct-question {
-            border-left-color: #2e7d32;
-            background: #f1f8f2;
-        }
-        .quiz-question.incorrect-question {
-            border-left-color: #d32f2f;
-            background: #fff5f5;
-        }
-        .opt-letter {
+
+        .option-letter {
+            color: var(--pink);
+            font-style: italic;
             font-weight: bold;
-            color: var(--blue);
         }
 
-        .result-box {
+        .answer-box {
             display: none;
-            width: min(92vw, 1200px);
-            margin: 14px auto 0;
-            padding: 14px 20px;
-            border-radius: 12px;
-            border: 2px solid transparent;
-            font-weight: 700;
-            text-align: center;
-            font-size: 1.05rem;
-        }
-        .result-box.success {
-            display: block;
             background: #e8f5e9;
-            border-color: #4caf50;
-            color: #1b5e20;
-        }
-        .result-box.warning {
-            display: block;
-            background: #fff3cd;
-            border-color: #ffc107;
-            color: #7a5b00;
+            border-left: 6px solid var(--green);
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            animation: fadeIn 0.4s ease-in-out;
         }
 
-        /* Tema oscuro */
-        body.dark-theme {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --blue: #64b5f6;
+        .reveal-btn {
+            align-self: center;
+            background-color: var(--blue);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
         }
-        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        body.dark-theme .quiz-question { background: #242424; border-color: var(--blue); }
-        body.dark-theme .option-card { background: #1a1a1a; border-color: #444; color: var(--blue); }
+        .reveal-btn:hover { background-color: #004573; }
 
-        .slide.active { display: flex; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        /* Controles */
+        /* --- Controles --- */
         .controls {
             position: fixed;
             bottom: 20px;
@@ -209,30 +153,35 @@
             gap: 10px;
             z-index: 1000;
             backdrop-filter: blur(6px);
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             padding: 8px;
             border-radius: 999px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
         }
-        body.dark-theme .controls { background: rgba(30, 30, 30, 0.8); }
-        button {
-            padding: 10px 18px;
-            font-size: clamp(0.95rem, 1.5vw, 1.2rem);
+        .controls button {
+            padding: 10px 20px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
             border: 2px solid var(--green);
             border-radius: 999px;
             background-color: white;
             color: var(--blue);
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
         }
-        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
-        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
+        .controls button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+
+        /* Tema Oscuro */
+        body.dark-theme { --bg-color: #121212; --text-color: #e0e0e0; --blue: #64b5f6; --pink: #f48fb1; }
+        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body.dark-theme .option-item { background: #311b22; border-color: #5c2035; }
+        body.dark-theme .answer-box { background: #1b2e20; }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.9); }
+        body.dark-theme .controls button { background-color: #333; border-color: var(--blue); color: white; }
 
         @media (max-width: 768px) {
-            .slide { width: min(96vw, 100%); padding: 20px; border-radius: 16px; }
-            .quiz-options { grid-template-columns: 1fr; }
-            h1 { text-align: center; border-bottom-width: 3px; }
+            .options-grid { grid-template-columns: 1fr; }
+            .slide { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -240,182 +189,192 @@
 
     <div class="slides-container">
 
-        <div class="slide active" style="padding: clamp(20px, 4vw, 50px);">
-            <div class="slide-header">
-                <p class="slide-kicker">Consolidación</p>
-                <h1 class="slide-title">Autoevaluación 4.3 (Parte 1)</h1>
+        <!-- Slide 1: Título -->
+        <div class="slide active" style="justify-content: center; align-items: center; text-align: center;">
+            <h1 style="border: none; font-size: clamp(3rem, 5vw, 5rem); text-transform: uppercase;">Autoevaluación 4.4</h1>
+            <p style="font-size: 1.8rem; color: #555;">Integración de conceptos: Producto Punto, Producto Cruz y Ángulos Vectoriales.</p>
+        </div>
+
+        <!-- Slide 2: Pregunta I -->
+        <div class="slide">
+            <h1>Pregunta I</h1>
+            <div class="math-eq">
+                <span class="question-number">I)</span> \(\mathbf{i} \times \mathbf{k} - \mathbf{k} \times \mathbf{i} = \) ________.
+            </div>
+            
+            <div class="options-grid">
+                <div class="option-item"><span class="option-letter">a)</span> 0</div>
+                <div class="option-item"><span class="option-letter">b)</span> \(\mathbf{j}\)</div>
+                <div class="option-item"><span class="option-letter">c)</span> \(2\mathbf{j}\)</div>
+                <div class="option-item"><span class="option-letter">d)</span> \(-2\mathbf{j}\)</div>
             </div>
 
-            <div class="quiz-question" data-question="q1">
-                <p style="margin: 0;"><strong class="num">I)</strong> La práctica común seguida en este curso es desplegar los ejes $xyz$ para $\mathbb{R}^3$ como un sistema derecho.</p>
-                <div class="quiz-options">
-                    <label class="option-card"><input type="radio" name="q1" value="v"><span class="opt-letter">a)</span> Verdadero</label>
-                    <label class="option-card"><input type="radio" name="q1" value="f"><span class="opt-letter">b)</span> Falso</label>
-                </div>
-            </div>
-
-            <div class="quiz-question" data-question="q2">
-                <p style="margin: 0;"><strong class="num">II)</strong> La distancia entre los puntos $(1, 2, 3)$ y $(3, 5, -1)$ es _________.</p>
-                <div class="quiz-options">
-                    <label class="option-card"><input type="radio" name="q2" value="a"><span class="opt-letter">a)</span> $\sqrt{(1+2+3)^2 + (3+5-1)^2}$</label>
-                    <label class="option-card"><input type="radio" name="q2" value="b"><span class="opt-letter">b)</span> $\sqrt{2^2 + 3^2 + 2^2}$</label>
-                    <label class="option-card"><input type="radio" name="q2" value="c"><span class="opt-letter">c)</span> $\sqrt{2^2 + 3^2 + 4^2}$</label>
-                    <label class="option-card"><input type="radio" name="q2" value="d"><span class="opt-letter">d)</span> $\sqrt{4^2 + 7^2 + 2^2}$</label>
-                </div>
-            </div>
-
-            <div class="quiz-question" data-question="q3">
-                <p style="margin: 0;"><strong class="num">III)</strong> El punto $(0.3, 0.5, 0.2)$ está _________ la esfera unitaria.</p>
-                <div class="quiz-options">
-                    <label class="option-card"><input type="radio" name="q3" value="a"><span class="opt-letter">a)</span> en la tangente a</label>
-                    <label class="option-card"><input type="radio" name="q3" value="b"><span class="opt-letter">b)</span> sobre</label>
-                    <label class="option-card"><input type="radio" name="q3" value="c"><span class="opt-letter">c)</span> dentro de</label>
-                    <label class="option-card"><input type="radio" name="q3" value="d"><span class="opt-letter">d)</span> fuera de</label>
-                </div>
+            <button class="reveal-btn" onclick="toggleAnswer('ans1')">Ver Respuesta</button>
+            <div id="ans1" class="answer-box">
+                <strong>Respuesta correcta:</strong> <span class="option-letter" style="font-size: 1.8rem;">d)</span> \(-2\mathbf{j}\)
             </div>
         </div>
 
-        <div class="slide" style="padding: clamp(20px, 4vw, 50px);">
-            <div class="slide-header">
-                <p class="slide-kicker">Consolidación</p>
-                <h1 class="slide-title">Autoevaluación 4.3 (Parte 2)</h1>
+        <!-- Slide 3: Pregunta II -->
+        <div class="slide">
+            <h1>Pregunta II</h1>
+            <div class="math-eq">
+                <span class="question-number">II)</span> \(\mathbf{i} \cdot (\mathbf{j} \times \mathbf{k}) = \) ________.
+            </div>
+            
+            <div class="options-grid">
+                <div class="option-item"><span class="option-letter">a)</span> 0</div>
+                <div class="option-item"><span class="option-letter">b)</span> \(\mathbf{0}\)</div>
+                <div class="option-item"><span class="option-letter">c)</span> 1</div>
+                <div class="option-item"><span class="option-letter">d)</span> \(\mathbf{i} - \mathbf{j} + \mathbf{k}\)</div>
             </div>
 
-            <div class="quiz-question" data-question="q4">
-                <p style="margin: 0;"><strong class="num">IV)</strong> $(x-3)^2 + (y+5)^2 + z^2 = 81$ es la ecuación de la esfera con _________.</p>
-                <div class="quiz-options">
-                    <label class="option-card"><input type="radio" name="q4" value="a"><span class="opt-letter">a)</span> centro 81 y radio $(-3, 5, 0)$</label>
-                    <label class="option-card"><input type="radio" name="q4" value="b"><span class="opt-letter">b)</span> radio 81 y centro $(-3, 5, 0)$</label>
-                    <label class="option-card"><input type="radio" name="q4" value="c"><span class="opt-letter">c)</span> radio $9$ y centro $(3, -5, 0)$</label>
-                    <label class="option-card"><input type="radio" name="q4" value="d"><span class="opt-letter">d)</span> radio 9 y centro $(3, -5, 0)$</label>
-                </div>
-            </div>
-
-            <div class="quiz-question" data-question="q5">
-                <p style="margin: 0;"><strong class="num">V)</strong> $\mathbf{j} - (4\mathbf{k} - 3\mathbf{i}) =$ _________.</p>
-                <div class="quiz-options">
-                    <label class="option-card"><input type="radio" name="q5" value="a"><span class="opt-letter">a)</span> $(1, -4, -3)$</label>
-                    <label class="option-card"><input type="radio" name="q5" value="b"><span class="opt-letter">b)</span> $(1, -4, 3)$</label>
-                    <label class="option-card"><input type="radio" name="q5" value="c"><span class="opt-letter">c)</span> $(-3, 1, -4)$</label>
-                    <label class="option-card"><input type="radio" name="q5" value="d"><span class="opt-letter">d)</span> $(3, 1, -4)$</label>
-                </div>
-            </div>
-
-            <div class="quiz-question" data-question="q6">
-                <p style="margin: 0;"><strong class="num">VI)</strong> $(\mathbf{i} + 3\mathbf{k} - \mathbf{j}) \cdot (\mathbf{k} - 4\mathbf{j} + 2\mathbf{i}) =$ _________.</p>
-                <div class="quiz-options">
-                    <label class="option-card"><input type="radio" name="q6" value="a"><span class="opt-letter">a)</span> $2 + 4 + 3 = 9$</label>
-                    <label class="option-card"><input type="radio" name="q6" value="b"><span class="opt-letter">b)</span> $(1+3-1)(1-4+2) = -3$</label>
-                    <label class="option-card"><input type="radio" name="q6" value="c"><span class="opt-letter">c)</span> $1 + 12 - 2 = 11$</label>
-                    <label class="option-card"><input type="radio" name="q6" value="d"><span class="opt-letter">d)</span> $2 - 4 - 3 = -5$</label>
-                </div>
-            </div>
-
-            <div class="quiz-question" data-question="q7">
-                <p style="margin: 0;"><strong class="num">VII)</strong> El vector unitario en la misma dirección que $2\mathbf{i} - 2\mathbf{j} + \mathbf{k}$ es _________.</p>
-                <div class="quiz-options">
-                    <label class="option-card"><input type="radio" name="q7" value="a"><span class="opt-letter">a)</span> $\mathbf{i} - \mathbf{j} + \mathbf{k}$</label>
-                    <label class="option-card"><input type="radio" name="q7" value="b"><span class="opt-letter">b)</span> $\frac{1}{5}(2\mathbf{i} - 2\mathbf{j} + \mathbf{k})$</label>
-                    <label class="option-card"><input type="radio" name="q7" value="c"><span class="opt-letter">c)</span> $\frac{1}{3}(2\mathbf{i} - 2\mathbf{j} + \mathbf{k})$</label>
-                    <label class="option-card"><input type="radio" name="q7" value="d"><span class="opt-letter">d)</span> $\frac{1}{3}(2\mathbf{i} + 2\mathbf{j} + \mathbf{k})$</label>
-                </div>
-            </div>
-
-            <div class="quiz-question" data-question="q8">
-                <p style="margin: 0;"><strong class="num">VIII)</strong> La componente de $\mathbf{u}$ en la dirección $\mathbf{w}$ es _________.</p>
-                <div class="quiz-options">
-                    <label class="option-card"><input type="radio" name="q8" value="a"><span class="opt-letter">a)</span> $\frac{\mathbf{u} \cdot \mathbf{w}}{|\mathbf{w}|}$</label>
-                    <label class="option-card"><input type="radio" name="q8" value="b"><span class="opt-letter">b)</span> $\frac{\mathbf{w}}{|\mathbf{w}|}$</label>
-                    <label class="option-card"><input type="radio" name="q8" value="c"><span class="opt-letter">c)</span> $\frac{\mathbf{u} \cdot \mathbf{w}}{|\mathbf{w}||\mathbf{w}|}$</label>
-                    <label class="option-card"><input type="radio" name="q8" value="d"><span class="opt-letter">d)</span> $\frac{\mathbf{u} \cdot \mathbf{w}}{|\mathbf{u}|}$</label>
-                </div>
+            <button class="reveal-btn" onclick="toggleAnswer('ans2')">Ver Respuesta</button>
+            <div id="ans2" class="answer-box">
+                <strong>Respuesta correcta:</strong> <span class="option-letter" style="font-size: 1.8rem;">c)</span> 1
             </div>
         </div>
+
+        <!-- Slide 4: Pregunta III -->
+        <div class="slide">
+            <h1>Pregunta III</h1>
+            <div class="math-eq">
+                <span class="question-number">III)</span> \(\mathbf{i} \times \mathbf{j} \times \mathbf{k} \) ________.
+            </div>
+            
+            <div class="options-grid">
+                <div class="option-item"><span class="option-letter">a)</span> 0</div>
+                <div class="option-item"><span class="option-letter">b)</span> \(\mathbf{0}\)</div>
+                <div class="option-item"><span class="option-letter">c)</span> 1</div>
+                <div class="option-item"><span class="option-letter">d)</span> no está definido</div>
+            </div>
+
+            <button class="reveal-btn" onclick="toggleAnswer('ans3')">Ver Respuesta</button>
+            <div id="ans3" class="answer-box">
+                <strong>Respuesta correcta:</strong> <span class="option-letter" style="font-size: 1.8rem;">b)</span> = vector cero<br><br>
+                <span style="font-size: 1.2rem; color: var(--pink);">[Nota: \(\mathbf{i} \times \mathbf{j} \times \mathbf{k}\) <em>está</em> definido porque \((\mathbf{i} \times \mathbf{j}) \times \mathbf{k} = \mathbf{0} = \mathbf{i} \times (\mathbf{j} \times \mathbf{k})\)]</span>
+            </div>
+        </div>
+
+        <!-- Slide 5: Pregunta IV -->
+        <div class="slide">
+            <h1>Pregunta IV</h1>
+            <div class="math-eq">
+                <span class="question-number">IV)</span> \((\mathbf{i} + \mathbf{j}) \times (\mathbf{j} + \mathbf{k}) = \) ________.
+            </div>
+            
+            <div class="options-grid">
+                <div class="option-item"><span class="option-letter">a)</span> 0</div>
+                <div class="option-item"><span class="option-letter">b)</span> \(\mathbf{0}\)</div>
+                <div class="option-item"><span class="option-letter">c)</span> 1</div>
+                <div class="option-item"><span class="option-letter">d)</span> \(\mathbf{i} - \mathbf{j} + \mathbf{k}\)</div>
+            </div>
+
+            <button class="reveal-btn" onclick="toggleAnswer('ans4')">Ver Respuesta</button>
+            <div id="ans4" class="answer-box">
+                <strong>Respuesta correcta:</strong> <span class="option-letter" style="font-size: 1.8rem;">d)</span> \(\mathbf{i} - \mathbf{j} + \mathbf{k}\)
+            </div>
+        </div>
+
+        <!-- Slide 6: Pregunta V -->
+        <div class="slide">
+            <h1>Pregunta V</h1>
+            <div class="math-eq" style="font-size: 2.2rem; margin-bottom: 40px;">
+                <span class="question-number">V)</span> El seno del ángulo entre los vectores \(\mathbf{u}\) y \(\mathbf{w}\) es ________.
+            </div>
+            
+            <div class="options-grid" style="grid-template-columns: 1fr 1fr; margin-top: 20px;">
+                <div class="option-item"><span class="option-letter">a)</span> $$ \frac{|\mathbf{u} \times \mathbf{w}|}{|\mathbf{u}||\mathbf{w}|} $$</div>
+                <div class="option-item"><span class="option-letter">b)</span> $$ \frac{|\mathbf{u} \times \mathbf{w}|}{\mathbf{u} \cdot \mathbf{w}} $$</div>
+                <div class="option-item"><span class="option-letter">c)</span> $$ \frac{|\mathbf{u} \cdot \mathbf{w}|}{|\mathbf{u} \times \mathbf{w}|} $$</div>
+                <div class="option-item"><span class="option-letter">d)</span> $$ |\mathbf{u} \times \mathbf{w}| - |\mathbf{u} \cdot \mathbf{w}| $$</div>
+            </div>
+
+            <button class="reveal-btn" onclick="toggleAnswer('ans5')">Ver Respuesta</button>
+            <div id="ans5" class="answer-box">
+                <strong>Respuesta correcta:</strong> <span class="option-letter" style="font-size: 1.8rem;">a)</span> $$ \frac{|\mathbf{u} \times \mathbf{w}|}{|\mathbf{u}||\mathbf{w}|} $$
+            </div>
+        </div>
+
+        <!-- Slide 7: Pregunta VI -->
+        <div class="slide">
+            <h1>Pregunta VI</h1>
+            <div class="math-eq">
+                <span class="question-number">VI)</span> \(\mathbf{u} \times \mathbf{u} = \) ________.
+            </div>
+            
+            <div class="options-grid">
+                <div class="option-item"><span class="option-letter">a)</span> \(|\mathbf{u}|^2\)</div>
+                <div class="option-item"><span class="option-letter">b)</span> 1</div>
+                <div class="option-item"><span class="option-letter">c)</span> \(\mathbf{0}\)</div>
+                <div class="option-item"><span class="option-letter">d)</span> 0</div>
+            </div>
+
+            <button class="reveal-btn" onclick="toggleAnswer('ans6')">Ver Respuesta</button>
+            <div id="ans6" class="answer-box">
+                <strong>Respuesta correcta:</strong> <span class="option-letter" style="font-size: 1.8rem;">c)</span> = vector cero
+            </div>
+        </div>
+
     </div>
 
+    <!-- Controles de Navegación -->
     <div class="controls">
-        <button type="button" onclick="prevSlide()">Anterior</button>
-        <button type="button" onclick="nextSlide()">Siguiente</button>
-        <button type="button" id="verifyBtn">Verificar respuestas</button>
-        <button type="button" onclick="toggleTheme()">Cambiar Tema</button>
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Modo Oscuro</button>
     </div>
-
-    <div id="result-box" class="result-box" aria-live="polite"></div>
 
     <script>
         const slides = document.querySelectorAll('.slide');
-        const slidesContainer = document.querySelector('.slides-container');
-        const verifyBtn = document.getElementById('verifyBtn');
-        const resultBox = document.getElementById('result-box');
-        const answerKey = {
-            q1: 'v',
-            q2: 'd',
-            q3: 'c',
-            q4: 'd',
-            q5: 'd',
-            q6: 'a',
-            q7: 'c',
-            q8: 'a'
-        };
         let currentSlideIndex = 0;
-        let touchStartX = 0;
 
         function showSlide(index) {
-            slides.forEach(slide => slide.classList.remove('active'));
+            slides.forEach(slide => {
+                slide.classList.remove('active');
+                // Ocultar respuestas al cambiar de diapositiva
+                const answerBox = slide.querySelector('.answer-box');
+                if(answerBox) answerBox.style.display = 'none';
+            });
+            
             if (index >= slides.length) currentSlideIndex = 0;
             else if (index < 0) currentSlideIndex = slides.length - 1;
             else currentSlideIndex = index;
+            
             slides[currentSlideIndex].classList.add('active');
+            window.scrollTo(0,0);
         }
 
         function nextSlide() { showSlide(currentSlideIndex + 1); }
         function prevSlide() { showSlide(currentSlideIndex - 1); }
         function toggleTheme() { document.body.classList.toggle('dark-theme'); }
 
-        function verifyAnswers() {
-            let correct = 0;
-            const total = Object.keys(answerKey).length;
-
-            document.querySelectorAll('.quiz-question').forEach(question => {
-                const name = question.dataset.question;
-                const selected = question.querySelector(`input[name="${name}"]:checked`);
-                const options = question.querySelectorAll('.option-card');
-
-                options.forEach(option => {
-                    option.classList.remove('correct-option', 'incorrect-option');
-                    const input = option.querySelector('input');
-                    if (input && input.value === answerKey[name]) {
-                        option.classList.add('correct-option');
-                    }
-                });
-
-                if (selected && selected.value === answerKey[name]) {
-                    correct++;
-                    question.classList.add('correct-question');
-                } else {
-                    question.classList.remove('correct-question');
-                    question.classList.add('incorrect-question');
-                }
-            });
-
-            resultBox.style.display = 'block';
-            resultBox.textContent = `Respuestas correctas: ${correct}/${total}`;
-            resultBox.className = 'result-box ' + (correct === total ? 'success' : 'warning');
+        // Función para revelar la respuesta
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            if(el.style.display === 'block') {
+                el.style.display = 'none';
+            } else {
+                el.style.display = 'block';
+            }
         }
 
-        verifyBtn.addEventListener('click', verifyAnswers);
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+
+        // Navegación Táctil
+        let touchStartX = 0;
+        document.addEventListener('touchstart', e => touchStartX = e.touches[0].clientX, {passive: true});
+        document.addEventListener('touchend', e => {
+            let touchEndX = e.changedTouches[0].clientX;
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }, {passive: true});
+
         showSlide(currentSlideIndex);
-
-        slidesContainer.addEventListener('touchstart', e => {
-            touchStartX = e.touches[0].clientX;
-        }, { passive: true });
-
-        slidesContainer.addEventListener('touchend', e => {
-            const touchEndX = e.changedTouches[0].clientX;
-            const deltaX = touchEndX - touchStartX;
-            if (deltaX > 50) prevSlide();
-            else if (deltaX < -50) nextSlide();
-        }, { passive: true });
     </script>
 </body>
 </html>

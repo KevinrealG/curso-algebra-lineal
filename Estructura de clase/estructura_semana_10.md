@@ -3,199 +3,229 @@
 
 **1. Información General**
 
-* **Tema:** Transición del producto escalar al producto vectorial, cálculo analítico, dirección (mano y tornillo) y áreas.
-* **Competencia:** Calcular el producto cruz para determinar vectores ortogonales y modelar áreas de superficies en el espacio tridimensional.
-* **Recursos:** Modelos físicos (un tornillo y tuerca grandes), GeoGebra 3D.
-
-**2. Apertura (10 min)**
-
-* **Reto:** Proyecta la imagen de un panel solar inclinado en el espacio y una ráfaga de viento golpeándolo.
-* **Preguntas Motivadoras:**
-1. Hasta ahora, el producto punto nos entregaba un escalar (energía, costo). Si necesitamos calcular una nueva *dirección* perpendicular donde actúa la fuerza del viento, ¿nos sirve el producto punto?
-2. ¿Por qué una herramienta geométrica que genera nuevas direcciones perpendiculares está limitada estrictamente a nuestro espacio tridimensional ($\mathbb{R}^3$)?
-3. Si cambiamos el orden de los vectores que definen el panel, ¿el viento golpea por arriba o por abajo?
-
-
-
-**3. Exploración (5 min)**
-
-* Entrega un tornillo grande a cada grupo. Pídeles que simulen el giro de un vector $u$ hacia un vector $v$ (girando la cabeza del tornillo). Los estudiantes deben observar y anotar en qué dirección se desplaza el cuerpo del tornillo a medida que ocurre el giro.
-
-**4. Desarrollo Conceptual (15 min)**
-
-* **La Ecuación:** Introduce la fórmula matemática, enfatizando que genera un nuevo vector, no un escalar:
-
-$$u \times v = (b_1c_2 - c_1b_2)i + (c_1a_2 - a_1c_2)j + (a_1b_2 - b_1a_2)k$$
-
-
-* **Sentido y Dirección:** Explica la regla de orientación:
-* *El Tornillo:* Rotar desde $u$ hacia $v$ define el avance (hacia arriba o hacia abajo).
-* *La Mano:* Utiliza la mano izquierda/derecha como convención espacial; el pulgar indica el vector resultante perpendicular al plano formado por los dedos índice y medio.
-
-
-* **Magnitud:** Define $\vert{}u \times v\vert{} = \vert{}u\vert{}\vert{}v\vert{} \sin(\omega)$. Demuestra geométricamente que esta magnitud equivale exactamente al **área del paralelogramo** que tiene como lados adyacentes a $u$ y $v$.
-
-**5. Actividad Guiada y Colaborativa (15 min)**
-
-* Asigna a cada grupo dos vectores $u$ y $v$ en $\mathbb{R}^3$ con coeficientes pequeños.
-* *Roles:* Un estudiante calcula los componentes $i, j$, otro calcula el componente $k$ y verifica signos, y el tercero verifica la ortogonalidad calculando el producto punto $(u \times v) \cdot u = 0$.
-
-**6. Aplicación (10 min)**
-
-* **Reto de Ingeniería Civil:** Un toldo de tensión está definido por tres puntos de anclaje en el espacio. Los estudiantes deben convertir los puntos en dos vectores adyacentes y calcular el área exacta de lona necesaria utilizando la magnitud del producto cruz. Utilizan Colab (`np.cross` y `np.linalg.norm`) para acelerar el cálculo.
-
-**7. Cierre y Reflexión (3 min)**
-
-* ¿Qué significa físicamente para nuestra cubierta de lona si el ángulo $\omega$ entre los dos vectores de anclaje es cero o $180^\circ$ (colineales)?
-
-**8. Actividad Final de Consolidación (2 min)**
-
-* **Ticket de Salida Visual:** En una hoja, dibujan dos vectores en un plano y una flecha perpendicular. Deben indicar con una "T" hacia dónde avanza el tornillo si multiplican $v \times u$ en lugar de $u \times v$.
+### Plan de Clase (70 Minutos): El Producto Vectorial y sus Aplicaciones Transversales
 
 ---
 
-### Clase 2: Propiedades del Producto y el Triple Producto Escalar
+#### 1. Información General
 
-**1. Información General**
-
-* **Tema:** Anticonmutatividad, distributividad, el triple producto escalar y volúmenes.
-* **Competencia:** Aplicar propiedades algebraicas para simplificar cálculos de productos vectoriales y modelar el volumen de sólidos geométricos.
-* **Recursos:** Google Colab, cajas de cartón (paralelepípedos) deformables si es posible.
-
-**2. Apertura (10 min)**
-
-* **Reto:** Muestra el cálculo de rotación de un brazo robótico en una fábrica. El ingeniero programó $u \times v$ para mover la pieza a la cinta transportadora, pero por error digitó $v \times u$.
-* **Preguntas Motivadoras:**
-1. A diferencia de los números reales ($3 \times 4 = 4 \times 3$), ¿qué catástrofe física ocurrió en la fábrica con este error de código?
-2. ¿Es posible multiplicar tres vectores combinando los dos mundos que conocemos (el punto y la cruz)?
-3. ¿Qué representa la "caja" o sombra 3D proyectada por tres vectores diferentes que parten de un mismo origen?
-
-
-
-**3. Exploración (5 min)**
-
-* Sin darles la regla, pide a los grupos que calculen rápidamente $i \times j$ y luego $j \times i$ usando la fórmula del determinante de la clase pasada. Deben formular una hipótesis sobre el comportamiento del signo.
-
-**4. Desarrollo Conceptual (15 min)**
-
-* **Propiedades:** Formaliza la **propiedad anticonmutativa** ($u \times v = -(v \times u)$) y la **propiedad distributiva** ($u \times (v + w) = (u \times v) + (u \times w)$).
-* **El Triple Producto Escalar:** Presenta la operación híbrida $u \cdot (v \times w)$.
-* **Interpretación Geométrica:** Explica que el escalar absoluto derivado de $u \cdot (v \times w)$ representa el **volumen del paralelepípedo** determinado por los vectores $u, v, w$.
-
-**5. Actividad Guiada y Colaborativa (15 min)**
-
-* Los equipos reciben tres vectores que representan las aristas de una celda cristalina (Ciencia de Materiales).
-* Paso 1: Calculan el área de la base ($v \times w$).
-* Paso 2: Calculan el producto punto del resultado con $u$ para hallar el volumen total.
-
-**6. Aplicación (10 min)**
-
-* **Validación Computacional:** Los estudiantes implementan en Python las propiedades. Deben programar una celda que arroje un valor `True` al verificar que `np.cross(u, v)` es igual a `-np.cross(v, u)` y luego calcular el volumen de un sistema de embalaje logístico de 3 variables.
-
-**7. Cierre y Reflexión (3 min)**
-
-* Si programamos un modelo en 3D de tres vectores y el triple producto escalar nos da un volumen exactamente igual a $0$, ¿qué nos dice esto sobre la ubicación de los tres vectores en el espacio real? (Están aplastados en un solo plano / son coplanarios).
-
-**8. Actividad Final de Consolidación (2 min)**
-
-* **Quiz Rápido:** Proyecta tres matrices (una de $u \times v$, otra demostrando la anticonmutatividad y una de volumen). Los estudiantes votan con señales manuales si la operación arrojará un *Vector* o un *Escalar*.
-### Clase 1: Cobertura de Riesgos y Activos No Correlacionados (Producto Cruz en $\mathbb{R}^3$)
-
-**1. Información General**
-
-* **Tema:** Cálculo del producto cruz y su aplicación para encontrar vectores ortogonales (activos no correlacionados).
-* **Competencia:** Utilizar el producto vectorial en $\mathbb{R}^3$ para diseñar instrumentos financieros sintéticos que sirvan como cobertura perfecta de riesgo ante otros dos activos.
-* **Nivel:** Ciencias Económicas, Finanzas y Negocios. Modalidad Presencial (1 hora).
-* **Recursos:** Google Colab (Python) o Microsoft Excel, Pizarras.
-
-**2. Apertura (El Reto - 10 min)**
-
-* **Reto:** Proyecta la pantalla de una terminal de Bloomberg simulada. Tu fondo de inversión ya tiene dos grandes paquetes de acciones (Vector $u$ y Vector $v$) cuyos rendimientos proyectados en 3 escenarios económicos (Optimista, Neutro, Pesimista) están definidos en $\mathbb{R}^3$. El CEO exige incorporar un tercer activo que sirva de "cobertura perfecta": debe tener **cero correlación** (ser ortogonal) con $u$ y con $v$ simultáneamente.
-* **Preguntas Motivadoras:**
-1. Usando el producto punto, podemos saber si dos activos están correlacionados, pero ¿cómo "fabricamos" o descubrimos desde cero un tercer activo que no tenga relación con los otros dos?
-2. Si imaginamos los rendimientos de nuestros dos fondos actuales como un plano, ¿hacia dónde debe apuntar nuestro nuevo fondo para no chocar con ellos?
-3. ¿Qué pasaría con el riesgo de nuestro portafolio si logramos encontrar este activo matemáticamente "perpendicular"?
-
-
-
-**3. Exploración (5 min)**
-
-* En parejas, los estudiantes formulan hipótesis: Si el Fondo $u = (1, 1, 0)$ y el Fondo $v = (0, 1, 1)$, ¿qué números intuitivamente le pondrían al Fondo $w$ para que su producto punto con $u$ y con $v$ sea exactamente cero?
-
-**4. Desarrollo Conceptual (15 min)**
-
-* **La Ecuación (El Creador de Activos):** Introduce la fórmula del producto cruz $u \times v$. Explica que este es un "motor" matemático que toma dos vectores y escupe un tercer vector 100% ortogonal a ambos.
-* **Interpretación Financiera:**
-* *La dirección:* El nuevo vector resultante indica las ponderaciones (pesos) de un portafolio sintético de cobertura.
-* *La magnitud (Área):* $\vert{}u \times v\vert{}$ representa la "prima de diversificación" o el grado de independencia entre los dos activos originales.
-
-
-* **Verificación:** ¿Qué significaría para nuestro portafolio de negocios si al calcular $u \times v$ el resultado es el vector nulo $(0,0,0)$? (Respuesta esperada: Los activos $u$ y $v$ son colineales, se comportan igual; no hay diversificación).
-
-**5. Actividad Guiada y Colaborativa (15 min)**
-
-* Los grupos reciben dos vectores de $\mathbb{R}^3$ que representan flujos de caja de dos proyectos de inversión en tres años distintos.
-* Calculan manualmente el producto cruz para encontrar el "Proyecto C", cuya estructura de flujo de caja proteja a la empresa (sea ortogonal) de las fluctuaciones de los Proyectos A y B.
-* Comprueban la ortogonalidad calculando que $(A \times B) \cdot A = 0$.
-
-**6. Aplicación (10 min)**
-
-* **Reto en Colab/Excel:** Los estudiantes reciben un dataset de 3 escenarios de mercado. Usando `np.cross()` en Python, deben hallar el vector de inversión ortogonal para dos criptomonedas altamente volátiles.
-
-**7. Cierre y Reflexión (3 min)**
-
-* Si el producto cruz nos entrega un activo con pesos negativos en ciertos escenarios, ¿qué acción financiera real representa un "peso negativo" en los mercados? (Posiciones en corto o *short selling*).
-
-**8. Actividad Final de Consolidación (2 min)**
-
-* **One-Minute Paper:** Escribe en un párrafo por qué el producto cruz es una herramienta para la gestión de riesgos y no solo para calcular áreas geométricas.
+* **Tema:** El Producto Vectorial (Cruz), propiedades geométricas, dirección (regla de la mano derecha/tornillo) y aplicaciones en Ingeniería (Torque y Robótica) y Finanzas (Cobertura de Riesgos).
+* **Modalidad y Duración:** Presencial, 70 minutos.
+* **Competencia:** Aplicar el producto vectorial en $\mathbb{R}^3$ para calcular torques mecánicos, evaluar la independencia lineal de sistemas robóticos y diseñar instrumentos de cobertura financiera ortogonales.
 
 ---
 
-### Clase 2: Auditoría de Portafolios y Activos Redundantes (Triple Producto Escalar)
+#### 2. Apertura (10 min): El Reto del Torque y la Rotación
+
+* **El Reto (Contexto Visual):** Proyecta la imagen de un mecánico industrial intentando aflojar un perno atascado con una llave de tuercas.
+* **Preguntas Motivadoras:**
+1. Si empujas el extremo de la llave con una fuerza determinada, ¿hacia dónde se orienta exactamente el resultado de ese esfuerzo y cómo sabe el perno si debe apretarse o aflojarse?
+2. ¿Por qué si empujas la llave exactamente en la misma dirección en la que apunta el mango no logras ningún giro, sin importar cuánta fuerza apliques?
+3. ¿Cómo podemos calcular matemáticamente tanto la **magnitud** de la fuerza de giro como su **dirección espacial exacta** en un entorno tridimensional?
+
+
+
+---
+
+#### 3. Exploración (5 min): Hipótesis de Orientación Física
+
+* **Dinámica en Parejas:** Pide a los estudiantes que usen su antebrazo como el brazo de la llave ($\vec{r}$) y su mano como la fuerza aplicada ($\vec{F}$). Deben simular el empuje y debatir rápidamente hacia dónde "apunta" imaginariamente el eje de giro del perno antes de recibir la teoría formal.
+
+---
+
+#### 4. Desarrollo Conceptual I (15 min): Relación Física, Producto Vectorial y Propiedades
+
+* **La Relación Física (Torque / Momento):**
+* $\vec{r}$ (Vector de Posición): Va desde el pivote (centro del perno) hasta el punto de aplicación de la fuerza.
+* $\vec{F}$ (Vector de Fuerza): La magnitud y dirección del empuje humano o mecánico.
+* El producto cruz genera un nuevo vector llamado **Torque ($\vec{\tau}$)**: $\vec{\tau} = \vec{r} \times \vec{F}$. Este vector no se mueve a lo largo del plano, sino que representa el **eje de rotación**.
+
+
+* **Definición y Dirección (El Tornillo y la Mano):**
+* El producto cruz genera un vector estrictamente **perpendicular** al plano formado por $\vec{r}$ y $\vec{F}$.
+* *Regla de la Mano Derecha / El Tornillo:* Si los dedos giran desde $\vec{r}$ hacia $\vec{F}$, el pulgar (o el avance del tornillo) indica la dirección del vector resultante (hacia adentro o hacia afuera del perno).
+
+
+* **Magnitud y Propiedades:**
+* Magnitud: $\Vert{}\vec{u} \times \vec{v}\Vert{} = \Vert{}\vec{u}\Vert{}\Vert{}\vec{v}\Vert{}\sin(\theta)$. Mide la eficacia máxima del giro (si $\theta = 0^\circ$, el seno es cero y no hay torque).
+* *Propiedad Anticonmutativa:* $\vec{u} \times \vec{v} = -(\vec{v} \times \vec{u})$. Invertir el orden invierte el sentido de giro (aprieta en vez de aflojar).
+
+
+
+---
+
+#### 5. Actividad Guiada y Colaborativa (10 min): Cálculo Exacto de Torque
+
+* **Práctica Deliberada:** Entrega un ejercicio estructurado a los grupos.
+* *Escenario:* Un perno ubicado en el origen recibe un vector de posición $\vec{r} = (0.2, 0.4, 0)$ metros y una fuerza aplicada $\vec{F} = (0, 50, -10)$ Newtons.
+
+
+* **Resolución:** Los estudiantes estructuran el determinante de $3 \times 3$ con los vectores unitarios $\hat{i}, \hat{j}, \hat{k}$:
+
+$$\vec{\tau} = \vec{r} \times \vec{F} = \begin{vmatrix} \hat{i} & \hat{j} & \hat{k} \\ 0.2 & 0.4 & 0 \\ 0 & 50 & -10 \end{vmatrix}$$
+
+
+* **Resultado:** Calculan los componentes y obtienen el vector de torque exacto y su norma para verificar si el perno resistirá la torsión.
+
+---
+
+#### 6. Desarrollo Conceptual y Aplicación II (10 min): Calibración y Control de un Dron
+
+* **El Escenario:** Un dron necesita moverse en $\mathbb{R}^3$. Sus propulsores deben ser linealmente independientes para evitar quedar atrapados en un plano. La magnitud del producto cruz mide el área del paralelogramo, funcionando como un **indicador de independencia espacial**.
+* **Caso 1 (Fallo del Sistema - Dependencia Lineal):**
+* Propulsor 1: $\vec{A} = [2, 4, 0]$ (Noreste).
+* Propulsor 2: $\vec{B} = [4, 8, 0]$ (Exactamente el doble, misma dirección).
+* Cálculo: $\vec{A} \times \vec{B} = [0, 0, (2 \times 8) - (4 \times 4)] = [0, 0, 0]$.
+* *Interpretación:* Magnitud cero. Los propulsores hacen exactamente lo mismo; el dron pierde control direccional.
+
+
+* **Caso 2 (Navegación Correcta - Independencia Lineal):**
+* Propulsor 1: $\vec{A} = [2, 0, 0]$ (Este).
+* Propulsor 3: $\vec{C} = [0, 3, 0]$ (Norte).
+* Cálculo: $\vec{A} \times \vec{C} = [0, 0, (2 \times 3) - (0 \times 0)] = [0, 0, 6]$.
+* *Interpretación:* Magnitud de 6 (área no nula). Los vectores son linealmente independientes, permitiendo navegación tridimensional estable.
+
+
+
+---
+
+#### 7. Aplicación III (15 min): Cobertura de Riesgos en Finanzas
+
+* **El Escenario:** Llevamos el producto cruz a un espacio de escenarios económicos ($x$: Crecimiento/Soleado, $y$: Estabilidad/Nublado, $z$: Crisis/Tormenta) para diseñar coberturas de portafolio.
+* **Activos Base:**
+* Activo Defensivo ($a$): $(0, 0, 2)$ — Refugio que duplica su valor en crisis.
+* Activo Especulativo ($b$): $(3, 0, -2)$ — Gana con la bonanza, pierde en pánico.
+* Índice de Mercado Tradicional ($c$): $(1, 1, 1)$ — Rendimiento constante y moderado.
+
+
+* **El Reto de Cobertura ($w = b \times c$):**
+* Tomamos el Activo Especulativo ($b$) y el Índice Tradicional ($c$ para hallar un nuevo activo sintético $w$ ortogonal a ambos).
+* *Cálculo vectorial:*
+* $x$ (Crecimiento): $(0)(1) - (-2)(1) = \mathbf{2}$
+* $y$ (Estabilidad): $(-2)(1) - (3)(1) = \mathbf{-5}$
+* $z$ (Crisis): $(3)(1) - (0)(1) = \mathbf{3}$
+
+
+* *Vector Resultante de Cobertura:* $w = (2, -5, 3)$
+
+
+* **Interpretación Financiera de los Valores ($x, y, z$):**
+* **$x = 2$ (Crecimiento):** Apuesta en positivo con 2 unidades para mantener el equilibrio con las ganancias del mercado en tiempos buenos.
+* **$y = -5$ (Estabilidad):** *¡El freno de mano!* Apuesta en negativo con 5 unidades (posición corta o *short*). Resta valor cuando el mercado está aburrido para neutralizar la inercia de los otros activos.
+* **$z = 3$ (Crisis):** Apuesta en positivo con 3 unidades. Inyecta ganancias fuertes exactamente cuando el mercado se desploma, rescatando el capital total.
+
+
+
+---
+
+#### 8. Cierre y Reflexión (5 min)
+
+* **Pregunta de Integración:** "¿Qué tienen en común un mecánico apretando un perno, un programador calibrando los propulsores de un dron y un gestor financiero cubriendo un fondo de inversión frente a una crisis?" (Respuesta: Todos utilizan la geometría del producto cruz para controlar direcciones perpendiculares, magnitudes y riesgos en espacios multidimensionales).
+* **Actividad Final de Consolidación (Ticket de Salida):** Cada estudiante escribe en un papel una breve frase explicando cómo la magnitud del producto cruz distingue un sistema físico inútil (como vectores colineales) de un sistema de cobertura financiera exitoso. Se entrega al salir.
+
+## Clase 2: Propiedades del Producto y el Triple Producto Escalar
+
+
+### Plan de Clase (30 Minutos): El Volumen Oculto en los Cristales
 
 **1. Información General**
 
-* **Tema:** Propiedades del producto cruz, el triple producto escalar y su interpretación analítica.
-* **Competencia:** Evaluar la dependencia lineal y la diversificación de un portafolio de tres activos mediante el cálculo del "volumen" financiero (triple producto escalar).
-* **Nivel:** Ciencias Económicas, Finanzas y Negocios. Modalidad Presencial (1 hora).
-* **Recursos:** Pizarras, Google Colab.
+* **Tema:** El Triple Producto Escalar y el cálculo de volúmenes espaciales.
+* **Competencia:** Calcular el triple producto escalar para determinar el volumen de un paralelepípedo, aplicándolo a la viabilidad estructural de una celda cristalina en Ingeniería de Materiales.
+* **Modalidad y Duración:** Presencial, 30 minutos (Cápsula intensiva).
+* **Recursos:** Pizarra, calculadoras/smartphones, apuntes de la clase de producto cruz.
 
-**2. Apertura (El Reto - 10 min)**
+**2. Apertura (El Reto - 5 min)**
 
-* **Reto:** Un banco de inversión te ofrece venderte tres estrategias comerciales diferentes ($u, v, w$) para operar en 3 mercados (Divisas, Bonos, Acciones). Te cobran una comisión altísima argumentando que te ofrecen "cobertura tridimensional total".
+* **Reto:** Proyecta la imagen de un microscopio electrónico mostrando la estructura atómica de un nuevo material para baterías de iones de litio. Informa a los estudiantes que los átomos forman una "celda unitaria" definida por tres vectores: $u, v, w$.
 * **Preguntas Motivadoras:**
-1. ¿Cómo podemos auditar matemáticamente si realmente nos están vendiendo 3 estrategias independientes, o si la tercera es solo una mezcla (combinación lineal) de las dos primeras disfrazada con otro nombre?
-2. Si graficáramos estos tres activos y el "volumen" de la figura que forman fuera cero, ¿estamos siendo estafados?
-3. Si el orden de las estrategias cambia, ¿cambia el nivel de diversificación total?
+1. Si estos tres vectores atómicos están aplastados en un solo plano, ¿cuánto espacio (volumen) tiene el litio para moverse dentro de la batería?
+2. Ya sabemos que el producto cruz ($v \times w$) nos da un área bidimensional. ¿Qué operación matemática le "inyectaría" la tercera dimensión a esa área para convertirla en una caja 3D?
+3. Si la operación matemática arroja un volumen negativo, ¿la materia se está destruyendo o qué significa físicamente?
 
 
 
-**3. Exploración (5 min)**
+**3. Exploración (3 min)**
 
-* Se presentan tres vectores a los grupos. Dos son evidentes ($u=(1,0,0)$ y $v=(0,1,0)$), y el tercero es $w=(2,3,0)$. Se les pide debatir si el vector $w$ aporta alguna información nueva al mercado que no pudieran replicar comprando $u$ y $v$.
+* **Hipótesis Rápida (Think-Pair-Share):** Pide a los estudiantes que miren a su compañero de al lado durante 60 segundos y debatan: *Si el área de la base de nuestra celda de cristal es el vector resultante de $v \times w$ (que apunta hacia arriba), ¿cómo podemos usar el producto escalar (punto) con el tercer vector $u$ para encontrar la altura exacta de la caja?*
 
-**4. Desarrollo Conceptual (15 min)**
+**4. Desarrollo Conceptual (5 min)**
 
-* **Propiedades Analíticas:** Formaliza rápidamente la anticonmutatividad y la distributividad, traduciéndolas a operaciones de portafolio (invertir el orden invierte la posición de largo a corto).
-* **El Triple Producto Escalar:** Define $u \cdot (v \times w)$.
-* **El "Volumen" Financiero:** Explica que este cálculo equivale al determinante de la matriz $3 \times 3$. En negocios, si este volumen es distinto de cero, el portafolio "abarca todo el mercado" (es una base completa). Si el volumen es $0$, los activos son coplanarios: uno de ellos es **redundante**.
+* **La Ecuación Híbrida:** Escribe en la pizarra la fórmula del **Triple Producto Escalar**: $u \cdot (v \times w)$.
+* **Decodificación Geométrica:**
+* **Paso 1:** $v \times w$ calcula el *área de la base* (un paralelogramo) y genera un vector perpendicular.
+* **Paso 2:** Al hacer el producto punto con $u$, estamos multiplicando esa área base por la "sombra" (proyección) de $u$ sobre el eje vertical, lo cual es exactamente la *altura*.
+* **Conclusión:** El valor absoluto $\vert{}u \cdot (v \times w)\vert{}$ es el **volumen del paralelepípedo**. ¡Área de la base por la altura!
 
-**5. Actividad Guiada y Colaborativa (15 min)**
 
-* Los equipos actúan como auditores financieros. Reciben la estructura de los 3 paquetes de inversión del Reto inicial.
-* Paso 1: Calculan el "área base" hallando el producto cruz de $v$ y $w$.
-* Paso 2: Realizan el producto punto con $u$.
-* Paso 3: Diagnostican. Si da $0$, deben redactar un memo alertando que hay un "activo redundante" (oportunidad de arbitraje o cobro indebido de comisiones).
 
-**6. Aplicación (10 min)**
+**5. Actividad Guiada y Colaborativa (10 min)**
 
-* **Modelado Computacional:** Abren Google Colab y programan una función llamada `auditor_arbitraje(u, v, w)` que retorne `"Portafolio Sólido"` si el valor absoluto del triple producto escalar es mayor a un umbral, o `"Alerta: Activos Redundantes"` si es cero. Validan la función con datos proporcionados por el docente.
+* **El Laboratorio Exprés:** Cada trío de estudiantes asume el rol de Ingenieros de Materiales.
+* **Los Datos:** La celda cristalina del material propuesto está definida por los vectores:
+* $u = (1, 0, 2)$
+* $v = (0, 2, 0)$
+* $w = (1, 1, 0)$
+
+
+* **La Misión:**
+1. Un estudiante calcula rápido la base: $v \times w$.
+2. Otro estudiante realiza el producto punto del resultado con $u$.
+3. El tercero audita los cálculos y aplica el valor absoluto para obtener el volumen en nanómetros cúbicos.
+
+
+
+**6. Aplicación (2 min)**
+
+* **Toma de Decisión:** Si el fabricante asiático les envía una propuesta de material barato cuyos vectores base arrojan un triple producto escalar exactamente igual a $0$, ¿aprueban la compra para fabricar baterías 3D o la rechazan de inmediato? (Respuesta: Se rechaza; volumen 0 significa vectores coplanarios, es un material 2D).
 
 **7. Cierre y Reflexión (3 min)**
 
-* En contabilidad corporativa y finanzas, ¿por qué encontrar un "volumen cero" en un sistema de ecuaciones de precios de mercado es el sueño de los analistas cuantitativos que buscan "arbitraje" (ganancias sin riesgo)?
+* **Debate Plenario:** ¿Por qué el triple producto escalar es el "detector de fraudes" definitivo en sistemas de coordenadas de 3 dimensiones? (Descubre dependencias lineales).
 
 **8. Actividad Final de Consolidación (2 min)**
 
-* **Diagrama Lógico:** En la pizarra o cuaderno, construyen un pequeño árbol de decisiones de 3 pasos que un bot de trading usaría, aplicando el triple producto escalar para decidir si comprar un paquete de tres acciones o rechazarlo por redundancia.
+* **Ticket de Salida (Fast-Sketch):** En un trozo de papel, cada estudiante debe dibujar una caja inclinada, etiquetar $u, v, w$, sombrear la base indicando que es $v \times w$, y entregar el papel al salir del aula.
+
+---
+
+### Estructura de las Diapositivas (Apoyo Visual)
+
+Dado que solo tienes 30 minutos, la presentación debe ser ágil y muy visual. No uses viñetas largas.
+
+**Slide 1: Apertura (El Reto del Material)**
+
+* **Visual:** Fotografía en alta resolución (microscopio) de una celda cristalina y una batería de litio moderna.
+* **Texto:** El Reto de Materiales: Tres vectores atómicos. ¿Material revolucionario o fraude geométrico?
+* **Uso:** Mantén esta diapositiva mientras lanzas las 3 preguntas motivadoras.
+
+**Slide 2: Exploración (La Caja Inclinada)**
+
+* **Visual:** Un modelo 3D simple de un paralelepípedo formado por flechas $u, v, w$. La base formada por $v, w$ está resaltada en un color brillante.
+* **Texto:** *Think-Pair-Share* (60 segundos).
+* **Uso:** Sirve como cronómetro visual para que los estudiantes discutan cómo calcular la altura.
+
+**Slide 3: Desarrollo Conceptual (La Ecuación del Volumen)**
+
+* **Visual:** La ecuación en fuente muy grande: **$\vert{}u \cdot (v \times w)\vert{} = \text{Volumen}$**.
+* Una flecha señala a $(v \times w)$ indicando "Área de la base".
+* Otra flecha señala al producto $\cdot$ indicando "Proyección de la Altura".
+
+
+* **Uso:** Explicación magistral mínima (5 minutos). El enfoque visual evita escribir texto explicativo.
+
+**Slide 4: Actividad Guiada (Cálculo de la Celda Cristalina)**
+
+* **Visual:** Los tres vectores atómicos $u = (1, 0, 2)$, $v = (0, 2, 0)$, $w = (1, 1, 0)$ en formato de matriz de $3 \times 3$ (para que visualicen que el triple producto escalar equivale al determinante).
+* **Texto:** ¡Misión de Auditoría! Calculen el volumen en nanómetros cúbicos ($nm^3$).
+* **Uso:** Queda proyectada durante los 10 minutos de trabajo colaborativo.
+
+**Slide 5: Cierre y Ticket de Salida**
+
+* **Visual:** Icono de advertencia o "Sello de Rechazado" sobre un cálculo que da $= 0$.
+* **Texto:**
+* Reflexión: Volumen $0$ = Vectores Coplanarios = Material Bidimensional.
+* **Ticket de Salida:** Dibuja la celda, etiqueta la base y la altura. ¡Entrégalo al salir!
+
+
+* **Uso:** Consolida el aprendizaje y dirige la actividad de cierre antes de que los estudiantes recojan sus pertenencias.
