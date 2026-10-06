@@ -3,227 +3,489 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Semana 10 - Matrices especiales y sistema de ecuaciones</title>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>El Producto Cruz - Definiciones y Ejemplos</title>
+<script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
         :root {
-            --bg-body: #f4f7fb;
-            --bg-wrapper: #ffffff;
-            --text-main: #2c3e50;
-            --card-bg: #f4f6f9;
-            --card-blue-bg: #eef4fb;
-            --card-blue-text: #1565c0;
-            --nav-bg: #2c3e50;
-        }
-        [data-theme="dark"] {
-            --bg-body: #121212;
-            --bg-wrapper: #1e1e1e;
-            --text-main: #e0e0e0;
-            --card-bg: #2a2d32;
-            --card-blue-bg: #1a2736;
-            --card-blue-text: #64b5f6;
-            --nav-bg: #111111;
+            --blue: #005b96;
+            --green: #4caf50;
+            --pink: #e91e63;
+            --bg-color: #f4fbf4;
+            --text-color: #333;
         }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-body);
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
             min-height: 100vh;
-        }
-        .presentation-wrapper { width: 100%; max-width: 900px; }
-        .slides-container {
-            background: var(--bg-wrapper);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-            overflow: hidden;
-            position: relative;
+            overflow-x: hidden;
         }
         .slide {
+            width: min(92vw, 1200px);
+            min-height: calc(100dvh - 140px);
+            margin: 2vh 0;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             display: none;
-            padding: clamp(30px, 5vw, 50px);
-            box-sizing: border-box;
-            min-height: 500px;
             flex-direction: column;
-            justify-content: center;
-            color: var(--text-main);
+            justify-content: flex-start;
+            padding: clamp(30px, 5vw, 60px);
+            box-sizing: border-box;
+            position: relative;
+        }
+        .slides-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 100px;
         }
         .slide.active { display: flex; }
+        
         h1 {
-            border-bottom: 2px solid var(--card-blue-text);
-            padding-bottom: 15px;
-            margin-bottom: 25px;
-            font-size: clamp(1.8rem, 2.5vw, 2.2rem);
-            color: var(--card-blue-text);
+            color: var(--blue);
+            font-size: clamp(1.8rem, 3.5vw, 3rem);
+            margin-bottom: 30px;
             text-align: center;
+            border-bottom: 4px solid var(--green);
+            padding-bottom: 10px;
         }
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 30px;
-            box-sizing: border-box;
-            color: var(--text-main);
-            font-size: 1.2rem;
+        
+        p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
             line-height: 1.6;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
         }
-        .math-block {
-            background-color: var(--card-blue-bg);
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
+
+        .math-eq {
+            font-size: clamp(1.3rem, 2.5vw, 2.2rem);
+            font-family: 'Cambria Math', serif;
+            color: var(--blue);
+            margin: 25px 0;
             text-align: center;
             overflow-x: auto;
         }
-        .nav-bar {
+
+        /* Estilos diferenciadores para Definiciones y Ejemplos */
+        .def-card {
+            background: #fff5f8;
+            border-left: 6px solid var(--pink);
+            padding: 25px 35px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .def-title {
+            color: var(--pink);
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            background: var(--nav-bg);
-            padding: 15px 30px;
-            border-bottom-left-radius: 16px;
-            border-bottom-right-radius: 16px;
-            color: white;
+            gap: 10px;
         }
-        .nav-controls { display: flex; align-items: center; gap: 15px; }
-        .nav-btn {
-            background-color: #1565c0;
-            color: white;
-            border: none;
+
+        .ex-card {
+            background: #f0f8ff;
+            border-left: 6px solid var(--blue);
+            padding: 25px 35px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .ex-title {
+            color: var(--blue);
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .solution-block {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px dashed #b3d4fc;
+        }
+        .solution-title {
+            color: var(--blue);
+            font-weight: bold;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .visual-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Controles de Navegación */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+            backdrop-filter: blur(6px);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 15px;
+            border-radius: 999px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        button {
             padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
+            font-size: 1.1rem;
             font-weight: bold;
-        }
-        .nav-btn:hover { background-color: #0d47a1; }
-        .nav-btn:disabled { background-color: #555; cursor: not-allowed; }
-        .theme-toggle {
-            background: transparent;
-            border: 2px solid white;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 8px;
             cursor: pointer;
-            font-weight: bold;
+            border: 2px solid var(--green);
+            border-radius: 999px;
+            background-color: white;
+            color: var(--blue);
+            transition: all 0.2s ease;
         }
+        button:hover { background-color: var(--green); color: white; transform: translateY(-2px); }
+
+        /* Tema oscuro */
+        body.dark-theme { --bg-color: #121212; --text-color: #e0e0e0; --blue: #64b5f6; --pink: #f48fb1; }
+        body.dark-theme .slide { background: #1e1e1e; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        body.dark-theme .def-card { background: #311b22; }
+        body.dark-theme .ex-card { background: #1a2a3a; }
+        body.dark-theme .controls { background: rgba(30, 30, 30, 0.9); }
+        body.dark-theme button { background-color: #333; border-color: var(--blue); color: white; }
     </style>
 </head>
-<body data-theme="light">
-<div class="presentation-wrapper">
+<body>
+
     <div class="slides-container">
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 1: DEFINICIÓN PRODUCTO CRUZ -->
+        <!-- ========================================== -->
         <div class="slide active">
-            <h1>Semana 10 - Matrices especiales y sistemas</h1>
-            <div class="card">
-                <p><strong>Objetivo:</strong> estudiar matrices especiales y su relación con sistemas de ecuaciones lineales.</p>
-                <p>Se revisan la transpuesta, simetría, inversa y la forma matricial de un sistema.</p>
-            </div>
-        </div>
+            <h1>El Producto Cruz en el Espacio</h1>
+            
+            <p>Se define un nuevo producto, llamado producto cruz o producto vectorial, que está definido sólo en \(\mathbb{R}^3\).</p>
 
-        <div class="slide">
-            <h1>Transpuesta de una matriz</h1>
-            <div class="card">
-                <p>La transpuesta de una matriz cambia filas por columnas.</p>
-                <div class="math-block">
-                    \[ (A^T)_{ij} = a_{ji} \]
+            <div class="def-card">
+                <div class="def-title">Definición: Producto Cruz</div>
+                <p>Sean \(\mathbf{u} = a_1\mathbf{i} + b_1\mathbf{j} + c_1\mathbf{k}\) y \(\mathbf{v} = a_2\mathbf{i} + b_2\mathbf{j} + c_2\mathbf{k}\). Entonces el producto cruz de \(\mathbf{u}\) y \(\mathbf{v}\), denotado por \(\mathbf{u} \times \mathbf{v}\), es un nuevo vector definido por la expresión algebraica:</p>
+                
+                <div class="math-eq" style="color: var(--pink);">
+                    $$ \mathbf{u} \times \mathbf{v} = (b_1c_2 - c_1b_2)\mathbf{i} + (c_1a_2 - a_1c_2)\mathbf{j} + (a_1b_2 - b_1a_2)\mathbf{k} $$
                 </div>
-                <p>Es útil para identificar propiedades como simetría y antisimetría.</p>
             </div>
+            
+            <p style="text-align: center; color: #666; font-style: italic;">El resultado de esta operación es un vector, a diferencia del producto escalar que arroja un número.</p>
         </div>
 
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 2: EJEMPLO PRODUCTO CRUZ -->
+        <!-- ========================================== -->
         <div class="slide">
-            <h1>Matrices simétricas</h1>
-            <div class="card">
-                <p>Una matriz es simétrica si \(A = A^T\).</p>
-                <div class="math-block">
-                    \[ a_{ij} = a_{ji} \]
+            <h1>Aplicación de la Fórmula Algebraica</h1>
+
+            <div class="ex-card">
+                <div class="ex-title">Ejemplo: Cálculo del producto cruz</div>
+                <p>Sean los vectores \(\mathbf{u} = \mathbf{i} - \mathbf{j} + 2\mathbf{k}\) y \(\mathbf{v} = 2\mathbf{i} + 3\mathbf{j} - 4\mathbf{k}\). Calcule el nuevo vector \(\mathbf{w} = \mathbf{u} \times \mathbf{v}\).</p>
+                
+                <div class="solution-block">
+                    <div class="solution-title">Solución</div>
+                    <p>Aplicando directamente la fórmula de los coeficientes, se agrupan los términos para cada componente espacial:</p>
+                    <div class="math-eq">
+                        \(\mathbf{w} = [(-1)(-4) - (2)(3)]\mathbf{i} + [(2)(2) - (1)(-4)]\mathbf{j} + [(1)(3) - (-1)(2)]\mathbf{k}\)
+                    </div>
+                    <div class="math-eq" style="font-weight: bold;">
+                        \(\mathbf{w} = -2\mathbf{i} + 8\mathbf{j} + 5\mathbf{k}\)
+                    </div>
                 </div>
-                <p>Las matrices simétricas aparecen con frecuencia en geometría y estadística.</p>
             </div>
+
+            <p style="text-align: center;">El vector resultante \(\mathbf{w}\) es ortogonal tanto al vector \(\mathbf{u}\) como al vector \(\mathbf{v}\).</p>
         </div>
 
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 3: DEFINICIÓN DETERMINANTE -->
+        <!-- ========================================== -->
         <div class="slide">
-            <h1>Matriz inversa</h1>
-            <div class="card">
-                <p>Una matriz cuadrada \(A\) es invertible si existe \(A^{-1}\) tal que \(A A^{-1} = I\).</p>
-                <div class="math-block">
-                    \[ A^{-1}A = I \]
+            <h1>Regla Mnemotécnica del Determinante</h1>
+
+            <p>Existe una forma sencilla de calcular el producto cruz usando determinantes. Aunque en realidad no se tiene un determinante formal porque \(\mathbf{i}, \mathbf{j}\) y \(\mathbf{k}\) no son números, esta notación ayuda a recordar el cálculo.</p>
+
+            <div class="def-card">
+                <div class="def-title">Definición: Notación de Determinante</div>
+                <div class="math-eq" style="color: var(--pink);">
+                    $$ \mathbf{u} \times \mathbf{v} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ a_1 & b_1 & c_1 \\ a_2 & b_2 & c_2 \end{vmatrix} $$
                 </div>
-                <p>La inversa permite resolver sistemas lineales de manera directa.</p>
-            </div>
-        </div>
-
-        <div class="slide">
-            <h1>Sistemas de ecuaciones</h1>
-            <div class="card">
-                <p>Un sistema lineal puede escribirse como:</p>
-                <div class="math-block">
-                    \[ Ax = b \]
+                
+                <p>Al desarrollar este determinante por su primera fila, se obtienen los determinantes menores:</p>
+                
+                <div class="math-eq">
+                    $$ \mathbf{i}\begin{vmatrix} b_1 & c_1 \\ b_2 & c_2 \end{vmatrix} - \mathbf{j}\begin{vmatrix} a_1 & c_1 \\ a_2 & c_2 \end{vmatrix} + \mathbf{k}\begin{vmatrix} a_1 & b_1 \\ a_2 & b_2 \end{vmatrix} $$
                 </div>
-                <p>Donde \(A\) es la matriz de coeficientes, \(x\) es el vector de incógnitas y \(b\) es el vector de términos independientes.</p>
             </div>
         </div>
 
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 4: EJEMPLO DETERMINANTE -->
+        <!-- ========================================== -->
         <div class="slide">
-            <h1>Eliminación gaussiana</h1>
-            <div class="card">
-                <p>La eliminación gaussiana reduce la matriz a una forma triangular para resolver el sistema.</p>
-                <ul>
-                    <li>Hacer ceros debajo de la diagonal</li>
-                    <li>Resolver por sustitución regresiva</li>
-                    <li>Interpretar la solución geométrica</li>
-                </ul>
+            <h1>Cálculo Operativo con Matrices</h1>
+
+            <div class="ex-card">
+                <div class="ex-title">Ejemplo: Uso del determinante</div>
+                <p>Calcule \(\mathbf{u} \times \mathbf{v}\), donde \(\mathbf{u} = 2\mathbf{i} + 4\mathbf{j} - 5\mathbf{k}\) y \(\mathbf{v} = -3\mathbf{i} - 2\mathbf{j} + \mathbf{k}\).</p>
+                
+                <div class="solution-block">
+                    <div class="solution-title">Solución</div>
+                    <p>Se construye el determinante colocando los vectores base en la primera fila, y los coeficientes en las filas inferiores:</p>
+                    <div class="math-eq">
+                        $$ \mathbf{u} \times \mathbf{v} = \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ 2 & 4 & -5 \\ -3 & -2 & 1 \end{vmatrix} $$
+                    </div>
+                    <div class="math-eq">
+                        $$ = (4 - 10)\mathbf{i} - (2 - 15)\mathbf{j} + (-4 + 12)\mathbf{k} $$
+                    </div>
+                    <div class="math-eq" style="font-weight: bold;">
+                        $$ = -6\mathbf{i} + 13\mathbf{j} + 8\mathbf{k} $$
+                    </div>
+                </div>
             </div>
         </div>
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 5: DEFINICIÓN PROPIEDADES -->
+        <!-- ========================================== -->
+        <div class="slide">
+            <h1>El Comportamiento del Producto</h1>
+
+            <p>El producto cruz posee características algebraicas únicas que lo diferencian de la multiplicación tradicional.</p>
+
+            <div class="def-card">
+                <div class="def-title">Definición: Propiedades Fundamentales</div>
+                <p>Sean \(\mathbf{u}, \mathbf{v}\) y \(\mathbf{w}\) tres vectores en \(\mathbb{R}^3\). Se establecen las siguientes reglas:</p>
+                
+                <div style="font-size: 1.3rem; margin-left: 20px; color: var(--pink);">
+                    <p><strong>Anticonmutatividad:</strong> \(\mathbf{u} \times \mathbf{v} = -(\mathbf{v} \times \mathbf{u})\)</p>
+                    <p><strong>Distributividad:</strong> \(\mathbf{u} \times (\mathbf{v} + \mathbf{w}) = (\mathbf{u} \times \mathbf{v}) + (\mathbf{u} \times \mathbf{w})\)</p>
+                    <p><strong>Ortogonalidad:</strong> \(\mathbf{u} \cdot (\mathbf{u} \times \mathbf{v}) = 0\). Es decir, el producto cruz es ortogonal tanto a \(\mathbf{u}\) como a \(\mathbf{v}\).</p>
+                    <p><strong>Paralelismo:</strong> Si los vectores no son cero, son paralelos si y sólo si \(\mathbf{u} \times \mathbf{v} = \mathbf{0}\).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 6: DEFINICIÓN DIRECCIÓN (Mano Derecha) -->
+        <!-- ========================================== -->
+        <div class="slide">
+            <h1>Orientación Espacial del Vector</h1>
+
+            <p>Siempre habrá dos vectores unitarios ortogonales a \(\mathbf{u}\) y \(\mathbf{v}\), apuntando en direcciones opuestas (\(\mathbf{n}\) y \(-\mathbf{n}\)).</p>
+
+            <div class="def-card">
+                <div class="def-title">Definición: Regla de la Mano Derecha</div>
+                <p>La dirección exacta del vector \(\mathbf{u} \times \mathbf{v}\) se determina con la mano derecha. Si se coloca la mano de manera que el índice apunte en la dirección de \(\mathbf{u}\) y el dedo medio en la dirección de \(\mathbf{v}\), entonces el pulgar apuntará en la dirección de \(\mathbf{u} \times \mathbf{v}\).</p>
+            </div>
+
+            <div class="visual-container">
+                <!-- Gráfico de los vectores ortogonales -->
+                <svg viewBox="-50 -50 300 200" width="350">
+                    <line x1="100" y1="100" x2="250" y2="100" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+                    <text x="260" y="105" font-style="italic">y</text>
+                    <line x1="100" y1="100" x2="100" y2="-30" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+                    <text x="95" y="-40" font-style="italic">z</text>
+                    <line x1="100" y1="100" x2="20" y2="160" stroke="black" stroke-width="2" marker-end="url(#arrow)" />
+                    <text x="10" y="170" font-style="italic">x</text>
+                    
+                    <line x1="100" y1="100" x2="160" y2="60" stroke="var(--pink)" stroke-width="3" marker-end="url(#arrow-pink)" />
+                    <text x="165" y="55" font-weight="bold">u</text>
+                    <line x1="100" y1="100" x2="80" y2="30" stroke="var(--pink)" stroke-width="3" marker-end="url(#arrow-pink)" />
+                    <text x="70" y="25" font-weight="bold">v</text>
+                    
+                    <line x1="100" y1="100" x2="100" y2="160" stroke="var(--blue)" stroke-width="3" marker-end="url(#arrow-blue)" />
+                    <text x="110" y="155" font-weight="bold">-n</text>
+                    <line x1="100" y1="100" x2="100" y2="40" stroke="var(--blue)" stroke-width="3" marker-end="url(#arrow-blue)" />
+                    <text x="110" y="45" font-weight="bold">n</text>
+                </svg>
+            </div>
+
+            <svg style="width:0; height:0; position:absolute;">
+                <defs>
+                    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 2 L 10 5 L 0 8 z" fill="black" /></marker>
+                    <marker id="arrow-pink" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 2 L 10 5 L 0 8 z" fill="var(--pink)" /></marker>
+                    <marker id="arrow-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 2 L 10 5 L 0 8 z" fill="var(--blue)" /></marker>
+                </defs>
+            </svg>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 7: DEFINICIÓN MAGNITUD Y ÁREA -->
+        <!-- ========================================== -->
+        <div class="slide">
+            <h1>Interpretación Cuantitativa</h1>
+
+            <p>Una vez estudiada la dirección, se analiza la magnitud geométrica del producto cruz.</p>
+
+            <div class="def-card">
+                <div class="def-title">Definición: Magnitud y Área</div>
+                <p>Si \(\varphi\) es un ángulo entre \(\mathbf{u}\) y \(\mathbf{v}\), entonces la magnitud se define como:</p>
+                <div class="math-eq" style="color: var(--pink);">
+                    $$ |\mathbf{u} \times \mathbf{v}| = |\mathbf{u}| |\mathbf{v}| \sin \varphi $$
+                </div>
+                <p>Geométricamente, el área del paralelogramo que tiene lados adyacentes \(\mathbf{u}\) y \(\mathbf{v}\) es exactamente igual a la magnitud de su producto cruz.</p>
+            </div>
+
+            <div class="visual-container">
+                <!-- Paralelogramo SVG -->
+                <svg viewBox="0 0 300 200" width="300">
+                    <!-- Vectores Base -->
+                    <line x1="50" y1="150" x2="200" y2="150" stroke="black" stroke-width="3" marker-end="url(#arrow)" />
+                    <text x="120" y="170" font-weight="bold">u</text>
+                    <line x1="50" y1="150" x2="100" y2="50" stroke="black" stroke-width="3" marker-end="url(#arrow)" />
+                    <text x="60" y="100" font-weight="bold">v</text>
+                    
+                    <!-- Proyecciones Paralelogramo -->
+                    <line x1="200" y1="150" x2="250" y2="50" stroke="black" stroke-width="2" stroke-dasharray="6,4" />
+                    <line x1="100" y1="50" x2="250" y2="50" stroke="black" stroke-width="2" stroke-dasharray="6,4" />
+                    
+                    <!-- Altura -->
+                    <line x1="100" y1="50" x2="100" y2="150" stroke="var(--blue)" stroke-width="2" stroke-dasharray="4,4" />
+                    <text x="110" y="110" fill="var(--blue)" font-style="italic">|v| sen φ</text>
+                    
+                    <!-- Ángulo -->
+                    <path d="M 80 150 A 30 30 0 0 0 65 120" fill="none" stroke="black" stroke-width="2" />
+                    <text x="85" y="140" font-style="italic">φ</text>
+                </svg>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 8: EJEMPLO ÁREA -->
+        <!-- ========================================== -->
+        <div class="slide">
+            <h1>Aplicación Superficial</h1>
+
+            <div class="ex-card">
+                <div class="ex-title">Ejemplo: Cálculo del área de un paralelogramo en \(\mathbb{R}^3\)</div>
+                <p>Encuentre el área del paralelogramo con vértices consecutivos en \(P = (1, 3, -2)\), \(Q = (2, 1, 4)\) y \(R = (-3, 1, 6)\).</p>
+                
+                <div class="solution-block">
+                    <div class="solution-title">Solución</div>
+                    <p>Primero, se determinan los vectores direccionales de los lados adyacentes \(\vec{PQ}\) y \(\vec{QR}\). Luego, se calcula el determinante de su producto cruz:</p>
+                    
+                    <div class="math-eq">
+                        $$ \text{Área} = |\vec{PQ} \times \vec{QR}| = |(\mathbf{i} - 2\mathbf{j} + 6\mathbf{k}) \times (-5\mathbf{i} + 2\mathbf{k})| $$
+                    </div>
+                    <div class="math-eq">
+                        $$ = \left| \begin{vmatrix} \mathbf{i} & \mathbf{j} & \mathbf{k} \\ 1 & -2 & 6 \\ -5 & 0 & 2 \end{vmatrix} \right| = |-4\mathbf{i} - 32\mathbf{j} - 10\mathbf{k}| $$
+                    </div>
+                    <div class="math-eq" style="font-weight: bold;">
+                        $$ = \sqrt{1140} \text{ unidades cuadradas.} $$
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- DIAPOSITIVA 9: DEFINICIÓN TRIPLE PRODUCTO ESCALAR -->
+        <!-- ========================================== -->
+        <div class="slide">
+            <h1>La Dimensión del Volumen</h1>
+
+            <p>Sean \(\mathbf{u}, \mathbf{v}\) y \(\mathbf{w}\) tres vectores que no están en el mismo plano. Entonces forman los lados de un sólido espacial.</p>
+
+            <div class="def-card">
+                <div class="def-title">Definición: El Triple Producto Escalar</div>
+                <p>Los tres vectores determinan un paralelepípedo geométrico. Su volumen equivale al valor absoluto de la operación combinada de punto y cruz:</p>
+                
+                <div class="math-eq" style="color: var(--pink);">
+                    $$ \text{Volumen} = |(\mathbf{u} \times \mathbf{v}) \cdot \mathbf{w}| $$
+                </div>
+                <p>El área de la base está dada por la magnitud del producto cruz, mientras que la altura es la proyección del vector restante.</p>
+            </div>
+
+            <div class="visual-container">
+                <!-- Paralelepípedo SVG -->
+                <svg viewBox="0 0 400 250" width="350">
+                    <!-- Base inferior -->
+                    <polygon points="100,200 250,200 320,130 170,130" fill="none" stroke="black" stroke-width="2" />
+                    <!-- Base superior -->
+                    <polygon points="150,100 300,100 370,30 220,30" fill="none" stroke="black" stroke-width="2" stroke-dasharray="4,4" />
+                    <!-- Aristas verticales -->
+                    <line x1="100" y1="200" x2="150" y2="100" stroke="black" stroke-width="2" />
+                    <line x1="250" y1="200" x2="300" y2="100" stroke="black" stroke-width="2" />
+                    <line x1="320" y1="130" x2="370" y2="30" stroke="black" stroke-width="2" />
+                    <line x1="170" y1="130" x2="220" y2="30" stroke="black" stroke-width="2" stroke-dasharray="4,4" />
+                    
+                    <!-- Vectores directores -->
+                    <line x1="100" y1="200" x2="250" y2="200" stroke="var(--pink)" stroke-width="3" marker-end="url(#arrow-pink)" />
+                    <text x="160" y="195" font-weight="bold" fill="var(--pink)">u</text>
+                    <line x1="100" y1="200" x2="170" y2="130" stroke="var(--pink)" stroke-width="3" marker-end="url(#arrow-pink)" />
+                    <text x="145" y="160" font-weight="bold" fill="var(--pink)">v</text>
+                    <line x1="100" y1="200" x2="150" y2="100" stroke="var(--pink)" stroke-width="3" marker-end="url(#arrow-pink)" />
+                    <text x="115" y="140" font-weight="bold" fill="var(--pink)">w</text>
+                    
+                    <!-- Vector Altura / Producto Cruz -->
+                    <line x1="100" y1="200" x2="100" y2="80" stroke="var(--blue)" stroke-width="2" marker-end="url(#arrow-blue)" />
+                    <text x="50" y="140" font-weight="bold" fill="var(--blue)">u × v</text>
+                </svg>
+            </div>
+        </div>
+
     </div>
 
-    <div class="nav-bar">
-        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)" disabled>Anterior</button>
-        <div class="nav-controls">
-            <button class="theme-toggle" onclick="toggleTheme()">Modo Oscuro</button>
-            <span id="slide-indicator">Diapositiva 1 de 6</span>
-        </div>
-        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Siguiente</button>
+    <!-- Controles -->
+    <div class="controls">
+        <button onclick="prevSlide()">Anterior</button>
+        <button onclick="nextSlide()">Siguiente</button>
+        <button onclick="toggleTheme()">Modo Oscuro</button>
     </div>
-</div>
 
-<script>
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const indicator = document.getElementById('slide-indicator');
-    const prevBtn = document.getElementById('prev-btn');
-    const nextBtn = document.getElementById('next-btn');
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let currentSlideIndex = 0;
 
-    function updateSlide() {
-        slides.forEach((slide, index) => slide.classList.toggle('active', index === currentSlide));
-        indicator.textContent = `Diapositiva ${currentSlide + 1} de ${slides.length}`;
-        prevBtn.disabled = currentSlide === 0;
-        nextBtn.disabled = currentSlide === slides.length - 1;
-        if (window.MathJax) MathJax.typesetPromise();
-    }
-
-    function changeSlide(direction) {
-        currentSlide += direction;
-        if (currentSlide < 0) currentSlide = 0;
-        if (currentSlide >= slides.length) currentSlide = slides.length - 1;
-        updateSlide();
-    }
-
-    function toggleTheme() {
-        const body = document.body;
-        const themeBtn = document.querySelector('.theme-toggle');
-        if (body.getAttribute('data-theme') === 'light') {
-            body.setAttribute('data-theme', 'dark');
-            themeBtn.textContent = 'Modo Claro';
-        } else {
-            body.setAttribute('data-theme', 'light');
-            themeBtn.textContent = 'Modo Oscuro';
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlideIndex = 0;
+            else if (index < 0) currentSlideIndex = slides.length - 1;
+            else currentSlideIndex = index;
+            slides[currentSlideIndex].classList.add('active');
+            window.scrollTo(0,0);
         }
-    }
 
-    updateSlide();
-</script>
+        function nextSlide() { showSlide(currentSlideIndex + 1); }
+        function prevSlide() { showSlide(currentSlideIndex - 1); }
+        function toggleTheme() { document.body.classList.toggle('dark-theme'); }
+
+        showSlide(currentSlideIndex);
+
+        // Soporte básico para teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
 </body>
 </html>
