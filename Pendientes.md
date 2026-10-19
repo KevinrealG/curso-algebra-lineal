@@ -1,3 +1,2 @@
-2. Calificar Informe 3
+2. Calificar Informe 3, 4 y 5
 3. calficar taller y parciales
-4. diseño del parcial

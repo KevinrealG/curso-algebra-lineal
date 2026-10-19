@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Álgebra Lineal UTB</title>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .download-btn {
+        display: inline-block;
+        background-color: var(--primary);
+        color: #fff;
+        text-decoration: none;
+        padding: 0.75rem 1.25rem;
+        border-radius: 10px;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        transition: background-color 0.2s ease;
+    }
+    .download-btn:hover {
+        background-color: #003d6e;
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+        margin-top: 1rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Álgebra Lineal · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 6: Vectores, producto cruz y producto mixto aplicados a dietas.</h2>
+<p>Aplicación de conceptos vectoriales al perfilamiento de alimentos, diseño de dietas y diversidad nutricional.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#objetivos">Objetivos de la Guía</a></li>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#recomendaciones">Recomendaciones Generales</a></li>
+<li><a href="#teoria">Contenidos Teóricos</a></li>
+<li><a href="#metodologia">Metodología del Laboratorio</a></li>
+<li><a href="#asignacion">Asignación de Tripletas</a></li>
+<li><a href="#datos">Descripción de la Base de Datos</a></li>
+<li><a href="#entorno">Configuración del Entorno</a></li>
+<li><a href="#desarrollo">Desarrollo del Laboratorio</a></li>
+<li><a href="#preinforme">Preinforme</a></li>
+<li><a href="#informe">Informe</a></li>
+<li><a href="#evaluacion">Rúbrica de Evaluación</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="objetivos" class="section card">
+    <h2 class="section-title">Objetivos de la Guía</h2>
+    <ul>
+        <li>Comprender la representación de vectores en $R^2$, $R^3$ y $R^7$ y su aplicación al perfilamiento de alimentos.</li>
+        <li>Calcular vectores unitarios, ángulos entre vectores y cosenos directores.</li>
+        <li>Calcular la proyección de un vector sobre otro e interpretarla como similitud de características.</li>
+        <li>Calcular el producto cruz y el producto mixto en $R^3$ e interpretarlos como medidas de redundancia y diversidad nutricional.</li>
+        <li>Agrupar alimentos por similitud angular y diseñar dietas según objetivos nutricionales.</li>
+        <li>Utilizar Python (Pandas, NumPy, SymPy, Matplotlib) para realizar operaciones vectoriales y visualizar resultados.</li>
+    </ul>
+</section>
+
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li><strong>Competencia matemática:</strong> Aplicar conceptos vectoriales para modelar y resolver problemas de nutrición.</li>
+        <li><strong>Competencia digital:</strong> Usar Google Colab y librerías científicas de Python para calcular, demostrar y visualizar.</li>
+        <li><strong>Competencia analítica:</strong> Interpretar geométricamente las operaciones vectoriales en contextos reales y reconocer el efecto de las unidades de medida.</li>
+        <li><strong>Competencia comunicativa:</strong> Elaborar informes técnicos que documenten procedimientos, resultados y conclusiones.</li>
+        <li><strong>Competencia autónoma:</strong> Gestionar el tiempo de trabajo y aprender de manera independiente mediante la documentación de librerías.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Representar alimentos como vectores en $R^7$ y calcular sus vectores unitarios.</li>
+        <li>Calcular ángulos entre vectores e interpretar el coseno como medida de similitud entre perfiles.</li>
+        <li>Calcular proyecciones y componentes ortogonales para identificar redundancia y complementariedad.</li>
+        <li>Calcular cosenos y ángulos directores en $R^3$.</li>
+        <li>Calcular el producto cruz y el producto mixto e interpretarlos nutricionalmente con medidas relativas.</li>
+        <li>Agrupar alimentos por similitud angular y diseñar dietas según objetivos.</li>
+    </ul>
+</section>
+
+<section id="recomendaciones" class="section card">
+    <h2 class="section-title">Recomendaciones Generales</h2>
+    <ul>
+        <li>El laboratorio se realiza en parejas, con la tripleta de alimentos (A, B, C) que asigne el docente.</li>
+        <li>Se debe entregar un preinforme al final de la sesión con los resultados de la tripleta asignada (P1 a P5).</li>
+        <li>El informe final (P6 a P12, con interpretación, conclusiones y recomendaciones) se entrega en PDF, con el enlace del cuaderno, en el plazo de una semana.</li>
+        <li>Use Google Colab (<a href="https://colab.research.google.com" target="_blank">https://colab.research.google.com</a>) y guarde su cuaderno en su unidad de Google Drive.</li>
+        <li>
+            <a class="download-btn" href="Alimentos_Dietas.xlsx" download>
+                Descargar archivo: Alimentos_Dietas.xlsx
+            </a>
+        </li>
+    </ul>
+</section>
+
+<section id="teoria" class="section card">
+    <h2 class="section-title">CONTENIDOS TEÓRICOS</h2>
+    <h3 style="color: var(--primary);">1. Significado de cada columna de características</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Columna</th>
+                <th>Unidad / Escala</th>
+                <th>Significado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Proteina</td><td>g / 100 g</td><td>Proteína aportada. Esencial para crecimiento y reparación de tejidos.</td></tr>
+            <tr><td>Calorias</td><td>kcal / 100 g</td><td>Energía total aportada por el alimento.</td></tr>
+            <tr><td>Grasas</td><td>g / 100 g</td><td>Contenido de lípidos. Energía concentrada; en exceso riesgo cardiovascular.</td></tr>
+            <tr><td>Vitaminas</td><td>escala 1–10</td><td>Riqueza relativa en vitaminas (A, B, C, D, E, K).</td></tr>
+            <tr><td>Minerales</td><td>escala 1–10</td><td>Riqueza relativa en minerales (Ca, Fe, Zn, Mg, K).</td></tr>
+            <tr><td>Agua</td><td>%</td><td>Proporción de agua. Influye en saciedad e hidratación.</td></tr>
+            <tr><td>Origen_Natural</td><td>escala 0–1</td><td>0 = altamente procesado; 1 = totalmente natural.</td></tr>
+            <tr><td>Region_Disponible</td><td>una de 10 regiones</td><td>Región del mundo donde el alimento se encuentra disponible en mayor proporción.</td></tr>
+        </tbody>
+    </table>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">2. Matriz de características y normalización por columna</h3>
+    <p>La matriz A ($40 \times 7$) tiene un alimento por fila y una característica numérica por columna. Las columnas están en escalas muy distintas: las calorías llegan a cientos de kcal y las vitaminas van de 1 a 10. Para comparar perfiles, cada columna se divide por su norma:<br>
+    $\hat{a}_j = \frac{a_j}{\|a_j\|} \quad \text{(donde } a_j \text{ es la columna j de A)}$<br>
+    Sin normalizar, la columna de calorías domina cualquier cálculo de ángulos, proyecciones o volúmenes.</p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">3. Vector unitario y coseno del ángulo</h3>
+    <p>$\hat{u} = \frac{u}{\|u\|} \quad \cos \theta = \frac{u \cdot v}{\|u\| \|v\|} = \hat{u} \cdot \hat{v}$</p>
+    <p>El coseno mide qué tan parecida es la dirección de dos perfiles: vale 1 si son paralelos y 0 si son perpendiculares. Como todas las características son positivas, los ángulos entre alimentos están entre 0° y 90°. En esta guía se llama «correlación» a este coseno; no debe confundirse con el coeficiente de correlación de Pearson, que se calcula sobre datos centrados en la media.</p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">4. Proyección como medida de similitud</h3>
+    <p>$proy_v(u) = \left( \frac{u \cdot v}{\|v\|^2} \right) v \quad u^\perp = u - proy_v(u)$</p>
+    <ul>
+        <li><strong>Proyección grande</strong> (cercana a u): los alimentos comparten muchas características; son similares o redundantes.</li>
+        <li><strong>Proyección pequeña:</strong> comparten pocas características.</li>
+        <li><strong>Proyección igual al vector nulo</strong> ($u \cdot v = 0$): no comparten características; se complementan.</li>
+        <li><strong>Componente ortogonal $u^\perp$:</strong> parte del perfil de u que no se explica por v. Si es grande, u aporta características propias que no se encuentran en v.</li>
+    </ul>
+    <p>La proyección relativa $\|proy_v(u)\| / \|u\|$ es igual a $|\cos \theta|$.</p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">5. Cosenos y ángulos directores</h3>
+    <p>$\cos \alpha = \frac{v_1}{\|v\|} \quad \cos \beta = \frac{v_2}{\|v\|} \quad \cos \gamma = \frac{v_3}{\|v\|} \quad \cos^2\alpha + \cos^2\beta + \cos^2\gamma = 1$</p>
+    <p>El ángulo director más pequeño indica el eje con el que el vector está más alineado. Con datos en unidades distintas, ese eje puede dominar solo por su escala.</p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">6. Producto cruz y producto mixto</h3>
+    <p>$u \times v = (u_2v_3 - u_3v_2, u_3v_1 - u_1v_3, u_1v_2 - u_2v_1) \quad \|u \times v\| = \|u\| \|v\| \operatorname{sen} \theta$</p>
+    <p>$\|u \times v\|$ es el área del paralelogramo formado por u y v; $|u \cdot (v \times w)|$ es el volumen del paralelepípedo formado por los tres vectores. Un volumen cercano a cero indica que los tres vectores son casi coplanarios (redundancia nutricional); un volumen grande, que son mutuamente independientes (mayor diversidad nutricional).</p>
+    <p>Estos valores dependen de las unidades, así que para interpretarlos se comparan con su máximo posible:<br>
+    $\operatorname{sen} \theta = \frac{\|v \times w\|}{\|v\| \|w\|} \quad \text{volumen relativo} = \frac{|u \cdot (v \times w)|}{\|u\| \|v\| \|w\|}$<br>
+    Ambos valen 0 cuando los vectores son dependientes y 1 cuando son mutuamente perpendiculares.</p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">7. Cinco tipos de dietas (definidas por objetivo, no por región)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Dieta</th>
+                <th>Objetivo</th>
+                <th>Características dominantes</th>
+                <th>Restricciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>A: Salud general</strong></td>
+                <td>Prevenir enfermedades crónicas</td>
+                <td>Vitaminas, minerales, origen natural, agua</td>
+                <td>$\ge 4$ grupos; evitar procesados con Origen_Natural $< 0.5$</td>
+            </tr>
+            <tr>
+                <td><strong>B: Forma física</strong></td>
+                <td>Aumentar masa muscular</td>
+                <td>Proteína alta, grasas bajas</td>
+                <td>Proteina $> 15$ g y Grasas $< 10$ g</td>
+            </tr>
+            <tr>
+                <td><strong>C: Evento social</strong></td>
+                <td>Comida variada y atractiva</td>
+                <td>Agua alta, calorías bajas</td>
+                <td>$\ge 3$ grupos; evitar Calorias $> 400$ kcal</td>
+            </tr>
+            <tr>
+                <td><strong>D: Económica</strong></td>
+                <td>Bajo costo y disponibilidad local</td>
+                <td>Origen natural, disponibilidad regional</td>
+                <td>Origen_Natural $> 0.5$ y alta disponibilidad</td>
+            </tr>
+            <tr>
+                <td><strong>E: Deportistas</strong></td>
+                <td>Energía y recuperación muscular</td>
+                <td>Calorías altas, proteína alta, minerales</td>
+                <td>Calorias $> 150$ kcal y Proteina $> 10$ g</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="metodologia" class="section card">
+    <h2 class="section-title">METODOLOGÍA DEL LABORATORIO</h2>
+    <ul>
+        <li>Conformar parejas de trabajo y asignar roles (conductor y navegante).</li>
+        <li>Crear un cuaderno en Google Colab: <code>Lab6_Vectores_Dietas_X.ipynb</code> (X = número de pareja).</li>
+        <li>Importar las librerías Pandas, NumPy, SymPy y Matplotlib.</li>
+        <li>Leer la introducción teórica y estudiar el ejemplo resuelto.</li>
+        <li>Recibir la tripleta de alimentos (A, B, C) asignada por el docente.</li>
+        <li>Desarrollar el ejemplo resuelto paso a paso, adaptándolo a la tripleta asignada.</li>
+        <li>Responder el preinforme (P1 a P5) durante la sesión.</li>
+        <li>Responder el informe final (P6 a P12) fuera de la sesión.</li>
+        <li>Documentar cada paso, resultado e interpretación en el notebook y compartirlo mediante enlace de Google Colab.</li>
+    </ul>
+</section>
+
+<section id="asignacion" class="section card">
+    <h2 class="section-title">ASIGNACIÓN DE TRIPLETAS POR PAREJA</h2>
+    <p>El alimento A se usa en P3 y P4; los alimentos B y C, en P5 y siguientes.</p>
+    <table>
+        <thead>
+            <tr>
+                <th>Pareja</th>
+                <th>Alimento A (P1–P4)</th>
+                <th>Alimento B (P5+)</th>
+                <th>Alimento C (P5+)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>1</td><td>Salmón</td><td>Atún</td><td>Pechuga de pollo</td></tr>
+            <tr><td>2</td><td>Carne de res</td><td>Huevo</td><td>Leche entera</td></tr>
+            <tr><td>3</td><td>Quinoa</td><td>Arroz integral</td><td>Avena</td></tr>
+            <tr><td>4</td><td>Espinaca</td><td>Brócoli</td><td>Zanahoria</td></tr>
+            <tr><td>5</td><td>Lentejas</td><td>Garbanzos</td><td>Tofu</td></tr>
+            <tr><td>6</td><td>Almendras</td><td>Nueces</td><td>Mantequilla de maní</td></tr>
+            <tr><td>7</td><td>Plátano</td><td>Naranja</td><td>Manzana</td></tr>
+            <tr><td>8</td><td>Yogur griego</td><td>Queso cheddar</td><td>Leche de almendras</td></tr>
+            <tr><td>9</td><td>Arroz blanco</td><td>Pan integral</td><td>Trigo sarraceno</td></tr>
+            <tr><td>10</td><td>Aguacate</td><td>Tomate</td><td>Lechuga</td></tr>
+            <tr><td>11</td><td>Tempeh</td><td>Atún</td><td>Salmón</td></tr>
+            <tr><td>12</td><td>Chocolate negro</td><td>Galletas integrales</td><td>Papas fritas</td></tr>
+            <tr><td>13</td><td>Refresco cola</td><td>Bebida energética</td><td>Jugo de naranja</td></tr>
+            <tr><td>14</td><td>Café</td><td>Té verde</td><td>Leche de almendras</td></tr>
+            <tr><td>15</td><td>Fresa</td><td>Plátano</td><td>Naranja</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<section id="datos" class="section card">
+    <h2 class="section-title">DESCRIPCIÓN DE LA BASE DE DATOS</h2>
+    <p>El archivo <code>Alimentos_Dietas.xlsx</code> tiene cuatro hojas:</p>
+    <ul>
+        <li><strong>Alimentos ($40 \times 9$):</strong> un alimento por fila, con sus siete características numéricas y la región donde está disponible en mayor proporción.</li>
+        <li><strong>Regiones ($10 \times 3$):</strong> las diez regiones del mundo y países representativos. En la hoja Alimentos solo aparecen 8 de ellas: África Subsahariana y Oceanía no tienen alimentos asignados.</li>
+        <li><strong>Dietas ($5 \times 6$):</strong> objetivo, características dominantes, restricciones y alimentos sugeridos de cada dieta.</li>
+        <li><strong>Instrucciones:</strong> descripción de cada columna y notas para el estudiante.</li>
+    </ul>
+</section>
+
+<section id="entorno" class="section card">
+    <h2 class="section-title">CONFIGURACIÓN DEL ENTORNO EN GOOGLE COLAB</h2>
+    
+    <h3 style="color: var(--primary);">Paso 1: Crear un nuevo cuaderno en Google Colab</h3>
+    <ul>
+        <li>Ingrese a <a href="https://colab.research.google.com/drive/1ps_Yi4-mfy_RB_I_9eieutT_6dvmmap9?usp=sharing" target="_blank">https://colab.research.google.com</a></li>
+        <li>Haga clic en Nuevo cuaderno</li>
+        <li>Cambie el nombre del cuaderno a: <code>Lab6_Vectores_Dietas_X.ipynb</code></li>
+    </ul>
+
+    <h3 style="color: var(--primary);">Paso 2: Instalar e importar librerías necesarias</h3>
+    <div class="code-block">
+<pre># En Colab estas librerías ya vienen instaladas; la línea siguiente solo es necesaria fuera de Colab.
+# !pip install sympy numpy matplotlib pandas openpyxl
+import pandas as pd
+import numpy as np
+import sympy as sp
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+sp.init_printing(use_unicode=True)
+print("Entorno configurado.")
+print(f"Pandas: {pd.__version__} | NumPy: {np.__version__} | SymPy: {sp.__version__}")</pre>
+    </div>
+</section>
+
+<section id="desarrollo" class="section card">
+    <h2 class="section-title">DESARROLLO DEL LABORATORIO</h2>
+    <h3 style="color: var(--primary);">EJEMPLO RESUELTO: Perfil vectorial de la tripleta Salmón, Atún y Pechuga de pollo</h3>
+    <p>Un equipo de nutrición quiere saber qué tan parecidos son tres alimentos ricos en proteína y si combinarlos aporta diversidad a una dieta. Cada alimento se representa como un vector con sus características nutricionales. El ejemplo usa la tripleta de la pareja 1 (A = Salmón, B = Atún, C = Pechuga de pollo); cada pareja cambia los tres nombres por los de su tripleta.</p>
+    
+    <div class="code-block">
+<pre>from google.colab import files
+files.upload()
+
+df = pd.read_excel("Alimentos_Dietas.xlsx", sheet_name="Alimentos")
+regiones = pd.read_excel("Alimentos_Dietas.xlsx", sheet_name="Regiones")
+
+print("Tamaño del DataFrame:", df.shape)   # (40, 9)
+df.head()
+
+ALIMENTO_A = "Salmón"
+ALIMENTO_B = "Atún"
+ALIMENTO_C = "Pechuga de pollo"
+
+for nombre in [ALIMENTO_A, ALIMENTO_B, ALIMENTO_C]:
+    print(nombre, "→ está en el Excel:", nombre in df["Alimento"].values)
+
+# Posición (índice de fila) de cada alimento en la tabla
+iA = df.index[df["Alimento"] == ALIMENTO_A][0]
+iB = df.index[df["Alimento"] == ALIMENTO_B][0]
+iC = df.index[df["Alimento"] == ALIMENTO_C][0]
+print("Índices:", iA, iB, iC)</pre>
+    </div>
+    <p>Asegúrate de ejecutar y documentar adecuadamente todos los pasos (1 al 6) definidos en la guía original, incluyendo la normalización, proyecciones, cosenos directores y producto cruz/mixto.</p>
+</section>
+
+<section id="preinforme" class="section card">
+    <h2 class="section-title">PREINFORME</h2>
+    <p>Cada pareja adapta el cuaderno del ejemplo resuelto a su tripleta (A, B, C) y responde durante la sesión (90 minutos). Escriban los valores con cuatro cifras decimales y acompañen cada respuesta con una interpretación nutricional breve.</p>
+    <ul>
+        <li><strong>P1. Construcción y lectura de la matriz:</strong> Construya la matriz A ($40 \times 7$), normalice cada columna y construya el perfil nutricional en $R^6$. Represente simbólicamente un alimento genérico. Explique qué representa cada fila, cada columna y cada elemento.</li>
+        <li><strong>P2. Vectores unitarios y coseno entre perfiles:</strong> Para los cinco primeros alimentos, calcule los vectores unitarios y la matriz de cosenos. Demuestre simbólicamente que si u y v son unitarios, $\cos \theta = u \cdot v$.</li>
+        <li><strong>P3. Proyección y ortogonalidad:</strong> Calcule la proyección de A sobre B y la componente ortogonal, y verifique la ortogonalidad.</li>
+        <li><strong>P4. Cosenos y ángulos directores del alimento A:</strong> Para el vector (Proteína, Calorías, Grasas) de A, complete y verifique $\cos^2\alpha + \cos^2\beta + \cos^2\gamma = 1$.</li>
+        <li><strong>P5. Producto cruz y producto mixto:</strong> Calcule $B \times C$, verifique que es ortogonal a B y a C, y calcule $A \cdot (B \times C)$. Interprete el volumen relativo.</li>
+    </ul>
+</section>
+
+<section id="informe" class="section card">
+    <h2 class="section-title">INFORME</h2>
+    <p>Las preguntas P6 a P12 se responden fuera de la sesión, en un lapso de una semana, y se entregan en PDF con el enlace del cuaderno de Google Colab. Cada respuesta debe apoyarse en cálculos hechos con los datos.</p>
+    <ul>
+        <li><strong>P6. Coseno y similitud entre perfiles:</strong> ¿Por qué el coseno del ángulo entre dos vectores unitarios mide la similitud de sus perfiles?</li>
+        <li><strong>P7. Proyección y redundancia nutricional:</strong> Si la proyección de u sobre v es grande, ¿qué implica sobre la redundancia?</li>
+        <li><strong>P8. Ángulos directores y perfil nutricional:</strong> ¿Cómo se generalizan los cosenos directores en $R^6$?</li>
+        <li><strong>P9. Producto cruz e independencia de perfiles:</strong> Demuestre que si $u \times v = 0$, entonces u y v son linealmente dependientes.</li>
+        <li><strong>P10. Agrupación de alimentos por ángulo y por región:</strong> Agrupe los alimentos según el ángulo entre sus vectores. Compare con clasificaciones tradicionales.</li>
+        <li><strong>P11. Diseño de las cinco dietas según objetivo:</strong> Seleccione al menos 5 alimentos para cada dieta (Salud general, Forma física, etc.) y justifique con cálculos vectoriales.</li>
+        <li><strong>P12. Sustitución de un alimento no disponible:</strong> Elija un alimento clave no disponible en una región y proponga tres sustitutos, evaluando proyecciones y ángulos.</li>
+    </ul>
+</section>
+
+<section id="evaluacion" class="section card">
+    <h2 class="section-title">Rúbrica de Evaluación</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Criterio</th>
+                <th>Descripción</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Configuración del entorno</td><td>Uso correcto de Google Colab, importación de librerías y carga del Excel.</td><td>10%</td></tr>
+            <tr><td>Cálculos vectoriales</td><td>Vectores unitarios, ángulos, proyecciones, cosenos directores, producto cruz y mixto.</td><td>20%</td></tr>
+            <tr><td>Uso de SymPy</td><td>Demostraciones simbólicas correctas (identidades, producto cruz, producto mixto).</td><td>10%</td></tr>
+            <tr><td>Visualizaciones</td><td>Gráficos 2D y 3D con Matplotlib correctamente etiquetados.</td><td>10%</td></tr>
+            <tr><td>Preinforme (P1–P5)</td><td>Respuestas completas, ordenadas y con interpretación nutricional.</td><td>20%</td></tr>
+            <tr><td>Informe final (P6–P12)</td><td>Interpretación profunda, decisiones justificadas con datos y cálculos.</td><td>20%</td></tr>
+            <tr><td>Documentación y presentación</td><td>Claridad, ortografía, formato PDF y enlace de Colab.</td><td>10%</td></tr>
+        </tbody>
+    </table>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Álgebra Lineal · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>
