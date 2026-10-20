@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación 5.1 - Espacios Vectoriales</title>
+    
+    <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #1565c0;
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .instruction {
+            text-align: center;
+            color: #d81b60;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+        .question-block {
+            background: #fff;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #1565c0;
+            transition: all 0.3s ease;
+        }
+        .question-block.correct {
+            border-left-color: #2e7d32;
+            background-color: #e8f5e9;
+        }
+        .question-block.incorrect {
+            border-left-color: #c62828;
+            background-color: #ffebee;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .option-label {
+            display: inline-block;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+            margin-right: 15px;
+        }
+        .option-label:hover {
+            background-color: #f0f4f8;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0d47a1;
+        }
+        #result-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AUTOEVALUACIÓN 5.1</h1>
+    <div class="instruction">De las siguientes afirmaciones, indique si son falsas o verdaderas:</div>
+
+    <form id="quiz-form">
+        
+        <div class="question-block" id="block-q1">
+            <div class="question-text">I) El conjunto de vectores \(\begin{pmatrix} x \\ y \end{pmatrix}\) en \(\mathbb{R}^2\) con \(y = -3x\) es un espacio vectorial real.</div>
+            <label class="option-label"><input type="radio" name="q1" value="V"> Verdadero (V)</label>
+            <label class="option-label"><input type="radio" name="q1" value="F"> Falso (F)</label>
+        </div>
+
+        <div class="question-block" id="block-q2">
+            <div class="question-text">II) El conjunto de vectores \(\begin{pmatrix} x \\ y \end{pmatrix}\) en \(\mathbb{R}^2\) con \(y = -3x + 1\) es un espacio vectorial real.</div>
+            <label class="option-label"><input type="radio" name="q2" value="V"> Verdadero (V)</label>
+            <label class="option-label"><input type="radio" name="q2" value="F"> Falso (F)</label>
+        </div>
+
+        <div class="question-block" id="block-q3">
+            <div class="question-text">III) El conjunto de matrices invertibles de \(5 \times 5\) forma un espacio vectorial (con "+" definido como en la suma de matrices ordinaria).</div>
+            <label class="option-label"><input type="radio" name="q3" value="V"> Verdadero (V)</label>
+            <label class="option-label"><input type="radio" name="q3" value="F"> Falso (F)</label>
+        </div>
+
+        <div class="question-block" id="block-q4">
+            <div class="question-text">IV) El conjunto de múltiplos constantes de la matriz idéntica de \(2 \times 2\) es un espacio vectorial (con "+" definido como en III).</div>
+            <label class="option-label"><input type="radio" name="q4" value="V"> Verdadero (V)</label>
+            <label class="option-label"><input type="radio" name="q4" value="F"> Falso (F)</label>
+        </div>
+
+        <div class="question-block" id="block-q5">
+            <div class="question-text">V) El conjunto de matrices idénticas de \(n \times n\) para \(n = 2, 3, 4, \dots\) es un espacio vectorial (con "+" definido como en III).</div>
+            <label class="option-label"><input type="radio" name="q5" value="V"> Verdadero (V)</label>
+            <label class="option-label"><input type="radio" name="q5" value="F"> Falso (F)</label>
+        </div>
+
+        <div class="question-block" id="block-q6">
+            <div class="question-text">VI) El conjunto de vectores \(\begin{pmatrix} x \\ y \\ z \end{pmatrix}\) en \(\mathbb{R}^3\) con \(2x - y - 12z = 0\) es un espacio vectorial real.</div>
+            <label class="option-label"><input type="radio" name="q6" value="V"> Verdadero (V)</label>
+            <label class="option-label"><input type="radio" name="q6" value="F"> Falso (F)</label>
+        </div>
+
+        <div class="question-block" id="block-q7">
+            <div class="question-text">VII) El conjunto de vectores \(\begin{pmatrix} x \\ y \\ z \end{pmatrix}\) en \(\mathbb{R}^3\) con \(2x - y - 12z = 1\) es un espacio vectorial real.</div>
+            <label class="option-label"><input type="radio" name="q7" value="V"> Verdadero (V)</label>
+            <label class="option-label"><input type="radio" name="q7" value="F"> Falso (F)</label>
+        </div>
+
+        <div class="question-block" id="block-q8">
+            <div class="question-text">VIII) El conjunto de polinomios de grado 3 es un espacio vectorial real (con "+" definido como la suma de polinomios ordinaria).</div>
+            <label class="option-label"><input type="radio" name="q8" value="V"> Verdadero (V)</label>
+            <label class="option-label"><input type="radio" name="q8" value="F"> Falso (F)</label>
+        </div>
+
+        <button type="submit">Evaluar mis respuestas</button>
+    </form>
+
+    <div id="result-container"></div>
+
+    <script>
+        const correctAnswers = {
+            q1: 'V',
+            q2: 'F',
+            q3: 'F',
+            q4: 'V',
+            q5: 'F',
+            q6: 'V',
+            q7: 'F',
+            q8: 'F'
+        };
+
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            for (let question in correctAnswers) {
+                const block = document.getElementById('block-' + question);
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                
+                block.classList.remove('correct', 'incorrect');
+
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[question]) {
+                        block.classList.add('correct');
+                        score++;
+                    } else {
+                        block.classList.add('incorrect');
+                    }
+                } else {
+                    block.classList.add('incorrect'); 
+                }
+            }
+
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+            
+            if (score === totalQuestions) {
+                resultContainer.style.color = '#2e7d32';
+                resultContainer.innerHTML = `¡Excelente! Puntuación perfecta: ${score}/${totalQuestions}`;
+            } else {
+                resultContainer.style.color = '#c62828';
+                resultContainer.innerHTML = `Tu puntuación es: ${score}/${totalQuestions}. ¡Revisa los bloques en rojo e inténtalo de nuevo!`;
+            }
+            
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
+
+```
