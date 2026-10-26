@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía de Laboratorios - Álgebra Lineal UTB</title>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs"></script>
+<script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['$', '$'], ['\\(', '\\)']],
+            displayMath: [['$$', '$$'], ['\\[', '\\]']]
+        },
+        options: {
+            skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+    };
+</script>
+<style>
+    :root {
+        --primary: #004b87;
+        --secondary: #f4a900;
+        --bg-color: #f7f9fc;
+        --text-color: #333;
+        --card-bg: #fff;
+        --border-radius: 12px;
+        --border-color: #e2e8f0;
+    }
+    body {
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+    }
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .hero {
+        background-color: var(--primary);
+        color: white;
+        padding: 4rem 1rem;
+        text-align: center;
+        border-bottom: 5px solid var(--secondary);
+    }
+    .hero .badge {
+        background-color: var(--secondary);
+        color: #000;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+    }
+    .hero h1 { margin: 1.5rem 0 0.5rem; font-size: 2.5rem; }
+    .hero h2 { margin: 0; font-weight: 400; opacity: 0.9; }
+    .hero p { max-width: 800px; margin: 1.5rem auto 0; font-size: 1.1rem; opacity: 0.85; }
+    
+    .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    .download-btn {
+        display: inline-block;
+        background-color: var(--primary);
+        color: #fff;
+        text-decoration: none;
+        padding: 0.75rem 1.25rem;
+        border-radius: 10px;
+        font-weight: 600;
+        margin-top: 0.5rem;
+        transition: background-color 0.2s ease;
+    }
+    .download-btn:hover {
+        background-color: #003d6e;
+    }
+    .section-title {
+        color: var(--primary);
+        border-bottom: 2px solid var(--secondary);
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+    }
+    aside nav ol { padding-left: 1.5rem; }
+    aside nav a { color: var(--primary); text-decoration: none; }
+    aside nav a:hover { text-decoration: underline; }
+    
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+    table, th, td { border: 1px solid var(--border-color); }
+    th, td { padding: 0.75rem; text-align: left; }
+    th { background-color: var(--bg-color); color: var(--primary); }
+    
+    footer { text-align: center; padding: 2rem; color: #718096; font-size: 0.9rem; }
+    
+    .logo-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+    .code-block {
+        background-color: #f1f5f9;
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        font-family: 'Courier New', Courier, monospace;
+        overflow-x: auto;
+        margin-top: 1rem;
+    }
+</style>
+</head>
+<body>
+<header class="hero">
+<div class="container hero-content">
+<div class="logo-container">
+    <img src="img/utb.png" alt="Universidad Tecnológica de Bolívar" style="height: 50px; margin-left: 1rem;">
+</div>
+<span class="badge">Álgebra Lineal · Universidad Tecnológica de Bolívar</span>
+<h1>Guía de Laboratorios</h1>
+<h2>Laboratorio 7: Subespacios Vectoriales y Dependencia Lineal en la Toma de Decisiones Financieras.</h2>
+<p>Aplicación de conceptos de álgebra lineal para el análisis financiero y estratégico de modelos de negocio.</p>
+</div>
+</header>
+
+<div class="container" style="display:grid;grid-template-columns:280px 1fr;gap:2rem;padding:2rem 0">
+<aside class="card" style="align-self: start; position: sticky; top: 2rem;">
+<h3>Índice</h3>
+<nav><ol>
+<li><a href="#objetivos">Objetivos de la Guía</a></li>
+<li><a href="#competencias">Competencias</a></li>
+<li><a href="#resultados">Resultados de Aprendizaje</a></li>
+<li><a href="#recomendaciones">Recomendaciones Generales</a></li>
+<li><a href="#teoria">Contenidos Teóricos</a></li>
+<li><a href="#metodologia">Metodología del Laboratorio</a></li>
+<li><a href="#asignacion">Asignación de Grupos</a></li>
+<li><a href="#datos">Conceptos de Ingresos y Gastos</a></li>
+<li><a href="#entorno">Configuración del Entorno</a></li>
+<li><a href="#preinforme">Desarrollo: Preinforme</a></li>
+<li><a href="#informe">Desarrollo: Informe</a></li>
+<li><a href="#codigo">Código de Apoyo</a></li>
+<li><a href="#evaluacion">Rúbrica y Referencias</a></li>
+</ol></nav>
+</aside>
+
+<main>
+<section id="objetivos" class="section card">
+    <h2 class="section-title">Objetivos de la Guía</h2>
+    <ul>
+        <li>Verificar si un conjunto de vectores en $\mathbb{R}^{12}$ forma un subespacio vectorial.</li>
+        <li>Determinar si un conjunto de vectores es linealmente dependiente o independiente usando reducción por filas.</li>
+        <li>Identificar y eliminar vectores redundantes para obtener un conjunto linealmente independiente (base).</li>
+        <li>Calcular la dimensión (grados de libertad) del subespacio generado.</li>
+        <li>Construir vectores de utilidad y vectores de diferencia respecto a un vector de referencia.</li>
+        <li>Interpretar los resultados en un contexto financiero realista.</li>
+        <li>Tomar decisiones estratégicas basadas en los resultados del análisis vectorial.</li>
+    </ul>
+</section>
+
+<section id="competencias" class="section card">
+    <h2 class="section-title">Competencias Por Desarrollar</h2>
+    <ul>
+        <li><strong>Competencia matemática:</strong> aplicar conceptos de subespacios, dependencia lineal y dimensión en la toma de decisiones financieras.</li>
+        <li><strong>Competencia digital:</strong> usar Google Colab, Pandas, NumPy, SymPy y Matplotlib para calcular, verificar, ilustrar resultados acerca de espacios y subespacios vectoriales.</li>
+        <li><strong>Competencia analítica:</strong> interpretar dependencias lineales en términos de similitud entre modelos.</li>
+        <li><strong>Competencia comunicativa:</strong> elaborar informes ejecutivos que documenten procedimientos, resultados y conclusiones con recomendaciones accionables.</li>
+        <li><strong>Competencia autónoma:</strong> gestionar el tiempo y documentar librerías de forma independiente.</li>
+    </ul>
+</section>
+
+<section id="resultados" class="section card">
+    <h2 class="section-title">Resultados de Aprendizaje</h2>
+    <ul>
+        <li>Explicar las tres condiciones para que un conjunto sea subespacio vectorial.</li>
+        <li>Calcular la RREF de una matriz y determinar su rango.</li>
+        <li>Identificar columnas pivote y extraer una base de un conjunto de vectores.</li>
+        <li>Calcular la dimensión de un subespacio generado.</li>
+        <li>Construir vectores de utilidad y diferencia con una referencia.</li>
+        <li>Tomar decisiones financieras basadas en el análisis vectorial.</li>
+    </ul>
+</section>
+
+<section id="recomendaciones" class="section card">
+    <h2 class="section-title">Recomendaciones Generales</h2>
+    <ul>
+        <li>El laboratorio se realiza en parejas, con los diez vectores que asigne el docente.</li>
+        <li>Se debe entregar un preinforme al final de la sesión con los resultados de los vectores asignados (P1 a P12).</li>
+        <li>El informe final (P13 a P18, con interpretación, conclusiones y recomendaciones) se entrega en PDF, con el enlace del cuaderno, en el plazo de una semana.</li>
+        <li>Use Google Colab (<a href="https://colab.research.google.com" target="_blank">https://colab.research.google.com</a>) y guarde su cuaderno en su unidad de Google Drive.</li>
+        <li>Descargue el archivo <code>NovaTech_Ingresos_Gastos.xlsx</code> antes de iniciar; el cuaderno le pedirá subirlo.</li>
+    </ul>
+</section>
+
+<section id="teoria" class="section card">
+    <h2 class="section-title">CONTENIDOS TEÓRICOS</h2>
+    <h3 style="color: var(--primary);">5.1 Dependencia e independencia lineal</h3>
+    <p>Un conjunto de vectores $\{v_1, v_2, \ldots, v_k\}$ en $\mathbb{R}^n$ es linealmente independiente si la única solución a la ecuación vectorial:</p>
+    <p>$c_1 \cdot v_1 + c_2 \cdot v_2 + \ldots + c_k \cdot v_k = 0$</p>
+    <p>es la solución trivial $c_1 = c_2 = \ldots = c_k = 0$.</p>
+    <p>Si existe alguna solución no trivial (algún $c_i \neq 0$), el conjunto es linealmente dependiente. Esto significa que al menos uno de los vectores se puede escribir como combinación lineal de los demás; es decir, hay redundancia en el conjunto.</p>
+    <p><strong>Interpretación financiera:</strong> si los vectores de ingresos de varios modelos de teléfonos son linealmente dependientes, significa que la estructura de ingresos de uno de ellos se puede replicar combinando los otros. Son modelos similares en su composición de ingresos o gastos.</p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">5.2 Verificación de independencia lineal mediante reducción por filas</h3>
+    <p>Para determinar si un conjunto de vectores es linealmente independiente, se construye una matriz $A$ cuyas filas (o columnas) son los vectores del conjunto. Luego se aplica la reducción por filas (eliminación gaussiana) hasta obtener la forma escalonada reducida por filas (RREF).</p>
+    <p>El número de filas no nulas en la RREF es el rango de la matriz, denotado $\operatorname{rango}(A)$. Este número coincide con el número de columnas pivote.</p>
+    <p><strong>Criterio de independencia:</strong></p>
+    <ul>
+        <li>Si $\operatorname{rango}(A) = k$ (el número de vectores), los vectores son linealmente independientes.</li>
+        <li>Si $\operatorname{rango}(A) < k$, los vectores son linealmente dependientes, y hay $k - \operatorname{rango}(A)$ vectores redundantes.</li>
+    </ul>
+    <p><em>Ejemplo:</em> si se tienen 10 vectores en $\mathbb{R}^{12}$ y el rango de la matriz es 7, entonces hay $10 - 7 = 3$ vectores redundantes.</p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">5.3 Subespacio vectorial y dimensión</h3>
+    <p>Un subespacio vectorial $W$ de $\mathbb{R}^n$ es un subconjunto no vacío que cumple tres condiciones:</p>
+    <ol>
+        <li>Contiene el vector cero: $0 \in W$</li>
+        <li>Cerrado bajo suma: si $u, v \in W$, entonces $u + v \in W$</li>
+        <li>Cerrado bajo multiplicación por escalar: si $u \in W$ y $c \in \mathbb{R}$, entonces $c \cdot u \in W$</li>
+    </ol>
+    <p>Un conjunto finito de vectores (distinto de $\{0\}$) nunca es un subespacio vectorial, porque no es cerrado bajo suma ni bajo escalar. Sin embargo, el <em>espacio generado</em> por un conjunto de vectores, denotado $\operatorname{gen}(v_1, \ldots, v_k)$, sí es un subespacio vectorial: es el conjunto de todas las combinaciones lineales de los vectores.</p>
+    <p>La <strong>dimensión</strong> de un subespacio W es el número de vectores en una base de W. Una base es un conjunto linealmente independiente que genera W. La dimensión coincide con el rango de la matriz cuyas filas (o columnas) son los vectores que generan W.</p>
+    <p><strong>Interpretación financiera:</strong> la dimensión del subespacio generado por los vectores de ingresos (o gastos) representa los grados de libertad del sistema. Si la dimensión es d, hay d direcciones independientes en las que se pueden combinar los datos. Una dimensión baja indica que los modelos son muy similares entre sí (poca diversidad); una dimensión alta indica que los modelos aportan información variada.</p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">5.4 Vectores de utilidad y diferencia con la referencia</h3>
+    <p>El vector de utilidad de un modelo se define como $u_i = I_i - G_i$, donde $I_i$ es el vector de ingresos y $G_i$ el vector de gastos del modelo i. Cada componente de $u_i$ representa la utilidad neta del concepto correspondiente.</p>
+    <p>El vector de diferencia respecto a una referencia $u_{ref}$ es $d_i = u_i - u_{ref}$. Este vector mide qué tan lejos está el modelo i del modelo exitoso de la competencia. Un $d_i = 0$ indica que el modelo i tiene exactamente la misma estructura de utilidad que la referencia; una norma $\|d_i\|$ grande indica una gran distancia.</p>
+    <p>El espacio generado por los $d_i$ representa todas las combinaciones lineales posibles de diferencias. Su dimensión indica cuántas direcciones independientes de mejora (o emulación) tiene la empresa.</p>
+</section>
+
+<section id="metodologia" class="section card">
+    <h2 class="section-title">METODOLOGÍA DEL LABORATORIO</h2>
+    <ul>
+        <li>Conformar parejas de trabajo y asignar roles (conductor y navegante).</li>
+        <li>Crear un cuaderno en Google Colab: <code>Lab7_NovaTech_Subespacios.ipynb</code>.</li>
+        <li>Importar las librerías Pandas, NumPy, SymPy y Matplotlib.</li>
+        <li>Descargar el archivo <code>NovaTech_Ingresos_Gastos.xlsx</code> y subirlo a Colab.</li>
+        <li>Leer el marco teórico y estudiar el código de apoyo.</li>
+        <li>Cada pareja recibirá 10 modelos asignados por el docente (mismos para ingresos y gastos).</li>
+        <li>Desarrollar las actividades 1 a 4 durante la sesión.</li>
+        <li>Responder las preguntas P1-P12 (preinforme) durante la sesión.</li>
+        <li>Responder las preguntas P13-P18 (informe final) fuera de la sesión.</li>
+        <li>Documentar cada paso, resultado e interpretación en el notebook.</li>
+        <li>Compartir el notebook como preinforme mediante enlace de Google Colab.</li>
+    </ul>
+</section>
+
+<section id="asignacion" class="section card">
+    <h2 class="section-title">Asignación de Grupos por Pareja</h2>
+    <p>Cada pareja recibirá del docente un conjunto de 10 modelos (los mismos para ingresos y gastos). La siguiente tabla muestra la asignación para un grupo de 20 estudiantes (10 parejas):</p>
+    <div style="overflow-x: auto;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Pareja</th>
+                    <th>Modelos asignados (10)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>1</td><td>Nova X1, Nova X3, Nova X5, Nova X7, Nova X9, Nova Pro 1, Nova Pro 3, Nova Pro 5, Nova Pro 7, Nova Pro 9</td></tr>
+                <tr><td>2</td><td>Nova X2, Nova X4, Nova X6, Nova X8, Nova X10, Nova Pro 2, Nova Pro 4, Nova Pro 6, Nova Pro 8, Nova Pro 10</td></tr>
+                <tr><td>3</td><td>Nova Lite 1, Nova Lite 2, Nova Lite 3, Nova Lite 4, Nova Lite 5, Nova Max 1, Nova Max 2, Nova Max 3, Nova Max 4, Nova Max 5</td></tr>
+                <tr><td>4</td><td>Nova X1, Nova X2, Nova X3, Nova X4, Nova X5, Nova Lite 1, Nova Lite 2, Nova Lite 3, Nova Lite 4, Nova Lite 5</td></tr>
+                <tr><td>5</td><td>Nova X6, Nova X7, Nova X8, Nova X9, Nova X10, Nova Pro 1, Nova Pro 2, Nova Pro 3, Nova Pro 4, Nova Pro 5</td></tr>
+                <tr><td>6</td><td>Nova Pro 6, Nova Pro 7, Nova Pro 8, Nova Pro 9, Nova Pro 10, Nova Max 1, Nova Max 2, Nova Max 3, Nova Max 4, Nova Max 5</td></tr>
+                <tr><td>7</td><td>Nova X1, Nova X3, Nova X5, Nova X7, Nova X9, Nova Lite 1, Nova Lite 3, Nova Lite 5, Nova Max 1, Nova Max 3</td></tr>
+                <tr><td>8</td><td>Nova X2, Nova X4, Nova X6, Nova X8, Nova X10, Nova Lite 2, Nova Lite 4, Nova Max 2, Nova Max 4, Nova Max 5</td></tr>
+                <tr><td>9</td><td>Nova Pro 1, Nova Pro 3, Nova Pro 5, Nova Pro 7, Nova Pro 9, Nova Max 1, Nova Max 3, Nova Max 5, Nova Lite 1, Nova Lite 3</td></tr>
+                <tr><td>10</td><td>Nova Pro 2, Nova Pro 4, Nova Pro 6, Nova Pro 8, Nova Pro 10, Nova Max 2, Nova Max 4, Nova Lite 2, Nova Lite 4, Nova X1</td></tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section id="datos" class="section card">
+    <h2 class="section-title">Conceptos de Ingresos y Gastos</h2>
+    <div class="grid">
+        <div>
+            <h3 style="color: var(--primary);">Conceptos de Ingreso (12)</h3>
+            <table>
+                <thead><tr><th>Concepto</th><th>Descripción</th></tr></thead>
+                <tbody>
+                    <tr><td>Ventas Contado</td><td>Ventas de equipos pagados de contado</td></tr>
+                    <tr><td>Ventas Credito</td><td>Ventas financiadas a crédito</td></tr>
+                    <tr><td>Planes Datos</td><td>Planes de datos móviles</td></tr>
+                    <tr><td>Planes Voz</td><td>Planes de voz y llamadas</td></tr>
+                    <tr><td>Roaming</td><td>Servicios en itinerancia internacional</td></tr>
+                    <tr><td>Apps_Premium</td><td>Suscripciones a aplicaciones premium</td></tr>
+                    <tr><td>Accesorios</td><td>Venta de accesorios (fundas, cargadores, etc.)</td></tr>
+                    <tr><td>Seguros_Equipo</td><td>Seguros contra daños y robo</td></tr>
+                    <tr><td>Garantias Ext</td><td>Extensión de garantías</td></tr>
+                    <tr><td>Publicidad_Movil</td><td>Publicidad en la plataforma móvil</td></tr>
+                    <tr><td>Servicios Cloud</td><td>Almacenamiento en la nube</td></tr>
+                    <tr><td>Otros_Ingresos</td><td>Otros ingresos menores</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3 style="color: var(--primary);">Conceptos de Gasto (12)</h3>
+            <table>
+                <thead><tr><th>Concepto</th><th>Descripción</th></tr></thead>
+                <tbody>
+                    <tr><td>Produccion</td><td>Costos directos de ensamblaje de los equipos</td></tr>
+                    <tr><td>Materiales</td><td>Materias primas (chasis, pantallas, baterías)</td></tr>
+                    <tr><td>Mano_Obra</td><td>Salarios y prestaciones del personal de planta</td></tr>
+                    <tr><td>Servicios</td><td>Servicios públicos (agua, luz, internet)</td></tr>
+                    <tr><td>Impuestos</td><td>Impuestos locales y nacionales</td></tr>
+                    <tr><td>Transporte</td><td>Fletes y logística de distribución</td></tr>
+                    <tr><td>Bodegas</td><td>Almacenamiento y bodegaje</td></tr>
+                    <tr><td>Mantenimiento</td><td>Mantenimiento de maquinaria y equipos</td></tr>
+                    <tr><td>Control Calidad</td><td>Inspección y control de calidad</td></tr>
+                    <tr><td>Marketing</td><td>Publicidad y promoción</td></tr>
+                    <tr><td>Administracion</td><td>Gastos administrativos y de oficina</td></tr>
+                    <tr><td>Depreciacion</td><td>Depreciación de activos fijos</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section id="entorno" class="section card">
+    <h2 class="section-title">CONFIGURACIÓN DEL ENTORNO EN GOOGLE COLAB</h2>
+    
+    <h3 style="color: var(--primary);">Paso 1: Crear un nuevo cuaderno en Google Colab</h3>
+    <ul>
+        <li>Ingrese a <a href="https://colab.research.google.com" target="_blank">https://colab.research.google.com</a></li>
+        <li><a class="download-btn" href="NovaTech_Ingresos_Gastos.xlsx" download>Descargar archivo: NovaTech_Ingresos_Gastos.xlsx</a></li>
+        <li>Haga clic en Nuevo cuaderno</li>
+        <li>Cambie el nombre del cuaderno a: <code>Lab7_NovaTech_Subespacios_X.ipynb</code></li>
+    </ul>
+
+    <h3 style="color: var(--primary);">Paso 2: Instalar e importar librerías necesarias</h3>
+    <div class="code-block">
+<pre># En Colab estas librerías ya vienen instaladas; la línea siguiente solo es necesaria fuera de Colab.
+#!pip install sympy numpy matplotlib pandas openpyxl
+import pandas as pd
+import numpy as np
+import sympy as sp
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+sp.init_printing(use_unicode=True)
+print("Entorno configurado.")
+print(f"Pandas: {pd.__version__} | NumPy: {np.__version__} | SymPy: {sp.__version__}")</pre>
+    </div>
+
+    <h3 style="color: var(--primary);">Paso 3 y 4: Encabezado</h3>
+    <p>Agrega la siguiente celda de código para incluir el estilo del encabezado de NovaTech (como se muestra en el archivo de apoyo):</p>
+    <div class="code-block">
+<pre>from IPython.display import display, HTML
+encabezado = """
+&lt;style&gt;
+@import url('https://fonts.googleapis.com/css?family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@500&amp;display=swap');
+.nb-header {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #003057 0%, #00509E 60%, #0077C8 100%);
+  border-radius: 12px;
+  padding: 28px 32px 24px 32px;
+  margin-bottom: 8px;
+  color: white;
+  max-width: 860px;
+}
+/* ... resto del código de estilo detallado en la guía original ... */
+&lt;/style&gt;
+&lt;div class="nb-header"&gt;
+  &lt;div class="top-row"&gt;
+    &lt;div&gt;
+      &lt;div class="institution"&gt;Universidad Tecnológica de Bolívar &amp;nbsp; &amp;nbsp; Álgebra Lineal&lt;/div&gt;
+      &lt;div class="course"&gt;Laboratorio de Álgebra Lineal&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="badge"&gt;PROBLEMA TOMA DE DECISIONES BASADO EN SUBESPACIOS&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="problem-title"&gt;SUBESPACIOS PARA TOMA DE DECISIONES FINANCIERAS&lt;/div&gt;
+  &lt;div class="problem-subtitle"&gt;Disciplina: Finanzas y Análisis de Datos &amp;nbsp; &amp;nbsp; Herramientas: Pandas NumPy SymPy Matplotlib&lt;/div&gt;
+&lt;/div&gt;
+"""
+display(HTML(encabezado))</pre>
+    </div>
+</section>
+
+<section id="preinforme" class="section card">
+    <h2 class="section-title">DESARROLLO DEL LABORATORIO: PREINFORME</h2>
+
+    <h3 style="color: var(--primary);">Actividad 1: ¿El conjunto de 10 vectores forma un subespacio vectorial de $\mathbb{R}^{12}$?</h3>
+    <ol>
+        <li>Cargue los 10 vectores de ingresos correspondientes a los modelos asignados. Cada vector tiene 12 componentes. Llame a este conjunto $S_I = \{v_1, \ldots, v_{10}\} \subset \mathbb{R}^{12}$</li>
+        <li>Verifique las tres condiciones para que $S_I$ sea un subespacio vectorial:
+            <ul>
+                <li>Vector cero: ¿El vector $0 \in \mathbb{R}^{12}$ está en $S_I$?</li>
+                <li>Cerradura bajo suma: Si $u, v \in S_I$, ¿es $u + v \in S_I$?</li>
+                <li>Cerradura bajo escalar: Si $u \in S_I$ y $c \in \mathbb{R}$, ¿es $c \cdot u \in S_I$?</li>
+            </ul>
+        </li>
+        <li>Concluya: ¿$S_I$ es un subespacio vectorial de $\mathbb{R}^{12}$? Justifique.</li>
+        <li>Repita el análisis para el conjunto de 10 vectores de gastos $S_G$ (mismos modelos).</li>
+    </ol>
+    <p><strong>Preguntas de interpretación:</strong></p>
+    <ul>
+        <li><strong>P1.</strong> ¿Por qué un conjunto finito de vectores (distinto de {0}) nunca puede ser un subespacio vectorial? Explique usando las condiciones de cerradura.</li>
+        <li><strong>P2.</strong> ¿Qué sería necesario para que $S_I$ fuera un subespacio vectorial? (Pista: piense en el espacio generado $\operatorname{gen}(S_I)$).</li>
+        <li><strong>P3.</strong> En el contexto financiero de NovaTech, ¿qué significaría que $S_I$ fuera un subespacio vectorial? ¿Es realista?</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 2: Dependencia lineal y reducción por filas</h3>
+    <ol>
+        <li>Construya la matriz $A_I \in \mathbb{R}^{10 \times 12}$ cuyas filas son los 10 vectores de ingresos.</li>
+        <li>Calcule la forma escalonada reducida por filas (RREF) de $A_I$ usando SymPy (<code>A.rref()</code>).</li>
+        <li>Determine el rango de $A_I$ (número de filas no nulas en la RREF).</li>
+        <li>Concluya: ¿Los 10 vectores de ingresos son linealmente dependientes o independientes? Justifique.</li>
+        <li>Repita para los 10 vectores de gastos (matriz $A_G$).</li>
+    </ol>
+    <p><strong>Preguntas de interpretación:</strong></p>
+    <ul>
+        <li><strong>P4.</strong> ¿Qué significa que los 10 vectores de ingresos sean linealmente dependientes? En el contexto de los modelos de teléfonos, ¿qué implica sobre la similitud entre modelos?</li>
+        <li><strong>P5.</strong> Si el rango de $A_I$ es $r < 10$, ¿cuántos vectores son redundantes? ¿Cómo se identifica cuáles vectores son redundantes?</li>
+        <li><strong>P6.</strong> Compare el rango de $A_I$ con el rango de $A_G$. ¿Los ingresos son más o menos independientes que los gastos? ¿Qué implica esto para la gestión financiera de NovaTech?</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 3: Eliminación de vectores redundantes y obtención de una base</h3>
+    <ol>
+        <li>Usando la RREF de $A_I$, identifique las columnas pivote.</li>
+        <li>Los vectores correspondientes a las columnas pivote forman un conjunto linealmente independiente y una base del espacio generado por los 10 vectores originales.</li>
+        <li>Extraiga esos vectores y verifique que son linealmente independientes (calcule la RREF de la submatriz y confirme que el rango es igual al número de vectores).</li>
+        <li>Repita para los vectores de gastos.</li>
+    </ol>
+    <p><strong>Preguntas de interpretación:</strong></p>
+    <ul>
+        <li><strong>P7.</strong> ¿Cuántos vectores de ingresos se eliminaron? ¿Cuáles eran redundantes? Interprete: ¿esos modelos eran similares en su estructura de ingresos?</li>
+        <li><strong>P8.</strong> ¿Cuál es la dimensión del subespacio generado por los 10 vectores de ingresos? (Es el rango de $A_I$). Interprete este número: ¿cuántos grados de libertad tienen los ingresos de NovaTech?</li>
+        <li><strong>P9.</strong> ¿Qué significa que la dimensión sea $d < 10$? En el contexto financiero, ¿qué implica tener pocos grados de libertad en los ingresos? ¿Es bueno o malo para NovaTech?</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 4: Construcción de vectores de utilidad y comparación con la referencia</h3>
+    <ol>
+        <li>Para cada uno de los 10 modelos asignados, construya el vector de utilidad $u_i = I_i - G_i \in \mathbb{R}^{12}$. Esto da 10 vectores de utilidad $U = \{u_1, \ldots, u_{10}\}$.</li>
+        <li>Cargue el vector de referencia $u_{ref} \in \mathbb{R}^{12}$ (utilidad de Quantum Mobile, la competencia exitosa).</li>
+        <li>Construya los vectores de diferencia $d_i = u_i - u_{ref}$ para $i = 1, \ldots, 10$. Esto da 10 vectores $D = \{d_1, \ldots, d_{10}\}$.</li>
+        <li>Repita el análisis completo para el conjunto D:
+            <ul>
+                <li>¿D es un subespacio vectorial de $\mathbb{R}^{12}$? Justifique.</li>
+                <li>Calcule la RREF de la matriz $A_D \in \mathbb{R}^{10 \times 12}$ cuyas filas son los $d_i$. Determine el rango.</li>
+                <li>¿Los $d_i$ son linealmente dependientes o independientes?</li>
+                <li>Elimine los vectores redundantes y obtenga una base.</li>
+                <li>Determine la dimensión del subespacio generado por los $d_i$.</li>
+            </ul>
+        </li>
+    </ol>
+    <p><strong>Preguntas de interpretación:</strong></p>
+    <ul>
+        <li><strong>P10.</strong> ¿Qué representa el vector $d_i = u_i - u_{ref}$? ¿Qué significa que $d_i = 0$? ¿Qué significa que $\|d_i\|$ sea grande?</li>
+        <li><strong>P11.</strong> ¿Qué significa que los $d_i$ sean linealmente dependientes? En el contexto de la comparación con Quantum Mobile, ¿qué implica sobre la distancia de nuestros modelos al modelo exitoso?</li>
+        <li><strong>P12.</strong> ¿Cuál es la dimensión del subespacio generado por los $d_i$? Interprete: ¿cuántos grados de libertad tiene NovaTech para acercarse al modelo de referencia?</li>
+    </ul>
+</section>
+
+<section id="informe" class="section card">
+    <h2 class="section-title">INFORME FINAL: TOMA DE DECISIONES</h2>
+    <p>Como Director Financiero de NovaTech, use los resultados de las actividades anteriores para responder las siguientes preguntas. Argumente con datos, cálculos y razonamiento financiero.</p>
+
+    <h3 style="color: var(--primary);">P13. Emular el caso exitoso de Quantum Mobile</h3>
+    <p>Con base en los vectores de diferencia $d_i = u_i - u_{ref}$:</p>
+    <ul>
+        <li>¿Qué concepto de ingreso o gasto muestra la mayor diferencia (en valor absoluto) entre nuestros modelos y el de Quantum Mobile? ¿En qué concepto estamos más lejos del éxito?</li>
+        <li>¿Qué cambios concretos en ingresos y/o gastos deberíamos hacer para reducir esa diferencia? Proponga al menos dos acciones específicas (por ejemplo, aumentar Planes_Datos en un 15% para el Nova X5 o reducir Materiales en un 10% para el Nova Pro 3).</li>
+        <li>¿Es factible implementar esos cambios en el corto plazo? ¿Qué riesgos implicaría para NovaTech?</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">P14. Riesgos y oportunidades a largo plazo</h3>
+    <p>El subespacio generado por los $d_i$ (llamado $W = \operatorname{gen}(D)$) representa todas las combinaciones lineales posibles de diferencias respecto a Quantum Mobile.</p>
+    <ul>
+        <li>Si W tiene dimensión d, ¿qué significa que podamos movernos en d direcciones independientes? En términos financieros, ¿qué oportunidades de mejora tiene NovaTech?</li>
+        <li>¿Qué pasaría si W tuviera dimensión 0? ¿Qué implicaría para NovaTech?</li>
+        <li>¿Qué pasaría si W tuviera dimensión 12 (máxima posible)? ¿Qué implicaría?</li>
+        <li>¿Qué riesgos hay en intentar movernos en una dirección del subespacio que no esté alineada con la estrategia de NovaTech? (Pista: piense en combinaciones lineales con coeficientes negativos).</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">P15. Priorización de inversiones en el portafolio de teléfonos</h3>
+    <p>Suponga que NovaTech tiene un presupuesto limitado para mejorar sus modelos. Con base en el análisis de dependencia lineal y la dimensión del subespacio:</p>
+    <ul>
+        <li>¿Qué modelos (o grupos de modelos) son redundantes y podrían ser eliminados o rediseñados para liberar recursos?</li>
+        <li>¿Qué modelos son linealmente independientes y representan direcciones únicas de ingresos/gastos? ¿Deberían recibir más inversión?</li>
+        <li>Proponga una estrategia de portafolio: ¿cuántos modelos debería mantener NovaTech? ¿Cuáles debería descontinuar? Justifique con los rangos y dimensiones calculados.</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">P16. Evaluación de la competencia (Quantum Mobile)</h3>
+    <p>El vector de referencia $u_{ref}$ representa el éxito de Quantum Mobile.</p>
+    <ul>
+        <li>¿Qué tan lejos está NovaTech del éxito? Use la norma $\|d_i\|$ para cuantificar.</li>
+        <li>¿Qué modelo nuestro está más cerca del éxito? ¿Cuál está más lejos? ¿Qué podemos aprender de cada uno?</li>
+        <li>Si Quantum Mobile cambia su estrategia (es decir, $u_{ref}$ cambia), ¿cómo afectaría eso a nuestros vectores de diferencia $d_i$? ¿Cambiaría el subespacio W? ¿Cambiaría su dimensión?</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">P17. Decisiones bajo incertidumbre</h3>
+    <p>Suponga que los datos de ingresos y gastos tienen incertidumbre (por ejemplo, ±5%).</p>
+    <ul>
+        <li>¿Cómo afectaría esta incertidumbre al rango de la matriz $A_D$? ¿Podría cambiar la dimensión del subespacio W?</li>
+        <li>¿Qué tan robusta es nuestra base de vectores independientes? ¿Qué vectores son más sensibles a cambios pequeños?</li>
+        <li>¿Qué decisiones deberían tomarse con cautela y cuáles son más seguras para NovaTech?</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">P18. Síntesis y recomendación final</h3>
+    <p>Redacte un informe ejecutivo de 1 o 2 páginas dirigido al CEO de NovaTech. Incluya:</p>
+    <ul>
+        <li>(a) Un resumen del análisis de subespacios y dependencia lineal.</li>
+        <li>(b) Los modelos redundantes identificados y su justificación.</li>
+        <li>(c) La dimensión del subespacio de utilidades y su interpretación.</li>
+        <li>(d) Los cambios específicos recomendados para emular el éxito de Quantum Mobile.</li>
+        <li>(e) Los riesgos y oportunidades a largo plazo.</li>
+        <li>(f) Una recomendación final clara y accionable para el portafolio de teléfonos de NovaTech.</li>
+    </ul>
+</section>
+
+<section id="codigo" class="section card">
+    <h2 class="section-title">Código de Apoyo (ejemplo para la pareja 1)</h2>
+
+    <div class="code-block">
+<pre># Paso 0: Configuración del entorno
+!pip install sympy numpy matplotlib pandas openpyxl
+
+import numpy as np
+import pandas as pd
+import sympy as sp
+from sympy import Matrix
+import matplotlib.pyplot as plt
+
+print("Entorno configurado.")
+
+# Paso 1: Carga de datos y selección de modelos
+df_ing = pd.read_excel("NovaTech_Ingresos_Gastos.xlsx", sheet_name="Ingresos")
+df_gas = pd.read_excel("NovaTech_Ingresos_Gastos.xlsx", sheet_name="Gastos")
+df_ref = pd.read_excel("NovaTech_Ingresos_Gastos.xlsx", sheet_name="Referencia")
+
+# Modelos asignados a la pareja 1
+modelos = [
+    "Nova X1", "Nova X3", "Nova X5", "Nova X7", "Nova X9",
+    "Nova Pro 1", "Nova Pro 3", "Nova Pro 5", "Nova Pro 7", "Nova Pro 9"
+]
+
+V_ing = df_ing.set_index("Modelo").loc[modelos].values # (10 x 12)
+V_gas = df_gas.set_index("Modelo").loc[modelos].values # (10 x 12)
+
+print("Dimensiones V_ing:", V_ing.shape)
+print("Dimensiones V_gas:", V_gas.shape)
+
+# Paso 2: Actividad 1 - ¿Es subespacio?
+def es_subespacio(V, nombre="conjunto"):
+    print(f"\n=== Análisis de {nombre} ===")
+    tiene_cero = any(np.allclose(v, np.zeros(12)) for v in V)
+    print(f"1. ¿Contiene el vector cero? {tiene_cero}")
+    
+    cerrado_suma = True
+    for i in range(len(V)):
+        for j in range(len(V)):
+            suma = V[i] + V[j]
+            if not any(np.allclose(suma, v) for v in V):
+                cerrado_suma = False
+                break
+    print(f"2. ¿Cerrado bajo suma? {cerrado_suma}")
+    
+    cerrado_escalar = True
+    for i in range(len(V)):
+        for c in [2, 0.5, -1]:
+            prod = c * V[i]
+            if not any(np.allclose(prod, v) for v in V):
+                cerrado_escalar = False
+                break
+    print(f"3. ¿Cerrado bajo escalar? {cerrado_escalar}")
+    
+    return tiene_cero and cerrado_suma and cerrado_escalar
+
+es_subespacio(V_ing, "ingresos")
+es_subespacio(V_gas, "gastos")
+
+# Paso 3: Actividad 2 - Dependencia lineal (RREF)
+def analizar_dependencia(V, nombre="conjunto"):
+    print(f"\n=== Dependencia lineal de {nombre} ===")
+    M = Matrix(V)
+    rref, pivotes = M.rref()
+    rango = len(pivotes)
+    print(f"Rango: {rango} (de {V.shape[0]} vectores)")
+    print(f"¿Linealmente independientes? {rango == V.shape[0]}")
+    print(f"Columnas pivote: {pivotes}")
+    return rango, pivotes
+
+rango_ing, piv_ing = analizar_dependencia(V_ing, "ingresos")
+rango_gas, piv_gas = analizar_dependencia(V_gas, "gastos")
+
+# Paso 4: Actividad 3 - Obtener base
+def obtener_base(V):
+    M = Matrix(V)
+    rref, piv = M.rref()
+    filas_no_nulas = [rref.row(i) for i in range(rref.rows) if any(rref.row(i))]
+    return filas_no_nulas
+
+base_ing = obtener_base(V_ing)
+base_gas = obtener_base(V_gas)
+
+print(f"\nBase de ingresos: {len(base_ing)} vectores")
+print(f"Base de gastos: {len(base_gas)} vectores")
+
+# Paso 5: Actividad 4 - Utilidad y diferencia con referencia
+u_ref = df_ref["Utilidad_Quantum"].values # (12,)
+U = V_ing - V_gas   # (10 x 12)
+D = U - u_ref       # (10 x 12)
+
+es_subespacio(D, "diferencias D")
+rango_D, piv_D = analizar_dependencia(D, "diferencias D")
+base_D = obtener_base(D)
+print(f"Dimensión del subespacio generado por D: {rango_D}")
+
+# Paso 6: Visualización de distancias a Quantum Mobile
+normas = np.linalg.norm(D, axis=1)
+
+plt.figure(figsize=(10, 4))
+plt.bar(range(1, 11), normas, color="#2a78d6")
+plt.xticks(range(1, 11), modelos, rotation=45, ha="right", fontsize=8)
+plt.xlabel("Modelo")
+plt.ylabel("||d_i|| (distancia a Quantum Mobile)")
+plt.title("Distancia de cada modelo de NovaTech al caso exitoso")
+plt.grid(axis="y", alpha=0.3)
+plt.tight_layout()
+plt.show()</pre>
+    </div>
+</section>
+
+<section id="evaluacion" class="section card">
+    <h2 class="section-title">Rúbrica de Evaluación</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Criterio</th>
+                <th>Descripción</th>
+                <th>Porcentaje</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Configuración y carga de datos</td>
+                <td>Uso correcto de Google Colab, carga del Excel y asignación de grupos.</td>
+                <td>10%</td>
+            </tr>
+            <tr>
+                <td>Análisis de subespacio (Actividad 1)</td>
+                <td>Verificación correcta de las tres condiciones y conclusión justificada.</td>
+                <td>15%</td>
+            </tr>
+            <tr>
+                <td>Dependencia lineal (Actividad 2)</td>
+                <td>Cálculo correcto de RREF, rango e interpretación.</td>
+                <td>20%</td>
+            </tr>
+            <tr>
+                <td>Eliminación de redundantes (Actividad 3)</td>
+                <td>Identificación de columnas pivote, extracción de base y verificación de independencia.</td>
+                <td>15%</td>
+            </tr>
+            <tr>
+                <td>Vectores de utilidad y diferencia (Actividad 4)</td>
+                <td>Construcción correcta de $u_i$ y $d_i$, análisis completo.</td>
+                <td>15%</td>
+            </tr>
+            <tr>
+                <td>Toma de decisiones (P13-P18)</td>
+                <td>Argumentación financiera sólida, propuestas concretas y realistas.</td>
+                <td>20%</td>
+            </tr>
+            <tr>
+                <td>Documentación y presentación</td>
+                <td>Claridad, ortografía, formato PDF y enlace de Colab.</td>
+                <td>5%</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Referencias</h3>
+    <ul>
+        <li>Grossman, S. I. (2012). Álgebra Lineal (8ª ed.). McGraw-Hill. Capítulos 4 y 5.</li>
+        <li>Anton, H., & Rorres, C. (2010). Elementary Linear Algebra (10th ed.). John Wiley & Sons. Capítulos 4 y 5.</li>
+        <li>Lay, D. C. (2012). Álgebra Lineal y sus aplicaciones. Pearson Education. Capítulos 2 y 4.</li>
+        <li>Documentación de SymPy: <a href="https://docs.sympy.org/" target="_blank">https://docs.sympy.org/</a></li>
+        <li>Documentación de NumPy: <a href="https://numpy.org/doc/" target="_blank">https://numpy.org/doc/</a></li>
+        <li>Documentación de Matplotlib: <a href="https://matplotlib.org/" target="_blank">https://matplotlib.org/</a></li>
+        <li>Documentación de Pandas: <a href="https://pandas.pydata.org/docs/" target="_blank">https://pandas.pydata.org/docs/</a></li>
+        <li>Google Colab: <a href="https://colab.research.google.com/" target="_blank">https://colab.research.google.com/</a></li>
+    </ul>
+</section>
+</main>
+</div>
+<footer>
+    © 2026 · Álgebra Lineal · Universidad Tecnológica de Bolívar<br>
+    <em>Generado por Asistente de Programación</em>
+</footer>
+</body></html>
