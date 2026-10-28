@@ -1,0 +1,2154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Álgebra Lineal Arcade - Misión Vectorial</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Pixel & Arcade + Clean Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- KaTeX for instant crisp math rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+    <!-- html2pdf.js para descarga directa de PDF sin bloqueo de iframe -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style id="arcade-core-styles">
+        :root {
+            --sky-blue: #38a1f3;
+            --mario-yellow: #fbd000;
+            --mario-red: #e52521;
+            --mario-green: #43b047;
+            --brick-brown: #c84c0c;
+            --block-gold: #f8b800;
+            --dark-hud: #182338;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        .font-pixel {
+            font-family: 'Press Start 2P', cursive;
+        }
+
+        .font-arcade {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        /* Estilo de texto con borde tipo logo de Super Mario */
+        .mario-title {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fbd000;
+            text-shadow: 
+                -3px -3px 0 #000,  
+                 3px -3px 0 #000,
+                -3px  3px 0 #000,
+                 3px  3px 0 #000,
+                 0px  5px 0 #000;
+            letter-spacing: 1px;
+        }
+
+        .mario-subtitle {
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: 
+                -2px -2px 0 #000,  
+                 2px -2px 0 #000,
+                -2px  2px 0 #000,
+                 2px  2px 0 #000,
+                 0px  4px 0 #000;
+        }
+
+        /* Fondo del mundo de Mario con nubes y bloques laterales */
+        .mario-world-bg {
+            background: linear-gradient(180deg, #2885f6 0%, #68b5ff 100%);
+            position: relative;
+            border: 6px solid #000;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        /* Patrón de ladrillos en los bordes laterales */
+        .brick-pillar {
+            background-color: #c84c0c;
+            background-image: 
+                linear-gradient(335deg, #b03a00 23px, transparent 23px),
+                linear-gradient(155deg, #d85c1c 23px, transparent 23px),
+                linear-gradient(335deg, #b03a00 23px, transparent 23px),
+                linear-gradient(155deg, #d85c1c 23px, transparent 23px);
+            background-size: 58px 58px;
+            background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+        }
+
+        /* Bloque de interrogación [?] / Número de ejercicio */
+        .question-block {
+            background-color: #fbd000;
+            border: 3px solid #000;
+            box-shadow: inset -3px -3px 0px #c87800, inset 3px 3px 0px #fff6a9, 2px 2px 0px #000;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+            color: #000;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 34px;
+            height: 34px;
+            border-radius: 6px;
+            position: relative;
+        }
+
+        /* Tubería verde decorativa */
+        .mario-pipe {
+            background: linear-gradient(90deg, #1b6d1f 0%, #43b047 25%, #8df277 45%, #43b047 75%, #125215 100%);
+            border: 3px solid #000;
+        }
+
+        /* Paneles de nivel estilo tarjeta blanca con borde grueso */
+        .level-card {
+            background: rgba(255, 255, 255, 0.96);
+            border: 3px solid #1e3a8a;
+            border-radius: 14px;
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        .exercise-box {
+            background: #ffffff;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .exercise-box:hover {
+            border-color: #f59e0b;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+            transform: translateY(-1px);
+        }
+
+        /* Botones estilo Arcade */
+        .btn-arcade {
+            border: 3px solid #000;
+            box-shadow: inset 0 -4px 0 rgba(0,0,0,0.3), 0 4px 0 #000;
+            transition: all 0.1s;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+        }
+        .btn-arcade:active {
+            transform: translateY(3px);
+            box-shadow: inset 0 -2px 0 rgba(0,0,0,0.3), 0 1px 0 #000;
+        }
+
+        /* HUD de vidas y puntos estilo oscuro */
+        .hud-box {
+            background: #162238;
+            border: 3px solid #64748b;
+            border-radius: 10px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.6), 0 4px 0 #000;
+            color: white;
+        }
+
+        /* Casillas de verificación cuadradas para impresión y clic */
+        .check-square {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #334155;
+            border-radius: 3px;
+            display: inline-block;
+            vertical-align: middle;
+            background: #fff;
+            cursor: pointer;
+        }
+        .check-square.checked {
+            background: #22c55e;
+            border-color: #15803d;
+            position: relative;
+        }
+        .check-square.checked::after {
+            content: '✓';
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+            position: absolute;
+            top: -3px;
+            left: 2px;
+        }
+
+        /* Notación de matrices 2x2 limpia en HTML/CSS para máxima compatibilidad en PDF */
+        .mat-2x2 {
+            display: inline-grid;
+            grid-template-columns: repeat(2, auto);
+            column-gap: 6px;
+            row-gap: 1px;
+            padding: 1px 5px;
+            border-left: 2px solid #0f172a;
+            border-right: 2px solid #0f172a;
+            border-radius: 4px;
+            vertical-align: middle;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            line-height: 1.15;
+            margin: 0 2px;
+            background: rgba(248, 250, 252, 0.8);
+        }
+
+        /* Modo Vista Limpia de Impresión cuando los popups están bloqueados */
+        body.clean-print-mode {
+            background: #ffffff !important;
+            padding-bottom: 0 !important;
+        }
+        body.clean-print-mode .no-print {
+            display: none !important;
+        }
+        body.clean-print-mode #cleanPrintBanner {
+            display: flex !important;
+        }
+        body.clean-print-mode #view-worksheet {
+            display: block !important;
+            max-width: 100% !important;
+            padding: 10px !important;
+        }
+
+        /* Ajustes estrictos de Impresión para que SIEMPRE se imprima #view-worksheet aunque esté en otra pestaña */
+        @media print {
+            @page {
+                size: letter portrait;
+                margin: 0.35cm;
+            }
+            body {
+                background: #ffffff !important;
+                color: #000 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .no-print,
+            #view-dashboard,
+            #view-guide,
+            #exerciseModal,
+            #cleanPrintBanner {
+                display: none !important;
+            }
+            #view-worksheet,
+            #worksheet-view {
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            #printable-sheet {
+                display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 8px !important;
+                border: 3px solid #000 !important;
+                box-shadow: none !important;
+            }
+            .level-card {
+                break-inside: avoid;
+                margin-bottom: 6px !important;
+                padding: 6px !important;
+            }
+            .exercise-box {
+                padding: 5px !important;
+            }
+            .just-line {
+                height: 22px !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-800 pb-12">
+
+    <!-- BANNER FLOTANTE PARA MODO VISTA LIMPIA DE IMPRESIÓN (FALLBACK CTRL+P) -->
+    <div id="cleanPrintBanner" class="hidden sticky top-0 z-50 bg-amber-400 border-b-4 border-black px-4 py-2.5 items-center justify-between gap-3 text-black font-bold text-xs sm:text-sm shadow-lg">
+        <div class="flex items-center gap-2">
+            <span class="text-lg">🖨️</span>
+            <span>MODO IMPRESIÓN ACTIVO: Presiona <kbd class="bg-black text-yellow-300 px-2 py-0.5 rounded">Ctrl + P</kbd> (o <kbd class="bg-black text-yellow-300 px-2 py-0.5 rounded">Cmd + P</kbd> en Mac) o usa los botones de descarga directa.</span>
+        </div>
+        <div class="flex items-center gap-2">
+            <button onclick="downloadDirectPDF()" class="btn-arcade bg-red-600 text-white px-3 py-1 rounded-lg text-xs">
+                📄 Descargar PDF Directo
+            </button>
+            <button onclick="exitCleanPrintMode()" class="btn-arcade bg-slate-900 text-white px-3 py-1 rounded-lg text-xs">
+                ✕ Volver al Tablero
+            </button>
+        </div>
+    </div>
+
+    <!-- BARRA DE NAVEGACIÓN SUPERIOR (NO SE IMPRIME) -->
+    <header class="no-print sticky top-0 z-40 bg-slate-900 border-b-4 border-black px-3 sm:px-4 py-2.5 shadow-xl">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2.5">
+            <div class="flex items-center gap-2.5">
+                <div class="question-block text-xl animate-bounce">?</div>
+                <div>
+                    <h1 class="font-arcade text-lg md:text-xl text-yellow-400 tracking-wide uppercase">
+                        Álgebra Lineal Arcade
+                    </h1>
+                    <p class="text-[11px] text-slate-300">Espacios Vectoriales, Subespacios, LI/LD, Bases y Generadores ($\mathbb{R}^2, \mathbb{R}^3, M_{2\times2}$)</p>
+                </div>
+            </div>
+
+            <!-- Pestañas de modo + 3 Opciones de Impresión/Descarga Infalibles -->
+            <div class="flex flex-wrap items-center gap-1.5">
+                <button onclick="switchTab('worksheet')" id="tab-worksheet" class="btn-arcade bg-yellow-400 text-black px-3 py-1.5 rounded-lg text-xs flex items-center gap-1">
+                    <span>📄</span> Hoja de Misión
+                </button>
+                <button onclick="switchTab('dashboard')" id="tab-dashboard" class="btn-arcade bg-blue-500 text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1">
+                    <span>🎰</span> Control 80 Min & 3 Ruletas
+                </button>
+                <button onclick="switchTab('guide')" id="tab-guide" class="btn-arcade bg-emerald-500 text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1">
+                    <span>⏱️</span> Guía Docente
+                </button>
+
+                <!-- Separador visual -->
+                <span class="hidden lg:inline-block h-6 w-0.5 bg-slate-700 mx-1"></span>
+
+                <!-- 1. Botón Descargar PDF Directo (Recomendado) -->
+                <button onclick="downloadDirectPDF()" id="btnDownloadPDF" class="btn-arcade bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1" title="Descarga directamente el PDF con todos los colores sin depender de window.print()">
+                    <span>📄</span> <span id="pdfBtnText">Descargar PDF Directo (Recomendado)</span>
+                </button>
+
+                <!-- 2. Botón Abrir para Imprimir -->
+                <button onclick="openPrintWindow()" class="btn-arcade bg-amber-500 hover:bg-amber-400 text-black px-3 py-1.5 rounded-lg text-xs flex items-center gap-1" title="Abre la hoja en una ventana nueva libre de bloqueos de iframe y lanza la impresora">
+                    <span>🖨️</span> Abrir para Imprimir
+                </button>
+
+                <!-- 3. Botón Descargar Hoja HTML Imprimible -->
+                <button onclick="downloadStandaloneHTML()" class="btn-arcade bg-indigo-500 hover:bg-indigo-400 text-white px-3 py-1.5 rounded-lg text-xs flex items-center gap-1" title="Descarga un archivo HTML autónomo listo para abrir e imprimir en cualquier navegador">
+                    <span>💾</span> Descargar Hoja HTML Imprimible
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- SECCIÓN 1: TABLERO DOCENTE (80 MIN, TRIPLE RULETA Y 8 EQUIPOS)        -->
+    <!-- ===================================================================== -->
+    <section id="view-dashboard" class="no-print hidden max-w-7xl mx-auto px-3 sm:px-4 pt-4 space-y-5">
+
+        <!-- 1. CRONÓMETRO MAESTRO DE SESIÓN (80 MINUTOS DIVIDIDOS EN 5 FASES) -->
+        <div class="bg-slate-900 border-4 border-black rounded-2xl p-4 shadow-2xl text-white">
+            <div class="flex flex-wrap items-center justify-between gap-3 border-b-2 border-slate-800 pb-3 mb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">⏱️</span>
+                    <div>
+                        <h2 class="font-arcade text-lg sm:text-xl text-yellow-400 uppercase tracking-wide">
+                            Reloj Maestro de Sesión (80 Minutos • 8 Grupos)
+                        </h2>
+                        <p id="activePhaseDesc" class="text-xs text-slate-300">
+                            Fase 0: Organización de los 8 equipos de 5 integrantes, asignación de roles (1-5) y entrega de hojas.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Controles del Cronómetro de Fase + Rápido de 90s -->
+                <div class="flex flex-wrap items-center gap-2">
+                    <div class="hud-box px-3 py-1.5 text-center flex items-center gap-2 border-2 border-yellow-400">
+                        <div class="text-left">
+                            <span id="timerLabelMode" class="text-[9px] text-slate-400 block uppercase font-bold">Reloj Activo</span>
+                            <span id="timerDisplay" class="font-pixel text-xl sm:text-2xl text-yellow-400">08:00</span>
+                        </div>
+                    </div>
+                    <button onclick="toggleTimer()" id="btnStartTimer" class="btn-arcade bg-emerald-500 text-black text-xs px-3 py-2 rounded-lg">
+                        ▶ Iniciar
+                    </button>
+                    <button onclick="resetTimer()" class="btn-arcade bg-slate-700 text-white text-xs px-2.5 py-2 rounded-lg">
+                        ↺ Reiniciar
+                    </button>
+                    <button onclick="startQuickDefenseTimer(90)" class="btn-arcade bg-red-500 text-white text-xs px-3 py-2 rounded-lg" title="Temporizador relámpago de 90s para cuando un grupo defiende en la ruleta">
+                        ⚡ Defensa 90s
+                    </button>
+                    <button onclick="nextSessionPhase()" class="btn-arcade bg-blue-500 text-white text-xs px-3 py-2 rounded-lg">
+                        Siguiente Fase ⏭
+                    </button>
+                </div>
+            </div>
+
+            <!-- Barra de las 5 Fases de los 80 minutos -->
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2" id="phaseButtonsContainer">
+                <!-- Renderizado dinámicamente por JS -->
+            </div>
+        </div>
+
+        <!-- 2. SISTEMA DE TRIPLE RULETA SIMULTÁNEA (MODO BATALLA 8 GRUPOS) -->
+        <div class="bg-slate-800 border-4 border-black rounded-2xl p-4 sm:p-5 shadow-2xl text-white">
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4 border-b-2 border-slate-700 pb-3">
+                <div>
+                    <h2 class="font-arcade text-xl sm:text-2xl text-yellow-400 flex items-center gap-2">
+                        <span>🎰</span> TRIPLE RULETA SIMULTÁNEA (MODO DUELO 8 GRUPOS)
+                    </h2>
+                    <p class="text-xs text-slate-300">
+                        Para que los 8 grupos participen en 80 min sin tiempos muertos: gira las 3 ruletas a la vez para activar un duelo entre 2 equipos.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <label class="bg-slate-900 border border-slate-600 px-3 py-1.5 rounded-lg text-xs flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" id="chkDuelMode" checked class="accent-yellow-400 w-4 h-4">
+                        <span class="font-bold text-amber-300">⚔️ Modo Duelo (2 Equipos a la vez)</span>
+                    </label>
+                    <button onclick="spinAllThreeWheels()" class="btn-arcade bg-gradient-to-b from-yellow-300 to-amber-500 text-black px-5 py-2.5 rounded-xl text-sm sm:text-base tracking-wide">
+                        🎰 ¡GIRAR LAS 3 RULETAS A LA VEZ!
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grid de 3 Ruletas -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+
+                <!-- RULETA A: EQUIPOS (1 AL 8) -->
+                <div class="bg-slate-900/95 p-3.5 rounded-xl border-2 border-emerald-500/60 flex flex-col items-center">
+                    <span class="bg-emerald-500 text-black text-xs font-bold px-3 py-0.5 rounded-full mb-2 uppercase tracking-wider">
+                        Ruleta A: Equipos (1 al 8)
+                    </span>
+                    <div class="relative my-1">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-10 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[18px] border-t-emerald-400 drop-shadow"></div>
+                        <canvas id="wheelTeamCanvas" width="215" height="215" class="rounded-full border-4 border-emerald-400 shadow-lg bg-slate-800"></canvas>
+                    </div>
+                    <button onclick="spinTeamWheel()" class="btn-arcade bg-emerald-500 hover:bg-emerald-400 text-black text-xs px-3 py-1.5 rounded-lg mt-2 w-full">
+                        Girar Equipos (1-8)
+                    </button>
+                    <div class="mt-2 w-full bg-slate-800 border border-emerald-400/40 rounded-lg p-2 text-center min-h-[58px] flex flex-col justify-center">
+                        <p id="teamResultTitle" class="font-arcade text-sm text-emerald-300">Esperando giro...</p>
+                        <p id="teamResultDesc" class="text-[11px] text-slate-300">Selecciona 2 equipos en duelo o 1 equipo.</p>
+                    </div>
+                </div>
+
+                <!-- RULETA B: INTEGRANTE DEL EQUIPO (ROLES 1 AL 5) -->
+                <div class="bg-slate-900/95 p-3.5 rounded-xl border-2 border-blue-500/60 flex flex-col items-center">
+                    <span class="bg-blue-600 text-white text-xs font-bold px-3 py-0.5 rounded-full mb-2 uppercase tracking-wider">
+                        Ruleta B: Integrante (Rol 1-5)
+                    </span>
+                    <div class="relative my-1">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-10 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[18px] border-t-red-500 drop-shadow"></div>
+                        <canvas id="wheelRoleCanvas" width="215" height="215" class="rounded-full border-4 border-yellow-400 shadow-lg bg-slate-800"></canvas>
+                    </div>
+                    <button onclick="spinRoleWheel()" class="btn-arcade bg-blue-500 hover:bg-blue-400 text-white text-xs px-3 py-1.5 rounded-lg mt-2 w-full">
+                        Girar Integrante (1-5)
+                    </button>
+                    <div class="mt-2 w-full bg-slate-800 border border-blue-400/40 rounded-lg p-2 text-center min-h-[58px] flex flex-col justify-center">
+                        <p id="roleResultTitle" class="font-arcade text-sm text-yellow-300">¡Gira la ruleta!</p>
+                        <p id="roleResultDesc" class="text-[11px] text-slate-300">Define qué estudiante de cada equipo responde.</p>
+                    </div>
+                </div>
+
+                <!-- RULETA C: BLOQUE DE EJERCICIO O ÍTEM MARIO -->
+                <div class="bg-slate-900/95 p-3.5 rounded-xl border-2 border-amber-500/60 flex flex-col items-center">
+                    <span class="bg-amber-500 text-black text-xs font-bold px-3 py-0.5 rounded-full mb-2 uppercase tracking-wider">
+                        Ruleta C: Bloque [1-14] / Poder
+                    </span>
+                    <div class="relative my-1">
+                        <div class="absolute -top-3 left-1/2 -translate-x-1/2 z-10 w-0 h-0 border-l-[10px] border-l-transparent border-r-[10px] border-r-transparent border-t-[18px] border-t-yellow-400 drop-shadow"></div>
+                        <canvas id="wheelChallengeCanvas" width="215" height="215" class="rounded-full border-4 border-red-500 shadow-lg bg-slate-800"></canvas>
+                    </div>
+                    <button onclick="spinChallengeWheel()" class="btn-arcade bg-red-500 hover:bg-red-400 text-white text-xs px-3 py-1.5 rounded-lg mt-2 w-full">
+                        Girar Bloque / Ítem
+                    </button>
+                    <div class="mt-2 w-full bg-slate-800 border border-amber-400/40 rounded-lg p-2 text-center min-h-[58px] flex flex-col justify-center">
+                        <p id="challengeResultTitle" class="font-arcade text-sm text-white">Esperando giro...</p>
+                        <p id="challengeResultDesc" class="text-[11px] text-slate-300">Elige el ejercicio o poder especial.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- BANNER GIGANTE DE DUELO ACTIVADO -->
+            <div id="duelBanner" class="mt-4 bg-gradient-to-r from-indigo-950 via-slate-900 to-indigo-950 border-2 border-yellow-400 rounded-xl p-3.5 flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="question-block text-lg shrink-0">⚔️</div>
+                    <div>
+                        <span class="text-[10px] uppercase tracking-widest font-bold text-yellow-400 block">ORDEN DE MISIÓN EN PANTALLA</span>
+                        <p id="duelBannerText" class="font-arcade text-sm sm:text-lg text-white">
+                            Presiona "¡GIRAR LAS 3 RULETAS A LA VEZ!" para convocar a 2 equipos, un rol del 1 al 5 y un bloque de ejercicio.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button id="btnBannerOpenModal" onclick="openLastSpunExercise()" class="hidden btn-arcade bg-yellow-400 text-black text-xs px-3.5 py-2 rounded-lg">
+                        🔍 Proyectar Bloque
+                    </button>
+                    <button onclick="startQuickDefenseTimer(90)" class="btn-arcade bg-red-500 text-white text-xs px-3.5 py-2 rounded-lg">
+                        ⏱️ Iniciar 90s de Defensa
+                    </button>
+                    <select id="selectExerciseInspect" onchange="openExerciseModal(this.value)" class="bg-slate-800 border border-slate-600 rounded-lg px-2.5 py-2 text-xs text-yellow-300 font-bold">
+                        <option value="">-- Abrir Bloque Manual --</option>
+                        <option value="1">Bloque [1] - Nivel 1 (Subespacio R²)</option>
+                        <option value="2">Bloque [2] - Nivel 1 (Subespacio R²)</option>
+                        <option value="3">Bloque [3] - Nivel 1 (Subespacio R³)</option>
+                        <option value="4">Bloque [4] - Nivel 1 (Subespacio M₂ₓ₂)</option>
+                        <option value="5">Bloque [5] - Nivel 2 (Generador R²)</option>
+                        <option value="6">Bloque [6] - Nivel 2 (Generador R³)</option>
+                        <option value="7">Bloque [7] - Nivel 2 (Generador M₂ₓ₂)</option>
+                        <option value="8">Bloque [8] - Nivel 3 (LI / LD en R²)</option>
+                        <option value="9">Bloque [9] - Nivel 3 (LI / LD en R²)</option>
+                        <option value="10">Bloque [10] - Nivel 3 (LI / LD en R³)</option>
+                        <option value="11">Bloque [11] - Nivel 3 (LI / LD en M₂ₓ₂)</option>
+                        <option value="12">Bloque [12] - Nivel 4 (Bases en R²)</option>
+                        <option value="13">Bloque [13] - Nivel 4 (Bases en R³)</option>
+                        <option value="14">Bloque [14] - Nivel 4 (Bases en M₂ₓ₂)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. MARCADOR DE LOS 8 EQUIPOS PRECONFIGURADOS (CUADRÍCULA 4x2 PARA PROYECTOR) -->
+        <div class="bg-slate-800 border-4 border-black rounded-2xl p-4 sm:p-5 shadow-2xl text-white">
+            <div class="flex flex-wrap items-center justify-between gap-2 border-b-2 border-slate-700 pb-3 mb-4">
+                <div>
+                    <h2 class="font-arcade text-xl sm:text-2xl text-emerald-400 flex items-center gap-2">
+                        <span>🏆</span> MARCADOR EN VIVO: 8 ESCUADRONES (CON BONO DE VIDAS +15 PTS/❤️)
+                    </h2>
+                    <p class="text-xs text-slate-300">
+                        El puntaje total suma automáticamente las monedas obtenidas + 15 puntos extra por cada corazón conservado.
+                    </p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="awardAllTeamsBonus(10)" class="btn-arcade bg-amber-400 text-black text-xs px-3 py-1.5 rounded-lg" title="Sumar 10 puntos a todos los equipos que levantaron respuesta correcta">
+                        🪙 +10 pts a Todos
+                    </button>
+                    <button onclick="addNewTeam()" class="btn-arcade bg-slate-700 text-white text-xs px-3 py-1.5 rounded-lg">
+                        + Equipo Extra
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grid 4x2 de los 8 equipos -->
+            <div id="teamsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <!-- Renderizado por JS -->
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SECCIÓN 2: GUÍA DE 80 MINUTOS PARA 8 GRUPOS (40 ESTUDIANTES)          -->
+    <!-- ===================================================================== -->
+    <section id="view-guide" class="no-print hidden max-w-6xl mx-auto px-4 pt-6">
+        <div class="bg-slate-800 border-4 border-black rounded-2xl p-6 text-white shadow-2xl space-y-6">
+            <div class="border-b-2 border-slate-700 pb-4 flex flex-wrap justify-between items-center gap-4">
+                <div>
+                    <h2 class="font-arcade text-2xl sm:text-3xl text-yellow-400">⏱️ PROTOCOLO DE 80 MINUTOS (8 GRUPOS • 40 ESTUDIANTES)</h2>
+                    <p class="text-sm text-slate-300 mt-1">Cómo lograr que los 8 grupos trabajen al 100% sin cuellos de botella al pasar al frente.</p>
+                </div>
+                <button onclick="switchTab('dashboard')" class="btn-arcade bg-blue-500 text-white px-4 py-2 rounded-xl text-sm">
+                    Ir al Tablero + Ruletas →
+                </button>
+            </div>
+
+            <!-- Cronograma exacto de 80 minutos -->
+            <div>
+                <h3 class="font-arcade text-xl text-emerald-400 mb-3">1. Distribución Exacta del Tiempo (80 Minutos)</h3>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-3 text-xs">
+                    <div class="bg-slate-900 border-2 border-slate-600 rounded-xl p-3">
+                        <span class="bg-slate-700 text-yellow-300 font-bold px-2 py-0.5 rounded">FASE 0 • 8 MIN</span>
+                        <h4 class="font-arcade text-sm text-white mt-2">Armado de los 8 Escuadrones</h4>
+                        <p class="text-slate-300 mt-1">Se forman los 8 grupos de 5. Se entrega 1 hoja impresa por grupo y cada estudiante escribe su nombre en una casilla del <b>1 al 5</b>.</p>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-blue-500 rounded-xl p-3">
+                        <span class="bg-blue-600 text-white font-bold px-2 py-0.5 rounded">FASE 1 • 15 MIN</span>
+                        <h4 class="font-arcade text-sm text-blue-300 mt-2">Mundos 1 y 2 en Mesa</h4>
+                        <p class="text-slate-300 mt-1">Los 8 equipos resuelven en su hoja el <b>Nivel 1</b> (Subespacios, bloques 1-3) y <b>Nivel 2</b> (Generadores, bloques 4-7). Todos deben conocer la justificación.</p>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-amber-500 rounded-xl p-3">
+                        <span class="bg-amber-500 text-black font-bold px-2 py-0.5 rounded">FASE 2 • 15 MIN</span>
+                        <h4 class="font-arcade text-sm text-amber-300 mt-2">Ronda Relámpago #1</h4>
+                        <p class="text-slate-300 mt-1">4 giros de la <b>Triple Ruleta</b> en modo Duelo (2 equipos por giro = participan los 8 equipos). Tienen 90s para defender su bloque.</p>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-red-500 rounded-xl p-3">
+                        <span class="bg-red-600 text-white font-bold px-2 py-0.5 rounded">FASE 3 • 20 MIN</span>
+                        <h4 class="font-arcade text-sm text-red-300 mt-2">Mundos 3 y 4 en Mesa</h4>
+                        <p class="text-slate-300 mt-1">Los 8 grupos atacan el <b>Nivel 3</b> (LI/LD, bloques 8-11) y el <b>Nivel 4 Jefe Final</b> (Bases y Dimensión en $\mathbb{R}^2,\mathbb{R}^3,M_{2\times2}$, bloques 12-14).</p>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-purple-500 rounded-xl p-3">
+                        <span class="bg-purple-600 text-white font-bold px-2 py-0.5 rounded">FASE 4 • 22 MIN</span>
+                        <h4 class="font-arcade text-sm text-purple-300 mt-2">Batalla Final y Cierre</h4>
+                        <p class="text-slate-300 mt-1">4 duelos finales en la Triple Ruleta para los bloques 8 al 14 + recolección de hojas impresas y coronación del equipo ganador.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Técnica de "Hoja en Alto Simultánea" + Duelo de 2 equipos -->
+            <div class="bg-slate-900/90 border-2 border-yellow-400/60 rounded-xl p-4">
+                <h3 class="font-arcade text-lg text-yellow-400 mb-2">⚡ Dinámica Clave para 8 Grupos: "Voto Simultáneo + Duelo de Justificación"</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-200">
+                    <div>
+                        <b class="text-emerald-400 block mb-1">Paso 1: Giro Triple (5 seg)</b>
+                        Giras las 3 ruletas a la vez. Ejemplo: sale <b>Equipo 2 vs Equipo 6</b>, <b>Jugador #4 (Auditor de Dimensión)</b> y <b>Bloque [7]</b>.
+                    </div>
+                    <div>
+                        <b class="text-blue-400 block mb-1">Paso 2: Defensa en Duelo (90 seg)</b>
+                        El Jugador #4 del Equipo 2 dice el veredicto (Sí/No o LI/LD) y la primera mitad del argumento; el Jugador #4 del Equipo 6 lo complementa o refuta con cálculo/teorema.
+                    </div>
+                    <div>
+                        <b class="text-amber-400 block mb-1">Paso 3: Puntos y Rebote</b>
+                        Si ambos aciertan, ambos equipos ganan <b>+10 🪙</b>. Si uno falla, pierde <b>-1 ❤️</b> y cualquiera de los otros 6 equipos puede levantar la mano en 10 seg para robarse las monedas.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Los 5 Roles Explicados -->
+            <div>
+                <h3 class="font-arcade text-xl text-blue-300 mb-3">2. Roles de los 5 Integrantes dentro de cada uno de los 8 Equipos</h3>
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+                    <div class="bg-slate-900 border-2 border-red-500 rounded-xl p-3">
+                        <span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded">JUGADOR 1</span>
+                        <h4 class="font-arcade text-base text-yellow-300 mt-2">Capitán Vectorial</h4>
+                        <p class="text-xs text-slate-300 mt-1">Plantea la ecuación vectorial inicial: $c_1 v_1 + c_2 v_2 = u$ o verifica si el vector cero $\vec{0}$ pertenece al conjunto.</p>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-blue-500 rounded-xl p-3">
+                        <span class="bg-blue-500 text-white text-xs font-bold px-2 py-0.5 rounded">JUGADOR 2</span>
+                        <h4 class="font-arcade text-base text-yellow-300 mt-2">Ingeniero Gaussiano</h4>
+                        <p class="text-xs text-slate-300 mt-1">Arma la matriz aumentada y ejecuta las operaciones elementales de fila (Gauss) o calcula el determinante.</p>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-emerald-500 rounded-xl p-3">
+                        <span class="bg-emerald-500 text-black text-xs font-bold px-2 py-0.5 rounded">JUGADOR 3</span>
+                        <h4 class="font-arcade text-base text-yellow-300 mt-2">Inspector de Matrices</h4>
+                        <p class="text-xs text-slate-300 mt-1">Especialista en transformar problemas de $M_{2\times2}$ a coordenadas o verificar cerradura bajo suma y escalar.</p>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-purple-500 rounded-xl p-3">
+                        <span class="bg-purple-500 text-white text-xs font-bold px-2 py-0.5 rounded">JUGADOR 4</span>
+                        <h4 class="font-arcade text-base text-yellow-300 mt-2">Auditor de Dimensión</h4>
+                        <p class="text-xs text-slate-300 mt-1">Usa teoremas rápidos: compara el número de vectores con $\dim(V)$ ($2$ en $\mathbb{R}^2$, $3$ en $\mathbb{R}^3$, $4$ en $M_{2\times2}$).</p>
+                    </div>
+                    <div class="bg-slate-900 border-2 border-amber-400 rounded-xl p-3">
+                        <span class="bg-amber-400 text-black text-xs font-bold px-2 py-0.5 rounded">JUGADOR 5</span>
+                        <h4 class="font-arcade text-base text-yellow-300 mt-2">Escriba y Vocero</h4>
+                        <p class="text-xs text-slate-300 mt-1">Redacta la justificación matemática formal en la hoja impresa y defiende el argumento ante el profesor.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SECCIÓN 3: HOJA IMPRIMIBLE ESTILO SUPER MARIO BROS (VISTA PRINCIPAL)  -->
+    <!-- ===================================================================== -->
+    <main id="view-worksheet" class="max-w-5xl mx-auto px-2 sm:px-4 pt-3">
+        <div id="worksheet-view">
+
+        <!-- Controles rápidos sobre la hoja (No se imprimen) -->
+        <div class="no-print mb-3 bg-slate-800/95 border-2 border-slate-600 rounded-xl px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 text-white text-xs shadow-lg">
+            <div class="flex items-center gap-2">
+                <span class="bg-yellow-400 text-black font-bold px-2 py-0.5 rounded">💡 ¿NO IMPRIME EN EL VISOR?</span>
+                <span>Usa <b>"📄 Descargar PDF Directo"</b> o <b>"🖨️ Abrir para Imprimir"</b> para saltar el bloqueo del navegador.</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+                <button onclick="toggleAllSolutionsSheet()" id="btnToggleSheetSol" class="bg-purple-600 hover:bg-purple-500 text-white font-bold px-3 py-1.5 rounded-lg transition">
+                    👁️ Mostrar Clave Docente
+                </button>
+                <button onclick="downloadDirectPDF()" class="bg-red-600 hover:bg-red-500 text-white font-bold px-3 py-1.5 rounded-lg transition">
+                    📄 Descargar PDF Directo
+                </button>
+                <button onclick="openPrintWindow()" class="bg-amber-400 hover:bg-amber-300 text-black font-bold px-3 py-1.5 rounded-lg transition">
+                    🖨️ Abrir para Imprimir
+                </button>
+                <button onclick="downloadStandaloneHTML()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3 py-1.5 rounded-lg transition">
+                    💾 Descargar HTML
+                </button>
+            </div>
+        </div>
+
+        <!-- CONTENEDOR DE LA HOJA IMPRIMIBLE (DISEÑO FIEL A LA IMAGEN DE REFERENCIA) -->
+        <div id="printable-sheet" class="mario-world-bg rounded-2xl p-3 sm:p-4 relative overflow-hidden">
+
+            <!-- Decoraciones de fondo estilo Mario Bros (Nubes, Tuberías y Bloques laterales) -->
+            <div class="brick-pillar absolute top-0 left-0 bottom-0 w-3 opacity-80 pointer-events-none"></div>
+            <div class="brick-pillar absolute top-0 right-0 bottom-0 w-3 opacity-80 pointer-events-none"></div>
+
+            <!-- Tubería decorativa derecha superior -->
+            <div class="hidden sm:block absolute top-14 right-3 w-8 h-12 mario-pipe rounded-t-md pointer-events-none opacity-90"></div>
+
+            <!-- ================= CABECERA SUPER MARIO ================= -->
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-2.5 items-center mb-2.5">
+                
+                <!-- Logo Izquierdo: ÁLGEBRA LINEAL -->
+                <div class="md:col-span-4 text-center md:text-left flex flex-col items-center md:items-start">
+                    <div class="inline-block relative">
+                        <div class="mario-title text-3xl sm:text-4xl leading-none tracking-tight">ÁLGEBRA</div>
+                        <div class="mario-subtitle text-3xl sm:text-4xl leading-none -mt-1">LINEAL</div>
+                    </div>
+                    <div class="mt-1 bg-yellow-400 border-2 border-black px-3 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider text-black shadow">
+                        • MISIÓN ESPACIOS VECTORIALES •
+                    </div>
+                    <div class="mt-1 bg-slate-900 text-white text-[10px] font-bold px-2.5 py-0.5 rounded border border-slate-500">
+                        $\mathbb{R}^2 \;\cdot\; \mathbb{R}^3 \;\cdot\; M_{2\times 2}$ | ESCUADRÓN DE 5
+                    </div>
+                </div>
+
+                <!-- Centro: NOMBRE DEL EQUIPO + ESCUADRÓN DE 5 -->
+                <div class="md:col-span-5 bg-[#fdf3d7] border-4 border-[#7c4d19] rounded-xl p-2 shadow-md">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="font-arcade text-xs sm:text-sm text-slate-900 uppercase tracking-wide">⭐ NOMBRE DEL EQUIPO:</span>
+                        <span class="text-[10px] font-bold text-amber-900 bg-amber-200 px-2 py-0.5 rounded">Roles 1 al 5</span>
+                    </div>
+                    <input type="text" placeholder="Escribe el nombre de tu escuadrón..." class="w-full bg-white border-2 border-slate-400 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:border-blue-600 mb-1.5">
+                    
+                    <!-- 5 Integrantes numerados para la ruleta -->
+                    <div class="grid grid-cols-5 gap-1 text-[9px] text-center font-bold text-slate-700">
+                        <div class="bg-white border border-slate-400 rounded p-1">
+                            <span class="text-red-600 block">1. Capitán</span>
+                            <div class="border-b border-dotted border-slate-400 h-3 mt-0.5"></div>
+                        </div>
+                        <div class="bg-white border border-slate-400 rounded p-1">
+                            <span class="text-blue-600 block">2. Gauss</span>
+                            <div class="border-b border-dotted border-slate-400 h-3 mt-0.5"></div>
+                        </div>
+                        <div class="bg-white border border-slate-400 rounded p-1">
+                            <span class="text-emerald-600 block">3. Matrices</span>
+                            <div class="border-b border-dotted border-slate-400 h-3 mt-0.5"></div>
+                        </div>
+                        <div class="bg-white border border-slate-400 rounded p-1">
+                            <span class="text-purple-600 block">4. Dimensión</span>
+                            <div class="border-b border-dotted border-slate-400 h-3 mt-0.5"></div>
+                        </div>
+                        <div class="bg-white border border-slate-400 rounded p-1">
+                            <span class="text-amber-600 block">5. Vocero</span>
+                            <div class="border-b border-dotted border-slate-400 h-3 mt-0.5"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Derecha: HUD DE VIDAS Y PUNTOS -->
+                <div class="md:col-span-3 flex md:flex-col justify-center gap-2">
+                    <div class="hud-box px-3 py-1.5 text-center flex-1">
+                        <div class="text-[10px] font-bold tracking-widest text-slate-300 uppercase">VIDAS</div>
+                        <div class="text-lg leading-tight tracking-widest text-red-500">❤️❤️❤️</div>
+                    </div>
+                    <div class="hud-box px-3 py-1.5 text-center flex-1">
+                        <div class="text-[10px] font-bold tracking-widest text-slate-300 uppercase">PUNTOS</div>
+                        <div class="font-pixel text-base text-yellow-400 mt-0.5">000</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ===================================================================== -->
+            <!-- NIVEL 1: SUBESPACIOS VECTORIALES (AZUL • BLOQUES [1], [2], [3], [4])  -->
+            <!-- ===================================================================== -->
+            <div class="level-card p-2.5 mb-2.5 relative z-10">
+                <div class="bg-gradient-to-r from-blue-800 via-blue-600 to-blue-700 rounded-xl p-1.5 px-2.5 text-white flex flex-wrap items-center justify-between gap-2 border-2 border-slate-900 shadow">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-slate-900 text-yellow-400 font-arcade text-xs sm:text-sm px-2.5 py-0.5 rounded-lg border border-yellow-400">
+                            NIVEL 1
+                        </span>
+                        <span class="bg-white text-slate-900 font-arcade text-xs sm:text-sm px-2.5 py-0.5 rounded-lg border-2 border-slate-900">
+                            ¿Es $W$ un Subespacio Vectorial?
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="bg-white text-slate-900 font-bold px-2 py-0.5 rounded-lg border border-slate-900">
+                            🪙 <b>+10 puntos</b> <span class="text-[10px] font-normal text-slate-600">por acierto</span>
+                        </span>
+                        <span class="bg-white text-slate-900 font-bold px-2 py-0.5 rounded-lg border border-slate-900">
+                            ❤️ <b>-1 vida</b> <span class="text-[10px] font-normal text-slate-600">por error</span>
+                        </span>
+                    </div>
+                </div>
+
+                <p class="text-[11px] font-semibold text-slate-700 my-1 px-1">
+                    Determina si el subconjunto $W$ es un subespacio vectorial ($\vec{0} \in W$, cerradura bajo suma y escalar). <b>Justifica tu respuesta.</b>
+                </p>
+
+                <!-- Grid de 4 ejercicios Nivel 1 (Bloques 1 al 4: R2, R2, R3, M2x2) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    
+                    <!-- Bloque [1] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <button onclick="openExerciseModal(1)" class="question-block text-xs shrink-0" title="Proyectar Bloque 1">1</button>
+                                <div class="text-xs font-bold text-slate-900">
+                                    En $\mathbb{R}^2$: $\quad W = \{(x,y)\in\mathbb{R}^2 : 2x - y = 3\}$
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-xs font-bold shrink-0">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">Sí <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">No <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-red-50 border border-red-400 rounded text-[10px] text-red-900">
+                                <b>❌ NO.</b> El vector nulo $(0,0) \notin W$ porque $2(0) - 0 = 0 \neq 3$ (recta que no pasa por el origen).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque [2] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <button onclick="openExerciseModal(2)" class="question-block text-xs shrink-0" title="Proyectar Bloque 2">2</button>
+                                <div class="text-xs font-bold text-slate-900">
+                                    En $\mathbb{R}^2$: $\quad W = \{(x,y)\in\mathbb{R}^2 : 3x + y = 0\}$
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-xs font-bold shrink-0">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">Sí <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">No <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-emerald-50 border border-emerald-400 rounded text-[10px] text-emerald-900">
+                                <b>✅ SÍ.</b> Contiene al $(0,0)$ y es cerrado bajo suma y multiplicación por escalar ($W = \text{gen}\{(1,-3)\}$).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque [3] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <button onclick="openExerciseModal(3)" class="question-block text-xs shrink-0" title="Proyectar Bloque 3">3</button>
+                                <div class="text-xs font-bold text-slate-900">
+                                    En $\mathbb{R}^3$: $\quad W = \{(x,y,z)\in\mathbb{R}^3 : x - 2y + z = 0\}$
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-xs font-bold shrink-0">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">Sí <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">No <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-emerald-50 border border-emerald-400 rounded text-[10px] text-emerald-900">
+                                <b>✅ SÍ.</b> Es un plano en $\mathbb{R}^3$ que pasa por $(0,0,0)$ y cumple cerradura bajo suma y escalar.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque [4] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <button onclick="openExerciseModal(4)" class="question-block text-xs shrink-0" title="Proyectar Bloque 4">4</button>
+                                <div class="text-xs font-bold text-slate-900">
+                                    En $M_{2\times 2}$: $W = \Big\{$<span class="mat-2x2"><span>a</span><span>b</span><span>0</span><span>c</span></span>$ : a,b,c \in \mathbb{R} \Big\}$
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-xs font-bold shrink-0">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">Sí <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">No <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-emerald-50 border border-emerald-400 rounded text-[10px] text-emerald-900">
+                                <b>✅ SÍ.</b> Las matrices triangulares superiores incluyen la matriz nula y son cerradas bajo suma y escalar.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ===================================================================== -->
+            <!-- NIVEL 2: ESPACIOS GENERADORES (VERDE • BLOQUES [5], [6], [7])         -->
+            <!-- ===================================================================== -->
+            <div class="level-card p-2.5 mb-2.5 relative z-10">
+                <div class="bg-gradient-to-r from-emerald-800 via-emerald-600 to-green-600 rounded-xl p-1.5 px-2.5 text-white flex flex-wrap items-center justify-between gap-2 border-2 border-slate-900 shadow">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-slate-900 text-yellow-400 font-arcade text-xs sm:text-sm px-2.5 py-0.5 rounded-lg border border-yellow-400">
+                            NIVEL 2
+                        </span>
+                        <span class="bg-white text-slate-900 font-arcade text-xs sm:text-sm px-2.5 py-0.5 rounded-lg border-2 border-slate-900">
+                            ¿Genera $S$ al Espacio?
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="bg-white text-slate-900 font-bold px-2 py-0.5 rounded-lg border border-slate-900">
+                            🪙 <b>+10 puntos</b> <span class="text-[10px] font-normal text-slate-600">por acierto</span>
+                        </span>
+                        <span class="bg-white text-slate-900 font-bold px-2 py-0.5 rounded-lg border border-slate-900">
+                            ❤️ <b>-1 vida</b> <span class="text-[10px] font-normal text-slate-600">por error</span>
+                        </span>
+                    </div>
+                </div>
+
+                <p class="text-[11px] font-semibold text-slate-700 my-1 px-1">
+                    Determina si el conjunto $S$ genera a todo el espacio vectorial indicado ($\text{gen}(S) = V$). <b>Justifica con determinante, rango o dimensión.</b>
+                </p>
+
+                <!-- Grid de 3 ejercicios Nivel 2 (Bloques 5, 6, 7: R2, R3, M2x2) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    
+                    <!-- Bloque [5] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-start gap-2">
+                            <button onclick="openExerciseModal(5)" class="question-block text-xs shrink-0">5</button>
+                            <div class="text-xs font-bold text-slate-900 leading-snug">
+                                <span class="text-[10px] font-bold text-emerald-700 uppercase block">En $V = \mathbb{R}^2$:</span>
+                                $S = \{(2, 1), (-1, 2)\}$
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-1.5 pt-1 border-t border-slate-200 text-xs font-semibold">
+                            <span>¿Genera $\mathbb{R}^2$?</span>
+                            <div class="flex items-center gap-2.5">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">Sí <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">No <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-emerald-50 border border-emerald-400 rounded text-[10px] text-emerald-900">
+                                <b>✅ SÍ.</b> $\det = 2(2)-(-1)(1) = 5 \neq 0$. Dos vectores LI en $\mathbb{R}^2$ generan todo $\mathbb{R}^2$.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque [6] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-start gap-2">
+                            <button onclick="openExerciseModal(6)" class="question-block text-xs shrink-0">6</button>
+                            <div class="text-xs font-bold text-slate-900 leading-snug">
+                                <span class="text-[10px] font-bold text-emerald-700 uppercase block">En $V = \mathbb{R}^3$:</span>
+                                $S = \{(1, 0, 2), (0, -1, 3)\}$
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-1.5 pt-1 border-t border-slate-200 text-xs font-semibold">
+                            <span>¿Genera $\mathbb{R}^3$?</span>
+                            <div class="flex items-center gap-2.5">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">Sí <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">No <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-red-50 border border-red-400 rounded text-[10px] text-red-900">
+                                <b>❌ NO.</b> $\dim(\mathbb{R}^3)=3$; con solo 2 vectores es imposible generar $\mathbb{R}^3$ (solo generan un plano).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque [7] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-start gap-2">
+                            <button onclick="openExerciseModal(7)" class="question-block text-xs shrink-0">7</button>
+                            <div class="text-xs font-bold text-slate-900 leading-snug">
+                                <span class="text-[10px] font-bold text-emerald-700 uppercase block">En $V = M_{2\times 2}$:</span>
+                                $S = \Big\{$<span class="mat-2x2"><span>1</span><span>0</span><span>0</span><span>0</span></span>, <span class="mat-2x2"><span>0</span><span>1</span><span>1</span><span>0</span></span>, <span class="mat-2x2"><span>0</span><span>0</span><span>0</span><span>1</span></span>$\Big\}$
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-1.5 pt-1 border-t border-slate-200 text-xs font-semibold">
+                            <span>¿Genera $M_{2\times 2}$?</span>
+                            <div class="flex items-center gap-2.5">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">Sí <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">No <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-red-50 border border-red-400 rounded text-[10px] text-red-900">
+                                <b>❌ NO.</b> $\dim(M_{2\times2})=4$ y $S$ solo tiene 3 matrices (únicamente genera las matrices simétricas).
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ===================================================================== -->
+            <!-- NIVEL 3: INDEPENDENCIA LINEAL LI / LD (ROJO • BLOQUES [8] AL [11])    -->
+            <!-- ===================================================================== -->
+            <div class="level-card p-2.5 mb-2.5 relative z-10">
+                <div class="bg-gradient-to-r from-red-700 via-red-600 to-orange-600 rounded-xl p-1.5 px-2.5 text-white flex flex-wrap items-center justify-between gap-2 border-2 border-slate-900 shadow">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-slate-900 text-yellow-400 font-arcade text-xs sm:text-sm px-2.5 py-0.5 rounded-lg border border-yellow-400">
+                            NIVEL 3
+                        </span>
+                        <span class="bg-white text-slate-900 font-arcade text-xs sm:text-sm px-2.5 py-0.5 rounded-lg border-2 border-slate-900">
+                            Independencia Lineal: ¿LI o LD?
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="bg-white text-slate-900 font-bold px-2 py-0.5 rounded-lg border border-slate-900">
+                            🪙 <b>+15 puntos</b> <span class="text-[10px] font-normal text-slate-600">por acierto</span>
+                        </span>
+                        <span class="bg-white text-slate-900 font-bold px-2 py-0.5 rounded-lg border border-slate-900">
+                            ❤️ <b>-1 vida</b> <span class="text-[10px] font-normal text-slate-600">por error</span>
+                        </span>
+                    </div>
+                </div>
+
+                <p class="text-[11px] font-semibold text-slate-700 my-1 px-1">
+                    Determina si el conjunto $S$ es Linealmente Independiente (LI) o Linealmente Dependiente (LD). <b>Justifica tu respuesta.</b>
+                </p>
+
+                <!-- Grid de 4 ejercicios Nivel 3 (Bloques 8, 9, 10, 11) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    
+                    <!-- Bloque [8] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <button onclick="openExerciseModal(8)" class="question-block text-xs shrink-0">8</button>
+                                <div class="text-xs font-bold text-slate-900">
+                                    En $\mathbb{R}^2$: $\quad S = \{(-2, 2), (3, 5)\}$
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-xs font-bold shrink-0">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">LI <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">LD <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-emerald-50 border border-emerald-400 rounded text-[10px] text-emerald-900">
+                                <b>✅ LI.</b> No son múltiplos escalares ($\det = -10 - 6 = -16 \neq 0$).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque [9] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <button onclick="openExerciseModal(9)" class="question-block text-xs shrink-0">9</button>
+                                <div class="text-xs font-bold text-slate-900">
+                                    En $\mathbb{R}^2$: $\quad S = \{(0, 0), (1, -1)\}$
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-xs font-bold shrink-0">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">LI <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">LD <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-amber-50 border border-amber-400 rounded text-[10px] text-amber-900">
+                                <b>✅ LD.</b> Todo conjunto que contiene al vector cero $\vec{0}$ es automáticamente Linealmente Dependiente.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque [10] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <button onclick="openExerciseModal(10)" class="question-block text-xs shrink-0">10</button>
+                                <div class="text-xs font-bold text-slate-900">
+                                    En $\mathbb{R}^3$: $\quad S = \{(1, 2, 0), (0, 1, -1), (2, 5, -1)\}$
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-xs font-bold shrink-0">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">LI <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">LD <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-amber-50 border border-amber-400 rounded text-[10px] text-amber-900">
+                                <b>✅ LD.</b> Se cumple $2(1,2,0) + (0,1,-1) = (2,5,-1)$ y el determinante $3\times3$ es igual a $0$.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque [11] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2">
+                                <button onclick="openExerciseModal(11)" class="question-block text-xs shrink-0">11</button>
+                                <div class="text-xs font-bold text-slate-900">
+                                    En $M_{2\times 2}$: $S = \Big\{$<span class="mat-2x2"><span>1</span><span>2</span><span>0</span><span>1</span></span>, <span class="mat-2x2"><span>0</span><span>1</span><span>-1</span><span>2</span></span>, <span class="mat-2x2"><span>2</span><span>5</span><span>-1</span><span>4</span></span>$\Big\}$
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2.5 text-xs font-bold shrink-0">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">LI <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">LD <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-amber-50 border border-amber-400 rounded text-[10px] text-amber-900">
+                                <b>✅ LD.</b> Como $2A_1 + A_2 = A_3$, existe combinación lineal no trivial igual a la matriz nula.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ===================================================================== -->
+            <!-- NIVEL 4 (JEFE FINAL): BASES Y DIMENSIÓN (MORADO • BLOQUES [12]-[14])  -->
+            <!-- ===================================================================== -->
+            <div class="level-card p-2.5 mb-2.5 relative z-10">
+                <div class="bg-gradient-to-r from-purple-900 via-purple-700 to-indigo-800 rounded-xl p-1.5 px-2.5 text-white flex flex-wrap items-center justify-between gap-2 border-2 border-slate-900 shadow">
+                    <div class="flex items-center gap-2">
+                        <span class="bg-yellow-400 text-black font-arcade text-xs sm:text-sm px-2.5 py-0.5 rounded-lg border border-black">
+                            👑 NIVEL 4: JEFE FINAL
+                        </span>
+                        <span class="bg-white text-slate-900 font-arcade text-xs sm:text-sm px-2.5 py-0.5 rounded-lg border-2 border-slate-900">
+                            Bases y Dimensión
+                        </span>
+                    </div>
+                    <div class="flex items-center gap-1.5 text-[11px]">
+                        <span class="bg-yellow-300 text-slate-900 font-bold px-2 py-0.5 rounded-lg border border-slate-900">
+                            🌟 <b>+20 puntos</b> <span class="text-[10px] font-normal text-slate-800">por acierto</span>
+                        </span>
+                        <span class="bg-white text-slate-900 font-bold px-2 py-0.5 rounded-lg border border-slate-900">
+                            ❤️ <b>-1 vida</b> <span class="text-[10px] font-normal text-slate-600">por error</span>
+                        </span>
+                    </div>
+                </div>
+
+                <p class="text-[11px] font-semibold text-slate-700 my-1 px-1">
+                    Recuerda: $B$ es Base de $V$ si y solo si <b>$B$ es LI</b> y <b>$B$ genera a $V$</b> ($|B| = \dim(V)$). <b>Justifica tu respuesta.</b>
+                </p>
+
+                <!-- Grid de 3 ejercicios Nivel 4 -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    
+                    <!-- Bloque [12] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-start gap-2">
+                            <button onclick="openExerciseModal(12)" class="question-block text-xs shrink-0">12</button>
+                            <div class="text-xs font-bold text-slate-900 leading-snug">
+                                <span class="text-[10px] font-bold text-purple-700 uppercase block">Para $V = \mathbb{R}^2$:</span>
+                                $B = \{(1, 2), (3, 4), (5, 6)\}$
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-1.5 pt-1 border-t border-slate-200 text-xs font-semibold">
+                            <span>¿Es Base de $\mathbb{R}^2$?</span>
+                            <div class="flex items-center gap-2.5">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">Sí <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">No <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-red-50 border border-red-400 rounded text-[10px] text-red-900">
+                                <b>❌ NO.</b> $\dim(\mathbb{R}^2)=2$. Como $B$ tiene 3 vectores en $\mathbb{R}^2$, es forzosamente LD.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque [13] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-start gap-2">
+                            <button onclick="openExerciseModal(13)" class="question-block text-xs shrink-0">13</button>
+                            <div class="text-xs font-bold text-slate-900 leading-snug">
+                                <span class="text-[10px] font-bold text-purple-700 uppercase block">Para $V = \mathbb{R}^3$:</span>
+                                $B = \{(1,0,0), (1,1,0), (1,1,1)\}$
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-1.5 pt-1 border-t border-slate-200 text-xs font-semibold">
+                            <span>¿Es Base de $\mathbb{R}^3$?</span>
+                            <div class="flex items-center gap-2.5">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">Sí <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">No <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-emerald-50 border border-emerald-400 rounded text-[10px] text-emerald-900">
+                                <b>✅ SÍ.</b> Son 3 vectores en $\mathbb{R}^3$ con matriz triangular de $\det = 1 \neq 0$ (LI y generan).
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bloque [14] -->
+                    <div class="exercise-box p-2">
+                        <div class="flex items-start gap-2">
+                            <button onclick="openExerciseModal(14)" class="question-block text-xs shrink-0">14</button>
+                            <div class="text-xs font-bold text-slate-900 leading-snug">
+                                <span class="text-[10px] font-bold text-purple-700 uppercase block">Simétricas $W \subset M_{2\times2}$:</span>
+                                $B = \Big\{$<span class="mat-2x2"><span>1</span><span>0</span><span>0</span><span>0</span></span>, <span class="mat-2x2"><span>0</span><span>1</span><span>1</span><span>0</span></span>, <span class="mat-2x2"><span>0</span><span>0</span><span>0</span><span>1</span></span>$\Big\}$
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between mt-1.5 pt-1 border-t border-slate-200 text-xs font-semibold">
+                            <span>¿Es Base de $W$?</span>
+                            <div class="flex items-center gap-2.5">
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">Sí <span class="check-square"></span></label>
+                                <label class="inline-flex items-center gap-1 cursor-pointer" onclick="toggleCheck(this)">No <span class="check-square"></span></label>
+                            </div>
+                        </div>
+                        <div class="mt-1 text-[11px]">
+                            <span class="font-bold text-slate-700">Justificación:</span>
+                            <div class="just-line border-b border-dashed border-slate-400 h-5"></div>
+                            <div class="sheet-solution hidden mt-1 p-1 bg-emerald-50 border border-emerald-400 rounded text-[10px] text-emerald-900">
+                                <b>✅ SÍ.</b> A diferencia del Bloque [7], sí genera todo el subespacio de matrices simétricas $W$ y es LI ($\dim(W)=3$).
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ================= PIE DE LA HOJA (COFRE DEL TESORO Y PUNTAJE FINAL) ================= -->
+            <div class="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-2.5 items-center pt-1">
+                <div class="md:col-span-7 bg-[#fdf3d7] border-4 border-[#7c4d19] rounded-xl p-2 flex items-center gap-2.5 shadow">
+                    <div class="text-2xl shrink-0">🏆</div>
+                    <p class="text-[11px] font-bold text-slate-800 leading-snug">
+                        ¡Completa los 4 niveles en equipo, defiende tus justificaciones en la Ruleta Arcade y conviértete en el Escuadrón Campeón de Álgebra Lineal!
+                    </p>
+                </div>
+
+                <div class="md:col-span-3 hud-box p-2 flex items-center justify-between">
+                    <span class="text-[11px] font-bold uppercase text-slate-300">PUNTAJE TOTAL:</span>
+                    <div class="flex gap-1">
+                        <span class="w-5 h-6 bg-white rounded border border-slate-400 inline-block"></span>
+                        <span class="w-5 h-6 bg-white rounded border border-slate-400 inline-block"></span>
+                        <span class="w-5 h-6 bg-white rounded border border-slate-400 inline-block"></span>
+                    </div>
+                </div>
+
+                <div class="md:col-span-2 hud-box p-1.5 text-center">
+                    <span class="text-[9px] font-bold uppercase text-slate-300 block">VIDAS FINALES:</span>
+                    <span class="text-sm tracking-widest">❤️❤️❤️</span>
+                </div>
+            </div>
+
+        </div>
+        </div>
+    </main>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL PARA PROYECTAR UN BLOQUE EN GRANDE Y VER LA SOLUCIÓN            -->
+    <!-- ===================================================================== -->
+    <div id="exerciseModal" class="no-print fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-slate-900 border-4 border-yellow-400 rounded-2xl max-w-2xl w-full p-6 text-white shadow-2xl relative">
+            <div class="flex items-center justify-between border-b-2 border-slate-700 pb-3 mb-4">
+                <div class="flex items-center gap-3">
+                    <div id="modalBlockNum" class="question-block text-xl">1</div>
+                    <div>
+                        <span id="modalLevelBadge" class="text-xs font-bold uppercase px-2.5 py-0.5 rounded bg-blue-600 text-white">NIVEL 1</span>
+                        <h3 id="modalTitle" class="font-arcade text-xl text-yellow-300 mt-0.5">Reto de Álgebra Lineal</h3>
+                    </div>
+                </div>
+                <button onclick="closeExerciseModal()" class="text-slate-400 hover:text-white text-2xl font-bold px-2">✕</button>
+            </div>
+
+            <!-- Enunciado Matemático en Grande -->
+            <div class="bg-white text-slate-900 rounded-xl p-5 border-4 border-slate-300 my-4 text-center">
+                <p id="modalQuestionPrompt" class="text-sm font-bold text-slate-600 uppercase mb-2"></p>
+                <div id="modalMathContent" class="text-lg sm:text-xl font-bold py-2"></div>
+            </div>
+
+            <!-- Recordatorio del Rol si vino desde la Ruleta -->
+            <div id="modalRoleReminder" class="bg-slate-800 border border-blue-500/40 rounded-xl p-3 mb-4 text-xs flex items-center justify-between">
+                <span>🎯 <b>Pregunta guía para el grupo:</b> ¿Cuál es el veredicto y qué teorema o cálculo lo demuestra?</span>
+                <button onclick="revealModalSolution()" class="btn-arcade bg-emerald-500 text-black px-4 py-1.5 rounded-lg text-xs shrink-0">
+                    👁️ Revelar Solución
+                </button>
+            </div>
+
+            <!-- Caja de Solución Oculta -->
+            <div id="modalSolutionBox" class="hidden bg-emerald-950/90 border-2 border-emerald-400 rounded-xl p-4 text-sm space-y-1">
+                <div class="font-arcade text-lg text-emerald-300" id="modalVerdict"></div>
+                <p class="text-slate-200 leading-relaxed" id="modalJustification"></p>
+            </div>
+
+            <div class="mt-5 flex justify-end gap-3">
+                <button onclick="closeExerciseModal()" class="btn-arcade bg-slate-700 text-white px-5 py-2 rounded-xl text-sm">
+                    Cerrar Visor
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- LÓGICA JAVASCRIPT: RULETAS, SONIDOS RETRO, EQUIPOS Y MATEMÁTICAS      -->
+    <!-- ===================================================================== -->
+    <script>
+        // ---------------------------------------------------------------------
+        // 1. BASE DE DATOS DE LOS 14 BLOQUES DE EJERCICIOS (NIVELES 1 AL 4)
+        // ---------------------------------------------------------------------
+        const EXERCISES_DB = {
+            1: {
+                level: "NIVEL 1 • Subespacios Vectoriales (+10 pts)",
+                prompt: "En V = ℝ², determina si W es un subespacio vectorial:",
+                math: "$$W = \\{(x,y)\\in\\mathbb{R}^2 : 2x - y = 3\\}$$",
+                verdict: "❌ RESPUESTA: NO es un subespacio de ℝ².",
+                justification: "El vector cero $(0,0)$ no pertenece a $W$ porque $2(0) - 0 = 0 \\neq 3$. Geométricamente es una recta que no pasa por el origen."
+            },
+            2: {
+                level: "NIVEL 1 • Subespacios Vectoriales (+10 pts)",
+                prompt: "En V = ℝ², determina si W es un subespacio vectorial:",
+                math: "$$W = \\{(x,y)\\in\\mathbb{R}^2 : 3x + y = 0\\}$$",
+                verdict: "✅ RESPUESTA: SÍ es un subespacio de ℝ².",
+                justification: "1) Contiene al $(0,0)$ porque $3(0)+0=0$. 2) Es una recta que pasa por el origen ($y = -3x$), cerrada bajo la suma y multiplicación por escalar."
+            },
+            3: {
+                level: "NIVEL 1 • Subespacios Vectoriales (+10 pts)",
+                prompt: "En V = ℝ³, determina si W es un subespacio vectorial:",
+                math: "$$W = \\{(x,y,z)\\in\\mathbb{R}^3 : x - 2y + z = 0\\}$$",
+                verdict: "✅ RESPUESTA: SÍ es un subespacio de ℝ³.",
+                justification: "El vector nulo $(0,0,0)$ cumple la ecuación homogénea $0 - 2(0) + 0 = 0$. Es un plano que pasa por el origen en $\\mathbb{R}^3$, cerrado bajo suma y escalar."
+            },
+            4: {
+                level: "NIVEL 1 • Subespacios Vectoriales (+10 pts)",
+                prompt: "En el espacio de matrices V = M₂ₓ₂, determina si W es subespacio:",
+                math: "$$W = \\left\\{ \\begin{pmatrix} a & b \\\\ 0 & c \\end{pmatrix} : a,b,c \\in \\mathbb{R} \\right\\}$$",
+                verdict: "✅ RESPUESTA: SÍ es un subespacio de M₂ₓ₂.",
+                justification: "Si $a=b=c=0$ obtenemos la matriz nula $\\mathbf{0}_{2\\times2} \\in W$. Además, la suma de dos matrices triangulares superiores y el producto por un escalar mantienen un $0$ en la posición $(2,1)$."
+            },
+            5: {
+                level: "NIVEL 2 • Espacios Generadores (+10 pts)",
+                prompt: "Determina si el conjunto S genera a todo el espacio ℝ²:",
+                math: "$$S = \\{(2, 1), (-1, 2)\\}$$",
+                verdict: "✅ RESPUESTA: SÍ genera a ℝ².",
+                justification: "Al colocar los vectores en una matriz $2\\times2$, su determinante es $(2)(2) - (-1)(1) = 5 \\neq 0$. Como tiene 2 pivotes en $\\mathbb{R}^2$, genera todo el plano."
+            },
+            6: {
+                level: "NIVEL 2 • Espacios Generadores (+10 pts)",
+                prompt: "Determina si el conjunto S genera a todo el espacio ℝ³:",
+                math: "$$S = \\{(1, 0, 2), (0, -1, 3)\\}$$",
+                verdict: "❌ RESPUESTA: NO genera a ℝ³.",
+                justification: "Como $\\dim(\\mathbb{R}^3) = 3$, cualquier conjunto generador de $\\mathbb{R}^3$ necesita al menos 3 vectores. Con 2 vectores a lo sumo se genera un plano en $\\mathbb{R}^3$."
+            },
+            7: {
+                level: "NIVEL 2 • Espacios Generadores (+10 pts)",
+                prompt: "Determina si el conjunto S genera a todo el espacio M₂ₓ₂:",
+                math: "$$S = \\left\\{\\begin{pmatrix}1 & 0\\\\0 & 0\\end{pmatrix}, \\begin{pmatrix}0 & 1\\\\1 & 0\\end{pmatrix}, \\begin{pmatrix}0 & 0\\\\0 & 1\\end{pmatrix}\\right\\}$$",
+                verdict: "❌ RESPUESTA: NO genera a todo M₂ₓ₂.",
+                justification: "La dimensión de $M_{2\\times2}$ es $4$, por lo que $3$ matrices no pueden generar todo el espacio. Además, toda combinación lineal produce matrices simétricas ($a_{12}=a_{21}$)."
+            },
+            8: {
+                level: "NIVEL 3 • Independencia Lineal (+15 pts)",
+                prompt: "Determina si S es Linealmente Independiente (LI) o Dependiente (LD) en ℝ²:",
+                math: "$$S = \\{(-2, 2), (3, 5)\\}$$",
+                verdict: "✅ RESPUESTA: LI (Linealmente Independiente).",
+                justification: "Dos vectores son LD si y solo si uno es múltiplo escalar del otro. Aquí $\\det = (-2)(5) - (2)(3) = -16 \\neq 0$, por tanto son LI."
+            },
+            9: {
+                level: "NIVEL 3 • Independencia Lineal (+15 pts)",
+                prompt: "Determina si S es Linealmente Independiente (LI) o Dependiente (LD) en ℝ²:",
+                math: "$$S = \\{(0, 0), (1, -1)\\}$$",
+                verdict: "✅ RESPUESTA: LD (Linealmente Dependiente).",
+                justification: "Por teorema fundamental: cualquier conjunto de vectores que contenga al vector nulo $\\vec{0}$ es automáticamente Linealmente Dependiente."
+            },
+            10: {
+                level: "NIVEL 3 • Independencia Lineal (+15 pts)",
+                prompt: "Determina si S es Linealmente Independiente (LI) o Dependiente (LD) en ℝ³:",
+                math: "$$S = \\{(1, 2, 0), (0, 1, -1), (2, 5, -1)\\}$$",
+                verdict: "✅ RESPUESTA: LD (Linealmente Dependiente).",
+                justification: "El tercer vector es combinación lineal de los dos primeros: $2(1,2,0) + 1(0,1,-1) = (2,5,-1)$. Su determinante $3\\times3$ es igual a $0$."
+            },
+            11: {
+                level: "NIVEL 3 • Independencia Lineal (+15 pts)",
+                prompt: "Determina si S es Linealmente Independiente (LI) o Dependiente (LD) en M₂ₓ₂:",
+                math: "$$S = \\left\\{\\begin{pmatrix}1 & 2\\\\0 & 1\\end{pmatrix}, \\begin{pmatrix}0 & 1\\\\-1 & 2\\end{pmatrix}, \\begin{pmatrix}2 & 5\\\\-1 & 4\\end{pmatrix}\\right\\}$$",
+                verdict: "✅ RESPUESTA: LD (Linealmente Dependiente).",
+                justification: "Si multiplicamos la primera matriz por $2$ y le sumamos la segunda: $2A_1 + A_2 = A_3$. Por tanto son linealmente dependientes."
+            },
+            12: {
+                level: "NIVEL 4 (JEFE FINAL) • Bases y Dimensión (+20 pts)",
+                prompt: "Determina si B es una Base del espacio vectorial ℝ²:",
+                math: "$$B = \\{(1, 2), (3, 4), (5, 6)\\}$$",
+                verdict: "❌ RESPUESTA: NO es una Base de ℝ².",
+                justification: "Sabemos que $\\dim(\\mathbb{R}^2) = 2$. Toda base de $\\mathbb{R}^2$ debe tener exactamente 2 vectores. Como $B$ tiene 3 vectores en $\\mathbb{R}^2$, es forzosamente LD."
+            },
+            13: {
+                level: "NIVEL 4 (JEFE FINAL) • Bases y Dimensión (+20 pts)",
+                prompt: "Determina si B es una Base del espacio vectorial ℝ³:",
+                math: "$$B = \\{(1,0,0), (1,1,0), (1,1,1)\\}$$",
+                verdict: "✅ RESPUESTA: SÍ es una Base de ℝ³.",
+                justification: "Tiene exactamente $3 = \\dim(\\mathbb{R}^3)$ vectores y su matriz es triangular con determinante $1\\times 1\\times 1 = 1 \\neq 0$. Es LI y genera todo $\\mathbb{R}^3$."
+            },
+            14: {
+                level: "NIVEL 4 (JEFE FINAL) • Bases y Dimensión (+20 pts)",
+                prompt: "Sea W el subespacio de matrices simétricas 2×2. ¿Es B una base de W?",
+                math: "$$B = \\left\\{\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}, \\begin{pmatrix}0&1\\\\1&0\\end{pmatrix}, \\begin{pmatrix}0&0\\\\0&1\\end{pmatrix}\\right\\}$$",
+                verdict: "✅ RESPUESTA: SÍ es una Base del subespacio W de matrices simétricas.",
+                justification: "¡Contraste clave con el Bloque [7]! Aunque no genera todo $M_{2\\times2}$ ($\\dim=4$), toda matriz simétrica $\\begin{pmatrix}a&b\\\\b&c\\end{pmatrix} = aM_1 + bM_2 + cM_3$ se expresa de forma única como combinación lineal de estas 3 matrices LI ($\\dim(W)=3$)."
+            }
+        };
+
+        // ---------------------------------------------------------------------
+        // 2. SISTEMA DE SONIDO SINTETIZADO (WEB AUDIO API - SIN ARCHIVOS EXTERNOS)
+        // ---------------------------------------------------------------------
+        let audioCtx = null;
+        function initAudio() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        function playTickSound(freq = 520) {
+            try {
+                initAudio();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.045);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.05);
+            } catch (e) {}
+        }
+
+        function playCoinSound() {
+            try {
+                initAudio();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(987.77, now); // B5
+                osc.frequency.setValueAtTime(1318.51, now + 0.08); // E6
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.36);
+            } catch (e) {}
+        }
+
+        function playPowerDownSound() {
+            try {
+                initAudio();
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(440, now);
+                osc.frequency.linearRampToValueAtTime(180, now + 0.3);
+                gain.gain.setValueAtTime(0.08, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.32);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.33);
+            } catch (e) {}
+        }
+
+        // ---------------------------------------------------------------------
+        // 3. OCHO EQUIPOS PRECONFIGURADOS + TRIPLE RULETA (EQUIPOS, ROLES, RETOS)
+        // ---------------------------------------------------------------------
+        let teams = [
+            { name: "1. Mario Bros", points: 0, lives: 3, color: "#e52521" },
+            { name: "2. Luigi Squad", points: 0, lives: 3, color: "#16a34a" },
+            { name: "3. Peach Royal", points: 0, lives: 3, color: "#ec4899" },
+            { name: "4. Yoshi Clan", points: 0, lives: 3, color: "#65a30d" },
+            { name: "5. Bowser Force", points: 0, lives: 3, color: "#ea580c" },
+            { name: "6. Toadstool", points: 0, lives: 3, color: "#2563eb" },
+            { name: "7. Rosalina Star", points: 0, lives: 3, color: "#0891b2" },
+            { name: "8. Donkey Kong", points: 0, lives: 3, color: "#9333ea" }
+        ];
+
+        const ROLE_SLICES = [
+            { label: "Jugador 1", title: "1. Capitán Vectorial", desc: "Plantea combinación lineal o verifica si 0 ∈ W.", color: "#e52521" },
+            { label: "Jugador 2", title: "2. Ingeniero Gaussiano", desc: "Explica escalonamiento de matriz o determinante.", color: "#2563eb" },
+            { label: "Jugador 3", title: "3. Inspector Matrices", desc: "Explica el caso en M₂ₓ₂ o cerradura suma/escalar.", color: "#16a34a" },
+            { label: "Jugador 4", title: "4. Auditor Dimensión", desc: "Compara # vectores con dim(V) en ℝ², ℝ³, M₂ₓ₂.", color: "#9333ea" },
+            { label: "Jugador 5", title: "5. Escriba y Vocero", desc: "Defiende la justificación escrita en la hoja.", color: "#f59e0b" }
+        ];
+
+        const CHALLENGE_SLICES = [
+            { label: "Bloque [1]", exId: 1, color: "#1d4ed8" },
+            { label: "Bloque [2]", exId: 2, color: "#2563eb" },
+            { label: "Bloque [3]", exId: 3, color: "#3b82f6" },
+            { label: "Bloque [4]", exId: 4, color: "#0284c7" },
+            { label: "⭐ ESTRELLA", event: "⭐ ¡SUPER ESTRELLA! Vale +20 pts si responden en 60 seg.", color: "#eab308" },
+            { label: "Bloque [5]", exId: 5, color: "#15803d" },
+            { label: "Bloque [6]", exId: 6, color: "#16a34a" },
+            { label: "Bloque [7]", exId: 7, color: "#10b981" },
+            { label: "🍄 1-UP", event: "🍄 ¡HONGO DE VIDA! Si aciertan la justificación, recuperan +1 ❤️.", color: "#ec4899" },
+            { label: "Bloque [8]", exId: 8, color: "#b91c1c" },
+            { label: "Bloque [9]", exId: 9, color: "#dc2626" },
+            { label: "Bloque [10]", exId: 10, color: "#ef4444" },
+            { label: "Bloque [11]", exId: 11, color: "#f97316" },
+            { label: "🐢 CAPARAZÓN", event: "🐢 ¡CAPARAZÓN ROJO! Eligen qué bloque resolver o retan a otro grupo.", color: "#d97706" },
+            { label: "Bloque [12]", exId: 12, color: "#6d28d9" },
+            { label: "Bloque [13]", exId: 13, color: "#7c3aed" },
+            { label: "Bloque [14]", exId: 14, color: "#8b5cf6" }
+        ];
+
+        let teamAngle = 0;
+        let roleAngle = 0;
+        let challengeAngle = 0;
+        let isSpinningTeam = false;
+        let isSpinningRole = false;
+        let isSpinningChallenge = false;
+
+        let lastSpunTeamsText = "Equipos en espera";
+        let lastSpunRoleText = "Rol (1-5)";
+        let lastSpunChallengeText = "Bloque";
+        let lastSpunExId = null;
+
+        function getTeamSlices() {
+            return teams.map((t, i) => ({
+                label: t.name.length > 13 ? t.name.substring(0, 13) : t.name,
+                fullName: t.name,
+                idx: i,
+                color: t.color || ["#e52521", "#16a34a", "#ec4899", "#65a30d", "#ea580c", "#2563eb", "#0891b2", "#9333ea"][i % 8]
+            }));
+        }
+
+        function drawWheel(canvasId, slices, currentAngle) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const cx = canvas.width / 2;
+            const cy = canvas.height / 2;
+            const radius = cx - 5;
+            const arc = (2 * Math.PI) / slices.length;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            slices.forEach((slice, i) => {
+                const startAngle = currentAngle + i * arc;
+                const endAngle = startAngle + arc;
+
+                ctx.beginPath();
+                ctx.moveTo(cx, cy);
+                ctx.arc(cx, cy, radius, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fillStyle = slice.color;
+                ctx.fill();
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "#0f172a";
+                ctx.stroke();
+
+                ctx.save();
+                ctx.translate(cx, cy);
+                ctx.rotate(startAngle + arc / 2);
+                ctx.textAlign = "right";
+                ctx.fillStyle = "#ffffff";
+                ctx.font = "bold 10px 'Fredoka', sans-serif";
+                ctx.fillText(slice.label, radius - 8, 3.5);
+                ctx.restore();
+            });
+
+            ctx.beginPath();
+            ctx.arc(cx, cy, 18, 0, 2 * Math.PI);
+            ctx.fillStyle = "#fbd000";
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = "#000";
+            ctx.stroke();
+
+            ctx.fillStyle = "#000";
+            ctx.font = "bold 13px 'Fredoka', sans-serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillText("?", cx, cy + 1);
+        }
+
+        function updateDuelBanner() {
+            const bannerEl = document.getElementById('duelBannerText');
+            const btnModal = document.getElementById('btnBannerOpenModal');
+            if (!bannerEl) return;
+
+            bannerEl.innerHTML = `<span class="text-emerald-300">${lastSpunTeamsText}</span> <span class="text-slate-400">➔</span> <span class="text-yellow-300">${lastSpunRoleText}</span> <span class="text-slate-400">➔</span> <span class="text-amber-300">${lastSpunChallengeText}</span>`;
+
+            if (lastSpunExId) {
+                btnModal.classList.remove('hidden');
+                btnModal.textContent = `🔍 Proyectar Bloque [${lastSpunExId}]`;
+            } else {
+                btnModal.classList.add('hidden');
+            }
+        }
+
+        function openLastSpunExercise() {
+            if (lastSpunExId) openExerciseModal(lastSpunExId);
+        }
+
+        function spinTeamWheel() {
+            if (isSpinningTeam) return;
+            isSpinningTeam = true;
+            const slices = getTeamSlices();
+            const spinDuration = 2500;
+            const startAngle = teamAngle;
+            const extraSpins = (Math.random() * 4 + 5) * 2 * Math.PI;
+            const startTime = performance.now();
+            let lastTick = 0;
+
+            function animate(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / spinDuration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                teamAngle = startAngle + extraSpins * easeOut;
+
+                if (Math.floor(teamAngle / 0.5) !== lastTick) {
+                    lastTick = Math.floor(teamAngle / 0.5);
+                    playTickSound(480);
+                }
+
+                drawWheel('wheelTeamCanvas', slices, teamAngle);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    isSpinningTeam = false;
+                    playCoinSound();
+                    const arc = (2 * Math.PI) / slices.length;
+                    const normalized = (1.5 * Math.PI - (teamAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+                    const index1 = Math.floor(normalized / arc) % slices.length;
+                    const winner1 = slices[index1];
+
+                    const duelMode = document.getElementById('chkDuelMode')?.checked;
+                    if (duelMode && slices.length >= 2) {
+                        // Elegir segundo equipo distinto para Duelo Simultáneo
+                        const offset = Math.floor(Math.random() * (slices.length - 1)) + 1;
+                        const index2 = (index1 + offset) % slices.length;
+                        const winner2 = slices[index2];
+                        lastSpunTeamsText = `⚔️ ${winner1.fullName} vs ${winner2.fullName}`;
+                        document.getElementById('teamResultTitle').textContent = `${winner1.fullName} vs ${winner2.fullName}`;
+                        document.getElementById('teamResultDesc').textContent = "¡Duelo simultáneo! Ambos equipos defienden.";
+                    } else {
+                        lastSpunTeamsText = `🛡️ ${winner1.fullName}`;
+                        document.getElementById('teamResultTitle').textContent = winner1.fullName;
+                        document.getElementById('teamResultDesc').textContent = "Equipo convocado al frente.";
+                    }
+                    updateDuelBanner();
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function spinRoleWheel() {
+            if (isSpinningRole) return;
+            isSpinningRole = true;
+            const spinDuration = 2750;
+            const startAngle = roleAngle;
+            const extraSpins = (Math.random() * 4 + 5) * 2 * Math.PI;
+            const startTime = performance.now();
+            let lastTick = 0;
+
+            function animate(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / spinDuration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                roleAngle = startAngle + extraSpins * easeOut;
+
+                if (Math.floor(roleAngle / 0.5) !== lastTick) {
+                    lastTick = Math.floor(roleAngle / 0.5);
+                    playTickSound(560);
+                }
+
+                drawWheel('wheelRoleCanvas', ROLE_SLICES, roleAngle);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    isSpinningRole = false;
+                    playCoinSound();
+                    const arc = (2 * Math.PI) / ROLE_SLICES.length;
+                    const normalized = (1.5 * Math.PI - (roleAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+                    const index = Math.floor(normalized / arc) % ROLE_SLICES.length;
+                    const winner = ROLE_SLICES[index];
+                    lastSpunRoleText = winner.title;
+                    document.getElementById('roleResultTitle').textContent = winner.title;
+                    document.getElementById('roleResultDesc').textContent = winner.desc;
+                    updateDuelBanner();
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function spinChallengeWheel() {
+            if (isSpinningChallenge) return;
+            isSpinningChallenge = true;
+            const spinDuration = 3000;
+            const startAngle = challengeAngle;
+            const extraSpins = (Math.random() * 5 + 6) * 2 * Math.PI;
+            const startTime = performance.now();
+            let lastTick = 0;
+
+            function animate(now) {
+                const elapsed = now - startTime;
+                const progress = Math.min(elapsed / spinDuration, 1);
+                const easeOut = 1 - Math.pow(1 - progress, 3);
+                challengeAngle = startAngle + extraSpins * easeOut;
+
+                if (Math.floor(challengeAngle / 0.4) !== lastTick) {
+                    lastTick = Math.floor(challengeAngle / 0.4);
+                    playTickSound(660);
+                }
+
+                drawWheel('wheelChallengeCanvas', CHALLENGE_SLICES, challengeAngle);
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    isSpinningChallenge = false;
+                    playCoinSound();
+                    const arc = (2 * Math.PI) / CHALLENGE_SLICES.length;
+                    const normalized = (1.5 * Math.PI - (challengeAngle % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+                    const index = Math.floor(normalized / arc) % CHALLENGE_SLICES.length;
+                    const winner = CHALLENGE_SLICES[index];
+
+                    const titleEl = document.getElementById('challengeResultTitle');
+                    const descEl = document.getElementById('challengeResultDesc');
+
+                    if (winner.exId) {
+                        const ex = EXERCISES_DB[winner.exId];
+                        lastSpunExId = winner.exId;
+                        lastSpunChallengeText = `${winner.label} (${ex.level.split('•')[0].trim()})`;
+                        titleEl.innerHTML = `<span class="underline cursor-pointer text-yellow-300" onclick="openExerciseModal(${winner.exId})">${winner.label} - Clic para proyectar</span>`;
+                        descEl.textContent = ex.prompt;
+                    } else {
+                        lastSpunExId = null;
+                        lastSpunChallengeText = winner.label;
+                        titleEl.textContent = winner.label;
+                        descEl.textContent = winner.event;
+                    }
+                    updateDuelBanner();
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        function spinAllThreeWheels() {
+            spinTeamWheel();
+            spinRoleWheel();
+            spinChallengeWheel();
+        }
+
+        // ---------------------------------------------------------------------
+        // 4. GESTOR DE LOS 8 EQUIPOS (CON CÁLCULO DE PUNTAJE TOTAL + BONO DE VIDAS)
+        // ---------------------------------------------------------------------
+        function renderTeams() {
+            const container = document.getElementById('teamsContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            teams.forEach((team, idx) => {
+                const hearts = '❤️'.repeat(team.lives) + '🖤'.repeat(Math.max(0, 3 - team.lives));
+                const lifeBonus = team.lives * 15;
+                const totalScore = team.points + lifeBonus;
+                const card = document.createElement('div');
+                card.className = "bg-slate-900 border-2 border-slate-700 hover:border-slate-500 rounded-xl p-3 flex flex-col justify-between gap-2 shadow-lg";
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between gap-1">
+                            <span class="w-3 h-3 rounded-full shrink-0" style="background:${team.color || '#eab308'}"></span>
+                            <input type="text" value="${team.name}" onchange="updateTeamName(${idx}, this.value)"
+                                class="bg-transparent font-arcade text-sm sm:text-base text-yellow-300 border-b border-transparent focus:border-yellow-400 focus:outline-none w-full truncate" />
+                        </div>
+                        <div class="flex items-center justify-between mt-2 bg-slate-950/80 px-2.5 py-1.5 rounded-lg border border-slate-800">
+                            <span class="text-sm tracking-widest" title="Vidas restantes (+15 pts c/u)">${hearts}</span>
+                            <span class="font-pixel text-xs text-amber-400" title="Monedas ganadas">
+                                🪙 ${String(team.points).padStart(3, '0')}
+                            </span>
+                        </div>
+                        <div class="mt-1.5 flex items-center justify-between px-2 py-1 bg-indigo-950/70 border border-indigo-500/40 rounded text-[11px]">
+                            <span class="text-slate-300 font-semibold">TOTAL (+Bono ❤️):</span>
+                            <span class="font-arcade text-sm text-emerald-300">${totalScore} pts</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-5 gap-1 pt-1">
+                        <button onclick="changePoints(${idx}, 10)" class="btn-arcade bg-emerald-500 hover:bg-emerald-400 text-black text-[10px] py-1 rounded" title="Moneda +10 pts">+10🪙</button>
+                        <button onclick="changePoints(${idx}, 15)" class="btn-arcade bg-orange-400 hover:bg-orange-300 text-black text-[10px] py-1 rounded" title="Nivel 3 +15 pts">+15🪙</button>
+                        <button onclick="changePoints(${idx}, 20)" class="btn-arcade bg-yellow-400 hover:bg-yellow-300 text-black text-[10px] py-1 rounded" title="Jefe Final / Estrella +20 pts">+20⭐</button>
+                        <button onclick="changeLives(${idx}, -1)" class="btn-arcade bg-red-600 hover:bg-red-500 text-white text-[10px] py-1 rounded" title="Perder 1 vida">-1❤️</button>
+                        <button onclick="changeLives(${idx}, 1)" class="btn-arcade bg-pink-500 hover:bg-pink-400 text-white text-[10px] py-1 rounded" title="Hongo 1-UP">+1🍄</button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            drawWheel('wheelTeamCanvas', getTeamSlices(), teamAngle);
+        }
+
+        function updateTeamName(idx, val) {
+            teams[idx].name = val;
+            drawWheel('wheelTeamCanvas', getTeamSlices(), teamAngle);
+        }
+
+        function changePoints(idx, delta) {
+            teams[idx].points = Math.max(0, teams[idx].points + delta);
+            playCoinSound();
+            renderTeams();
+        }
+
+        function awardAllTeamsBonus(delta) {
+            teams.forEach(t => { t.points = Math.max(0, t.points + delta); });
+            playCoinSound();
+            renderTeams();
+        }
+
+        function changeLives(idx, delta) {
+            teams[idx].lives = Math.max(0, Math.min(4, teams[idx].lives + delta));
+            if (delta < 0) playPowerDownSound();
+            else playCoinSound();
+            renderTeams();
+        }
+
+        function addNewTeam() {
+            const palette = ["#e52521", "#16a34a", "#ec4899", "#65a30d", "#ea580c", "#2563eb", "#0891b2", "#9333ea"];
+            const n = teams.length + 1;
+            teams.push({ name: `${n}. Equipo ${n}`, points: 0, lives: 3, color: palette[(n - 1) % palette.length] });
+            renderTeams();
+        }
+
+        // ---------------------------------------------------------------------
+        // 5. CRONÓMETRO MAESTRO DE 80 MINUTOS (5 FASES) + DEFENSA 90 SEG
+        // ---------------------------------------------------------------------
+        const SESSION_PHASES = [
+            {
+                id: 0,
+                short: "Fase 0 (8m)",
+                title: "Organización 8 Grupos",
+                minutes: 8,
+                desc: "Fase 0 (8 min): Formar los 8 equipos de 5 estudiantes, entregar hoja impresa y asignar roles del 1 al 5."
+            },
+            {
+                id: 1,
+                short: "Fase 1 (15m)",
+                title: "Niveles 1 y 2 en Mesa",
+                minutes: 15,
+                desc: "Fase 1 (15 min): Los 8 grupos resuelven en equipo el Nivel 1 (Subespacios, Bloques 1-3) y Nivel 2 (Generadores, Bloques 4-7)."
+            },
+            {
+                id: 2,
+                short: "Fase 2 (15m)",
+                title: "Ruleta Relámpago #1",
+                minutes: 15,
+                desc: "Fase 2 (15 min): 4 giros de la Triple Ruleta en Modo Duelo (2 equipos por giro = participan los 8 grupos en bloques 1 al 7)."
+            },
+            {
+                id: 3,
+                short: "Fase 3 (20m)",
+                title: "Niveles 3 y 4 en Mesa",
+                minutes: 20,
+                desc: "Fase 3 (20 min): Trabajo grupal en Nivel 3 (Independencia Lineal, Bloques 8-11) y Nivel 4 Jefe Final (Bases, Bloques 12-14)."
+            },
+            {
+                id: 4,
+                short: "Fase 4 (22m)",
+                title: "Batalla Final y Cierre",
+                minutes: 22,
+                desc: "Fase 4 (22 min): 4 duelos finales en la Triple Ruleta para bloques 8 al 14, conteo de monedas/vidas y premiación."
+            }
+        ];
+
+        let currentPhaseIdx = 0;
+        let timerSeconds = 8 * 60;
+        let timerInitial = 8 * 60;
+        let timerInterval = null;
+
+        function renderPhaseButtons() {
+            const container = document.getElementById('phaseButtonsContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            SESSION_PHASES.forEach((p, idx) => {
+                const isActive = idx === currentPhaseIdx;
+                const btn = document.createElement('button');
+                btn.onclick = () => selectSessionPhase(idx);
+                btn.className = isActive
+                    ? "bg-yellow-400 text-black border-2 border-white rounded-xl p-2 text-left transition shadow-md"
+                    : "bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 rounded-xl p-2 text-left transition";
+                btn.innerHTML = `
+                    <div class="flex items-center justify-between text-[11px] font-extrabold uppercase">
+                        <span>${p.short}</span>
+                        <span>${isActive ? '🔥 ACTIVA' : ''}</span>
+                    </div>
+                    <div class="font-arcade text-xs sm:text-sm truncate mt-0.5">${p.title}</div>
+                `;
+                container.appendChild(btn);
+            });
+        }
+
+        function selectSessionPhase(idx) {
+            currentPhaseIdx = idx;
+            const phase = SESSION_PHASES[idx];
+            document.getElementById('activePhaseDesc').textContent = phase.desc;
+            document.getElementById('timerLabelMode').textContent = phase.short;
+            setTimer(phase.minutes * 60);
+            renderPhaseButtons();
+        }
+
+        function nextSessionPhase() {
+            const nextIdx = (currentPhaseIdx + 1) % SESSION_PHASES.length;
+            selectSessionPhase(nextIdx);
+            playCoinSound();
+        }
+
+        function startQuickDefenseTimer(sec) {
+            document.getElementById('timerLabelMode').textContent = "⚡ DEFENSA DUELO";
+            setTimer(sec);
+            toggleTimer();
+        }
+
+        function updateTimerDisplay() {
+            const m = String(Math.floor(timerSeconds / 60)).padStart(2, '0');
+            const s = String(timerSeconds % 60).padStart(2, '0');
+            const el = document.getElementById('timerDisplay');
+            if (el) {
+                el.textContent = `${m}:${s}`;
+                el.className = timerSeconds <= 15
+                    ? "font-pixel text-xl sm:text-2xl text-red-500 animate-pulse"
+                    : "font-pixel text-xl sm:text-2xl text-yellow-400";
+            }
+        }
+
+        function setTimer(sec) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            timerInitial = sec;
+            timerSeconds = sec;
+            const btn = document.getElementById('btnStartTimer');
+            if (btn) btn.textContent = "▶ Iniciar";
+            updateTimerDisplay();
+        }
+
+        function toggleTimer() {
+            const btn = document.getElementById('btnStartTimer');
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                btn.textContent = "▶ Reanudar";
+            } else {
+                btn.textContent = "⏸ Pausar";
+                timerInterval = setInterval(() => {
+                    if (timerSeconds > 0) {
+                        timerSeconds--;
+                        if (timerSeconds <= 10 && timerSeconds > 0) playTickSound(880);
+                        updateTimerDisplay();
+                    } else {
+                        clearInterval(timerInterval);
+                        timerInterval = null;
+                        btn.textContent = "▶ Iniciar";
+                        playPowerDownSound();
+                    }
+                }, 1000);
+            }
+        }
+
+        function resetTimer() {
+            setTimer(timerInitial);
+        }
+
+        // ---------------------------------------------------------------------
+        // 6. NAVEGACIÓN DE PESTAÑAS, MODAL Y SOLUCIONARIO
+        // ---------------------------------------------------------------------
+        function switchTab(tab) {
+            const views = ['worksheet', 'dashboard', 'guide'];
+            views.forEach(v => {
+                document.getElementById(`view-${v}`).classList.add('hidden');
+            });
+            document.getElementById(`view-${tab}`).classList.remove('hidden');
+
+            if (tab === 'dashboard') {
+                drawWheel('wheelTeamCanvas', getTeamSlices(), teamAngle);
+                drawWheel('wheelRoleCanvas', ROLE_SLICES, roleAngle);
+                drawWheel('wheelChallengeCanvas', CHALLENGE_SLICES, challengeAngle);
+            }
+        }
+
+        function toggleCheck(labelEl) {
+            const box = labelEl.querySelector('.check-square');
+            if (box) box.classList.toggle('checked');
+        }
+
+        function openExerciseModal(id) {
+            if (!id || !EXERCISES_DB[id]) return;
+            const ex = EXERCISES_DB[id];
+            document.getElementById('modalBlockNum').textContent = id;
+            document.getElementById('modalLevelBadge').textContent = ex.level;
+            document.getElementById('modalTitle').textContent = `Bloque de Misión [${id}]`;
+            document.getElementById('modalQuestionPrompt').textContent = ex.prompt;
+            document.getElementById('modalMathContent').innerHTML = ex.math;
+            document.getElementById('modalVerdict').textContent = ex.verdict;
+            document.getElementById('modalJustification').innerHTML = ex.justification;
+            document.getElementById('modalSolutionBox').classList.add('hidden');
+
+            const modal = document.getElementById('exerciseModal');
+            modal.classList.remove('hidden');
+
+            if (window.renderMathInElement) {
+                renderMathInElement(modal, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false}
+                    ]
+                });
+            }
+        }
+
+        function revealModalSolution() {
+            document.getElementById('modalSolutionBox').classList.remove('hidden');
+            playCoinSound();
+        }
+
+        function closeExerciseModal() {
+            document.getElementById('exerciseModal').classList.add('hidden');
+            const sel = document.getElementById('selectExerciseInspect');
+            if (sel) sel.value = "";
+        }
+
+        let solutionsVisibleOnSheet = false;
+        function toggleAllSolutionsSheet() {
+            solutionsVisibleOnSheet = !solutionsVisibleOnSheet;
+            const sols = document.querySelectorAll('.sheet-solution');
+            sols.forEach(el => {
+                if (solutionsVisibleOnSheet) el.classList.remove('hidden');
+                else el.classList.add('hidden');
+            });
+            const btn = document.getElementById('btnToggleSheetSol');
+            btn.textContent = solutionsVisibleOnSheet
+                ? "🙈 Ocultar Respuestas en la Hoja"
+                : "👁️ Mostrar Clave Docente";
+        }
+
+        // ---------------------------------------------------------------------
+        // 7. SISTEMA TRIPLE DE EXPORTACIÓN E IMPRESIÓN INFALIBLE (ANTI-SANDBOX)
+        // ---------------------------------------------------------------------
+
+        // OPCIÓN 1: Descargar PDF Directo usando html2pdf.js
+        async function downloadDirectPDF() {
+            switchTab('worksheet');
+            const sheetEl = document.getElementById('printable-sheet');
+            const btnText = document.getElementById('pdfBtnText');
+            const btn = document.getElementById('btnDownloadPDF');
+
+            if (!sheetEl) return;
+
+            const originalText = btnText ? btnText.textContent : 'Descargar PDF Directo (Recomendado)';
+            if (btnText) btnText.textContent = '⏳ Generando PDF...';
+            if (btn) btn.disabled = true;
+
+            try {
+                // Asegurar renderizado matemático antes de capturar
+                if (window.renderMathInElement) {
+                    renderMathInElement(sheetEl, {
+                        delimiters: [
+                            {left: '$$', right: '$$', display: true},
+                            {left: '$', right: '$', display: false}
+                        ]
+                    });
+                }
+
+                const opt = {
+                    margin:       [4, 4, 4, 4],
+                    filename:     'Hoja_Mision_Algebra_Lineal.pdf',
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#2885f6', logging: false },
+                    jsPDF:        { unit: 'mm', format: 'letter', orientation: 'portrait' }
+                };
+
+                if (window.html2pdf) {
+                    await html2pdf().set(opt).from(sheetEl).save();
+                    playCoinSound();
+                } else {
+                    // Si por red no cargó html2pdf, usar el archivo autónomo como respaldo inmediato
+                    downloadStandaloneHTML();
+                }
+            } catch (err) {
+                console.error('Error generando PDF:', err);
+                downloadStandaloneHTML();
+            } finally {
+                if (btnText) btnText.textContent = originalText;
+                if (btn) btn.disabled = false;
+            }
+        }
+
+        // Construye el documento HTML autónomo de la Hoja de Misión para ventana emergente o descarga
+        function buildStandaloneWorksheetHTML(autoPrint = false) {
+            const sheetClone = document.getElementById('printable-sheet').cloneNode(true);
+            const styles = document.getElementById('arcade-core-styles').innerHTML;
+
+            return `<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoja de Misión - Álgebra Lineal Arcade</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Fredoka:wght@500;600;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"><\/script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"><\/script>
+    <style>
+        ${styles}
+        body { background: #0f172a; padding: 16px; }
+        @media print { body { background: #fff !important; padding: 0 !important; } }
+    </style>
+</head>
+<body>
+    <div class="no-print max-w-5xl mx-auto mb-3 bg-slate-900 border-2 border-yellow-400 rounded-xl p-3 flex items-center justify-between text-white">
+        <span class="font-arcade text-sm text-yellow-300">🖨️ Hoja de Misión Lista para Imprimir</span>
+        <button onclick="window.print()" class="btn-arcade bg-red-600 text-white px-4 py-1.5 rounded-lg text-xs">🖨️ Imprimir Ahora (Ctrl + P)</button>
+    </div>
+    <div class="max-w-5xl mx-auto">
+        ${sheetClone.outerHTML}
+    </div>
+    ${autoPrint ? `<script>window.onload = function() { setTimeout(function(){ window.print(); }, 700); };<\/script>` : ''}
+</body>
+</html>`;
+        }
+
+        // OPCIÓN 2: Abrir en nueva ventana libre de iframe y lanzar impresión (con fallback a Vista Limpia)
+        function openPrintWindow() {
+            switchTab('worksheet');
+            const htmlContent = buildStandaloneWorksheetHTML(true);
+            const printWin = window.open('', '_blank');
+
+            if (printWin && !printWin.closed) {
+                printWin.document.open();
+                printWin.document.write(htmlContent);
+                printWin.document.close();
+            } else {
+                // Si el navegador bloquea ventanas emergentes, activar Modo Vista Limpia y ejecutar window.print()
+                document.body.classList.add('clean-print-mode');
+                setTimeout(() => {
+                    try { window.print(); } catch (e) {}
+                }, 200);
+            }
+        }
+
+        function exitCleanPrintMode() {
+            document.body.classList.remove('clean-print-mode');
+        }
+
+        // OPCIÓN 3: Descargar archivo .html autónomo de la Hoja de Misión
+        function downloadStandaloneHTML() {
+            switchTab('worksheet');
+            const htmlContent = buildStandaloneWorksheetHTML(false);
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Hoja_Imprimible_Algebra_Lineal.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            playCoinSound();
+        }
+
+        // Inicialización al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            renderPhaseButtons();
+            renderTeams();
+            drawWheel('wheelTeamCanvas', getTeamSlices(), teamAngle);
+            drawWheel('wheelRoleCanvas', ROLE_SLICES, roleAngle);
+            drawWheel('wheelChallengeCanvas', CHALLENGE_SLICES, challengeAngle);
+        });
+    </script>
+</body>
+</html>
