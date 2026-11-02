@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Espacios y Subespacios Vectoriales</title>
+    
+    <!-- Importación de MathJax para renderizar matemáticas en la web -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Estilos CSS para dar formato de hoja de trabajo -->
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f6f9;
+        }
+        h1, h2 {
+            color: #1565c0;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+        .section {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        /* Cuadrícula responsiva de 1 columna para textos largos o 2 para cortos */
+        .grid-1-col {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+        .exercise {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #eee;
+        }
+        .exercise:last-child {
+            border-bottom: none;
+        }
+        .ex-num {
+            font-weight: bold;
+            color: #d32f2f;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ejercicios: Espacios y Subespacios Vectoriales</h1>
+
+    <!-- SECCIÓN 1: Determinación de Espacios Vectoriales -->
+    <div class="section">
+        <h2>Determinación de Espacios Vectoriales</h2>
+        <p style="font-style: italic; color: #555;">De los problemas 1 al 27 determine si el conjunto dado es un espacio vectorial. De no ser así, proporcione una lista de los axiomas que no se cumplen.</p>
+        
+        <div class="grid-1-col">
+            <div class="exercise">
+                <span class="ex-num">1.</span> El conjunto de números naturales \( \mathbb{N} \) como vectores, el conjunto de números naturales \( \mathbb{N} \) como escalares y la operación de multiplicación para números naturales.
+            </div>
+            
+            <div class="exercise">
+                <span class="ex-num">4.</span> El conjunto de matrices diagonales de \( n \times n \) bajo la suma de matrices y multiplicación por un escalar usuales.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">6.</span> \( \{(x, y): y \le 0; x, y \text{ reales}\} \) con la suma de vectores y multiplicación por un escalar usuales.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">8.</span> El conjunto de vectores en \( \mathbb{R}^3 \) de la forma \( (x, x, x) \).
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">9.</span> El conjunto de polinomios de grado 4 bajo las operaciones del ejemplo 5.1.7.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">12.</span> El conjunto de matrices de \( 2 \times 2 \) que tienen la forma \( \begin{pmatrix} 0 & a \\ b & 0 \end{pmatrix} \) bajo la suma y multiplicación por un escalar usuales.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">14.</span> El conjunto de matrices \( \begin{pmatrix} a & b \\ c & d \end{pmatrix} \) donde \( a, b, c, d \) son números reales diferentes de cero con la operación de multiplicación definida por 
+                \[ \begin{pmatrix} a_1 & b_1 \\ c_1 & d_1 \end{pmatrix} \odot \begin{pmatrix} a_2 & b_2 \\ c_2 & d_2 \end{pmatrix} = \begin{pmatrix} a_1 a_2 & b_1 b_2 \\ c_1 c_2 & d_1 d_2 \end{pmatrix}, \] 
+                el conjunto de escalares los reales positivos y la multiplicación de escalar y matriz la usual.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">15.</span> El conjunto de vectores los números racionales \( \mathbb{Q} \) con la operación de suma, el conjunto de escalares los números enteros \( \mathbb{Z} \) y la operación de multiplicación de escalar y vector la multiplicación usual.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">17.</span> El conjunto de polinomios de grado \( \le n \) con término constante cero.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">20.</span> El conjunto de funciones continuas de valores reales definidas en \( [0, 1] \) con \( f(0) = 0 \) y \( f(1) = 0 \) bajo las operaciones del ejemplo 5.1.8.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">23.</span> \( \mathbb{R}^2 \) con la suma definida por \( (x_1, y_1) + (x_2, y_2) = (x_1 + x_2 + 1, y_1 + y_2 + 1) \) y la multiplicación por un escalar ordinaria.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">27.</span> El conjunto de números reales de la forma \( a + b\sqrt{2} \), donde \( a \) y \( b \) son números racionales, bajo la suma de números reales usual y la multiplicación por un escalar definida sólo para escalares racionales.
+            </div>
+        </div>
+    </div>
+
+    <!-- SECCIÓN 2: Demostraciones Teóricas -->
+    <div class="section">
+        <h2>Demostraciones Teóricas</h2>
+        
+        <div class="grid-1-col">
+            <div class="exercise">
+                <span class="ex-num">28.</span> Demuestre que en un espacio vectorial el elemento idéntico aditivo es único.
+            </div>
+            
+            <div class="exercise">
+                <span class="ex-num">29.</span> Demuestre que en un espacio vectorial todo vector tiene un inverso aditivo único.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">30.</span> Si \( \mathbf{x} \) y \( \mathbf{y} \) son vectores en un espacio vectorial \( V \), demuestre que existe un vector único \( \mathbf{z} \in V \) tal que \( \mathbf{x} + \mathbf{z} = \mathbf{y} \).
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">31.</span> Demuestre que el conjunto de números reales positivos forma un espacio vectorial bajo las operaciones \( x + y = xy \) y \( \alpha x = x^\alpha \).
+            </div>
+        </div>
+    </div>
+    <!-- SECCIÓN 4: Determinación de Subespacios -->
+    <div class="section" style="margin-top: 30px;">
+        <h2>Determinación de Subespacios</h2>
+        <p style="font-style: italic; color: #555; margin-bottom: 20px;">De los problemas 1 al 29 determine si el subconjunto dado \(H\) del espacio vectorial \(V\) es un subespacio de \(V\).</p>
+        
+        <div class="grid-2-col">
+            <!-- Ejercicios de la primera imagen -->
+            <div class="exercise"><span class="ex-num">1.</span> \( V = \mathbb{R}^2; H = \{(x, y); x = 3, y \in \mathbb{R}\} \)</div>
+            <div class="exercise"><span class="ex-num">2.</span> \( V = \mathbb{R}^2; H = \{(x, y); y \ge 0\} \)</div>
+            <div class="exercise"><span class="ex-num">3.</span> \( V = \mathbb{R}^2; H = \{(x, y); x = y\} \)</div>
+            <div class="exercise"><span class="ex-num">4.</span> \( V = \mathbb{R}^2; H = \{(x, y); y = 2x\} \)</div>
+            <div class="exercise"><span class="ex-num">5.</span> \( V = \mathbb{R}^3; H = \text{el plano } xy \)</div>
+            <div class="exercise"><span class="ex-num">6.</span> \( V = \mathbb{R}^2; H = \{(x, y); x^2 + y^2 \le 1\} \)</div>
+            <div class="exercise"><span class="ex-num">7.</span> \( V = \mathbb{R}^2; H = \{(x, y) : x^2 + y^3 < 1\} \)</div>
+            
+            <div class="exercise"><span class="ex-num">8.</span> \( V = M_{mn}; H = \{D \in M_{mn}; D \text{ es diagonal}\} \)</div>
+            <div class="exercise"><span class="ex-num">9.</span> \( V = M_{mn}; H = \{T \in M_{mn}; T \text{ es triangular superior}\} \)</div>
+            <div class="exercise"><span class="ex-num">10.</span> \( V = M_{mn}; H = \{T : T \text{ es triangular inferior}\} \)</div>
+            <div class="exercise"><span class="ex-num">11.</span> \( V = M_{mn}; H = \{S \in M_{mn}: S \text{ es simétrica}\} \)</div>
+            <div class="exercise"><span class="ex-num">12.</span> \( V = M_{mn}; H = \{A \in M_{mn}: a_{ij} = 0\} \)</div>
+            
+            <div class="exercise"><span class="ex-num">13.</span> \( V = M_{22}; H = \left\{ A = \begin{pmatrix} 0 & a \\ -a & 0 \end{pmatrix}, a \in \mathbb{R} \right\} \)</div>
+            <div class="exercise"><span class="ex-num">14.</span> \( V = \mathbb{R}; H = \mathbb{Q} \)</div>
+            
+            <!-- Ejercicios de la segunda imagen -->
+            <div class="exercise"><span class="ex-num">15.</span> \( V = M_{22}; H = \left\{ A \in M_{22}: A = \begin{pmatrix} a & b \\ -b & c \end{pmatrix} \right\} \)</div>
+            <div class="exercise"><span class="ex-num">16.</span> \( V = M_{22}; H = \left\{ A = \begin{pmatrix} a + 2 & a - 2 \\ 0 & 0 \end{pmatrix}, a \in \mathbb{R} \right\} \)</div>
+            <div class="exercise"><span class="ex-num">17.</span> \( V = M_{22}; H = \left\{ A \in M_{22}: A = \begin{pmatrix} a & a - 1 \\ 0 & 0 \end{pmatrix} \right\} \)</div>
+            <div class="exercise"><span class="ex-num">18.</span> \( V = M_{22}; H = \left\{ A \in M_{22}: A = \begin{pmatrix} 0 & a \\ b & 0 \end{pmatrix} \right\} \)</div>
+            
+            <div class="exercise"><span class="ex-num">19.</span> \( V = P_4; H = \{p \in P_4: \text{grado } p = 4\} \)</div>
+            <div class="exercise"><span class="ex-num">20.</span> \( V = P_n; H = \{p \in P_n: p(0) = 0 \text{ y } p'(0) = 0\} \)</div>
+            <div class="exercise"><span class="ex-num">21.</span> \( V = P_4; H = \{p \in P_4: p(0) = 0\} \)</div>
+            
+            <!-- Ejercicios de la tercera imagen -->
+            <div class="exercise"><span class="ex-num">22.</span> \( V = P_n; H = \{p \in P_n: p(0) = 0\} \)</div>
+            <div class="exercise"><span class="ex-num">23.</span> \( V = P_n; H = \{p \in P_n: p(0) = 1\} \)</div>
+            
+            <div class="exercise"><span class="ex-num">24.</span> \( V = C[0, 1]; H = \{f \in C[0, 1]: f(0) = f(1) = 0\} \)</div>
+            <div class="exercise"><span class="ex-num">25.</span> \( V = C[0, 1]; H = \{f \in C[0, 1]: f(0) = 2\} \)</div>
+            <div class="exercise"><span class="ex-num">26.</span> \( V = C^1[0, 1]; H = \{f \in C^1[0, 1]: f'(0) = 0\} \)</div>
+            
+            <div class="exercise"><span class="ex-num">27.</span> \( V = C[a, b] \), donde \(a\) y \(b\) son reales y \(a < b\); \( H = \left\{ f \in C[a, b]: \int_a^b f(x)dx = 0 \right\} \)</div>
+            <div class="exercise"><span class="ex-num">28.</span> \( V = C[a, b]; H = \left\{ f \in C[a, b]: \int_a^b f(x)dx = 1 \right\} \)</div>
+            <div class="exercise"><span class="ex-num">29.</span> \( V = C[a, b]; H = \left\{ f \in C[a, b]: \int_a^b f^2(x)dx \right\} \)</div>
+        </div>
+
+        <!-- Ejercicios extendidos y demostraciones -->
+        <div style="margin-top: 30px;">
+            <div class="exercise" style="background-color: #f9f9f9; padding: 15px; border-left: 4px solid #1565c0;">
+                <span class="ex-num">30.</span> Sea \( V = M_{22} \); sean \( H_1 = \{A \in M_{22}: a_{11} = 0\} \) y \( H_2 = \left\{ A \in M_{22}: A = \begin{pmatrix} -b & a \\ a & b \end{pmatrix} \right\} \).<br>
+                <span style="color: #d32f2f; font-weight: bold;">a)</span> Demuestre que \( H_1 \) y \( H_2 \) son subespacios.<br>
+                <span style="color: #d32f2f; font-weight: bold;">b)</span> Describa el subconjunto de \( H = H_1 \cap H_2 \) y muestre que es un subespacio.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">31.</span> Si \( V = C[0, 1] \), sea \( H_1 \) el subespacio del ejemplo 5.2.10 y \( H_2 \) el subespacio del ejemplo 5.2.11. Describa el conjunto \( H_1 \cap H_2 \) y demuestre que es un subespacio.
+            </div>
+
+            <div class="exercise">
+                <span class="ex-num">32.</span> Sea \( A \) una matriz de \( n \times m \) y sea \( H = \{\mathbf{x} \in \mathbb{R}^m: A\mathbf{x} = 0\} \). Demuestre que \( H \) es un subespacio de \( \mathbb{R}^m \). \( H \) se llama <strong style="color: #d81b60;">espacio nulo</strong> de la matriz \( A \).
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

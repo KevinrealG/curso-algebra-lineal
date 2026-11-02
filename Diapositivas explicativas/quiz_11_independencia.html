@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación - Independencia Lineal</title>
+    
+    <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf0f4; /* Fondo claro con tono rosa basado en la imagen */
+            color: #333;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #d81b60; /* Rosa oscuro */
+            text-align: center;
+            border-bottom: 2px solid #f8bbd0;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+        }
+        .instruction-title {
+            color: #d81b60;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #d81b60;
+        }
+        .question-block {
+            background: #fff;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #d81b60;
+            transition: all 0.3s ease;
+        }
+        /* Clases de retroalimentación */
+        .question-block.correct {
+            border-left-color: #2e7d32;
+            background-color: #e8f5e9;
+        }
+        .question-block.incorrect {
+            border-left-color: #c62828;
+            background-color: #ffebee;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .q-num {
+            color: #d81b60;
+            margin-right: 5px;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 15px 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .option-label:hover {
+            background-color: #f0f4f8;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        /* Grid para las opciones múltiples (I, II, III) */
+        .grid-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        /* Contenedor para Verdadero/Falso */
+        .vf-container {
+            display: flex;
+            gap: 20px;
+        }
+        .vf-container .option-label {
+            background-color: #f5f5f5;
+            flex: 1;
+            justify-content: center;
+            border: 1px solid #e0e0e0;
+            padding: 10px 20px;
+        }
+        .vf-container .option-label:hover {
+            background-color: #e0e0e0;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ad1457;
+        }
+        #result-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AUTOEVALUACIÓN 5.4</h1>
+
+    <form id="quiz-form">
+        
+        <!-- SECCIÓN DE SELECCIÓN MÚLTIPLE -->
+        <div class="instruction-title">Seleccione TODAS las opciones correctas (puede ser más de una o todas):</div>
+
+        <!-- Pregunta I -->
+        <div class="question-block" id="block-q1">
+            <div class="question-text"><span class="q-num">I)</span> ¿Cuáles de los siguientes pares de vectores son linealmente independientes?</div>
+            <div class="grid-options">
+                <label class="option-label"><input type="checkbox" name="q1" value="a"> a) \( \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 1 \\ -1 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q1" value="b"> b) \( \begin{pmatrix} 2 \\ 3 \end{pmatrix}, \begin{pmatrix} 3 \\ 2 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q1" value="c"> c) \( \begin{pmatrix} 11 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 4 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q1" value="d"> d) \( \begin{pmatrix} -3 \\ -11 \end{pmatrix}, \begin{pmatrix} -6 \\ 11 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q1" value="e"> e) \( \begin{pmatrix} -2 \\ 4 \end{pmatrix}, \begin{pmatrix} 2 \\ 4 \end{pmatrix} \)</label>
+            </div>
+        </div>
+
+        <!-- Pregunta II -->
+        <div class="question-block" id="block-q2">
+            <div class="question-text"><span class="q-num">II)</span> ¿Cuál de los siguientes pares de vectores es un conjunto generador de \(\mathbb{R}^2\)?</div>
+            <div class="grid-options">
+                <label class="option-label"><input type="checkbox" name="q2" value="a"> a) \( \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 1 \\ -1 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q2" value="b"> b) \( \begin{pmatrix} 2 \\ 3 \end{pmatrix}, \begin{pmatrix} 3 \\ 2 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q2" value="c"> c) \( \begin{pmatrix} 11 \\ 0 \end{pmatrix}, \begin{pmatrix} 0 \\ 4 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q2" value="d"> d) \( \begin{pmatrix} -3 \\ -11 \end{pmatrix}, \begin{pmatrix} -6 \\ 11 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q2" value="e"> e) \( \begin{pmatrix} -2 \\ 4 \end{pmatrix}, \begin{pmatrix} 2 \\ 4 \end{pmatrix} \)</label>
+            </div>
+        </div>
+
+        <!-- Pregunta III -->
+        <div class="question-block" id="block-q3">
+            <div class="question-text"><span class="q-num">III)</span> ¿Cuál de los siguientes conjuntos de vectores <em>debe</em> ser linealmente dependiente? (Aquí \(a, b, \dots, l\) son números reales)</div>
+            <div class="grid-options" style="grid-template-columns: 1fr 1fr;">
+                <label class="option-label"><input type="checkbox" name="q3" value="a"> a) \( \begin{pmatrix} a \\ b \\ c \end{pmatrix}, \begin{pmatrix} d \\ e \\ f \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q3" value="b"> b) \( \begin{pmatrix} a \\ b \end{pmatrix}, \begin{pmatrix} c \\ d \end{pmatrix}, \begin{pmatrix} e \\ f \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q3" value="c"> c) \( \begin{pmatrix} a \\ b \\ c \end{pmatrix}, \begin{pmatrix} d \\ e \\ f \end{pmatrix}, \begin{pmatrix} g \\ h \\ i \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q3" value="d"> d) \( \begin{pmatrix} a \\ b \\ c \end{pmatrix}, \begin{pmatrix} d \\ e \\ f \end{pmatrix}, \begin{pmatrix} g \\ h \\ i \end{pmatrix}, \begin{pmatrix} j \\ k \\ l \end{pmatrix} \)</label>
+            </div>
+        </div>
+
+        <!-- SECCIÓN VERDADERO O FALSO -->
+        <div class="instruction-title">Indique si las siguientes afirmaciones son falsas o verdaderas:</div>
+
+        <!-- Pregunta IV -->
+        <div class="question-block" id="block-q4">
+            <div class="question-text"><span class="q-num">IV)</span> Si \(\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n\) son linealmente independientes, entonces \(\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n, \mathbf{v}_{n+1}\) también son linealmente independientes.</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q4" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q4" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta V -->
+        <div class="question-block" id="block-q5">
+            <div class="question-text"><span class="q-num">V)</span> Si \(\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n\) son linealmente dependientes, entonces \(\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n, \mathbf{v}_{n+1}\) también son linealmente dependientes.</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q5" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q5" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta VI -->
+        <div class="question-block" id="block-q6">
+            <div class="question-text"><span class="q-num">VI)</span> Si \(A\) es una matriz de \(3 \times 3\) y \(\det A = 0\), entonces los renglones de \(A\) son vectores linealmente dependientes en \(\mathbb{R}^3\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q6" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q6" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta VII -->
+        <div class="question-block" id="block-q7">
+            <div class="question-text"><span class="q-num">VII)</span> Los polinomios \(3, 2x, -x^3\) y \(3x^4\) son linealmente independientes en \(P_4\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q7" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q7" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta VIII -->
+        <div class="question-block" id="block-q8">
+            <div class="question-text"><span class="q-num">VIII)</span> Las matrices \( \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}, \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, \begin{pmatrix} 0 & 1 \\ 1 & 0 \end{pmatrix} \) y \( \begin{pmatrix} 2 & 3 \\ -5 & 0 \end{pmatrix} \) son linealmente independientes en \(M_{22}\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q8" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q8" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <button type="submit">Evaluar mis respuestas</button>
+    </form>
+
+    <div id="result-container"></div>
+
+    <script>
+        // Diccionario con las respuestas correctas de la imagen[cite: 58]
+        // Las preguntas I y II tienen todas las opciones correctas.
+        const correctAnswers = {
+            q1: ['a', 'b', 'c', 'd', 'e'], 
+            q2: ['a', 'b', 'c', 'd', 'e'],
+            q3: ['b', 'd'],
+            q4: 'F',
+            q5: 'V',
+            q6: 'V',
+            q7: 'V',
+            q8: 'F'
+        };
+
+        // Lógica de validación al enviar el formulario
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            // Iteramos sobre las respuestas correctas
+            for (let question in correctAnswers) {
+                const block = document.getElementById('block-' + question);
+                const expected = correctAnswers[question];
+                
+                // Limpiamos estilos previos
+                block.classList.remove('correct', 'incorrect');
+
+                // Validación para Checkboxes (Selección Múltiple)
+                if (Array.isArray(expected)) {
+                    const checkedNodes = document.querySelectorAll(`input[name="${question}"]:checked`);
+                    const checkedValues = Array.from(checkedNodes).map(n => n.value).sort();
+                    const expectedSorted = expected.slice().sort();
+                    
+                    if (checkedValues.length > 0 && JSON.stringify(checkedValues) === JSON.stringify(expectedSorted)) {
+                        block.classList.add('correct');
+                        score++;
+                    } else {
+                        block.classList.add('incorrect');
+                    }
+                } 
+                // Validación para Radios (V/F)
+                else {
+                    const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                    if (selectedOption && selectedOption.value === expected) {
+                        block.classList.add('correct');
+                        score++;
+                    } else {
+                        block.classList.add('incorrect'); 
+                    }
+                }
+            }
+
+            // Mostrar el resultado final
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+            
+            if (score === totalQuestions) {
+                resultContainer.style.color = '#2e7d32';
+                resultContainer.innerHTML = `¡Excelente! Puntuación perfecta: ${score}/${totalQuestions}`;
+            } else {
+                resultContainer.style.color = '#c62828';
+                resultContainer.innerHTML = `Tu puntuación es: ${score}/${totalQuestions}. ¡Revisa los bloques en rojo e inténtalo de nuevo!`;
+            }
+            
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

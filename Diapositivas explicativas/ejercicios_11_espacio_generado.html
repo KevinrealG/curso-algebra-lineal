@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Combinación Lineal y Espacio Generado</title>
+    
+    <!-- Importación de MathJax directa (Sin polyfill según requerimiento) -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --paper-color: #ffffff;
+            --text-color: #333;
+            --primary-blue: #1565c0;
+            --border-color: #e0e0e0;
+            --accent-pink: #d81b60;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        .document-container {
+            max-width: 950px;
+            margin: 0 auto;
+            background-color: var(--paper-color);
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h1, h2 {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .instruction {
+            font-size: 1.1rem;
+            color: #444;
+            margin: 30px 0 20px 0;
+            padding: 10px 15px;
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        /* Cuadrícula de 2 columnas para ejercicios de vectores */
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 40px;
+            row-gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .problem-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .problem-number {
+            font-weight: bold;
+            color: var(--accent-pink);
+            font-size: 1.2rem;
+            min-width: 30px;
+        }
+
+        /* Estilos para la tabla del problema de aplicación */
+        table.app-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            text-align: center;
+        }
+        table.app-table th, table.app-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+        }
+        table.app-table th {
+            background-color: #9e9e9e;
+            color: white;
+            font-weight: bold;
+        }
+        table.app-table tr:nth-child(even) {
+            background-color: #fdf5f6; /* Tono muy tenue rojizo para alternar filas como en la imagen */
+        }
+        table.app-table td:first-child {
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .question-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .question-list li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+        .question-list li::before {
+            content: attr(data-letter) ")";
+            position: absolute;
+            left: 0;
+            color: var(--accent-pink);
+            font-weight: bold;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="document-container">
+        <h1>Ejercicios: Combinación Lineal y Espacio Generado</h1>
+
+        <!-- SECCIÓN 1: Generación de espacios (1 al 17) -->
+        <div class="instruction">
+            De los problemas 1 al 25 determine si el conjunto dado de vectores genera el espacio vectorial dado.
+        </div>
+
+        <div class="grid-2-col">
+            <!-- Problemas del 1 al 14 -->
+            <div class="problem-item">
+                <span class="problem-number">1.</span>
+                <div>En \( \mathbb{R}^2 \): \( \begin{pmatrix} 2 \\ 10 \end{pmatrix}, \begin{pmatrix} 10 \\ 8 \end{pmatrix} \)</div>
+            </div>
+            
+            <div class="problem-item">
+                <span class="problem-number">2.</span>
+                <div>En \( \mathbb{R}^2 \): \( \begin{pmatrix} 1 \\ 2 \end{pmatrix}, \begin{pmatrix} 3 \\ 4 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">3.</span>
+                <div>En \( \mathbb{R}^2 \): \( \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 2 \\ 1 \end{pmatrix}, \begin{pmatrix} 2 \\ 2 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">4.</span>
+                <div>En \( \mathbb{R}^2 \): \( \begin{pmatrix} 0 \\ 1 \end{pmatrix}, \begin{pmatrix} 3 \\ 4 \end{pmatrix}, \begin{pmatrix} -1 \\ -2 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">5.</span>
+                <div>En \( \mathbb{R}^2 \): \( \begin{pmatrix} -12 \\ 5 \end{pmatrix}, \begin{pmatrix} -3 \\ 0 \end{pmatrix}, \begin{pmatrix} 4 \\ -8 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">6.</span>
+                <div>En \( \mathbb{R}^2 \): \( \begin{pmatrix} -6 \\ 5 \end{pmatrix}, \begin{pmatrix} 7 \\ 9 \end{pmatrix}, \begin{pmatrix} 7 \\ -12 \end{pmatrix}, \begin{pmatrix} -10 \\ 6 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">7.</span>
+                <div>En \( \mathbb{R}^2 \): \( \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 2 \\ 2 \end{pmatrix}, \begin{pmatrix} 5 \\ 5 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">8.</span>
+                <div>En \( \mathbb{R}^3 \): \( \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix}, \begin{pmatrix} -1 \\ 2 \\ 3 \end{pmatrix}, \begin{pmatrix} 5 \\ 2 \\ 3 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">9.</span>
+                <div>En \( \mathbb{R}^3 \): \( \begin{pmatrix} 0 \\ 5 \\ 1 \end{pmatrix}, \begin{pmatrix} 0 \\ -1 \\ 3 \end{pmatrix}, \begin{pmatrix} -1 \\ -1 \\ 5 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">10.</span>
+                <div>En \( \mathbb{R}^3 \): \( \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 0 \\ 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \\ 1 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">11.</span>
+                <div>En \( \mathbb{R}^3 \): \( \begin{pmatrix} 2 \\ 0 \\ 1 \end{pmatrix}, \begin{pmatrix} 3 \\ 1 \\ 2 \end{pmatrix}, \begin{pmatrix} 1 \\ 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 7 \\ 3 \\ 5 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">12.</span>
+                <div>En \( \mathbb{R}^3 \): \( \begin{pmatrix} -7 \\ -6 \\ 9 \end{pmatrix}, \begin{pmatrix} 14 \\ -6 \\ 18 \end{pmatrix}, \begin{pmatrix} 7 \\ 0 \\ 3 \end{pmatrix}, \begin{pmatrix} 35 \\ 18 \\ -21 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">13.</span>
+                <div>En \( \mathbb{R}^3 \): \( \begin{pmatrix} 4 \\ 4 \\ -6 \end{pmatrix}, \begin{pmatrix} -8 \\ 4 \\ -24 \end{pmatrix}, \begin{pmatrix} -4 \\ 0 \\ -6 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">14.</span>
+                <div>En \( \mathbb{R}^3 \): \( (1, -1, 2), (1, 1, 2), (0, 0, 1) \)</div>
+            </div>
+
+            <!-- Problemas del 15 al 17 -->
+            <div class="problem-item">
+                <span class="problem-number">15.</span>
+                <div>En \( \mathbb{R}^3 \): \( (1, -1, 2), (-1, 1, 2), (0, 0, 1) \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">16.</span>
+                <div>En \( \mathbb{R}^3 \): \( (-2 \quad -18 \quad 24), (3 \quad -3 \quad -8), (1 \quad -6 \quad 2) \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">17.</span>
+                <div>En \( \mathbb{R}^2 \): \( (42 \quad 12 \quad -16), (-9 \quad 8 \quad 4), (6 \quad 7 \quad -2), (-2 \quad 2 \quad 0) \)</div>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 40px 0;">
+
+        <!-- SECCIÓN 2: Descripción de espacios generados (26 al 32) -->
+        <div class="instruction">
+            De los problemas 26 al 33 describa el espacio generado por los vectores.
+        </div>
+
+        <div class="grid-2-col">
+            <!-- Problemas del 26 al 32 -->
+            <div class="problem-item">
+                <span class="problem-number">26.</span>
+                <div>\( \begin{pmatrix} -6 \\ 3 \end{pmatrix}, \begin{pmatrix} -11 \\ 5 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">27.</span>
+                <div>\( \begin{pmatrix} -5 \\ -8 \end{pmatrix}, \begin{pmatrix} -4 \\ -8 \end{pmatrix}, \begin{pmatrix} 10 \\ -5 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">28.</span>
+                <div>\( \begin{pmatrix} -12 \\ -16 \end{pmatrix}, \begin{pmatrix} 6 \\ 8 \end{pmatrix}, \begin{pmatrix} 18 \\ 24 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">29.</span>
+                <div>\( \begin{pmatrix} 20 \\ -23 \\ -8 \end{pmatrix}, \begin{pmatrix} 2 \\ 7 \\ -2 \end{pmatrix}, \begin{pmatrix} 8 \\ -3 \\ -4 \end{pmatrix}, \begin{pmatrix} -2 \\ 24 \\ -2 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">30.</span>
+                <div>\( \begin{pmatrix} -3 \\ -3 \\ -2 \end{pmatrix}, \begin{pmatrix} -2 \\ 4 \\ -8 \end{pmatrix}, \begin{pmatrix} 6 \\ -6 \\ 12 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">31.</span>
+                <div>\( \begin{pmatrix} -9 \\ 8 \\ -4 \end{pmatrix}, \begin{pmatrix} 39 \\ 20 \\ 38 \end{pmatrix}, \begin{pmatrix} -34 \\ 12 \\ -22 \end{pmatrix}, \begin{pmatrix} 7 \\ 12 \\ 10 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">32.</span>
+                <div>\( \begin{pmatrix} 2 \\ -1 \\ -1 \end{pmatrix}, \begin{pmatrix} -4 \\ 2 \\ 2 \end{pmatrix}, \begin{pmatrix} 6 \\ -3 \\ -3 \end{pmatrix} \)</div>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 40px 0;">
+
+        <!-- SECCIÓN 3: Problema de Aplicación -->
+        <h2>Problema de Aplicación</h2>
+        <div style="background-color: #fafafa; padding: 25px; border-radius: 8px; border: 1px solid var(--border-color);">
+            <div style="display: flex; gap: 10px; align-items: baseline;">
+                <span class="problem-number">8.</span>
+                <div>
+                    <strong style="color: var(--accent-pink);">Aplicación</strong> Una compañía de concreto almacena las tres mezclas básicas, que se presentan a continuación. Las cantidades se miden en gramos y cada "unidad" de mezcla pesa 60 gramos. Puede formular mezclas especiales revolviendo combinaciones de las tres mezclas básicas; entonces las mezclas especiales posibles pertenecen al espacio generado por los tres vectores que representan las tres mezclas básicas.
+                </div>
+            </div>
+
+            <table class="app-table">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Cemento</td>
+                        <td>20</td>
+                        <td>18</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td>Agua</td>
+                        <td>10</td>
+                        <td>10</td>
+                        <td>10</td>
+                    </tr>
+                    <tr>
+                        <td>Arena</td>
+                        <td>20</td>
+                        <td>25</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>Grava</td>
+                        <td>10</td>
+                        <td>5</td>
+                        <td>15</td>
+                    </tr>
+                    <tr>
+                        <td>Tobas</td>
+                        <td>0</td>
+                        <td>2</td>
+                        <td>8</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <ul class="question-list">
+                <li data-letter="a">¿Se puede hacer una mezcla que consiste en 1000 g de cemento, 200 g de agua, 1000 g de arena, 500 g de grava y 300 g de tobas? ¿Por qué sí o por qué no? De ser posible, ¿cuántas unidades de cada una de las mezclas \( A \), \( B \) y \( C \) se necesitan para formular la mezcla especial?</li>
+                <li data-letter="b">Suponga que desea preparar 5000 g de concreto con una razón de agua a cemento de 2 a 3 con 1250 g de cemento. Si debe incluir 1500 g de arena y 1000 g de grava en las especificaciones, encuentre la cantidad de tobas para hacer 5000 g de concreto. ¿Se puede formular ésta como una mezcla especial? De ser así, ¿cuántas unidades de cada mezcla se necesitan para formular la mezcla especial?</li>
+            </ul>
+
+            <p style="font-size: 0.9rem; color: #666; margin-top: 20px; border-top: 1px solid #ddd; padding-top: 10px;">
+                <strong style="color: var(--accent-pink);">Nota.</strong> Este problema fue tomado de "Teaching Elementary Linear Algebra with MATLAB to Engineering Students" de Deborah P. Levinson, en <em>Proceedings of the Fifth International Conference on Technology in Collegiate Mathematics</em>, 1992.
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

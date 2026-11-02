@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación - Generadores</title>
+    
+    <!-- Librería MathJax para renderizar ecuaciones matemáticas -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            color: #333;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #1565c0;
+            text-align: center;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+        .instruction-title {
+            color: #d81b60; /* Toque rosa para coincidir con la instrucción del libro */
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #d81b60;
+        }
+        .question-block {
+            background: #fff;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #1565c0;
+            transition: all 0.3s ease;
+        }
+        /* Clases dinámicas aplicadas por JavaScript */
+        .question-block.correct {
+            border-left-color: #2e7d32;
+            background-color: #e8f5e9;
+        }
+        .question-block.incorrect {
+            border-left-color: #c62828;
+            background-color: #ffebee;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .q-num {
+            color: #d81b60;
+            margin-right: 5px;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
+        .option-label:hover {
+            background-color: #f0f4f8;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        /* Estructura para opciones de V/F */
+        .vf-container {
+            display: flex;
+            gap: 20px;
+        }
+        .vf-container .option-label {
+            background-color: #f5f5f5;
+            flex: 1;
+            justify-content: center;
+            border: 1px solid #e0e0e0;
+        }
+        .vf-container .option-label:hover {
+            background-color: #e0e0e0;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #1565c0;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0d47a1;
+        }
+        #result-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        /* Grid para las respuestas múltiples de la Q1 y Q2 */
+        .grid-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AUTOEVALUACIÓN 5.3: Generadores</h1>
+
+    <form id="quiz-form">
+        
+        <!-- SECCIÓN DE SELECCIÓN MÚLTIPLE -->
+        <div class="instruction-title">Seleccione TODAS las opciones que respondan correctamente a la pregunta (puede ser más de una):</div>
+
+        <!-- Pregunta I -->
+        <div class="question-block" id="block-q1">
+            <div class="question-text"><span class="q-num">I)</span> ¿Cuáles de los siguientes pares de vectores no pueden generar a \(\mathbb{R}^2\)?</div>
+            <div class="grid-options">
+                <label class="option-label"><input type="checkbox" name="q1" value="a"> a) \( \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} -3 \\ -3 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q1" value="b"> b) \( \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 2 \\ 2 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q1" value="c"> c) \( \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} -1 \\ 1 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q1" value="d"> d) \( \begin{pmatrix} 1 \\ 3 \end{pmatrix}, \begin{pmatrix} 0 \\ 0 \end{pmatrix} \)</label>
+                <label class="option-label"><input type="checkbox" name="q1" value="e"> e) \( \begin{pmatrix} 1 \\ 3 \end{pmatrix}, \begin{pmatrix} 3 \\ 1 \end{pmatrix} \)</label>
+            </div>
+        </div>
+
+        <!-- Pregunta II -->
+        <div class="question-block" id="block-q2">
+            <div class="question-text"><span class="q-num">II)</span> ¿Cuáles de los siguientes conjuntos de polinomios generan a \(P_2\)?</div>
+            <div class="grid-options">
+                <label class="option-label"><input type="checkbox" name="q2" value="a"> a) \( 1, x^2 \)</label>
+                <label class="option-label"><input type="checkbox" name="q2" value="b"> b) \( 3, 2x, -x^2 \)</label>
+                <label class="option-label"><input type="checkbox" name="q2" value="c"> c) \( 1 + x, 2 + 2x, x^2 \)</label>
+                <label class="option-label"><input type="checkbox" name="q2" value="d"> d) \( 1, 1 + x, 1 + x^2 \)</label>
+            </div>
+        </div>
+
+        <!-- SECCIÓN VERDADERO O FALSO -->
+        <div class="instruction-title">Indique si los siguientes enunciados son falsos o verdaderos:</div>
+
+        <!-- Pregunta III -->
+        <div class="question-block" id="block-q3">
+            <div class="question-text"><span class="q-num">III)</span> \( \begin{pmatrix} 3 \\ 5 \end{pmatrix} \) está en el espacio generado por \( \left\{ \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \begin{pmatrix} 2 \\ 4 \end{pmatrix} \right\} \).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q3" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q3" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta IV -->
+        <div class="question-block" id="block-q4">
+            <div class="question-text"><span class="q-num">IV)</span> \( \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \) está en el espacio generado por \( \left\{ \begin{pmatrix} 2 \\ 0 \\ 4 \end{pmatrix}, \begin{pmatrix} -1 \\ 0 \\ 3 \end{pmatrix} \right\} \).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q4" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q4" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta V -->
+        <div class="question-block" id="block-q5">
+            <div class="question-text"><span class="q-num">V)</span> \( \{1, x, x^2, x^3, \dots, x^{10000}\} \) genera a \( P \).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q5" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q5" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta VI -->
+        <div class="question-block" id="block-q6">
+            <div class="question-text"><span class="q-num">VI)</span> \( \left\{ \begin{pmatrix} 1 & 0 \\ 0 & 0 \end{pmatrix}, \begin{pmatrix} 0 & 1 \\ 0 & 0 \end{pmatrix}, \begin{pmatrix} 0 & 0 \\ 1 & 0 \end{pmatrix}, \begin{pmatrix} 0 & 0 \\ 0 & 1 \end{pmatrix} \right\} \) genera a \( M_{22} \).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q6" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q6" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta VII -->
+        <div class="question-block" id="block-q7">
+            <div class="question-text"><span class="q-num">VII)</span> \( \text{gen}\left\{ \begin{pmatrix} 1 \\ 2 \\ -1 \\ 3 \end{pmatrix}, \begin{pmatrix} 7 \\ 1 \\ 0 \\ 4 \end{pmatrix}, \begin{pmatrix} -8 \\ 0 \\ 8 \\ 2 \end{pmatrix} \right\} \) es un subespacio de \( \mathbb{R}^3 \).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q7" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q7" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta VIII -->
+        <div class="question-block" id="block-q8">
+            <div class="question-text"><span class="q-num">VIII)</span> \( \text{gen}\left\{ \begin{pmatrix} 1 \\ 2 \\ -1 \\ 3 \end{pmatrix}, \begin{pmatrix} 7 \\ 1 \\ 0 \\ 4 \end{pmatrix}, \begin{pmatrix} -8 \\ 0 \\ 8 \\ 2 \end{pmatrix} \right\} \) es un subespacio de \( \mathbb{R}^4 \).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q8" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q8" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta IX -->
+        <div class="question-block" id="block-q9">
+            <div class="question-text"><span class="q-num">IX)</span> Si \( \left\{ \begin{pmatrix} 1 \\ 2 \end{pmatrix}, \begin{pmatrix} 2 \\ 3 \end{pmatrix} \right\} \) genera a \( \mathbb{R}^2 \), entonces \( \left\{ \begin{pmatrix} 1 \\ 2 \end{pmatrix}, \begin{pmatrix} 2 \\ 3 \end{pmatrix}, \begin{pmatrix} -2 \\ -3 \end{pmatrix} \right\} \) también genera a \( \mathbb{R}^2 \).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q9" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q9" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <button type="submit">Evaluar mis respuestas</button>
+    </form>
+
+    <div id="result-container"></div>
+
+    <script>
+        // Diccionario con las respuestas correctas de la imagen
+        // Los arrays representan respuestas de selección múltiple (checkboxes)
+        const correctAnswers = {
+            q1: ['a', 'b', 'd'],
+            q2: ['b', 'd'],
+            q3: 'V',
+            q4: 'F',
+            q5: 'V',
+            q6: 'V',
+            q7: 'F',
+            q8: 'V',
+            q9: 'V'
+        };
+
+        // Lógica de validación al enviar el formulario
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que la página se recargue
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            // Iteramos sobre las respuestas correctas
+            for (let question in correctAnswers) {
+                const block = document.getElementById('block-' + question);
+                const expected = correctAnswers[question];
+                
+                // Limpiamos estilos previos
+                block.classList.remove('correct', 'incorrect');
+
+                // Si la respuesta esperada es un arreglo, es una pregunta de Checkbox
+                if (Array.isArray(expected)) {
+                    // Obtenemos todas las casillas marcadas por el usuario para esta pregunta
+                    const checkedNodes = document.querySelectorAll(`input[name="${question}"]:checked`);
+                    const checkedValues = Array.from(checkedNodes).map(n => n.value).sort();
+                    const expectedSorted = expected.slice().sort();
+                    
+                    // Comparamos si los arreglos son idénticos
+                    if (checkedValues.length > 0 && JSON.stringify(checkedValues) === JSON.stringify(expectedSorted)) {
+                        block.classList.add('correct');
+                        score++;
+                    } else {
+                        block.classList.add('incorrect');
+                    }
+                } 
+                // Si la respuesta es un string único, es una pregunta de Radio (V/F)
+                else {
+                    const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                    if (selectedOption && selectedOption.value === expected) {
+                        block.classList.add('correct');
+                        score++;
+                    } else {
+                        block.classList.add('incorrect'); 
+                    }
+                }
+            }
+
+            // Mostrar el resultado final
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+            
+            if (score === totalQuestions) {
+                resultContainer.style.color = '#2e7d32';
+                resultContainer.innerHTML = `¡Excelente! Puntuación perfecta: ${score}/${totalQuestions}`;
+            } else {
+                resultContainer.style.color = '#c62828';
+                resultContainer.innerHTML = `Tu puntuación es: ${score}/${totalQuestions}. ¡Revisa los bloques en rojo e inténtalo de nuevo!`;
+            }
+            
+            // Hacemos scroll suave hacia el resultado
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
