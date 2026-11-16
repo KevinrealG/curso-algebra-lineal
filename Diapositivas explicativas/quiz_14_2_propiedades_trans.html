@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación - Propiedades de las Transformaciones</title>
+    
+    <!-- Importación de MathJax para renderizar la notación matemática -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf0f4;
+            color: #333;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #d81b60;
+            text-align: center;
+            border-bottom: 2px solid #f8bbd0;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-size: 1.8rem;
+        }
+        .instruction-title {
+            color: #d81b60;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 4px solid #d81b60;
+        }
+        .question-block {
+            background: #fff;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #d81b60;
+            transition: all 0.3s ease;
+        }
+        /* Clases CSS dinámicas para la retroalimentación */
+        .question-block.correct {
+            border-left-color: #2e7d32;
+            background-color: #e8f5e9;
+        }
+        .question-block.incorrect {
+            border-left-color: #c62828;
+            background-color: #ffebee;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .q-num {
+            color: #d81b60;
+            margin-right: 5px;
+        }
+        .vf-container {
+            display: flex;
+            gap: 20px;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #f5f5f5;
+            transition: background-color 0.2s;
+            flex: 1;
+            justify-content: center;
+            border: 1px solid #e0e0e0;
+        }
+        .option-label:hover {
+            background-color: #e0e0e0;
+        }
+        input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ad1457;
+        }
+        #result-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AUTOEVALUACIÓN 7.2</h1>
+
+    <div class="instruction-title">De los siguientes enunciados, indique si son verdaderos o falsos.</div>
+
+    <form id="quiz-form">
+
+        <!-- Pregunta I -->
+        <div class="question-block" id="block-q1">
+            <div class="question-text"><span class="q-num">I)</span> Sea \(T: V \rightarrow W\) una transformación lineal. En ocasiones es posible encontrar tres vectores diferentes \(\mathbf{v}_1 \in V, \mathbf{v}_2 \in V\) y \(\mathbf{w} \in W\) tales que \(T\mathbf{v}_1 = T\mathbf{v}_2 = \mathbf{w}\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q1" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q1" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta II -->
+        <div class="question-block" id="block-q2">
+            <div class="question-text"><span class="q-num">II)</span> Si \(T\mathbf{v}_1 = T\mathbf{v}_2\) como en el problema 7.2.1, entonces \(\mathbf{v}_1 - \mathbf{v}_2 \in \text{nu } T\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q2" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q2" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta III -->
+        <div class="question-block" id="block-q3">
+            <div class="question-text"><span class="q-num">III)</span> Si \(T\) es una transformación lineal de \(V\) en \(W\), entonces la imagen de \(T\) es \(W\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q3" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q3" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta IV -->
+        <div class="question-block" id="block-q4">
+            <div class="question-text"><span class="q-num">IV)</span> Sea \(\mathbf{v}_1, \mathbf{v}_2, \dots, \mathbf{v}_n\) una base para \(\mathbb{R}^n\) y sea \(\mathbf{w}_1, \mathbf{w}_2, \dots, \mathbf{w}_n\) una base para \(P_{n-1}\). Entonces existen dos transformaciones lineales \(S\) y \(T\) tales que \(T\mathbf{v}_i = \mathbf{w}_i\) y \(S\mathbf{w}_i = \mathbf{v}_i\) para \(i = 1, 2, \dots, n\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q4" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q4" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta V -->
+        <div class="question-block" id="block-q5">
+            <div class="question-text"><span class="q-num">V)</span> Si \(T: \mathbb{R}^2 \rightarrow \mathbb{R}^2\) es una transformación lineal y \(T\begin{pmatrix} 0 \\ 0 \end{pmatrix} = \begin{pmatrix} 0 \\ 0 \end{pmatrix}\), entonces \(T\) es la transformación cero.</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q5" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q5" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta VI -->
+        <div class="question-block" id="block-q6">
+            <div class="question-text"><span class="q-num">VI)</span> Existe una transformación lineal \(T\) de \(\mathbb{R}^5 \rightarrow \mathbb{R}^5\) con \(\rho(T) = \nu(T)\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q6" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q6" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta VII -->
+        <div class="question-block" id="block-q7">
+            <div class="question-text"><span class="q-num">VII)</span> Suponga que \(T: M_{22} \rightarrow M_{22}\) con \(\rho(T) = 4\). Si \(TA = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}\), entonces \(A = \begin{pmatrix} 0 & 0 \\ 0 & 0 \end{pmatrix}\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q7" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q7" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <button type="submit">Evaluar mis respuestas</button>
+    </form>
+
+    <div id="result-container"></div>
+
+    <script>
+        // Diccionario con las respuestas correctas de la imagen
+        const correctAnswers = {
+            q1: 'V',
+            q2: 'V',
+            q3: 'F',
+            q4: 'F',
+            q5: 'F',
+            q6: 'F',
+            q7: 'V'
+        };
+
+        // Lógica de validación al enviar el formulario
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que la página se recargue
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            for (let question in correctAnswers) {
+                const block = document.getElementById('block-' + question);
+                const expected = correctAnswers[question];
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                
+                block.classList.remove('correct', 'incorrect');
+
+                if (selectedOption) {
+                    if (selectedOption.value === expected) {
+                        block.classList.add('correct');
+                        score++;
+                    } else {
+                        block.classList.add('incorrect');
+                    }
+                } else {
+                    // Marca como incorrecto si el usuario no seleccionó ninguna opción
+                    block.classList.add('incorrect'); 
+                }
+            }
+
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+            
+            if (score === totalQuestions) {
+                resultContainer.style.color = '#2e7d32';
+                resultContainer.innerHTML = `¡Excelente! Puntuación perfecta: ${score}/${totalQuestions}`;
+            } else {
+                resultContainer.style.color = '#c62828';
+                resultContainer.innerHTML = `Tu puntuación es: ${score}/${totalQuestions}. ¡Revisa los bloques en rojo e inténtalo de nuevo!`;
+            }
+            
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

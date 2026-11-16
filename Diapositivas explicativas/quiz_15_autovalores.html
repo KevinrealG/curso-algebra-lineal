@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación - Autovalores y Autovectores</title>
+    
+    <!-- Librería MathJax para renderizar la notación matemática en el navegador -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Estilos generales del documento */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf0f4;
+            color: #333;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #d81b60;
+            text-align: center;
+            border-bottom: 2px solid #f8bbd0;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-size: 1.8rem;
+        }
+        .instruction-title {
+            color: #d81b60;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 4px solid #d81b60;
+        }
+        /* Diseño de cada bloque de pregunta */
+        .question-block {
+            background: #fff;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #d81b60;
+            transition: all 0.3s ease;
+        }
+        /* Clases dinámicas para la retroalimentación visual (agregadas por JS) */
+        .question-block.correct {
+            border-left-color: #2e7d32;
+            background-color: #e8f5e9;
+        }
+        .question-block.incorrect {
+            border-left-color: #c62828;
+            background-color: #ffebee;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .q-num {
+            color: #d81b60;
+            margin-right: 5px;
+        }
+        /* Estilos para los contenedores de las opciones de respuesta */
+        .vf-container, .mc-container {
+            display: flex;
+            gap: 20px;
+        }
+        .mc-container {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #f5f5f5;
+            transition: background-color 0.2s;
+            flex: 1;
+            justify-content: center;
+            border: 1px solid #e0e0e0;
+        }
+        .option-label:hover {
+            background-color: #e0e0e0;
+        }
+        .option-letter {
+            color: #d81b60;
+            font-weight: bold;
+            font-style: italic;
+            margin-right: 5px;
+        }
+        input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        /* Estilo del botón de evaluación */
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ad1457;
+        }
+        /* Contenedor del mensaje de puntuación */
+        #result-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <h1>AUTOEVALUACIÓN 8.1</h1>
+
+    <form id="quiz-form">
+
+        <!-- SECCIÓN: Verdadero o Falso -->
+        <div class="instruction-title">Indique si los enunciados siguientes son falsos o verdaderos.</div>
+
+        <div class="question-block" id="block-q1">
+            <div class="question-text"><span class="q-num">I)</span> Los valores característicos de una matriz triangular son los números en la diagonal de la matriz.</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q1" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q1" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-q2">
+            <div class="question-text"><span class="q-num">II)</span> Si la matriz real \(A\) de \(3 \times 3\) tiene valores característicos distintos, entonces los vectores característicos correspondientes a esos valores característicos distintos constituyen una base para \(\mathbb{R}^3\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q2" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q2" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-q3">
+            <div class="question-text"><span class="q-num">III)</span> Si la matriz \(A\) de \(3 \times 3\) tiene dos valores característicos distintos, entonces \(A\) tiene a lo más dos vectores característicos linealmente independientes.</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q3" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q3" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-q4">
+            <div class="question-text"><span class="q-num">IV)</span> Si \(A\) tiene elementos reales, entonces \(A\) puede tener exactamente un valor característico complejo (es decir, un valor característico \(a + ib\) con \(b \neq 0\)).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q4" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q4" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-q5">
+            <div class="question-text"><span class="q-num">V)</span> Si \(\det A = 0\), entonces 0 es un valor característico de \(A\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q5" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q5" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: Selección múltiple -->
+        <div class="instruction-title">Elija la opción que responda acertadamente al enunciado propuesto.</div>
+
+        <div class="question-block" id="block-q6">
+            <div class="question-text"><span class="q-num">VI)</span> 1 es un valor característico de la matriz identidad \(3 \times 3\). Su multiplicidad geométrica es ________.</div>
+            <div class="mc-container">
+                <label class="option-label"><input type="radio" name="q6" value="a"><span class="option-letter">a)</span> 1</label>
+                <label class="option-label"><input type="radio" name="q6" value="b"><span class="option-letter">b)</span> 2</label>
+                <label class="option-label"><input type="radio" name="q6" value="c"><span class="option-letter">c)</span> 3</label>
+            </div>
+        </div>
+
+        <div class="question-block" id="block-q7">
+            <div class="question-text"><span class="q-num">VII)</span> 1 es el único valor característico de \(A = \begin{pmatrix} 1 & 2 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{pmatrix}\). Su multiplicidad geométrica es ________.</div>
+            <div class="mc-container">
+                <label class="option-label"><input type="radio" name="q7" value="a"><span class="option-letter">a)</span> 1</label>
+                <label class="option-label"><input type="radio" name="q7" value="b"><span class="option-letter">b)</span> 2</label>
+                <label class="option-label"><input type="radio" name="q7" value="c"><span class="option-letter">c)</span> 3</label>
+            </div>
+        </div>
+
+        <button type="submit">Evaluar mis respuestas</button>
+    </form>
+
+    <div id="result-container"></div>
+
+    <script>
+        // Diccionario con las respuestas correctas asignadas a cada pregunta
+        const correctAnswers = {
+            q1: 'V',
+            q2: 'V',
+            q3: 'F',
+            q4: 'F',
+            q5: 'V',
+            q6: 'c',
+            q7: 'b'
+        };
+
+        // Función que evalúa el formulario al hacer clic en el botón
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que la página se recargue
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            // Bucle para iterar y comprobar cada respuesta
+            for (let question in correctAnswers) {
+                const block = document.getElementById('block-' + question);
+                const expected = correctAnswers[question];
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                
+                // Reiniciar los estilos antes de evaluar
+                block.classList.remove('correct', 'incorrect');
+
+                if (selectedOption) {
+                    if (selectedOption.value === expected) {
+                        block.classList.add('correct'); // Respuesta acertada
+                        score++;
+                    } else {
+                        block.classList.add('incorrect'); // Respuesta errónea
+                    }
+                } else {
+                    // Si el estudiante dejó la pregunta en blanco
+                    block.classList.add('incorrect'); 
+                }
+            }
+
+            // Muestra y actualiza el mensaje de resultados
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+            
+            if (score === totalQuestions) {
+                resultContainer.style.color = '#2e7d32';
+                resultContainer.innerHTML = `¡Excelente! Puntuación perfecta: ${score}/${totalQuestions}`;
+            } else {
+                resultContainer.style.color = '#c62828';
+                resultContainer.innerHTML = `Tu puntuación es: ${score}/${totalQuestions}. ¡Revisa los bloques en rojo e inténtalo de nuevo!`;
+            }
+            
+            // Desplaza la vista hacia el mensaje de resultados
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>

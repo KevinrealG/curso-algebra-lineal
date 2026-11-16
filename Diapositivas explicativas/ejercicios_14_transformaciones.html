@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hoja de Práctica: Transformaciones Lineales</title>
+    
+    <!-- Librería MathJax para renderizar la notación matemática -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Variables de color y tipografía */
+        :root {
+            --bg-color: #f0f2f5;
+            --paper-color: #ffffff;
+            --text-color: #333333;
+            --primary-blue: #1565c0;
+            --border-color: #e0e0e0;
+            --accent-pink: #d81b60; /* Color rosa basado en las imágenes del libro */
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+
+        /* Contenedor principal que simula una hoja de papel */
+        .document-container {
+            max-width: 950px;
+            margin: 0 auto;
+            background-color: var(--paper-color);
+            padding: 50px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        h1 {
+            color: var(--primary-blue);
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 10px;
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            color: #444;
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-left: 4px solid var(--primary-blue);
+            margin-top: 35px;
+            margin-bottom: 25px;
+        }
+
+        .instruction {
+            font-size: 1.1rem;
+            color: #444;
+            margin-bottom: 30px;
+            padding: 10px 15px;
+        }
+
+        /* Uso de CSS Grid para forzar 2 columnas de ejercicios */
+        .grid-2-col {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            column-gap: 40px;
+            row-gap: 30px;
+        }
+
+        /* En pantallas pequeñas (móviles), pasa a 1 columna */
+        @media (max-width: 768px) {
+            .grid-2-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Lista de 1 columna para ejercicios más largos */
+        .grid-1-col {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .problem-item {
+            display: flex;
+            align-items: center; /* Alinea verticalmente el número con la ecuación */
+            gap: 15px;
+            background-color: #fafafa;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .problem-item-text {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px 0;
+        }
+
+        /* Número del problema en color rosa */
+        .problem-number {
+            font-weight: bold;
+            color: var(--accent-pink);
+            font-size: 1.2rem;
+            min-width: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="document-container">
+        <h1>Hoja de Práctica: Transformaciones Lineales</h1>
+
+        <!-- SECCIÓN 1: Determinación de transformaciones lineales -->
+        <h2>De los problemas 1 al 39 determine si la transformación de \(V\) en \(W\) dada es lineal.</h2>
+
+        <div class="grid-2-col">
+            <!-- Problemas del 1 al 14 -->
+            <div class="problem-item">
+                <span class="problem-number">1.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^1; T\begin{pmatrix} x \\ y \end{pmatrix} = x \)</div>
+            </div>
+            
+            <div class="problem-item">
+                <span class="problem-number">2.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">3.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} 1 \\ y \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">4.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^1; T\begin{pmatrix} x \\ y \end{pmatrix} = x + 1 \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">5.</span>
+                <div>\( T: \mathbb{R}^3 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} x \\ y \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">6.</span>
+                <div>\( T: \mathbb{R}^3 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 0 \\ y \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">7.</span>
+                <div>\( T: \mathbb{R}^3 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} x \\ y + z \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">8.</span>
+                <div>\( T: \mathbb{R}^3 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} 1 \\ z \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">9.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x^2 \\ y^2 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">10.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ \frac{x}{y} \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">11.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} y \\ x \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">12.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^4; T\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ x + y \\ y \\ x - y \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">13.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}; T\begin{pmatrix} x \\ y \end{pmatrix} = xy \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">14.</span>
+                <div>\( T: \mathbb{R}^n \rightarrow \mathbb{R}; T\begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix} = x_1 + x_2 + \cdots + x_n \)</div>
+            </div>
+            
+            <!-- Problemas del 15 al 18 -->
+            <div class="problem-item">
+                <span class="problem-number">15.</span>
+                <div>\( T: \mathbb{R}^n \rightarrow \mathbb{R}^2; T\begin{pmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{pmatrix} = \begin{pmatrix} |x_4| \\ x_1 \end{pmatrix} \)</div>
+            </div>
+            
+            <div class="problem-item">
+                <span class="problem-number">16.</span>
+                <div>\( T: \mathbb{R} \rightarrow \mathbb{R}^n; T(x) = \begin{pmatrix} x \\ x \\ \vdots \\ x \end{pmatrix} \)</div>
+            </div>
+            
+            <div class="problem-item">
+                <span class="problem-number">17.</span>
+                <div>\( T: \mathbb{R}^4 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \\ z \\ w \end{pmatrix} = \begin{pmatrix} x + z \\ y + w \end{pmatrix} \)</div>
+            </div>
+            
+            <div class="problem-item">
+                <span class="problem-number">18.</span>
+                <div>\( T: \mathbb{R}^4 \rightarrow M_{22}; T\begin{pmatrix} x \\ y \\ z \\ w \end{pmatrix} = \begin{pmatrix} x & z \\ y & w \end{pmatrix} \)</div>
+            </div>
+        </div>
+
+        <!-- Problemas del 19 al 26 (En 1 columna debido a la longitud) -->
+        <div class="grid-1-col">
+            <div class="problem-item-text">
+                <span class="problem-number">19.</span>
+                <div>\( T: M_{nn} \rightarrow M_{nn}; T(A) = AB \), donde \(B\) es una matriz fija de \(n \times n\)</div>
+            </div>
+            <div class="problem-item-text">
+                <span class="problem-number">20.</span>
+                <div>\( T: M_{nn} \rightarrow M_{nn}; T(A) = A^TA \)</div>
+            </div>
+            <div class="problem-item-text">
+                <span class="problem-number">21.</span>
+                <div>\( T: M_{pq} \rightarrow M_{pq}; T(A) = A^T \)</div>
+            </div>
+            <div class="problem-item-text">
+                <span class="problem-number">22.</span>
+                <div>\( T: M_{mn} \rightarrow M_{qn}; T(A) = BA \), donde \(B\) es una matriz fija de \(q \times m\)</div>
+            </div>
+            <div class="problem-item-text">
+                <span class="problem-number">23.</span>
+                <div>\( T: D_n \rightarrow D_n; T(D) = D^2 \) (\(D_n\) es el conjunto de matrices diagonales de \(n \times n\))</div>
+            </div>
+            <div class="problem-item-text">
+                <span class="problem-number">24.</span>
+                <div>\( T: D_5 \rightarrow \mathbb{R}^3; T(D) = \begin{pmatrix} d_{11} + 2d_{33} \\ d_{22} - 3d_{33} \\ d_{55} \end{pmatrix} \)</div>
+            </div>
+            <div class="problem-item-text">
+                <span class="problem-number">25.</span>
+                <div>\( T: P_2 \rightarrow P_1; T(a_0 + a_1x + a_2x^2) = a_0 + a_1x \)</div>
+            </div>
+            <div class="problem-item-text">
+                <span class="problem-number">26.</span>
+                <div>\( T: P_2 \rightarrow P_1; T(a_0 + a_1x + a_2x^2) = a_1 + a_2x \)</div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 2: Problemas específicos -->
+        <h2 style="margin-top: 40px;">Problemas Adicionales</h2>
+        
+        <div class="grid-1-col">
+            <div class="problem-item-text">
+                <span class="problem-number">41.</span>
+                <div>
+                    Sea \(T\) una transformación lineal de \(\mathbb{R}^2 \rightarrow \mathbb{R}^3\) tal que \( T\begin{pmatrix} 1 \\ 0 \end{pmatrix} = \begin{pmatrix} 1 \\ 2 \\ 3 \end{pmatrix} \) y \( T\begin{pmatrix} 0 \\ 1 \end{pmatrix} = \begin{pmatrix} -4 \\ 0 \\ 5 \end{pmatrix} \). <br>
+                    Encuentre:<br><br>
+                    <span style="color: var(--accent-pink); font-style: italic; font-weight: bold; margin-right: 15px;">a)</span> \( T\begin{pmatrix} 2 \\ 4 \end{pmatrix} \) <span style="margin: 0 20px;">y</span> 
+                    <span style="color: var(--accent-pink); font-style: italic; font-weight: bold; margin-right: 15px;">b)</span> \( T\begin{pmatrix} -3 \\ 7 \end{pmatrix} \)
+                </div>
+            </div>
+
+            <div class="problem-item-text">
+                <span class="problem-number">42.</span>
+                <div>
+                    En el ejemplo 7.1.8:<br><br>
+                    <span style="color: var(--accent-pink); font-style: italic; font-weight: bold; margin-right: 10px;">a)</span> Encuentre la matriz de rotación \(A_\theta\) cuando \(\theta = \frac{\pi}{6}\).<br><br>
+                    <span style="color: var(--accent-pink); font-style: italic; font-weight: bold; margin-right: 10px;">b)</span> ¿Qué le ocurre al vector \( \begin{pmatrix} -3 \\ 4 \end{pmatrix}^T \) si se rota un ángulo de \( \frac{\pi}{6} \) en dirección contraria a la de las manecillas del reloj?
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 3: Núcleo, imagen, rango y nulidad -->
+        <h2 style="margin-top: 40px;">De los problemas 1 al 14 encuentre núcleo, imagen, rango y nulidad de la transformación lineal dada.</h2>
+        
+        <div class="grid-2-col">
+            <div class="problem-item">
+                <span class="problem-number">1.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}; T\begin{pmatrix} x \\ y \end{pmatrix} = x \)</div>
+            </div>
+            
+            <div class="problem-item">
+                <span class="problem-number">2.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} x \\ 0 \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">3.</span>
+                <div>\( T: \mathbb{R}^3 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \\ z \end{pmatrix} = \begin{pmatrix} z \\ y \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">4.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \end{pmatrix} = \begin{pmatrix} -4y \\ y \end{pmatrix} \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">5.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}; T\begin{pmatrix} x \\ y \end{pmatrix} = x + y \)</div>
+            </div>
+
+            <div class="problem-item">
+                <span class="problem-number">6.</span>
+                <div>\( T: \mathbb{R}^4 \rightarrow \mathbb{R}^2; T\begin{pmatrix} x \\ y \\ z \\ w \end{pmatrix} = \begin{pmatrix} x + z \\ y + w \end{pmatrix} \)</div>
+            </div>
+        </div>
+        
+        <!-- Continuación de la sección 3 en 1 columna -->
+        <div class="grid-1-col">
+            <div class="problem-item-text">
+                <span class="problem-number">7.</span>
+                <div>\( T: M_{22} \rightarrow M_{22}; T(A) = BA \), donde \( B = \begin{pmatrix} 1 & 0 \\ 3 & 1 \end{pmatrix} \)</div>
+            </div>
+            
+            <div class="problem-item-text">
+                <span class="problem-number">8.</span>
+                <div>\( T: \mathbb{R} \rightarrow P_3; T(a) = a + ax + ax^2 + ax^3 \)</div>
+            </div>
+            
+            <div class="problem-item-text">
+                <span class="problem-number">9.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow P_3; T\begin{pmatrix} a \\ b \end{pmatrix} = a + bx + (a+b)x^2 + (a-b)x^3 \)</div>
+            </div>
+            
+            <div class="problem-item-text">
+                <span class="problem-number" style="display: flex; align-items: center;">*10.</span>
+                <div>\( T: M_{nn} \rightarrow M_{nn}; T(A) = A^T + A \)</div>
+            </div>
+            
+            <div class="problem-item-text">
+                <span class="problem-number">11.</span>
+                <div>\( T: C^1[0, 1] \rightarrow C[0, 1]; Tf = f' \)</div>
+            </div>
+            
+            <div class="problem-item-text">
+                <span class="problem-number">12.</span>
+                <div>\( T: C^2[0, 1] \rightarrow C[0, 1]; Tf = f'' \)</div>
+            </div>
+            
+            <div class="problem-item-text">
+                <span class="problem-number">13.</span>
+                <div>\( T: C[0, 1] \rightarrow \mathbb{R}; Tf = f(0) \)</div>
+            </div>
+            
+            <div class="problem-item-text">
+                <span class="problem-number">14.</span>
+                <div>\( T: \mathbb{R}^2 \rightarrow \mathbb{R}^2 \); \( T \) es una rotación de \( \frac{\pi}{3} \)</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoevaluación - Transformación Lineal</title>
+    
+    <!-- Se incluye MathJax para la renderización de ecuaciones y notación matemática -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        /* Variables de color y estilos generales para mantener un diseño coherente */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf0f4; /* Fondo rosado claro para coincidir con el diseño */
+            color: #333;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #d81b60; /* Rosa oscuro */
+            text-align: center;
+            border-bottom: 2px solid #f8bbd0;
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            font-size: 1.8rem;
+        }
+        .instruction-title {
+            color: #d81b60;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 4px solid #d81b60;
+        }
+        /* Contenedor de cada pregunta individual */
+        .question-block {
+            background: #fff;
+            padding: 20px 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border-left: 5px solid #d81b60;
+            transition: all 0.3s ease;
+        }
+        /* Clases CSS dinámicas aplicadas por JavaScript según la respuesta */
+        .question-block.correct {
+            border-left-color: #2e7d32;
+            background-color: #e8f5e9;
+        }
+        .question-block.incorrect {
+            border-left-color: #c62828;
+            background-color: #ffebee;
+        }
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        .q-num {
+            color: #d81b60;
+            margin-right: 5px;
+        }
+        /* Contenedor flexible para los botones de Verdadero y Falso */
+        .vf-container {
+            display: flex;
+            gap: 20px;
+        }
+        .option-label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 4px;
+            background-color: #f5f5f5;
+            transition: background-color 0.2s;
+            flex: 1; /* Permite que ambos botones ocupen el mismo ancho */
+            justify-content: center;
+            border: 1px solid #e0e0e0;
+        }
+        .option-label:hover {
+            background-color: #e0e0e0;
+        }
+        input[type="radio"] {
+            margin-right: 15px;
+            transform: scale(1.2);
+        }
+        /* Botón de envío del formulario */
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #d81b60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 30px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #ad1457;
+        }
+        /* Contenedor para mostrar el mensaje de puntuación final */
+        #result-container {
+            display: none;
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Título principal de la evaluación -->
+    <h1>AUTOEVALUACIÓN 7.1</h1>
+
+    <!-- Instrucciones -->
+    <div class="instruction-title">Falso-verdadero.</div>
+
+    <!-- Formulario que agrupa todas las preguntas -->
+    <form id="quiz-form">
+
+        <!-- Pregunta I -->
+        <div class="question-block" id="block-q1">
+            <div class="question-text"><span class="q-num">I)</span> Si \(T\) es una transformación lineal, entonces \(T(3\mathbf{x}) = 3T\mathbf{x}\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q1" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q1" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta II -->
+        <div class="question-block" id="block-q2">
+            <div class="question-text"><span class="q-num">II)</span> Si \(T\) es una transformación lineal, entonces \(T(\mathbf{x} + \mathbf{y}) = T\mathbf{x} + T\mathbf{y}\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q2" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q2" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta III -->
+        <div class="question-block" id="block-q3">
+            <div class="question-text"><span class="q-num">III)</span> Si \(T\) es una transformación lineal, entonces \(T(\mathbf{xy}) = T\mathbf{x}T\mathbf{y}\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q3" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q3" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta IV -->
+        <div class="question-block" id="block-q4">
+            <div class="question-text"><span class="q-num">IV)</span> Si \(A\) es una matriz de \(4 \times 5\), entonces \(T\mathbf{x} = A\mathbf{x}\) es una transformación lineal de \(\mathbb{R}^4\) en \(\mathbb{R}^5\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q4" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q4" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Pregunta V -->
+        <div class="question-block" id="block-q5">
+            <div class="question-text"><span class="q-num">V)</span> Si \(A\) es una matriz de \(4 \times 5\), entonces \(T\mathbf{x} = A\mathbf{x}\) es una transformación lineal de \(\mathbb{R}^5\) en \(\mathbb{R}^4\).</div>
+            <div class="vf-container">
+                <label class="option-label"><input type="radio" name="q5" value="V"> Verdadero</label>
+                <label class="option-label"><input type="radio" name="q5" value="F"> Falso</label>
+            </div>
+        </div>
+
+        <!-- Botón para disparar la validación de JavaScript -->
+        <button type="submit">Evaluar mis respuestas</button>
+    </form>
+
+    <!-- Contenedor donde aparecerá el resultado final -->
+    <div id="result-container"></div>
+
+    <script>
+        // Objeto que almacena las respuestas correctas para cada pregunta 
+        // según las "Respuestas a la autoevaluación" proporcionadas en la imagen[cite: 59].
+        const correctAnswers = {
+            q1: 'V', // Pregunta I
+            q2: 'V', // Pregunta II
+            q3: 'F', // Pregunta III
+            q4: 'F', // Pregunta IV
+            q5: 'V'  // Pregunta V
+        };
+
+        // Se captura el evento 'submit' del formulario
+        document.getElementById('quiz-form').addEventListener('submit', function(event) {
+            // Se previene la acción por defecto (enviar datos y recargar la página)
+            event.preventDefault(); 
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            // Se itera a través de cada pregunta definida en correctAnswers
+            for (let question in correctAnswers) {
+                // Se obtiene el bloque contenedor de la pregunta
+                const block = document.getElementById('block-' + question);
+                // Se obtiene la respuesta correcta esperada
+                const expected = correctAnswers[question];
+                // Se busca si el usuario seleccionó un radio button para esta pregunta
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                
+                // Se eliminan clases de validaciones previas para un estilo limpio
+                block.classList.remove('correct', 'incorrect');
+
+                // Si el usuario seleccionó una opción
+                if (selectedOption) {
+                    // Si el valor seleccionado coincide con la respuesta correcta
+                    if (selectedOption.value === expected) {
+                        block.classList.add('correct'); // Añade borde verde
+                        score++; // Incrementa la puntuación
+                    } else {
+                        block.classList.add('incorrect'); // Añade borde rojo
+                    }
+                } else {
+                    // Si no seleccionó nada, se marca visualmente como incorrecta
+                    block.classList.add('incorrect'); 
+                }
+            }
+
+            // Se obtiene el contenedor del resultado final
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block'; // Lo hace visible
+            
+            // Si respondió todo correctamente
+            if (score === totalQuestions) {
+                resultContainer.style.color = '#2e7d32'; // Color verde
+                resultContainer.innerHTML = `¡Excelente! Puntuación perfecta: ${score}/${totalQuestions}`;
+            } else {
+                // Si hubo errores
+                resultContainer.style.color = '#c62828'; // Color rojo
+                resultContainer.innerHTML = `Tu puntuación es: ${score}/${totalQuestions}. ¡Revisa los bloques en rojo e inténtalo de nuevo!`;
+            }
+            
+            // Efecto de desplazamiento suave hacia la parte inferior de la página para ver el resultado
+            resultContainer.scrollIntoView({ behavior: 'smooth' });
+        });
+    </script>
+</body>
+</html>
