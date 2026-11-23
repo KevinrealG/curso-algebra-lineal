@@ -103,7 +103,21 @@
         font-family: 'Courier New', Courier, monospace;
         overflow-x: auto;
         margin-top: 1rem;
+        position: relative;
     }
+    .copy-code-button {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        border: 0;
+        border-radius: 6px;
+        padding: 0.35rem 0.7rem;
+        background: var(--primary);
+        color: white;
+        cursor: pointer;
+        font-size: 0.82rem;
+    }
+    .copy-code-button:hover { background: #003761; }
 </style>
 </head>
 <body>
@@ -115,7 +129,7 @@
 <span class="badge">Álgebra Lineal · Universidad Tecnológica de Bolívar</span>
 <h1>Guía de Laboratorios</h1>
 <h2>Laboratorio: Misión monedas en $R^{3}$. Combinaciones lineales, independencia lineal y bases de $R^{3}$.</h2>
-<p>Aplicación de combinaciones lineales, determinantes y bases tridimensionales mediante trabajo manual y un videojuego interactivo en Python.</p>
+<p>Aplicación de combinaciones lineales, determinantes y bases tridimensionales mediante cálculos completamente implementados en Python.</p>
 </div>
 </header>
 
@@ -130,7 +144,7 @@
 <li><a href="#materiales">Materiales y Conceptos</a></li>
 <li><a href="#entorno">Configuración del Entorno</a></li>
 <li><a href="#etapa1">Etapa 1: Análisis Matemático</a></li>
-<li><a href="#etapa2">Etapa 2: Videojuego</a></li>
+<li><a href="#etapa2">Etapa 2: Nuevas Posiciones</a></li>
 <li><a href="#etapa3">Etapa 3: Nueva Base</a></li>
 <li><a href="#resultados-tabla">Recopilación de Resultados</a></li>
 <li><a href="#evaluacion">Evaluación y Rúbrica</a></li>
@@ -141,42 +155,42 @@
 <section id="objetivos" class="section card">
     <h2 class="section-title">Objetivos de la Guía</h2>
     <ul>
-        <li>Plantear y resolver combinaciones lineales en $R^{3}$ mediante sistemas de ecuaciones, y decidir si una posición puede alcanzarse con coeficientes enteros no negativos[cite: 90].</li>
-        <li>Verificar la independencia lineal de tres vectores de $R^{3}$ mediante el determinante y reconocer cuándo constituyen una base[cite: 90].</li>
-        <li>Usar un videojuego en Python como herramienta de comprobación y experimentación de los resultados obtenidos previamente a mano[cite: 90].</li>
+        <li>Plantear y resolver combinaciones lineales en $R^{3}$ mediante sistemas de ecuaciones, y decidir si una posición puede alcanzarse con coeficientes enteros no negativos.</li>
+        <li>Verificar la independencia lineal de tres vectores de $R^{3}$ mediante el determinante y reconocer cuándo constituyen una base.</li>
+        <li>Usar funciones y scripts de Python para calcular, verificar y experimentar con combinaciones lineales y bases.</li>
     </ul>
 </section>
 
 <section id="competencias" class="section card">
     <h2 class="section-title">Competencias Por Desarrollar</h2>
     <ul>
-        <li><strong>Competencia digital:</strong> Utilizar Google Colab, SymPy y un videojuego en Python con visualización tridimensional (Plotly) para comprobar resultados y modificar los parámetros de un modelo[cite: 90].</li>
-        <li><strong>Competencia matemática:</strong> Expresar vectores de $R^{3}$ como combinaciones lineales, resolver los sistemas de ecuaciones asociados, verificar la independencia lineal mediante el determinante e identificar bases de $R^{3}$[cite: 90].</li>
-        <li><strong>Competencia analítica:</strong> Distinguir lo que garantiza una base (existencia y unicidad de los coeficientes reales) de lo que exige una restricción adicional sobre esos coeficientes[cite: 90].</li>
-        <li><strong>Competencia comunicativa:</strong> Elaborar informes técnicos que documenten procedimientos manuales, modificaciones al código, evidencias de juego y conclusiones de manera clara y estructurada[cite: 90].</li>
-        <li><strong>Competencia autónoma:</strong> Diseñar sus propios objetivos y su propia base de $R^{3}$, y comprobarlos de manera independiente[cite: 90].</li>
+        <li><strong>Competencia digital:</strong> Utilizar Python, funciones matemáticas y una interfaz interactiva para comprobar resultados y modificar los parámetros de un modelo.</li>
+        <li><strong>Competencia matemática:</strong> Expresar vectores de $R^{3}$ como combinaciones lineales, resolver los sistemas de ecuaciones asociados, verificar la independencia lineal mediante el determinante e identificar bases de $R^{3}$.</li>
+        <li><strong>Competencia analítica:</strong> Distinguir lo que garantiza una base (existencia y unicidad de los coeficientes reales) de lo que exige una restricción adicional sobre esos coeficientes.</li>
+        <li><strong>Competencia comunicativa:</strong> Elaborar informes técnicos que documenten código, resultados generados por Python, evidencias de ejecución y conclusiones de manera clara y estructurada.</li>
+        <li><strong>Competencia autónoma:</strong> Diseñar sus propios objetivos y su propia base de $R^{3}$, y comprobarlos de manera independiente.</li>
     </ul>
 </section>
 
 <section id="resultados" class="section card">
     <h2 class="section-title">Resultados de Aprendizaje</h2>
     <ol>
-        <li>Escribir un vector de R³ como combinación lineal de una base y calcular sus coeficientes resolviendo el sistema de ecuaciones correspondiente[cite: 91].</li>
-        <li>Determinar, mediante el determinante, si tres vectores de R³ son linealmente independientes y constituyen una base[cite: 91].</li>
-        <li>Explicar por qué un conjunto generador de $R^{3}$ no permite alcanzar todos los puntos cuando los coeficientes se restringen a números enteros no negativos[cite: 91].</li>
-        <li>Diseñar posiciones alcanzables para una base dada y comprobarlas experimentalmente en el videojuego[cite: 91].</li>
-        <li>Documentar en un informe los procedimientos realizados, las evidencias obtenidas y las conclusiones derivadas del análisis[cite: 91].</li>
+        <li>Escribir un vector de R³ como combinación lineal de una base y calcular sus coeficientes resolviendo el sistema de ecuaciones correspondiente.</li>
+        <li>Determinar, mediante el determinante, si tres vectores de R³ son linealmente independientes y constituyen una base.</li>
+        <li>Explicar por qué un conjunto generador de $R^{3}$ no permite alcanzar todos los puntos cuando los coeficientes se restringen a números enteros no negativos.</li>
+        <li>Diseñar posiciones alcanzables para una base dada y comprobarlas con Python y el notebook organizado <code>Lab08_Mision_Monedas_Etapas.ipynb</code>.</li>
+        <li>Documentar en un informe los procedimientos realizados, las evidencias obtenidas y las conclusiones derivadas del análisis.</li>
     </ol>
 </section>
 
 <section id="recomendaciones" class="section card">
     <h2 class="section-title">Recomendaciones Generales</h2>
     <ul>
-        <li>El laboratorio se realiza de manera individual[cite: 91].</li>
-        <li>Desarrolle las etapas en el orden establecido. No ejecute ni modifique el código hasta terminar y registrar en su cuaderno la Etapa 1[cite: 91].</li>
-        <li>El código es una herramienta de comprobación y experimentación; no reemplaza el procedimiento escrito. Todo resultado que registre debe estar respaldado por un cálculo manual[cite: 91].</li>
-        <li>Se debe entregar un informe definitivo al final de la sesión con la tabla de resultados de las tres etapas junto a las respuestas de las preguntas de análisis, conclusiones y recomendaciones[cite: 91].</li>
-        <li>Use Google Colab (<a href="https://colab.research.google.com" target="_blank">https://colab.research.google.com</a>) y guarde su copia del cuaderno en su unidad de Google Drive[cite: 91].</li>
+        <li>El laboratorio se realiza de manera individual.</li>
+        <li>Desarrolle las etapas en el orden establecido usando el notebook organizado <code>Lab08_Mision_Monedas_Etapas.ipynb</code>.</li>
+        <li>Todo procedimiento matemático debe implementarse y ejecutarse en Python. No se requieren cálculos escritos ni soluciones en papel.</li>
+        <li>Se debe entregar una copia modificada del notebook <code>Lab08_Mision_Monedas_Etapas.ipynb</code>, las capturas de ejecución y un informe con los resultados, conclusiones y recomendaciones.</li>
+        <li>Las actividades y los códigos matemáticos ya están organizados por celdas dentro del notebook.</li>
     </ul>
 </section>
 
@@ -184,56 +198,184 @@
     <h2 class="section-title">Materiales y Conceptos Matemáticos</h2>
     <h3 style="color: var(--primary);">Materiales y Herramientas</h3>
     <ul>
-        <li>Cuaderno de apuntes, lápiz y borrador para el trabajo manual[cite: 92].</li>
-        <li>Computador con conexión a internet y una cuenta de Google[cite: 92].</li>
-        <li>Google Colab[cite: 92].</li>
-        <li>Cuaderno del videojuego <code>Mision_Monedas_R3.ipynb</code>, entregado por el docente[cite: 92].</li>
-        <li>Librerías de Python SymPy (verificar cálculos) y Plotly (escena 3D)[cite: 92].</li>
+        <li>Computador con acceso a internet y una cuenta de Google.</li>
+        <li>Google Colab.</li>
+        <li>El notebook organizado <a href="Lab08_Mision_Monedas_Etapas.ipynb" download><code>Lab08_Mision_Monedas_Etapas.ipynb</code></a>.</li>
+        <li>El motor interactivo incluido dentro del mismo notebook.</li>
+        <li>Biblioteca estándar de Python; no requiere instalaciones adicionales.</li>
     </ul>
 
     <h3 style="color: var(--primary); margin-top: 1.5rem;">Conceptos Matemáticos Involucrados</h3>
     <ul>
-        <li><strong>Combinación lineal:</strong> un vector P de $R^{3}$ es combinación lineal de $v_1, v_2$ y $v_3$ si existen escalares $a, b$ y $c$ tales que $P = a \cdot v_1 + b \cdot v_2 + c \cdot v_3$[cite: 92].</li>
-        <li><strong>Conjunto generador:</strong> $\{v_1, v_2, v_3\}$ genera $R^{3}$ si todo vector de $R^{3}$ puede escribirse como combinación lineal de ellos con escalares reales[cite: 92].</li>
-        <li><strong>Independencia lineal:</strong> $v_1, v_2$ y $v_3$ son linealmente independientes si la única solución de $a \cdot v_1 + b \cdot v_2 + c \cdot v_3 = 0$ es $a = b = c = 0$[cite: 92].</li>
-        <li><strong>Base de $R^{3}$:</strong> conjunto de tres vectores linealmente independientes que genera $R^{3}$. Respecto a una base, los coeficientes de cada vector existen y son únicos[cite: 92].</li>
-        <li><strong>Criterio del determinante:</strong> si $A = [v_1 \ v_2 \ v_3]$ es la matriz cuyas columnas son los tres vectores, estos son linealmente independientes si y solo si $\det(A) \neq 0$[cite: 92].</li>
-        <li><strong>Coeficientes restringidos:</strong> en el videojuego cada pulsación suma un vector completo; por eso solo se admiten coeficientes enteros no negativos ($0, 1, 2, \dots$)[cite: 92].</li>
+        <li><strong>Combinación lineal:</strong> un vector P de $R^{3}$ es combinación lineal de $v_1, v_2$ y $v_3$ si existen escalares $a, b$ y $c$ tales que $P = a \cdot v_1 + b \cdot v_2 + c \cdot v_3$.</li>
+        <li><strong>Conjunto generador:</strong> $\{v_1, v_2, v_3\}$ genera $R^{3}$ si todo vector de $R^{3}$ puede escribirse como combinación lineal de ellos con escalares reales.</li>
+        <li><strong>Independencia lineal:</strong> $v_1, v_2$ y $v_3$ son linealmente independientes si la única solución de $a \cdot v_1 + b \cdot v_2 + c \cdot v_3 = 0$ es $a = b = c = 0$.</li>
+        <li><strong>Base de $R^{3}$:</strong> conjunto de tres vectores linealmente independientes que genera $R^{3}$. Respecto a una base, los coeficientes de cada vector existen y son únicos.</li>
+        <li><strong>Criterio del determinante:</strong> si $A = [v_1 \ v_2 \ v_3]$ es la matriz cuyas columnas son los tres vectores, estos son linealmente independientes si y solo si $\det(A) \neq 0$.</li>
+        <li><strong>Coeficientes restringidos:</strong> cada movimiento suma un vector completo; por eso solo se admiten coeficientes enteros no negativos ($0, 1, 2, \dots$).</li>
     </ul>
-    <p><em>Importante: Termine la Etapa 1 en su cuaderno antes de ejecutar el videojuego[cite: 92].</em></p>
+    <p><em>Importante: La matriz, el determinante, los sistemas y las clasificaciones deben aparecer como salida del programa Python.</em></p>
 </section>
 
 <section id="entorno" class="section card">
     <h2 class="section-title">Configuración del Entorno en Google Colab</h2>
-    
-    <h3 style="color: var(--primary);">Paso 1: Abrir el cuaderno del videojuego</h3>
+
+    <h3 style="color: var(--primary);">Paso 1: Crear el cuaderno de trabajo</h3>
     <ol>
-        <li>Ingrese a <a href="https://colab.research.google.com" target="_blank">https://colab.research.google.com</a>[cite: 92]</li>
-        <li>Seleccione <strong>Archivo → Subir cuaderno</strong> y cargue el archivo <code>Mision_Monedas_R3.ipynb</code>[cite: 92]</li>
-        <li>Seleccione <strong>Archivo → Guardar una copia en Drive</strong> y cambie el nombre a: <code>Lab8_Monedas_R3_Apellido_Nombre_Codigo.ipynb</code>[cite: 92]</li>
+        <li>Ingrese a <a href="https://colab.research.google.com" target="_blank">Google Colab</a>.</li>
+        <li>Descargue <a href="Lab08_Mision_Monedas_Etapas.ipynb" download><code>Lab08_Mision_Monedas_Etapas.ipynb</code></a>.</li>
+        <li>En Colab seleccione <strong>Archivo → Subir cuaderno</strong> y cargue <code>Lab08_Mision_Monedas_Etapas.ipynb</code>.</li>
+        <li>Seleccione <strong>Archivo → Guardar una copia en Drive</strong> y cambie el nombre a <code>Lab8_Apellido_Nombre_Codigo.ipynb</code>.</li>
+        <li>Ejecute primero la celda <strong>Configuración del juego</strong> y después la celda <strong>Misión Monedas en R³</strong>. No modifique el motor del videojuego.</li>
+        <li>Agregue celdas nuevas al final del notebook para copiar los códigos matemáticos de esta guía.</li>
     </ol>
 
-    <h3 style="color: var(--primary); margin-top: 1.5rem;">Paso 2: Reconocer la estructura del cuaderno</h3>
-    <ul>
-        <li><strong>Celda «Configuración del juego»:</strong> contiene los vectores de movimiento $v_1, v_2$ y $v_3$ y la lista <code>OBJETIVOS</code> con las monedas o estrellas. Es la única celda que usted modificará[cite: 93].</li>
-        <li><strong>Celda «Misión Monedas en $R^{3}$»:</strong> contiene el motor del juego. Aparece contraída; puede ver su código con doble clic, pero no necesita modificarlo[cite: 93].</li>
-        <li><strong>Orden de ejecución:</strong> cada vez que cambie la configuración, ejecute las dos celdas en ese orden[cite: 93].</li>
-    </ul>
-
-    <h3 style="color: var(--primary); margin-top: 1.5rem;">Paso 3: Preparar la celda de verificación con SymPy</h3>
-    <p>Agregue una celda de código al final del cuaderno (<code>+ Código</code>) y ejecute:</p>
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Código 1: funciones y resolución matemática</h3>
+    <p>Copie este bloque completo en la primera celda de Google Colab.</p>
     <div class="code-block">
-<pre># Importacion de bibliotecas
-import sympy as sp
-sp.init_printing(use_unicode=True)
-print(f"SymPy version: {sp.__version__}")</pre>
+<button class="copy-code-button" type="button">Copiar</button>
+<pre>from fractions import Fraction
+from typing import Iterable
+
+
+Vector = tuple[Fraction, ...]
+
+
+def vector(*components: int) -> Vector:
+    return tuple(Fraction(component) for component in components)
+
+
+def linear_combination(vectors, coefficients):
+    """Calcula a*v1 + b*v2 + c*v3."""
+    return tuple(
+        coefficients[0] * vectors[0][row]
+        + coefficients[1] * vectors[1][row]
+        + coefficients[2] * vectors[2][row]
+        for row in range(3)
+    )
+
+
+def matrix(vectors):
+    """Construye la matriz A = [v1 v2 v3]."""
+    return [[vectors[column][row] for column in range(3)] for row in range(3)]
+
+
+def gauss_jordan(matrix_a, P):
+    """Resuelve Ax = P por eliminación de Gauss-Jordan."""
+    augmented = [
+        row[:] + [P[row_index]]
+        for row_index, row in enumerate(matrix_a)
+    ]
+
+    pivot_row = 0
+    for column in range(3):
+        pivot = next(
+            (row for row in range(pivot_row, 3)
+             if augmented[row][column] != 0),
+            None,
+        )
+        if pivot is None:
+            continue
+
+        augmented[pivot_row], augmented[pivot] = (
+            augmented[pivot],
+            augmented[pivot_row],
+        )
+        pivot_value = augmented[pivot_row][column]
+        augmented[pivot_row] = [
+            value / pivot_value for value in augmented[pivot_row]
+        ]
+
+        for row in range(3):
+            if row == pivot_row:
+                continue
+            factor = augmented[row][column]
+            augmented[row] = [
+                augmented[row][index]
+                - factor * augmented[pivot_row][index]
+                for index in range(4)
+            ]
+        pivot_row += 1
+
+    for row in augmented:
+        if all(value == 0 for value in row[:3]) and row[3] != 0:
+            return augmented, None
+
+    if pivot_row < 3:
+        return augmented, None
+
+    return augmented, [augmented[row][3] for row in range(3)]
+
+
+def determinant3(matrix_a):
+    a, b, c = matrix_a[0]
+    d, e, f = matrix_a[1]
+    g, h, i = matrix_a[2]
+    return (
+        a * (e * i - f * h)
+        - b * (d * i - f * g)
+        + c * (d * h - e * g)
+    )
+
+
+def integer_nonnegative(solution):
+    return solution is not None and all(
+        value.denominator == 1 and value >= 0
+        for value in solution
+    )
+
+
+def format_vector(value: Iterable[Fraction]) -> str:
+    return "(" + ", ".join(str(component) for component in value) + ")"
+
+
+def analyze_base(vectors, objectives):
+    matrix_a = matrix(vectors)
+    det = determinant3(matrix_a)
+
+    print("\nMatriz A:")
+    for row in matrix_a:
+        print(format_vector(row))
+    print("det(A) =", det)
+    print("¿Es una base?", "Sí" if det != 0 else "No")
+
+    for name, position in objectives.items():
+        augmented, solution = gauss_jordan(matrix_a, position)
+        reachable = integer_nonnegative(solution)
+
+        coefficients = (
+            tuple(int(value) for value in solution)
+            if reachable
+            else solution
+        )
+
+        print(f"\n{name}: P = {format_vector(position)}")
+        print("Matriz aumentada:")
+        for row in augmented:
+            print(format_vector(row[:3]) + " | " + str(row[3]))
+        print("Solución (a, b, c):", coefficients)
+        print("Clasificación:",
+              "ALCANZABLE" if reachable else "NO ALCANZABLE")
+
+        if reachable:
+            print("Pulsaciones:", coefficients)</pre>
     </div>
-    <p><em>Importante: En las celdas de SymPy use los nombres <code>vec1</code>, <code>vec2</code> y <code>vec3</code>. Los nombres <code>v1</code>, <code>v2</code> y <code>v3</code> están reservados para la celda de configuración del juego[cite: 93].</em></p>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Funciones disponibles</h3>
+    <ul>
+        <li><code>matrix(vectors)</code>: construye la matriz cuyas columnas son los vectores.</li>
+        <li><code>determinant3(matrix_a)</code>: calcula el determinante con Python.</li>
+        <li><code>gauss_jordan(matrix_a, P)</code>: obtiene la matriz aumentada y resuelve el sistema.</li>
+        <li><code>integer_nonnegative(solution)</code>: clasifica si los coeficientes son enteros no negativos.</li>
+        <li><code>linear_combination(vectors, coefficients)</code>: genera una posición a partir de una terna.</li>
+        <li><code>analyze_base(vectors, objectives)</code>: verifica la base y clasifica todos los objetivos.</li>
+    </ul>
+    <p><em>Entrega: el cuaderno de Colab debe conservar las celdas de código y sus resultados, incluyendo todas las tablas y clasificaciones.</em></p>
 </section>
 
 <section id="etapa1" class="section card">
-    <h2 class="section-title">Etapa 1. Análisis Matemático y Resolución Manual</h2>
-    <p>En esta etapa trabajará primero con su cuaderno de apuntes, y luego con el código. La exploradora del videojuego parte del origen $(0, 0, 0)$ y cada pulsación suma un vector completo a su posición, sin movimientos fraccionarios ni inversos[cite: 93]. Los vectores de movimiento y las posiciones de las monedas son:</p>
+    <h2 class="section-title">Etapa 1. Análisis Matemático en Python</h2>
+    <p>La exploradora parte del origen $(0, 0, 0)$. Cada movimiento suma un vector completo; no existen movimientos fraccionarios ni inversos. Todos los cálculos de esta etapa deben ejecutarse desde Python.</p>
 
     <div class="grid">
         <div>
@@ -241,9 +383,9 @@ print(f"SymPy version: {sp.__version__}")</pre>
             <table>
                 <thead><tr><th>Elemento</th><th>Valor</th></tr></thead>
                 <tbody>
-                    <tr><td>Paso 1 - flecha derecha (→)</td><td>$v_1 = (1, 1, 0)$[cite: 93]</td></tr>
-                    <tr><td>Paso 2 - flecha izquierda (←)</td><td>$v_2 = (1, 0, 1)$[cite: 93]</td></tr>
-                    <tr><td>Paso 3 - flecha arriba (↑)</td><td>$v_3 = (0, 1, 1)$[cite: 93]</td></tr>
+                    <tr><td>Paso 1 - flecha derecha (→)</td><td>$v_1 = (1, 1, 0)$</td></tr>
+                    <tr><td>Paso 2 - flecha izquierda (←)</td><td>$v_2 = (1, 0, 1)$</td></tr>
+                    <tr><td>Paso 3 - flecha arriba (↑)</td><td>$v_3 = (0, 1, 1)$</td></tr>
                 </tbody>
             </table>
         </div>
@@ -252,133 +394,233 @@ print(f"SymPy version: {sp.__version__}")</pre>
             <table>
                 <thead><tr><th>Moneda</th><th>Posición P</th></tr></thead>
                 <tbody>
-                    <tr><td>Moneda 1</td><td>$(3, 3, 2)$[cite: 93]</td></tr>
-                    <tr><td>Moneda 2</td><td>$(3, 2, 3)$[cite: 93]</td></tr>
-                    <tr><td>Moneda 3</td><td>$(1, 1, 1)$[cite: 93]</td></tr>
+                    <tr><td>Moneda 1</td><td>$(3, 3, 2)$</td></tr>
+                    <tr><td>Moneda 2</td><td>$(3, 2, 3)$</td></tr>
+                    <tr><td>Moneda 3</td><td>$(1, 1, 1)$</td></tr>
                 </tbody>
             </table>
         </div>
     </div>
 
-    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 1: Identificación de los vectores y verificación de la base</h3>
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 1: Construcción de datos y verificación de la base</h3>
     <ol>
-        <li>Escriba los tres vectores de movimiento y construya la matriz $A = [v_1 \ v_2 \ v_3]$ ubicando cada vector como una columna[cite: 94].</li>
-        <li>Calcule $\det(A)$ a mano por expansión de cofactores[cite: 94].</li>
-        <li>Con base en el resultado, concluya si los vectores son linealmente independientes y si constituyen una base de $R^{3}$. Justifique[cite: 94].</li>
+        <li>Declare los tres vectores como tuplas de enteros en una celda nueva de Colab.</li>
+        <li>Use <code>matrix(vectors)</code> para construir $A = [v_1 \ v_2 \ v_3]$.</li>
+        <li>Use <code>determinant3(matrix_a)</code> para calcular $\det(A)$ y programe una condición que determine si existe una base.</li>
+        <li>Capture la salida en un archivo de texto o en una captura de pantalla.</li>
     </ol>
 
-    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 2: Planteamiento de las combinaciones lineales</h3>
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 2: Resolución de sistemas con Python</h3>
     <ol>
-        <li>Para cada moneda, plantee la ecuación vectorial $a \cdot v_1 + b \cdot v_2 + c \cdot v_3 = P$, donde $P$ es la posición de la moneda[cite: 94].</li>
-        <li>Iguale componente por componente y escriba el sistema de tres ecuaciones con tres incógnitas resultante[cite: 94].</li>
-        <li>Escriba la matriz aumentada $[A \mid P]$ de cada sistema[cite: 94].</li>
+        <li>Para cada moneda, construya su vector $P$ y llame a <code>gauss_jordan(matrix_a, P)</code>.</li>
+        <li>El programa debe imprimir la matriz aumentada $[A \mid P]$ y la solución $(a,b,c)$.</li>
+        <li>Implemente una comprobación que reconstruya $P$ con <code>linear_combination(vectors, coefficients)</code>.</li>
     </ol>
 
-    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 3: Resolución y clasificación de las monedas</h3>
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 3: Clasificación automática</h3>
     <ol>
-        <li>Resuelva cada sistema por eliminación de Gauss-Jordan, mostrando las operaciones de fila[cite: 94].</li>
-        <li>Compruebe cada solución sustituyendo $a, b$ y $c$ en la ecuación vectorial[cite: 94].</li>
-        <li>Clasifique cada moneda como alcanzable ($a, b$ y $c$ enteros no negativos) o no alcanzable bajo las reglas del juego[cite: 94].</li>
-        <li>Para la moneda no alcanzable, explique qué condición incumplen sus coeficientes y por qué eso impide recogerla[cite: 94].</li>
-        <li>Para cada moneda alcanzable, indique cuántas pulsaciones de cada tecla necesita[cite: 94].</li>
+        <li>Use <code>integer_nonnegative(solution)</code> para clasificar cada moneda.</li>
+        <li>Para las monedas alcanzables, imprima cuántas pulsaciones corresponden a $v_1$, $v_2$ y $v_3$.</li>
+        <li>Para la moneda no alcanzable, imprima qué coeficiente viola la restricción y explique el resultado en el informe.</li>
     </ol>
 
-    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 4: Verificación con SymPy</h3>
-    <p>Solo después de completar las actividades 1 a 3, ejecute la siguiente celda para comprobar sus resultados[cite: 95]:</p>
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 4: Ejecución completa de la Etapa 1</h3>
     <div class="code-block">
-<pre># Verificacion de la Etapa 1 (ejecutar solo despues del trabajo manual)
-vec1 = sp.Matrix([1, 1, 0])
-vec2 = sp.Matrix([1, 0, 1])
-vec3 = sp.Matrix([0, 1, 1])
-
-# Matriz cuyas columnas son los vectores de movimiento
-A = vec1.row_join(vec2).row_join(vec3)
-print("Matriz A = [v1 v2 v3]:\n")
-sp.pprint(A)
-print("\ndet(A) =", A.det())
-
-# Solucion de a*v1 + b*v2 + c*v3 = P para cada moneda
-a, b, c = sp.symbols('a b c')
-monedas = {
-    "Moneda 1": sp.Matrix([3, 3, 2]),
-    "Moneda 2": sp.Matrix([3, 2, 3]),
-    "Moneda 3": sp.Matrix([1, 1, 1])
+<button class="copy-code-button" type="button">Copiar</button>
+<pre>original_vectors = (
+    vector(1, 1, 0),
+    vector(1, 0, 1),
+    vector(0, 1, 1),
+)
+objectives = {
+    "Moneda 1": vector(3, 3, 2),
+    "Moneda 2": vector(3, 2, 3),
+    "Moneda 3": vector(1, 1, 1),
 }
-for nombre, P in monedas.items():
-    solucion = sp.linsolve((A, P), a, b, c)
-    print(f"\n{nombre} {tuple(P)}: (a, b, c) =", solucion)</pre>
+analyze_base(original_vectors, objectives)</pre>
     </div>
 </section>
 
 <section id="etapa2" class="section card">
-    <h2 class="section-title">Etapa 2. Modificación del Código y Exploración del Videojuego</h2>
+    <h2 class="section-title">Etapa 2. Diseño de Nuevas Posiciones y Exploración del Notebook</h2>
 
-    <h3 style="color: var(--primary);">Actividad 5: Comprobación de la Etapa 1 en el videojuego</h3>
+    <h3 style="color: var(--primary);">Actividad 5: Comprobación de la Etapa 1</h3>
     <ol>
-        <li>Ejecute la celda «Configuración del juego» sin modificarla y luego la celda «Misión Monedas en $R^{3}$»[cite: 96].</li>
-        <li>Haga clic sobre el recuadro del juego para activar el teclado[cite: 96].</li>
-        <li>Recoja las monedas que clasificó como alcanzables, usando las combinaciones obtenidas en la Etapa 1. Use el botón «Volver al origen» si necesita reiniciar[cite: 96].</li>
-        <li>Para la moneda no alcanzable, pulse el botón «... es inalcanzable» y compare la explicación del juego con la suya[cite: 96].</li>
-        <li>Responda la pregunta que aparece al completar la misión y guarde una captura de pantalla[cite: 96].</li>
+        <li>Ejecute en Colab el Código 1 y el código de la Actividad 4 sin modificaciones; luego capture la salida matemática de la Etapa 1.</li>
+        <li>Ejecute la celda <strong>Configuración del juego</strong> original y después la celda <strong>Misión Monedas en R³</strong>.</li>
+        <li>Recoja las monedas alcanzables usando las combinaciones obtenidas en Python.</li>
+        <li>Para la moneda no alcanzable, use el botón correspondiente del videojuego y compare su explicación con el resultado de la clasificación.</li>
+        <li>Capture una imagen del notebook donde se observe la escena y el registro de combinaciones.</li>
     </ol>
 
     <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 6: Diseño de nuevas posiciones</h3>
-    <p>Trabaje primero en su cuaderno:</p>
     <ol>
-        <li>Elija al menos tres ternas de coeficientes $(a, b, c)$ enteros no negativos, distintas entre sí y de las monedas 1 y 2. Al menos una terna debe tener un coeficiente igual a 0, y otra debe sumar cinco o más pulsaciones[cite: 96].</li>
-        <li>Calcule cada posición $P = a \cdot v_1 + b \cdot v_2 + c \cdot v_3$[cite: 96].</li>
-        <li>Decida cuáles objetivos serán monedas y cuáles estrellas (incluya al menos una estrella)[cite: 96].</li>
-        <li>Para una de las posiciones, plantee y resuelva el sistema y compruebe que recupera los coeficientes[cite: 96].</li>
+        <li>Elija al menos tres ternas $(a,b,c)$ enteras no negativas, distintas de las monedas originales.</li>
+        <li>Incluya al menos una terna con un coeficiente cero y otra cuya suma sea cinco o mayor.</li>
+        <li>Use <code>linear_combination()</code> para calcular todas las posiciones nuevas.</li>
+        <li>Guarde un diccionario Python con el nombre y la posición de cada objetivo.</li>
+        <li>Use <code>analyze_base()</code> para comprobar que Python recupera los coeficientes utilizados.</li>
     </ol>
 
-    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 7: Modificación de la celda de configuración</h3>
-    <ol>
-        <li>Abra la celda «Configuración del juego» y ubique la lista <code>OBJETIVOS</code>[cite: 97].</li>
-        <li>Agregue un elemento por cada nueva posición[cite: 97].</li>
-        <li>Ejecute la celda de configuración y luego la celda del juego[cite: 97].</li>
-    </ol>
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 7: Modificación del programa</h3>
+    <p>Calcule las nuevas posiciones en una celda de Colab con el código siguiente. Después copie las coordenadas obtenidas en la celda <strong>Configuración del juego</strong> del notebook.</p>
     <div class="code-block">
-<pre>OBJETIVOS = [
+<button class="copy-code-button" type="button">Copiar</button>
+<pre>nuevas_ternas = ((2, 0, 1), (1, 2, 2), (0, 3, 1))
+nuevos_objetivos = {}
+
+for i, coeficientes in enumerate(nuevas_ternas, start=1):
+    posicion = linear_combination(original_vectors, coeficientes)
+    nuevos_objetivos[f"Objetivo nuevo {i}"] = posicion
+
+analyze_base(original_vectors, nuevos_objetivos)</pre>
+    </div>
+    <p>Después reemplace la configuración del notebook por los resultados calculados. Este es el formato que debe pegar en la celda <strong>Configuración del juego</strong>:</p>
+    <div class="code-block">
+<button class="copy-code-button" type="button">Copiar</button>
+<pre>v1 = (1, 1, 0)
+v2 = (1, 0, 1)
+v3 = (0, 1, 1)
+
+OBJETIVOS = [
     {"nombre": "Moneda 1", "pos": (3, 3, 2), "tipo": "moneda"},
     {"nombre": "Moneda 2", "pos": (3, 2, 3), "tipo": "moneda"},
     {"nombre": "Moneda 3", "pos": (1, 1, 1), "tipo": "moneda"},
-    # Nuevos objetivos: reemplace x, y, z por sus coordenadas
-    {"nombre": "Estrella A", "pos": (x, y, z), "tipo": "estrella"},
-    {"nombre": "Moneda 4", "pos": (x, y, z), "tipo": "moneda"},
-    {"nombre": "Moneda 5", "pos": (x, y, z), "tipo": "moneda"},
-]</pre>
-    </div>
-    <p>Para comprobar los cálculos manuales, puede usar la celda de verificación provista en el material original[cite: 97].</p>
+    # Reemplace las posiciones siguientes por las ternas que diseñó
+    {"nombre": "Objetivo nuevo 1", "pos": (2, 3, 1), "tipo": "estrella"},
+    {"nombre": "Objetivo nuevo 2", "pos": (3, 3, 4), "tipo": "moneda"},
+    {"nombre": "Objetivo nuevo 3", "pos": (3, 1, 4), "tipo": "moneda"},
+]
 
-    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 8: Exploración y registro de combinaciones</h3>
+print("Configuración de la Etapa 2 guardada. Ejecute la celda del juego.")</pre>
+    </div>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 8: Registro de resultados</h3>
     <ol>
-        <li>Recoja cada nuevo objetivo. El panel «Registro de combinaciones» mostrará la combinación utilizada[cite: 97].</li>
-        <li>Alcance la misma posición con dos órdenes distintos de pulsaciones y registre ambos[cite: 97].</li>
-        <li>Tome una captura de pantalla que muestre la escena, el panel de posición y el registro[cite: 97].</li>
+        <li>Imprima cada terna, su posición y la clasificación generada por Python.</li>
+        <li>Demuestre que el orden de los vectores no cambia el resultado usando al menos dos rutas equivalentes.</li>
+        <li>Explique en el informe la propiedad de conmutatividad aplicada a la suma de vectores.</li>
+        <li>Capture la salida completa de la ejecución.</li>
     </ol>
 </section>
 
 <section id="etapa3" class="section card">
-    <h2 class="section-title">Etapa 3. Propuesta de una Nueva Base y Experimentación</h2>
+    <h2 class="section-title">Etapa 3. Nueva Base y Experimento de Control en Python</h2>
 
     <h3 style="color: var(--primary);">Actividad 9: Definición y verificación de la nueva base</h3>
     <ol>
-        <li>Proponga tres nuevos vectores de movimiento $v_1, v_2, v_3$ de $R^{3}$ con componentes enteras y diferentes a los iniciales[cite: 98].</li>
-        <li>Construya la matriz $B = [v_1 \ v_2 \ v_3]$ y calcule $\det(B)$[cite: 98].</li>
-        <li>Compruebe el determinante con la celda de SymPy proporcionada en la guía[cite: 98].</li>
+        <li>Declare tres vectores nuevos con componentes enteras y diferentes de los iniciales.</li>
+        <li>Construya $B = [v_1 \ v_2 \ v_3]$ y calcule $\det(B)$ con las funciones Python.</li>
+        <li>Si $\det(B)\neq 0$, clasifique el conjunto como base de $R^3$ e imprima el resultado.</li>
     </ol>
+    <div class="code-block">
+<button class="copy-code-button" type="button">Copiar</button>
+<pre># Modifique los tres vectores propuestos
+nueva_base = (
+    vector(1, 0, 1),
+    vector(0, 2, 1),
+    vector(1, 1, 0),
+)
+
+nuevos_objetivos = {
+    "Objetivo A": linear_combination(nueva_base, (2, 1, 0)),
+    "Objetivo B": linear_combination(nueva_base, (0, 2, 3)),
+    "Objetivo C": linear_combination(nueva_base, (1, 0, 4)),
+}
+
+analyze_base(nueva_base, nuevos_objetivos)</pre>
+    </div>
+    <p>Una vez que haya verificado su nueva base en Python, copie las siguientes variables en la celda <strong>Configuración del juego</strong> del notebook y ejecute la celda del juego:</p>
+    <div class="code-block">
+<button class="copy-code-button" type="button">Copiar</button>
+<pre># Reemplace estos vectores por los que usted propuso
+v1 = (1, 0, 1)
+v2 = (0, 2, 1)
+v3 = (1, 1, 0)
+
+OBJETIVOS = [
+    # Reemplace por las posiciones alcanzables calculadas en Python
+    {"nombre": "Objetivo A", "pos": (2, 2, 3), "tipo": "moneda"},
+    {"nombre": "Objetivo B", "pos": (3, 7, 2), "tipo": "estrella"},
+    {"nombre": "Objetivo C", "pos": (5, 4, 1), "tipo": "moneda"},
+    # Incluya aquí el punto entero que clasificó como no alcanzable
+    {"nombre": "Punto no alcanzable", "pos": (-1, 1, 1), "tipo": "estrella"},
+]
+
+print("Configuración de la Etapa 3 guardada. Ejecute la celda del juego.")</pre>
+    </div>
 
     <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 10: Diseño de objetivos para la nueva base</h3>
     <ol>
-        <li>Elija al menos tres ternas $(a, b, c)$ de enteros no negativos y calcule las posiciones con su nueva base[cite: 99].</li>
-        <li>Proponga un punto con coordenadas enteras que <strong>no</strong> pueda alcanzarse con su base bajo las reglas del juego. Demuestre por qué resolviendo su sistema[cite: 99].</li>
+        <li>Elija al menos tres ternas $(a,b,c)$ enteras no negativas y genere sus posiciones con Python.</li>
+        <li>Proponga un punto entero que no pueda alcanzarse y use <code>integer_nonnegative()</code> para verificarlo.</li>
+        <li>Puede agregar puntos fuera del semigrupo generado por las ternas, por ejemplo puntos con una coordenada negativa.</li>
     </ol>
+    <div class="code-block">
+<button class="copy-code-button" type="button">Copiar</button>
+<pre># Diseñe al menos tres ternas nuevas
+ternas_nueva_base = (
+    (2, 1, 0),
+    (0, 2, 3),
+    (1, 0, 4),
+)
 
-    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 11: Modificación del código y experimentación</h3>
+objetivos_nueva_base = {}
+for i, coeficientes in enumerate(ternas_nueva_base, start=1):
+    posicion = linear_combination(nueva_base, coeficientes)
+    objetivos_nueva_base[f"Objetivo {i}"] = posicion
+
+# Punto de prueba no alcanzable: modifique sus coordenadas
+punto_no_alcanzable = vector(-1, 1, 1)
+objetivos_nueva_base["Punto no alcanzable"] = punto_no_alcanzable
+
+analyze_base(nueva_base, objetivos_nueva_base)</pre>
+    </div>
+
+    <h3 style="color: var(--primary); margin-top: 1.5rem;">Actividad 11: Experimento de control</h3>
     <ol>
-        <li>Actualice en la celda «Configuración del juego» los nuevos vectores y la nueva lista de objetivos (incluyendo el punto inalcanzable)[cite: 99].</li>
-        <li><strong>Experimento de control:</strong> cambie temporalmente $v_3$ por la suma de los nuevos $v_1$ y $v_2$, ejecute y registre el mensaje de error del sistema. Luego restaure su base[cite: 99].</li>
+        <li>Declare temporalmente $v_3 = v_1 + v_2$.</li>
+        <li>Ejecute <code>analyze_base()</code> y capture el determinante cero y la clasificación dependiente.</li>
+        <li>Imprima también qué plano o subconjunto puede describirse mediante los vectores dependientes.</li>
+        <li>Restaure la nueva base al finalizar el experimento.</li>
+        <li>Repita el experimento en la celda de configuración del notebook: defina temporalmente el tercer vector como la suma de los dos primeros y ejecute la celda del juego. Después restaure la base propuesta.</li>
     </ol>
+    <div class="code-block">
+<button class="copy-code-button" type="button">Copiar</button>
+<pre># Experimento de control: se reemplaza v3 por v1 + v2
+base_dependiente = (
+    nueva_base[0],
+    nueva_base[1],
+    (
+        nueva_base[0][0] + nueva_base[1][0],
+        nueva_base[0][1] + nueva_base[1][1],
+        nueva_base[0][2] + nueva_base[1][2],
+    ),
+)
+
+prueba_dependiente = {
+    "Punto de prueba": vector(1, 1, 1),
+}
+
+analyze_base(base_dependiente, prueba_dependiente)</pre>
+    </div>
+    <p>Repita temporalmente el control en el notebook pegando esta configuración en la celda <strong>Configuración del juego</strong>:</p>
+    <div class="code-block">
+<button class="copy-code-button" type="button">Copiar</button>
+<pre>v1 = (1, 0, 1)
+v2 = (0, 2, 1)
+v3 = (
+    v1[0] + v2[0],
+    v1[1] + v2[1],
+    v1[2] + v2[2],
+)
+
+OBJETIVOS = [
+    {"nombre": "Punto de control", "pos": (1, 1, 1), "tipo": "moneda"},
+]
+
+print("Experimento de control activado. El juego debe mostrar un error por dependencia lineal.")</pre>
+    </div>
 </section>
 
 <section id="resultados-tabla" class="section card">
@@ -392,32 +634,32 @@ for nombre, P in monedas.items():
             </tr>
         </thead>
         <tbody>
-            <tr><td><strong>ETAPA 1</strong></td><td>Matriz $A = [v_1 \ v_2 \ v_3]$ y $\det(A)$[cite: 100]</td></tr>
-            <tr><td></td><td>¿Constituyen una base de R³? Justificación[cite: 100]</td></tr>
-            <tr><td></td><td>Coeficientes $(a, b, c)$ de la Moneda 1, Moneda 2 y Moneda 3[cite: 100]</td></tr>
-            <tr><td></td><td>Clasificación de monedas alcanzables y no alcanzables[cite: 100]</td></tr>
-            <tr><td><strong>ETAPA 2</strong></td><td>Nuevas posiciones diseñadas y sus coeficientes $(a, b, c)$[cite: 100]</td></tr>
-            <tr><td></td><td>Orden de pulsaciones usado y validación con el cálculo manual[cite: 100]</td></tr>
-            <tr><td><strong>ETAPA 3</strong></td><td>Nuevos vectores $v_1, v_2, v_3$ y matriz de la nueva base con su determinante[cite: 100]</td></tr>
-            <tr><td></td><td>Posiciones propuestas, punto no alcanzable y mensaje del experimento de control[cite: 100]</td></tr>
+            <tr><td><strong>ETAPA 1</strong></td><td>Matriz $A = [v_1 \ v_2 \ v_3]$ y $\det(A)$</td></tr>
+            <tr><td></td><td>¿Constituyen una base de R³? Justificación</td></tr>
+            <tr><td></td><td>Coeficientes $(a, b, c)$ de la Moneda 1, Moneda 2 y Moneda 3</td></tr>
+            <tr><td></td><td>Clasificación de monedas alcanzables y no alcanzables</td></tr>
+            <tr><td><strong>ETAPA 2</strong></td><td>Nuevas posiciones diseñadas y sus coeficientes $(a, b, c)$</td></tr>
+            <tr><td></td><td>Órdenes de pulsaciones usados y validación producida por Python</td></tr>
+            <tr><td><strong>ETAPA 3</strong></td><td>Nuevos vectores $v_1, v_2, v_3$ y matriz de la nueva base con su determinante</td></tr>
+            <tr><td></td><td>Posiciones propuestas, punto no alcanzable y mensaje del experimento de control</td></tr>
         </tbody>
     </table>
 
     <h3 style="color: var(--primary); margin-top: 1.5rem;">Preguntas de Análisis Cortas</h3>
     <ol>
-        <li>¿Por qué la Moneda 3 no puede recogerse con la configuración original, si los vectores de movimiento constituyen una base de $R^{3}$?[cite: 100]</li>
-        <li>¿Cambia la posición final si se modifica el orden de las pulsaciones? ¿Qué propiedad de la suma de vectores lo explica?[cite: 100]</li>
+        <li>¿Por qué la Moneda 3 no puede recogerse con la configuración original, si los vectores de movimiento constituyen una base de $R^{3}$?</li>
+        <li>¿Cambia la posición final si se modifica el orden de las pulsaciones? ¿Qué propiedad de la suma de vectores lo explica?</li>
     </ol>
 
     <h3 style="color: var(--primary); margin-top: 1.5rem;">Preguntas de Interpretación, Conclusiones y Recomendaciones</h3>
     <ol>
-        <li>Si los tres vectores (iniciales y propuestos) constituyen una base de $R^{3}$, ¿por qué no podemos alcanzar todas las posiciones usando únicamente movimientos completos?[cite: 100, 101]</li>
-        <li>Explique la diferencia entre generar $R^{3}$ con escalares reales y alcanzar puntos con coeficientes enteros no negativos[cite: 101].</li>
-        <li>¿Qué garantiza la independencia lineal sobre los coeficientes de una posición? Relaciónelo con el orden de pulsaciones[cite: 101].</li>
-        <li>En el experimento de control, los vectores eran linealmente dependientes. ¿Qué subconjunto generan?[cite: 101]</li>
-        <li>Compare el determinante de la base original con el de su nueva base. Formule una conjetura sobre el valor del determinante[cite: 101].</li>
-        <li>Evalúe el papel del videojuego comparado con el trabajo manual[cite: 101].</li>
-        <li>Redacte al menos dos conclusiones sobre combinaciones lineales, generadores, independencia lineal y bases[cite: 101].</li>
+        <li>Si los tres vectores (iniciales y propuestos) constituyen una base de $R^{3}$, ¿por qué no podemos alcanzar todas las posiciones usando únicamente movimientos completos?</li>
+        <li>Explique la diferencia entre generar $R^{3}$ con escalares reales y alcanzar puntos con coeficientes enteros no negativos.</li>
+        <li>¿Qué garantiza la independencia lineal sobre los coeficientes de una posición? Relaciónelo con el orden de pulsaciones.</li>
+        <li>En el experimento de control, los vectores eran linealmente dependientes. ¿Qué subconjunto generan?</li>
+        <li>Compare el determinante de la base original con el de su nueva base. Formule una conjetura sobre el valor del determinante.</li>
+        <li>Evalúe el papel de Python y del notebook interactivo como herramientas de cálculo, comprobación y experimentación.</li>
+        <li>Redacte al menos dos conclusiones sobre combinaciones lineales, generadores, independencia lineal y bases.</li>
     </ol>
 </section>
 
@@ -434,22 +676,22 @@ for nombre, P in monedas.items():
         <tbody>
             <tr>
                 <td><strong>Etapa 1</strong></td>
-                <td>Planteamiento y solución manual de los sistemas, cálculo del determinante y clasificación justificada de las monedas[cite: 102].</td>
+                <td>Implementación de Python para resolver los sistemas, calcular determinantes y clasificar monedas.</td>
                 <td>25%</td>
             </tr>
             <tr>
                 <td><strong>Etapa 2</strong></td>
-                <td>Cálculo de nuevas posiciones alcanzables, modificación correcta de la configuración y comprobación en el videojuego[cite: 102].</td>
+                <td>Cálculo de nuevas posiciones alcanzables, modificación correcta del código y comprobación en Colab.</td>
                 <td>25%</td>
             </tr>
             <tr>
                 <td><strong>Etapa 3</strong></td>
-                <td>Propuesta y verificación de una nueva base, objetivos alcanzables, punto no alcanzable y experimento de control[cite: 102].</td>
+                <td>Propuesta y verificación de una nueva base, objetivos alcanzables, punto no alcanzable y experimento de control.</td>
                 <td>25%</td>
             </tr>
             <tr>
                 <td><strong>Informe</strong></td>
-                <td>Informe completo y ordenado con análisis, conclusiones y recomendaciones[cite: 102].</td>
+                <td>Informe completo y ordenado con análisis, conclusiones y recomendaciones.</td>
                 <td>25%</td>
             </tr>
         </tbody>
@@ -457,10 +699,8 @@ for nombre, P in monedas.items():
 
     <h3 style="color: var(--primary); margin-top: 1.5rem;">Referencias</h3>
     <ul>
-        <li>Grossman, S. I. (2012). <em>Álgebra Lineal</em> (8ª ed.). McGraw-Hill[cite: 102].</li>
-        <li>Documentación de SymPy: <a href="https://docs.sympy.org/" target="_blank">https://docs.sympy.org/</a>[cite: 102]</li>
-        <li>Documentación de Plotly para Python: <a href="https://plotly.com/python/" target="_blank">https://plotly.com/python/</a>[cite: 102]</li>
-        <li>Google Colab: <a href="https://colab.research.google.com/" target="_blank">https://colab.research.google.com/</a>[cite: 102]</li>
+        <li>Grossman, S. I. (2012). <em>Álgebra Lineal</em> (8ª ed.). McGraw-Hill.</li>
+        <li>Documentación de SymPy: <a href="https://docs.sympy.org/" target="_blank">https://docs.sympy.org/</a></li>
     </ul>
 </section>
 </main>
@@ -469,4 +709,25 @@ for nombre, P in monedas.items():
     © 2026 · Álgebra Lineal · Universidad Tecnológica de Bolívar<br>
     <em>Generado por Asistente de Programación</em>
 </footer>
+<script>
+document.querySelectorAll('.copy-code-button').forEach((button) => {
+    button.addEventListener('click', async () => {
+        const code = button.nextElementSibling.innerText;
+        try {
+            await navigator.clipboard.writeText(code);
+            button.textContent = 'Copiado';
+            setTimeout(() => { button.textContent = 'Copiar'; }, 1500);
+        } catch (error) {
+            const textarea = document.createElement('textarea');
+            textarea.value = code;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            textarea.remove();
+            button.textContent = 'Copiado';
+            setTimeout(() => { button.textContent = 'Copiar'; }, 1500);
+        }
+    });
+});
+</script>
 </body></html>
